@@ -29,6 +29,7 @@ and renders/transcribes only the clips that are missing.
 | `tts.py` | Renders clean clips with `edge_tts` (at most 2 requests at once) into `audio/clean/*.wav` (16 kHz mono). Also renders the babble sources. |
 | `noise.py` | Mixes pink, babble or traffic noise at 15 dB and 5 dB SNR (numpy only) into `audio/noisy/`. |
 | `asr.py` | Sends one request at a time to the local Whisper server (`127.0.0.1:8790`) and caches each result in `transcripts/<audio>__<lang\|auto>.json`. It starts the server if `/health` fails twice. `python asr.py --stop` stops only a server it started (PID in `asr_server.pid`). |
+| `asr_alt.py` | Second ASR: Whisper large-v3 (OpenVINO int8, in-process on the GPU; model in `models/`, git-ignored, download with `huggingface_hub.snapshot_download('OpenVINO/whisper-large-v3-int8-ov')`). Writes `transcripts_<name>/`. `--tiers all`; `HARNESS_PLAN=plan_kit.json` for the kit apps. Score with `run_eval.mjs --transcripts transcripts_lv3` or `kit_apps_eval.mjs --asr plan_kit.json --transcripts transcripts_lv3`. Run it with the clipping venv's Python (it has openvino_genai). |
 | `lib.mjs` | Canonical bank and app names, time tolerance, WER/CER, and the value-in-transcript oracles. |
 | `run_eval.mjs` | Scores the reference text and every transcript, attributes each error, and writes the report. |
 

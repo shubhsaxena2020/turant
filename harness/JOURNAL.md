@@ -39,6 +39,10 @@ node split.mjs <round> [...]   # dev voice vs held-out voice
 | round19 | + Telugu Whisper spellings (అయదు, ఇరావాయ, తుమేది, glued రిండునరవేల), ఒంటి గంట = the digit 1 inside a read-out, independent-vowel slips (ఏ/ఎ), time units by sound; no amount if the money itself was misheard and no readable amount sits next to a currency word | 100.0% | 50.0% | 48.4% | 40.4% | 31.1% | 75.7 |
 | round20 | + Tamil Whisper forms (70தாயிரம், அயாயிரம், பதனேந்தாயிரம், ஒந்தரை, மோன்று), Tamil scam words; Bandhan only before "bank" (பண்டாங்க = "did") | 100.0% | 50.7% | 48.8% | 40.4% | 31.1% | 76.5 |
 | round21 | + Kannada Whisper forms (ಸಾವರದ, ವಂದು ಅರೆ ಲಕ್ಷ, ಯಪತ್ತು …), "just now" split in two words, short/long vowel letters; one shared read-out digit reader (ಆಯದು = 5 only inside a read-out); an amount followed by an unreadable number-like word is incomplete: ask (21 wrong amounts → ask, 0 right ones lost) | 100.0% | 51.5% | 49.4% | 40.7% | 31.1% | 77.4 |
+| round25 (24 Nov) | + spellings found on large-v3 transcripts (below): "7 p.m.", देड लाख, ருபீஸ், ಆಯದು ಸಾವಿರ, ಪೇಟಿಯಂ, केवा ऐसी, रुपे; Telugu written in Kannada letters read as Telugu | 100.0% | 52.0% | 50.3% | 41.1% | 31.4% | 77.7 |
+| round26 | + a 12-digit UTR glued to a round amount ("4032187654325000 रुपए"); नमबर = number; a 7+ digit run under "number" is never an amount | 100.0% | 52.0% | 50.3% | 41.1% | 31.4% | 77.7 |
+| round27 | + misspelled numbers in number context only (छै, बारा सौं, laak, লাক, পাঁছ / আঠ before হাজার, ಸಾವಿರು / ಸಾವಿಳ, ಎರ್ಡು, ವರೆ, இரண்டறே); "saade 3000" = 3,500 | 100.0% | 52.0% | 50.3% | 41.1% | 31.8% | 77.9 |
+| round28 | + garbled "KYC update" (কাইক আপডেট, ಕೆಕ್ ಅಪ್ಪೇಟ್; not "कुछ अपडेट"); single digits inside a spoken read-out ("9, 8, 7 … பூஜ்யம்"); 9-10 digits after "who?" are not an account (13 spurious accounts gone) | 100.0% | 52.8% | 51.6% | 41.1% | 31.8% | 78.3 |
 
 **Net change:** (round9 changed no outcome to correct; it turned 87 wrong amounts into "ask again", raising clean-ASR amount precision from 67% to 76%)
 
@@ -181,6 +185,35 @@ Speech, not text, is the bottleneck for every app, and the gap is largest in bn/
 
 So on day 1 of Round 2: write the keyword lists in all languages, write 30-50 cases, then loop this harness.
 
+## Experiment: Whisper large-v3 instead of large-v3-turbo (24 Nov), adopted as the second ASR
+
+`asr_alt.py` loads OpenVINO's `whisper-large-v3-int8-ov` in-process on the laptop GPU and writes `transcripts_lv3/`; it does not touch the clipping project's ASR server. That covers all 1,510 clips (clean, noise, rate, auto-language), about 3.3 s per clip. Then `node run_eval.mjs --transcripts transcripts_lv3`.
+
+Turbo has only 4 decoder layers, and it loses the most on low-resource languages.
+
+| Same extractor (round 28) | turbo | large-v3 |
+|---|---|---|
+| Clean, fully correct | 52.8% | **65.7%** |
+| Clean, held-out voice | 51.6% | **64.4%** |
+| Noise 15 dB | 41.1% | 58.2% |
+| Noise 5 dB | 31.8% | 43.9% |
+| Rate ±15% | 48.6% | 60.7% |
+| All forced-language runs | 45.6% | 59.0% |
+| Field F1 (clean) | 78.3 | 84.3 |
+| WER (clean) | 65.5% | 56.9% |
+
+| Clean, fully correct | hi | en | mr | ta | te | kn | bn |
+|---|---|---|---|---|---|---|---|
+| turbo | 91% | 78% | 60% | 23% | 40% | 26% | 39% |
+| large-v3 | 96% | 89% | 66% | 63% | 55% | 40% | 39% |
+
+- **Before any rule changes**, the model swap alone moved clean runs from 51.5% to 59.7% (held-out from 49.4% to 60.6%).
+- **Rounds 25-28 were tuned on large-v3 dev-voice transcripts.** That added +6.0 points on clean runs, and held-out moved 60.6% → 64.4%. On turbo the same rules were neutral to slightly positive (51.5% → 52.8%), with every per-run diff checked.
+- **A new large-v3 quirk:** in 21 of 80 Telugu transcripts it writes some words in Kannada letters. `unifyScript` (shared `indic/cleanup.ts`) maps them back.
+- **Kit fraud app on large-v3:** 63.7% clean.
+- **Product meaning:** this is still a stand-in for the phone recogniser. A server-side large-v3 (or IndicConformer, which needs a gated Hugging Face download that Shubh has to accept) is a real option for a low-end-phone or kiosk mode. It also gives a more realistic tuning target than turbo, whose Tamil WER was 134%.
+- **Extractor-only ceiling on large-v3:** 68.0% of clean runs (we are at 65.7%). By language: hi 98, en 90, mr 73, ta 64, te 56, kn 43, bn 43.
+
 ## Experiment: biasing Whisper with domain words (`asr_hotwords.py`), not adopted
 
 The 600 clean clips were re-transcribed with per-language hotwords (currency, thousand / lakh, time words, bank and app names), then scored with the same round-16 extractor (`run_eval.mjs --transcripts transcripts_hw`).
@@ -201,13 +234,9 @@ The 600 clean clips were re-transcribed with per-language hotwords (currency, th
 
 ## What is left
 
-- **Remaining clean-ASR field errors** (round21):
-  - 92% are the recogniser losing the words.
-  - 8% have the value still in the transcript in a form we don't parse.
-  - 0% are extractor bugs on correct text.
-- **Ceiling for extractor work alone:** 54.5% of clean runs; we are at 51.5%.
-- **By language:**
-  - On clean speech: Hindi 91%, English 78%, Marathi 60%.
-  - Telugu 39%, Bengali 36%, Kannada 23%, Tamil 21%. Whisper's word error rate there is 75-123%.
-  - Most of the remaining gain is in speech recognition (a better Indic ASR, e.g. Sarvam, or hotword prompting) and in the confirmation UX, not in more extraction rules.
+- **On large-v3** (round 28, clean), the extractor-only ceiling is 68.0%; we are at 65.7%. The rest is the recogniser losing words. That is concentrated in Bengali (39%; large-v3 did not help it) and Kannada (40%).
+- **On turbo:**
+  - Remaining clean-ASR field errors (round 21) were 92% the recogniser losing the words and 8% a value still in the transcript in a form we don't parse.
+  - The extractor-only ceiling was 54.5%.
+- **Biggest lever** is still the recogniser: large-v3 already gave +13 points over turbo with no rule changes. Next candidates: IndicConformer (gated download), Sarvam (needs a key), or Chrome's own recogniser on a real phone.
 - **Whisper is a stand-in.** The app uses the phone's own speech recogniser (Web Speech), which cannot be benchmarked automatically. A real-phone test script is in `research/findings-2026-11-23.md`.

@@ -1,7 +1,7 @@
 {
  "summary": {
   "name": "round28",
-  "generatedAt": "2026-11-23T18:30:00.816Z",
+  "generatedAt": "2026-11-23T18:43:21.149Z",
   "extractor": "..\\prototype\\src\\lib\\extract.ts",
   "cases": 280,
   "runs": 1510,
