@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><title>ws probe</title>
+<script>
+window.result = { finals: [], interim: '', error: null, done: false, events: [] };
+function go(lang) {
+  const R = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!R) { result.error = 'unsupported'; result.done = true; return; }
+  const r = new R(); r.lang = lang; r.continuous = true; r.interimResults = true;
+  r.onresult = (e) => { result.finals = []; result.interim = '';
+    for (let i = 0; i < e.results.length; i++) { const x = e.results[i];
+      if (x.isFinal) result.finals.push({ t: x[0].transcript, c: x[0].confidence }); else result.interim += x[0].transcript; } };
+  r.onerror = (e) => { result.error = e.error; };
+  r.onend = () => { result.done = true; result.events.push('end'); };
+  ['start','audiostart','soundstart','speechstart','speechend','audioend','nomatch'].forEach((ev) => r.addEventListener(ev, () => result.events.push(ev)));
+  r.start(); window.rec = r;
+}
+</script>

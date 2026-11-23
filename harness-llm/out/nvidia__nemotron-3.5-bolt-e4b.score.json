@@ -1,0 +1,250 @@
+{
+ "model": "nvidia/nemotron-3.5-bolt-e4b",
+ "cases": 280,
+ "fully_correct": 258,
+ "fully_correct_pct": 92.1,
+ "median_secs": 1.29,
+ "fields": {
+  "amount": {
+   "ok": 156,
+   "wrong": 10,
+   "missing": 0
+  },
+  "time": {
+   "ok": 105,
+   "wrong": 7,
+   "missing": 1
+  },
+  "scamType": {
+   "ok": 81,
+   "wrong": 0,
+   "missing": 0
+  },
+  "bank": {
+   "ok": 94,
+   "wrong": 3,
+   "missing": 0
+  },
+  "paymentApp": {
+   "ok": 29,
+   "wrong": 0,
+   "missing": 0
+  },
+  "suspectPhone": {
+   "ok": 29,
+   "wrong": 0,
+   "missing": 0
+  },
+  "suspectUpi": {
+   "ok": 15,
+   "wrong": 1,
+   "missing": 0
+  },
+  "utr": {
+   "ok": 21,
+   "wrong": 0,
+   "missing": 0
+  },
+  "suspectAccount": {
+   "ok": 7,
+   "wrong": 0,
+   "missing": 0
+  },
+  "intent": {
+   "ok": 7,
+   "wrong": 0,
+   "missing": 0
+  }
+ },
+ "lang_field_acc": {
+  "hi": 95.1,
+  "en": 96.4,
+  "bn": 96.3,
+  "ta": 96.2,
+  "te": 98.8,
+  "mr": 93.8,
+  "kn": 96.2
+ },
+ "fails": [
+  {
+   "id": "hi-03",
+   "field": "time",
+   "expected": {
+    "day": -1,
+    "at": "19:00"
+   },
+   "got": "2026-11-21T19:00",
+   "text": "कल शाम 7 बजे कस्टमर केयर वाले का फोन आया, उसने AnyDesk डाउनलोड करवाया और मेरे एचडीएफसी अकाउंट से दो लाख रुपये निकाल लिए"
+  },
+  {
+   "id": "hi-06",
+   "field": "time",
+   "expected": {
+    "day": -2,
+    "at": "12:00",
+    "tol": 720
+   },
+   "got": "2026-11-19T00:00",
+   "text": "टेलीग्राम पे टास्क वाला पार्ट टाइम जॉब था, पहले थोड़ा पैसा मिला फिर मैंने सैंतालीस हज़ार रुपये इन्वेस्ट कर दिए, परसों की बात है, कोटक बैंक स"
+  },
+  {
+   "id": "hi-24",
+   "field": "time",
+   "expected": {
+    "day": -1,
+    "at": "14:30"
+   },
+   "got": "2026-11-21T14:30",
+   "text": "कल दोपहर करीब ढाई बजे फोन पे से छब्बीस सौ रुपये गए"
+  },
+  {
+   "id": "hi-30",
+   "field": "time",
+   "expected": {
+    "day": -2,
+    "at": "19:00",
+    "tol": 120
+   },
+   "got": null,
+   "text": "परसों शाम को"
+  },
+  {
+   "id": "en-04",
+   "field": "amount",
+   "expected": 6000,
+   "got": 5000,
+   "text": "Bhaiya paanch... nahi nahi chhe hazaar rupaye gaye hai, PhonePe se, abhi abhi"
+  },
+  {
+   "id": "en-09",
+   "field": "suspectUpi",
+   "expected": "rahul.kyc@ybl",
+   "got": "rahul.kyc",
+   "text": "I paid to the UPI ID rahul dot kyc at ybl, eight thousand rupees, twenty minutes back"
+  },
+  {
+   "id": "en-17",
+   "field": "amount",
+   "expected": 250000,
+   "got": 150000,
+   "text": "Do lakh pachas hazaar rupaye invest karwaye trading app mein, bola paisa double hoga, Yes Bank se gaye"
+  },
+  {
+   "id": "bn-20",
+   "field": "time",
+   "expected": {
+    "day": -1,
+    "at": "14:30"
+   },
+   "got": "2026-11-20T12:40",
+   "text": "উম্ম... মানে, গতকাল দুপুর আড়াইটায় ফোনপে থেকে দু হাজার ছশো টাকা গেছে"
+  },
+  {
+   "id": "bn-24",
+   "field": "amount",
+   "expected": 4999,
+   "got": 4990,
+   "text": "চার হাজার নশো নিরানব্বই"
+  },
+  {
+   "id": "bn-26",
+   "field": "time",
+   "expected": {
+    "day": -1,
+    "at": "21:30"
+   },
+   "got": "2026-11-20T00:30",
+   "text": "গতকাল রাত সাড়ে নটায়"
+  },
+  {
+   "id": "ta-21",
+   "field": "bank",
+   "expected": "sbi",
+   "got": "other",
+   "text": "கரண்ட் பில் மெசேஜ் வந்தது, லிங்க் கிளிக் பண்ணேன், 9999 ரூபாய் கட் ஆச்சு, ஸ்டேட் பேங்க்"
+  },
+  {
+   "id": "ta-23",
+   "field": "amount",
+   "expected": 5000,
+   "got": 10000,
+   "text": "ஐயாயிரம் ரூபாய்"
+  },
+  {
+   "id": "ta-24",
+   "field": "amount",
+   "expected": 4999,
+   "got": 149009,
+   "text": "நாலாயிரத்து தொள்ளாயிரத்து தொண்ணூத்தொன்பது"
+  },
+  {
+   "id": "te-17",
+   "field": "amount",
+   "expected": 70000,
+   "got": 50000,
+   "text": "యూనియన్ బ్యాంక్ నుండి డెబ్బై వేల రూపాయలు మాయం, నాన్న ఫోన్‌కి కాల్ వచ్చింది"
+  },
+  {
+   "id": "mr-03",
+   "field": "time",
+   "expected": {
+    "day": -1,
+    "at": "19:00"
+   },
+   "got": "2026-11-21T19:00",
+   "text": "काल संध्याकाळी सात वाजता कस्टमर केअरमधून फोन आला, AnyDesk इन्स्टॉल करायला सांगितलं, मग एचडीएफसी खात्यातून दोन लाख रुपये काढले"
+  },
+  {
+   "id": "mr-06",
+   "field": "amount",
+   "expected": 47000,
+   "got": 40000,
+   "text": "टेलिग्रामवर पार्ट टाइम जॉबचे टास्क दिले, मग गुंतवणूक करायला सांगितली, मी सत्तेचाळीस हजार रुपये भरले, कोटक बँकेतून"
+  },
+  {
+   "id": "mr-07",
+   "field": "time",
+   "expected": {
+    "day": 0,
+    "at": "10:30"
+   },
+   "got": "2026-11-21T09:30",
+   "text": "एक क्यूआर कोड पाठवला आणि स्कॅन करा पैसे मिळतील म्हणाले, स्कॅन केल्यावर ₹4,999 कापले गेले, आज सकाळी साडेदहा वाजता"
+  },
+  {
+   "id": "mr-12",
+   "field": "amount",
+   "expected": 2500,
+   "got": 13000,
+   "text": "अडीच हजार रुपये कापले, अर्ध्या तासापूर्वी, कॅनरा बँक"
+  },
+  {
+   "id": "mr-18",
+   "field": "amount",
+   "expected": 250000,
+   "got": 130000,
+   "text": "अडीच लाख रुपये गुंतवणुकीच्या नावाखाली घेतले, पैसे दुप्पट होतील म्हणाले, येस बँक"
+  },
+  {
+   "id": "kn-21",
+   "field": "bank",
+   "expected": "sbi",
+   "got": "other",
+   "text": "ಕರೆಂಟ್ ಬಿಲ್ ಮೆಸೇಜ್ ಬಂತು, ಲಿಂಕ್ ಕ್ಲಿಕ್ ಮಾಡಿದೆ, 9999 ರೂಪಾಯಿ ಕಟ್ ಆಯಿತು, ಸ್ಟೇಟ್ ಬ್ಯಾಂಕ್"
+  },
+  {
+   "id": "kn-24",
+   "field": "amount",
+   "expected": 4999,
+   "got": 49190,
+   "text": "ನಾಲ್ಕು ಸಾವಿರದ ಒಂಬೈನೂರ ತೊಂಬತ್ತೊಂಬತ್ತು"
+  },
+  {
+   "id": "kn-29",
+   "field": "bank",
+   "expected": "sbi",
+   "got": "boi",
+   "text": "ಸ್ಟೇಟ್ ಬ್ಯಾಂಕ್ ಆಫ್ ಇಂಡಿಯಾ"
+  }
+ ]
+}
