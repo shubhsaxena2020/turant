@@ -462,6 +462,11 @@ export function numberGroups(text: string): Group[] {
     i++;
     while (i < toks.length) {
       if (toks[i] === '|') break;
+      // "four thousand nine hundred AND ninety nine", "do sau aur pachaas"
+      if (['and', 'aur', 'और', 'আর', 'ani', 'आणि'].includes(toks[i].toLowerCase()) && toks[i + 1] && wordParts(toks[i + 1]) && !/^\d+$/.test(toks[i + 1])) {
+        i++;
+        continue;
+      }
       const q = wordParts(toks[i]);
       if (!q) break;
       // a read-out ID (single spaced digits) never runs into number words
@@ -506,6 +511,11 @@ export function numberGroups(text: string): Group[] {
  * ("पाँच... नहीं नहीं, छह हज़ार" -> 6000).
  */
 export function findAmount(text: string): number | undefined {
+  return findAmountHit(text)?.value;
+}
+
+/** Like findAmount, plus whether the number sat next to a currency word (strong evidence). */
+export function findAmountHit(text: string): { value: number; currencyNear: boolean } | undefined {
   const groups = numberGroups(text).filter((g) => !g.timeAfter && g.value >= 1 && g.value < 1e9 && !(g.digitsOnly && String(g.value).length >= 10));
   if (!groups.length) return undefined;
   const toks = tokenize(text).map((t) => t.toLowerCase());
@@ -514,5 +524,5 @@ export function findAmount(text: string): number | undefined {
   const pool = money.length ? money : groups.filter((g) => g.value >= 10);
   if (!pool.length) return undefined;
   const pick = corrected ? pool[pool.length - 1] : pool.reduce((a, b) => (b.value > a.value && b.currencyNear >= a.currencyNear ? b : a));
-  return pick.value;
+  return { value: pick.value, currencyNear: pick.currencyNear };
 }

@@ -141,6 +141,9 @@ export interface EnumSlot extends SlotBase {
   pick?: 'priority' | 'longest' | 'first';
   /** Default confidence of a keyword hit (0.88). */
   confidence?: number;
+  /** Optional resolver run before keyword matching (e.g. a cross-script bank-name matcher).
+   *  Must return one of the option values, or undefined. */
+  resolve?: (raw: string) => string | undefined;
 }
 export interface NameSlot extends SlotBase {
   type: 'name';

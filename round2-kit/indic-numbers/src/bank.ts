@@ -181,7 +181,9 @@ export function findBank(text: string): BankHit | undefined {
     if (isBankWord(raw) && ['of', 'ऑफ', 'অফ', 'ஆஃப்', 'ఆఫ్', 'ಆಫ್', 'ऑफ़'].includes(toks[i + 1] ?? '')) {
       const after = soundKey(romanize(toks[i + 2] ?? ''));
       const prev = soundKey(romanize(toks[i - 1] ?? ''));
+      const named = KEYS.find((k) => k.generic.some((g) => similarity(prev, g) >= 0.75));
       if (similarity(prev.slice(0, 4), 'stet') >= 0.75) consider({ key: 'sbi', name: BANKS[0].name, confidence: 0.95 });
+      else if (named) consider({ key: named.b.key, name: named.b.name, confidence: 0.95 }); // Union/Central Bank of India
       else if (similarity(after, soundKey('baroda')) >= 0.6) consider({ key: 'bob', name: 'Bank of Baroda', confidence: 0.95 });
       else if (similarity(after.slice(0, 5), soundKey('india')) >= 0.6) consider({ key: 'boi', name: 'Bank of India', confidence: 0.9 });
     }

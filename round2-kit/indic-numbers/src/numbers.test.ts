@@ -74,3 +74,10 @@ describe('parts', () => {
     expect(combine(wordParts('ನಲವತ್ತೇಳು')!)).toBe(47);
   });
 });
+
+describe('connectors', () => {
+  it('"and" / "aur" inside a number joins it', () => {
+    expect(findAmount('four thousand nine hundred and ninety nine rupees')).toBe(4999);
+    expect(findAmount('do sau aur pachaas rupaye')).toBe(250);
+  });
+});

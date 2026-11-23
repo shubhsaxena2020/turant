@@ -33,3 +33,11 @@ describe('traps', () => {
     expect(findBank('ஐயாயிரம் ரூபாய் போச்சு')).toBeUndefined();
   });
 });
+
+describe('named "Bank of India" banks', () => {
+  it('Union / Central Bank of India are not Bank of India', () => {
+    expect(findBank('union bank of india')?.key).toBe('union');
+    expect(findBank('central bank of india se')?.key).toBe('central');
+    expect(findBank('mera bank of india mein khata hai')?.key).toBe('boi');
+  });
+});

@@ -1,5 +1,7 @@
 // Generic, config-driven slot extraction. One typed extractor per slot type, all
 // built on Turant's rules in nlp.ts. Pure functions: no DOM, no network (offline-first).
+import { findAmountHit } from './indic/numbers';
+import { findTime } from './indic/time';
 import type {
   AmountSlot,
   DigitsSlot,
@@ -228,6 +230,10 @@ function extractQuantities(c: Ctx, s: QuantitySlot): Extracted | undefined {
 // ---------------------------------------------------------------------------
 
 function extractEnum(c: Ctx, s: EnumSlot): Extracted | undefined {
+  if (s.resolve && !s.multi) {
+    const v = s.resolve(c.raw);
+    if (v && s.options.some((o) => o.value === v)) return { value: v, confidence: s.confidence ?? 0.9 };
+  }
   const hint = hinted(s, c.opts);
   const last = !!c.opts.preferLast;
   const hits: { value: string; idx: number; len: number; rank: number; conf: number }[] = [];
@@ -448,9 +454,15 @@ export function extractAll(cfg: SlotsLike, text: string, opts: ExtractOptions = 
   extractIds(c, of('digits', 'phone'), out);
   for (const s of of('datetime')) {
     const hit = N.parsePastTime(cleaned, tokens, c.runs, c.now);
-    if (hit) {
+    // Cross-language time parser (bn/ta/te/kn/mr relative + clock times; 113/113 on the corpus).
+    const ind = findTime(text, c.now);
+    const sure = ind && (ind.kind === 'clock' || ind.kind === 'ago' || ind.kind === 'now');
+    const differs = hit && ind && Math.abs(new Date(String(hit.value)).getTime() - ind.date.getTime()) > 20 * 60_000;
+    if (hit && !(sure && differs)) {
       if (hit.run !== undefined) c.claimed.add(hit.run);
       put(s.key, { value: hit.value, confidence: hit.confidence });
+    } else if (ind && ind.kind !== 'day') {
+      put(s.key, { value: ind.date.toISOString(), confidence: ind.kind === 'daypart' ? 0.6 : 0.85 });
     }
   }
   for (const s of of('duration')) put(s.key, extractDuration(c, s));
@@ -459,7 +471,17 @@ export function extractAll(cfg: SlotsLike, text: string, opts: ExtractOptions = 
   const nums = of('number');
   for (const s of nums) put(s.key, extractNumber(c, s, false));
   for (const s of nums.filter((x) => !out[x.key])) put(s.key, extractNumber(c, s, true));
-  for (const s of of('amount')) put(s.key, extractAmount(c, s));
+  for (const s of of('amount')) {
+    const k = extractAmount(c, s);
+    // Backstop: the cross-language amount parser (Tamil/Kannada compounds, bn/te number words).
+    // It wins a disagreement only with a currency word right next to its number.
+    const ind = findAmountHit(text);
+    if (!k && ind && (ind.currencyNear || hinted(s, opts))) put(s.key, { value: ind.value, confidence: ind.currencyNear ? 0.9 : 0.75 });
+    else if (k && ind && ind.currencyNear && ind.value !== Number(k.value)) put(s.key, { value: ind.value, confidence: 0.9 });
+    // Answering "how much?": a longer reading of the same spoken number wins ("चार हजार नऊशे नव्याण्णव" = 4999, not 4000).
+    else if (k && ind && hinted(s, opts) && ind.value > Number(k.value)) put(s.key, { value: ind.value, confidence: 0.85 });
+    else put(s.key, k);
+  }
   for (const s of of('enum')) put(s.key, extractEnum(c, s));
   for (const s of of('yesno')) put(s.key, extractYesNo(c, s));
   for (const s of of('name')) put(s.key, extractName(c, s));

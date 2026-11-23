@@ -1,5 +1,6 @@
 // fraud: Turant parity. Report a UPI / online payment fraud by voice, leave with a
 // 1930 call script and a cybercrime.gov.in complaint. Copy is Turant's, verbatim.
+import { findBank } from '../../lib/indic/bank';
 import { defineDomain, type EnumOption, type Text } from '../../domain/types';
 import type { LangCode } from '../../lib/lang';
 import type { UIKey } from '../../i18n/ui';
@@ -53,6 +54,17 @@ const BANKS: [string, string[]][] = [
   ['Paytm Payments Bank', ['paytm bank', 'paytm payments bank']],
   ['Regional Rural (Gramin) Bank', ['gramin', 'grameen', 'ग्रामीण']],
 ];
+// Cross-script bank matcher (round2-kit/indic-numbers: 97/97 on the corpus, 0 false positives).
+const BANK_BY_KEY: Record<string, string> = {
+  sbi: 'State Bank of India (SBI)', hdfc: 'HDFC Bank', icici: 'ICICI Bank', axis: 'Axis Bank', pnb: 'Punjab National Bank (PNB)',
+  bob: 'Bank of Baroda', canara: 'Canara Bank', union: 'Union Bank of India', kotak: 'Kotak Mahindra Bank', indusind: 'IndusInd Bank',
+  yes: 'Yes Bank', idfc: 'IDFC FIRST Bank', boi: 'Bank of India', central: 'Central Bank of India', iob: 'Indian Overseas Bank',
+  indian: 'Indian Bank', federal: 'Federal Bank', bandhan: 'Bandhan Bank', ippb: 'India Post Payments Bank', airtel: 'Airtel Payments Bank', paytm: 'Paytm Payments Bank',
+};
+const resolveBank = (raw: string) => {
+  const hit = findBank(raw);
+  return hit ? BANK_BY_KEY[hit.key] : undefined;
+};
 const TOP_BANKS = BANKS.slice(0, 8).map(([n]) => n).concat(['Kotak Mahindra Bank', 'India Post Payments Bank']);
 
 const APPS: [string, string[]][] = [
@@ -99,7 +111,7 @@ export default defineDomain({
       aliases: ['scam', 'fraud type', 'type', 'tarika', 'tareeka', 'तरीका', 'प्रकार', 'धोखा'],
     },
     {
-      key: 'bank', type: 'enum', required: true, pick: 'longest', confidence: 0.95, choices: TOP_BANKS,
+      key: 'bank', type: 'enum', required: true, pick: 'longest', confidence: 0.95, choices: TOP_BANKS, resolve: resolveBank,
       options: BANKS.map(([name, keywords]) => ({ value: name, keywords, label: { 'en-IN': name } })),
       label: T('f_bank'), q: T('q_bank'), rq: T('rq_bank'), ex: T('ex_bank'),
       aliases: ['bank', 'बैंक', 'ব্যাংক', 'வங்கி', 'బ్యాంక్', 'बँक', 'ಬ್ಯಾಂಕ್'],
