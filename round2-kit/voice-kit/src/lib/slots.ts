@@ -76,6 +76,9 @@ interface IdSeq {
  * joined only when the halves make a mobile or a 12-digit UTR), and native-script digits read one word
  * at a time (নয় নয় আট আট…, ஒன்பது ஒன்பது எட்டு…).
  */
+const UTR_WORDS = N.wordSet(['utr', 'ref', 'reference', 'refno', 'rrn', 'transaction', 'txn', 'upi']);
+const UTR_STEMS = ['यूटीआर', 'रेफरन्स', 'रेफरेंस', 'ইউটিআর', 'রেফারেন্স', 'யூடிஆர்', 'యూటీఆర్', 'ಯುಟಿಆರ್'].map(fold);
+
 function idSequences(c: Ctx): IdSeq[] {
   const seqs: IdSeq[] = [];
   c.runs.forEach((r, ri) => {
@@ -101,8 +104,27 @@ function idSequences(c: Ctx): IdSeq[] {
       if (c.tokens[j] === 'ఒంటి' && /^గంటా?$/.test(c.tokens[j + 1] ?? '')) j++;
       else if (c.tokens[j] === 'ఒంటి' && /^గంటసున్నా?$/.test(c.tokens[j + 1] ?? '')) (d += '0'), j++;
     }
-    if (d.length >= 7 && !seqs.some((s) => s.start <= i && i < s.end)) seqs.push({ start: i, end: j, digits: d, runs: [] });
+    // the kit's own reader may have taken part of this read-out (it stops at साथ / ಎಳು): the longer reading wins
+    const overlapping = seqs.filter((s) => s.start < j && i < s.end);
+    if (d.length >= 7 && overlapping.every((s) => s.digits.length < d.length)) {
+      for (const s of overlapping) seqs.splice(seqs.indexOf(s), 1);
+      seqs.push({ start: i, end: j, digits: d, runs: overlapping.flatMap((s) => s.runs) });
+    }
     i = Math.max(j, i + 1);
+  }
+  // "UTR नंबर है 403218 765 432 5000 रुपए": the UTR's digit groups run straight into the amount. After UTR /
+  // reference words, if the leading groups make exactly 12 digits and one group plus a currency word follows,
+  // those 12 digits are the UTR (the amount is read separately).
+  for (const s of seqs) {
+    if (s.digits.length <= 12 || !c.tokens.slice(Math.max(0, s.start - 6), s.start).some((t) => UTR_WORDS.has(t) || UTR_STEMS.some((st) => /[^\x00-\x7f]/.test(t) && fold(t).startsWith(st)))) continue;
+    let d = '';
+    for (let k = s.start; k < s.end - 1 && /^\d+$/.test(c.tokens[k]); k++) {
+      d += c.tokens[k];
+      if (d.length >= 12) {
+        if (d.length === 12 && k === s.end - 2 && N.isCurrency(c.tokens[s.end])) s.digits = d;
+        break;
+      }
+    }
   }
   return seqs.sort((a, b) => a.start - b.start);
 }

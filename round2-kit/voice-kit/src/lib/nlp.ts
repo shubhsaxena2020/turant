@@ -46,6 +46,7 @@ export function normalize(input: string): string {
   s = s.replace(/\+\s?91[\s-]*(?=\d)/g, ' '); // +91 country code
   s = s.replace(/₹\s*/g, ' ₹ ');
   s = s.replace(/\s*°\s*(?:[fc](?![a-z]))?/g, ' degree '); // 101°F
+  s = s.replace(/\b(\d)\s*,\s+(?=\d\b)/g, '$1 '); // digits read out with commas: "4, 5, 6, 7" (not 4,999)
   s = s.replace(/(\d),(?=\d)/g, '$1'); // 4,999 and 1,00,000
   s = s.replace(/(^|[^a-z])(rs|inr)\.?(?=\s|\d|$)/g, '$1 rs ');
   s = s.replace(/(\d)(rs|rupees?|rupaye|rupay)\b/g, '$1 $2');
