@@ -412,3 +412,21 @@ describe('round 31 (large-v3 dev transcripts)', () => {
     expect(parseCorrection('15,00,000', { now: NOW })?.value).toBe(1500000);
   });
 });
+
+describe('round 32 (hour-and-minute phrases)', () => {
+  const x = (t: string, o = {}) => extractFields(t, { now: NOW, ...o });
+  const at = (t: string) => new Date(x(t).time!.value).getTime();
+  const ist = (d: string) => new Date(d + '+05:30').getTime();
+  it('clock and duration', () => {
+    expect(at('कल रात 9 बजकर 30 मिनट पर पैसे गए')).toBe(ist('2026-11-20T21:30:00'));
+    expect(x('कल रात 9 बजकर 30 मिनट पर पैसे गए').amount).toBeUndefined();
+    expect(x('कल रात 9:30 पर पैसे गए').amount).toBeUndefined(); // a clock time is not ₹30
+    expect(at('நேற்று இரவு 9 மணி 30 நிமிடம் மணிக்கு')).toBe(ist('2026-11-20T21:30:00'));
+    expect(at('மூன்று மணி நேரம் 30 நிமிடம் முன்னாடி')).toBe(ist('2026-11-21T08:30:00'));
+    expect(at('2 hours 30 minutes ago')).toBe(ist('2026-11-21T09:30:00'));
+    expect(x('1.00 1.00 2.00 3.00 3.00 4.00').time).toBeUndefined(); // a digit read-out
+  });
+  it('KYC in Kannada letters', () => {
+    expect(x('ಕೇವ ಆಯಸಿ ಅಪ್ಡೇಟ್ ಮಾಡಿ').scamType?.value).toBe('fake_kyc');
+  });
+});

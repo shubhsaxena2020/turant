@@ -1,0 +1,12 @@
+{"id": "kn-b01", "lang": "kn", "kind": "story", "text": "ಯಾರೋ ಫೋನ್ ಮಾಡಿ ಕೆವೈಸಿ ಅಪ್ಡೇಟ್ ಮಾಡಬೇಕು ಅಂದರು, ನನ್ನ ಕೆನರಾ ಬ್ಯಾಂಕ್ ಖಾತೆಯಿಂದ ಐದು ಸಾವಿರ ರೂಪಾಯಿ ಹೋಯಿತು", "expected": {"amount": 5000, "scamType": "fake_kyc", "bank": "canara"}, "tags": ["blind"]}
+{"id": "kn-b02", "lang": "kn", "kind": "story", "text": "ಒಟಿಪಿ ಹೇಳಿಬಿಟ್ಟೆ, ಇಪ್ಪತ್ತು ಸಾವಿರ ರೂಪಾಯಿ ಹೋಯಿತು, ಅರ್ಧ ಗಂಟೆ ಹಿಂದೆ", "expected": {"amount": 20000, "scamType": "otp_shared", "time": {"ago": 30}}, "tags": ["blind"]}
+{"id": "kn-b03", "lang": "kn", "kind": "story", "text": "ನಿನ್ನೆ ರಾತ್ರಿ ಒಂಬತ್ತು ಗಂಟೆಗೆ ಕ್ಯೂಆರ್ ಕೋಡ್ ಸ್ಕ್ಯಾನ್ ಮಾಡಿದೆ, ಫೋನ್‌ಪೇ ನಲ್ಲಿ ಎರಡು ಸಾವಿರ ರೂಪಾಯಿ ಕಟ್ ಆಯಿತು", "expected": {"amount": 2000, "scamType": "qr_scan", "time": {"day": -1, "at": "21:00"}, "paymentApp": "phonepe"}, "tags": ["blind"]}
+{"id": "kn-b04", "lang": "kn", "kind": "story", "text": "ಟೆಲಿಗ್ರಾಮ್ ನಲ್ಲಿ ಟಾಸ್ಕ್ ಅಂತ ಹೇಳಿ ಅರವತ್ತು ಸಾವಿರ ರೂಪಾಯಿ ತಗೊಂಡರು", "expected": {"amount": 60000, "scamType": "investment_task"}, "tags": ["blind"]}
+{"id": "kn-b05", "lang": "kn", "kind": "answer:amount", "text": "ಸಾವಿರದ ಐನೂರು ರೂಪಾಯಿ", "expected": {"amount": 1500}, "tags": ["blind"], "hint": "amount"}
+{"id": "kn-b06", "lang": "kn", "kind": "answer:time", "text": "ಈಗಷ್ಟೇ, ಹತ್ತು ನಿಮಿಷದ ಹಿಂದೆ", "expected": {"time": {"ago": 10}}, "tags": ["blind"], "hint": "time"}
+{"id": "kn-b07", "lang": "kn", "kind": "answer:utr", "text": "8 1 2 3 4 5 6 7 9 0 1 2", "expected": {"utr": "812345679012"}, "tags": ["blind"], "hint": "utr"}
+{"id": "kn-b08", "lang": "kn", "kind": "answer:suspect", "text": "ಅವನ ನಂಬರ್ 9 9 0 0 1 2 3 4 5 6", "expected": {"suspectPhone": "9900123456"}, "tags": ["blind"], "hint": "suspect"}
+{"id": "kn-b09", "lang": "kn", "kind": "answer:bank", "text": "ಐಸಿಐಸಿಐ ಬ್ಯಾಂಕ್", "expected": {"bank": "icici"}, "tags": ["blind"], "hint": "bank"}
+{"id": "kn-b10", "lang": "kn", "kind": "correction", "text": "ಇಲ್ಲ, ಮೂರು ಸಾವಿರ ಅಲ್ಲ, ಮೂವತ್ತು ಸಾವಿರ", "expected": {"amount": 30000}, "tags": ["blind"]}
+{"id": "kn-b11", "lang": "kn", "kind": "story", "text": "ತಪ್ಪಾಗಿ ಹಣ ಕಳಿಸಿದೆ ಅಂತ ಒಬ್ಬರು ಕೇಳಿದರು, ನಾನು ಗೂಗಲ್ ಪೇ ಇಂದ ಆರುನೂರು ರೂಪಾಯಿ ವಾಪಸ್ ಕಳಿಸಿದೆ", "expected": {"amount": 600, "scamType": "wrong_transfer", "paymentApp": "gpay"}, "tags": ["blind"]}
+{"id": "kn-b12", "lang": "kn", "kind": "answer:suspect", "text": "ಯುಪಿಐ ಐಡಿ bonus dot pay at ybl", "expected": {"suspectUpi": "bonus.pay@ybl"}, "tags": ["blind"], "hint": "suspect"}

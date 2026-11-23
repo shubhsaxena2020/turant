@@ -1,0 +1,12 @@
+{"id": "ta-b01", "lang": "ta", "kind": "story", "text": "யாரோ போன் பண்ணி கேஒய்சி அப்டேட் பண்ணணும்னு சொன்னாங்க, என் இந்தியன் பேங்க் அக்கவுண்ட்ல இருந்து பத்தாயிரம் ரூபாய் போச்சு", "expected": {"amount": 10000, "scamType": "fake_kyc", "bank": "indian"}, "tags": ["blind"]}
+{"id": "ta-b02", "lang": "ta", "kind": "story", "text": "ஓடிபி சொல்லிட்டேன், இருபதாயிரம் ரூபாய் போயிடுச்சு, ஒரு மணி நேரம் முன்னாடி", "expected": {"amount": 20000, "scamType": "otp_shared", "time": {"ago": 60}}, "tags": ["blind"]}
+{"id": "ta-b03", "lang": "ta", "kind": "story", "text": "நேத்து ராத்திரி எட்டு மணிக்கு க்யூஆர் கோட் ஸ்கேன் பண்ணேன், போன்பே ல மூவாயிரம் ரூபாய் கட் ஆச்சு", "expected": {"amount": 3000, "scamType": "qr_scan", "time": {"day": -1, "at": "20:00"}, "paymentApp": "phonepe"}, "tags": ["blind"]}
+{"id": "ta-b04", "lang": "ta", "kind": "story", "text": "டெலிகிராம்ல டாஸ்க் பண்ணா லாபம்னு சொல்லி ஐம்பதாயிரம் ரூபாய் வாங்கிட்டாங்க", "expected": {"amount": 50000, "scamType": "investment_task"}, "tags": ["blind"]}
+{"id": "ta-b05", "lang": "ta", "kind": "answer:amount", "text": "ஆயிரத்து ஐநூறு ரூபாய்", "expected": {"amount": 1500}, "tags": ["blind"], "hint": "amount"}
+{"id": "ta-b06", "lang": "ta", "kind": "answer:time", "text": "இப்போதான், பத்து நிமிஷம் முன்னாடி", "expected": {"time": {"ago": 10}}, "tags": ["blind"], "hint": "time"}
+{"id": "ta-b07", "lang": "ta", "kind": "answer:utr", "text": "7 7 1 2 3 4 5 6 8 9 0 1", "expected": {"utr": "771234568901"}, "tags": ["blind"], "hint": "utr"}
+{"id": "ta-b08", "lang": "ta", "kind": "answer:suspect", "text": "அவன் நம்பர் 9 4 4 3 2 1 0 9 8 7", "expected": {"suspectPhone": "9443210987"}, "tags": ["blind"], "hint": "suspect"}
+{"id": "ta-b09", "lang": "ta", "kind": "answer:bank", "text": "கனரா பேங்க்", "expected": {"bank": "canara"}, "tags": ["blind"], "hint": "bank"}
+{"id": "ta-b10", "lang": "ta", "kind": "correction", "text": "இல்ல, ஐயாயிரம் இல்ல, ஆறாயிரத்து ஐநூறு", "expected": {"amount": 6500}, "tags": ["blind"]}
+{"id": "ta-b11", "lang": "ta", "kind": "story", "text": "தப்பா பணம் அனுப்பிட்டேன்னு ஒருத்தர் சொன்னார், நான் ஜிபே மூலமா எண்ணூறு ரூபாய் திருப்பி அனுப்பினேன்", "expected": {"amount": 800, "scamType": "wrong_transfer", "paymentApp": "gpay"}, "tags": ["blind"]}
+{"id": "ta-b12", "lang": "ta", "kind": "answer:suspect", "text": "யுபிஐ ஐடி cash dot back at paytm", "expected": {"suspectUpi": "cash.back@paytm"}, "tags": ["blind"], "hint": "suspect"}

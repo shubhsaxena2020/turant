@@ -1,0 +1,12 @@
+{"id": "mr-b01", "lang": "mr", "kind": "story", "text": "कोणीतरी फोन करून केवायसी अपडेट करायला सांगितलं, माझ्या एसबीआय खात्यातून सहा हजार रुपये गेले", "expected": {"amount": 6000, "scamType": "fake_kyc", "bank": "sbi"}, "tags": ["blind"]}
+{"id": "mr-b02", "lang": "mr", "kind": "story", "text": "चुकून ओटीपी सांगितला, पंचवीस हजार रुपये गेले, अर्ध्या तासापूर्वी", "expected": {"amount": 25000, "scamType": "otp_shared", "time": {"ago": 30}}, "tags": ["blind"]}
+{"id": "mr-b03", "lang": "mr", "kind": "story", "text": "काल रात्री आठ वाजता क्यूआर कोड स्कॅन केला, फोनपे वरून तीन हजार रुपये कापले गेले", "expected": {"amount": 3000, "scamType": "qr_scan", "time": {"day": -1, "at": "20:00"}, "paymentApp": "phonepe"}, "tags": ["blind"]}
+{"id": "mr-b04", "lang": "mr", "kind": "story", "text": "टेलिग्रामवर टास्कचं काम सांगून चाळीस हजार रुपये घेतले", "expected": {"amount": 40000, "scamType": "investment_task"}, "tags": ["blind"]}
+{"id": "mr-b05", "lang": "mr", "kind": "answer:amount", "text": "साडे चार हजार", "expected": {"amount": 4500}, "tags": ["blind"], "hint": "amount"}
+{"id": "mr-b06", "lang": "mr", "kind": "answer:time", "text": "आज सकाळी अकरा वाजता", "expected": {"time": {"day": 0, "at": "11:00"}}, "tags": ["blind"], "hint": "time"}
+{"id": "mr-b07", "lang": "mr", "kind": "answer:utr", "text": "6 5 4 3 2 1 0 9 8 7 6 5", "expected": {"utr": "654321098765"}, "tags": ["blind"], "hint": "utr"}
+{"id": "mr-b08", "lang": "mr", "kind": "answer:suspect", "text": "त्याचा नंबर 9 8 2 2 0 1 2 3 4 5", "expected": {"suspectPhone": "9822012345"}, "tags": ["blind"], "hint": "suspect"}
+{"id": "mr-b09", "lang": "mr", "kind": "answer:bank", "text": "बँक ऑफ बडोदा", "expected": {"bank": "bob"}, "tags": ["blind"], "hint": "bank"}
+{"id": "mr-b10", "lang": "mr", "kind": "correction", "text": "नाही, दोन हजार नाही, बारा हजार", "expected": {"amount": 12000}, "tags": ["blind"]}
+{"id": "mr-b11", "lang": "mr", "kind": "story", "text": "चुकून पैसे पाठवले म्हणून एकाने परत मागितले, मी गुगल पे ने सातशे रुपये परत पाठवले", "expected": {"amount": 700, "scamType": "wrong_transfer", "paymentApp": "gpay"}, "tags": ["blind"]}
+{"id": "mr-b12", "lang": "mr", "kind": "answer:suspect", "text": "यूपीआय आयडी help dot desk at ybl", "expected": {"suspectUpi": "help.desk@ybl"}, "tags": ["blind"], "hint": "suspect"}

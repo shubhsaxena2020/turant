@@ -1,0 +1,12 @@
+{"id": "te-b01", "lang": "te", "kind": "story", "text": "ఎవరో ఫోన్ చేసి కేవైసీ అప్డేట్ చేయాలని చెప్పారు, నా ఎస్బిఐ ఖాతా నుంచి ఎనిమిది వేల రూపాయలు పోయాయి", "expected": {"amount": 8000, "scamType": "fake_kyc", "bank": "sbi"}, "tags": ["blind"]}
+{"id": "te-b02", "lang": "te", "kind": "story", "text": "ఓటీపీ చెప్పేశాను, ముప్పై వేల రూపాయలు కట్ అయ్యాయి, అరగంట క్రితం", "expected": {"amount": 30000, "scamType": "otp_shared", "time": {"ago": 30}}, "tags": ["blind"]}
+{"id": "te-b03", "lang": "te", "kind": "story", "text": "నిన్న సాయంత్రం ఆరు గంటలకు క్యూఆర్ కోడ్ స్కాన్ చేశాను, ఫోన్‌పే లో రెండు వేల రూపాయలు పోయాయి", "expected": {"amount": 2000, "scamType": "qr_scan", "time": {"day": -1, "at": "18:00"}, "paymentApp": "phonepe"}, "tags": ["blind"]}
+{"id": "te-b04", "lang": "te", "kind": "story", "text": "టెలిగ్రామ్ లో టాస్క్ అని చెప్పి డెబ్బై వేల రూపాయలు తీసుకున్నారు", "expected": {"amount": 70000, "scamType": "investment_task"}, "tags": ["blind"]}
+{"id": "te-b05", "lang": "te", "kind": "answer:amount", "text": "పదిహేను వందల రూపాయలు", "expected": {"amount": 1500}, "tags": ["blind"], "hint": "amount"}
+{"id": "te-b06", "lang": "te", "kind": "answer:time", "text": "ఈ రోజు ఉదయం తొమ్మిది గంటలకు", "expected": {"time": {"day": 0, "at": "09:00"}}, "tags": ["blind"], "hint": "time"}
+{"id": "te-b07", "lang": "te", "kind": "answer:utr", "text": "3 2 1 4 5 6 7 8 9 0 1 2", "expected": {"utr": "321456789012"}, "tags": ["blind"], "hint": "utr"}
+{"id": "te-b08", "lang": "te", "kind": "answer:suspect", "text": "అతని నంబర్ 7 8 9 0 1 2 3 4 5 6", "expected": {"suspectPhone": "7890123456"}, "tags": ["blind"], "hint": "suspect"}
+{"id": "te-b09", "lang": "te", "kind": "answer:bank", "text": "హెచ్‌డీఎఫ్‌సీ బ్యాంక్", "expected": {"bank": "hdfc"}, "tags": ["blind"], "hint": "bank"}
+{"id": "te-b10", "lang": "te", "kind": "correction", "text": "కాదు, నాలుగు వేలు కాదు, నాలుగు వేల ఐదు వందలు", "expected": {"amount": 4500}, "tags": ["blind"]}
+{"id": "te-b11", "lang": "te", "kind": "story", "text": "పొరపాటున డబ్బులు పంపానని ఒకతను అడిగాడు, నేను గూగుల్ పే లో తొమ్మిది వందలు తిరిగి పంపాను", "expected": {"amount": 900, "scamType": "wrong_transfer", "paymentApp": "gpay"}, "tags": ["blind"]}
+{"id": "te-b12", "lang": "te", "kind": "answer:suspect", "text": "యూపీఐ ఐడీ gift dot card at ybl", "expected": {"suspectUpi": "gift.card@ybl"}, "tags": ["blind"], "hint": "suspect"}

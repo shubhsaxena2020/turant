@@ -767,7 +767,8 @@ export function findAmount(text: string): number | undefined {
 
 /** Like findAmount, plus whether the number sat next to a currency word (strong evidence). */
 export function findAmountHit(text: string): { value: number; currencyNear: boolean } | undefined {
-  const all = numberGroups(text);
+  // a clock time is never the money: "कल रात 9:30 पर पैसे गए" is not ₹30
+  const all = numberGroups(text.replace(/(?<![\d.:])\d{1,2}:\d{2}(?![\d:])/g, ' '));
   const groups = all.filter((g) => !g.unsure && !g.timeAfter && g.value >= 1 && g.value < 1e9 && !(g.digitsOnly && String(g.value).length >= 10));
   // "ఏనిమిది వేల రూపాయలు … ఇరవై నిమిషాల": the amount itself was misheard ("? thousand") and no readable amount sits
   // next to a currency word. Any other number in the sentence is not the money; ask rather than pick it.

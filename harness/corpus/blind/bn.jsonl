@@ -1,0 +1,12 @@
+{"id": "bn-b01", "lang": "bn", "kind": "story", "text": "কেউ ফোন করে বলল কেওয়াইসি আপডেট করতে হবে, তারপর আমার এসবিআই অ্যাকাউন্ট থেকে সাত হাজার টাকা কেটে নিল, আধ ঘণ্টা আগে", "expected": {"amount": 7000, "scamType": "fake_kyc", "bank": "sbi", "time": {"ago": 30}}, "tags": ["blind"]}
+{"id": "bn-b02", "lang": "bn", "kind": "story", "text": "ওটিপি বলে দিয়েছিলাম, পনেরো হাজার টাকা চলে গেছে, ফোনপে থেকে", "expected": {"amount": 15000, "scamType": "otp_shared", "paymentApp": "phonepe"}, "tags": ["blind"]}
+{"id": "bn-b03", "lang": "bn", "kind": "story", "text": "গতকাল সন্ধ্যা সাতটায় একটা কিউআর কোড স্ক্যান করলাম, দুই হাজার পাঁচশো টাকা কেটে গেল", "expected": {"amount": 2500, "scamType": "qr_scan", "time": {"day": -1, "at": "19:00"}}, "tags": ["blind"]}
+{"id": "bn-b04", "lang": "bn", "kind": "story", "text": "টেলিগ্রামে টাস্ক দিয়ে এক লাখ টাকা ইনভেস্ট করিয়েছে, বলেছিল ডাবল হবে", "expected": {"amount": 100000, "scamType": "investment_task"}, "tags": ["blind"]}
+{"id": "bn-b05", "lang": "bn", "kind": "answer:amount", "text": "আট হাজার টাকা", "expected": {"amount": 8000}, "tags": ["blind"], "hint": "amount"}
+{"id": "bn-b06", "lang": "bn", "kind": "answer:time", "text": "আজ সকাল দশটায়", "expected": {"time": {"day": 0, "at": "10:00"}}, "tags": ["blind"], "hint": "time"}
+{"id": "bn-b07", "lang": "bn", "kind": "answer:utr", "text": "৪ ১ ২ ৩ ৫ ৬ ৭ ৮ ৯ ০ ১ ২", "expected": {"utr": "412356789012"}, "tags": ["blind"], "hint": "utr"}
+{"id": "bn-b08", "lang": "bn", "kind": "answer:suspect", "text": "নম্বরটা হল ৯ ৮ ৩ ০ ১ ২ ৪ ৫ ৬ ৭", "expected": {"suspectPhone": "9830124567"}, "tags": ["blind"], "hint": "suspect"}
+{"id": "bn-b09", "lang": "bn", "kind": "answer:bank", "text": "পাঞ্জাব ন্যাশনাল ব্যাংক", "expected": {"bank": "pnb"}, "tags": ["blind"], "hint": "bank"}
+{"id": "bn-b10", "lang": "bn", "kind": "correction", "text": "না না, তিন হাজার নয়, তেরো হাজার", "expected": {"amount": 13000}, "tags": ["blind"]}
+{"id": "bn-b11", "lang": "bn", "kind": "story", "text": "ভুল করে টাকা পাঠিয়েছি বলে একজন ফেরত চাইল, আমি গুগল পে থেকে বারোশো টাকা দিয়ে দিলাম", "expected": {"amount": 1200, "scamType": "wrong_transfer", "paymentApp": "gpay"}, "tags": ["blind"]}
+{"id": "bn-b12", "lang": "bn", "kind": "answer:suspect", "text": "ইউপিআই আইডি ছিল lucky dot win at ybl", "expected": {"suspectUpi": "lucky.win@ybl"}, "tags": ["blind"], "hint": "suspect"}

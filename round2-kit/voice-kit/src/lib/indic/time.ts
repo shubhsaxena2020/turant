@@ -22,7 +22,7 @@ const is = (t: string, list: string[]) => list.includes(t) || folded(list).inclu
 const NOW_WORDS = N(['अभी', 'abhi', 'এইমাত্র', 'এইমাত্রো', 'এইমত্র', 'এখনই', 'இப்பதான்', 'இப்போதான்', 'ఇప్పుడే', 'ఇపుడే', 'ಈಗಷ್ಟೇ', 'आत्ताच', 'just']);
 const MIN = N(['मिनट', 'मिनिट', 'minute', 'min', 'মিনিট', 'நிமிட', 'நிமிஷ', 'நிமிண', 'నిమిష', 'ನಿಮಿಷ']);
 const HOUR = N(['घंटा', 'घंटे', 'घण्टा', 'तास', 'ghanta', 'ghante', 'hour', 'hr', 'ঘণ্টা', 'ঘন্টা', 'மணி நேர', 'நேரத்', 'గంట', 'ಗಂಟೆ']);
-const DAY = N(['दिन', 'दिवस', 'din', 'day', 'দিন', 'நாள', 'நாட்', 'రోజు', 'రోజుల', 'రోజిల', 'ದಿನ']);
+const DAY = N(['दिन', 'दिवस', 'din', 'day', 'দিন', 'நாள', 'நாட்', 'రోజు', 'రోజుల', 'రోజిల', 'రోజల', 'ದಿನ']);
 const AGO = N(['पहले', 'pehle', 'pahle', 'पूर्वी', 'कूर्वी', 'कूरवी', // कूर्वी: how Whisper writes Marathi पूर्वी
   'ago', 'back', 'before', 'আগে', 'முன்னாடி', 'முன்பு', 'முன்', 'க்கு', 'క్రితం', 'కృతం', 'క్రతం', 'ಹಿಂದೆ']);
 const HALF_UNIT_WORDS: [string, number][] = [
@@ -74,7 +74,9 @@ function to24(h: number, part?: string): number {
 /** Clock time in the sentence as decimal hours (9.5 = 9:30), or undefined. */
 function clockHours(text: string, toks: string[]): number | undefined {
   // not inside a dotted digit chain ("5.00.1.00.2.3" is a number read out, not 5:00)
-  const hm = text.match(/(?<![\d.:])\b(\d{1,2})[:.](\d{2})(?![.:]?\d)\s*(am|pm)?/i);
+  // three or more "N.00" are a digit read-out ("1.00, 2.00, 3.00"), not a clock
+  const dotted = (text.match(/\b\d{1,2}\.\d{2}\b/g) ?? []).length >= 3;
+  const hm = dotted ? text.match(/(?<![\d.:])\b(\d{1,2}):(\d{2})(?![.:]?\d)\s*(am|pm)?/i) : text.match(/(?<![\d.:])\b(\d{1,2})[:.](\d{2})(?![.:]?\d)\s*(am|pm)?/i);
   if (hm) {
     let h = Number(hm[1]) + Number(hm[2]) / 60;
     if (hm[3]?.toLowerCase() === 'pm' && h < 12) h += 12;
@@ -157,8 +159,39 @@ function agoMinutes(toks: string[]): number | undefined {
   return undefined;
 }
 
+// One hour-and-minute phrase. With an "ago" word it is a duration ("3 மணி நேரம் 30 நிமிடம் முன்னாடி" = 210 minutes ago);
+// with a clock word and no "ago" it is a clock time ("कल रात 9 बजकर 30 मिनट", "9 மணி 30 நிமிடம் மணிக்கு", "2 గంటల 30 నిమిషాలు కి").
+// A pure duration word with no "ago" ("2 घंटे 30 मिनट") is left alone.
+const CLOCK_HOUR = N(['बजकर', 'बजके', 'वाजून', 'மணி', 'గంటల', 'గంటలు', 'ಗಂಟೆ']);
+export function hourMinutePhrase(text: string): string {
+  const w = text.split(/\s+/);
+  const clean = (t: string | undefined) => (t ?? '').replace(/[.,!?।]+$/, '').normalize('NFC').toLowerCase();
+  const num = (t: string | undefined) => {
+    const c = clean(t);
+    if (/^\d{1,2}$/.test(c)) return Number(c);
+    const p = c && !/\d/.test(c) ? wordParts(c) : undefined;
+    return p ? combine(p) : undefined;
+  };
+  for (let i = 0; i + 3 < w.length; i++) {
+    const h = num(w[i]);
+    if (h === undefined || h < 0 || h > 23 || !Number.isInteger(h)) continue;
+    let j = i + 1;
+    const ht = clean(w[j]);
+    const clockWord = CLOCK_HOUR.includes(ht);
+    let duration = !clockWord && has(ht, HOUR);
+    if (!clockWord && !duration) continue;
+    if (clean(w[j + 1]).startsWith('நேர')) (duration = true), j++; // மணி நேரம் = hour (duration)
+    const m = num(w[j + 1]);
+    if (m === undefined || m < 1 || m > 59 || !Number.isInteger(m) || !has(clean(w[j + 2]), MIN)) continue;
+    const ago = [w[j + 3], w[j + 4]].some((t) => t && has(clean(t), AGO));
+    if (ago) w.splice(i, j + 2 - i, String(h * 60 + m));
+    else if (!duration) w.splice(i, j + 3 - i, `${h}:${String(m).padStart(2, '0')}`);
+  }
+  return w.join(' ');
+}
+
 export function findTime(text: string, now: Date = new Date()): TimeHit | undefined {
-  text = text.replace(/\b([ap])\.\s?m\b\.?/gi, '$1m'); // "7 p.m."
+  text = hourMinutePhrase(text.replace(/\b([ap])\.\s?m\b\.?/gi, '$1m')); // "7 p.m."
   const toks = tokenize(text).map((t) => t.toLowerCase());
   const low = text.toLowerCase();
   const ago = agoMinutes(toks);

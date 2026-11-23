@@ -1,0 +1,12 @@
+{"id": "hi-b01", "lang": "hi", "kind": "story", "text": "मेरे बेटे के फोन पर एक लिंक आया, उसने क्लिक किया और बैंक ऑफ बड़ौदा के खाते से बारह हज़ार पाँच सौ रुपये कट गए, आधा घंटा पहले", "expected": {"amount": 12500, "time": {"ago": 30}, "bank": "bob"}, "tags": ["blind"]}
+{"id": "hi-b02", "lang": "hi", "kind": "story", "text": "किसी ने बोला आपकी लॉटरी लगी है, फीस भेजो, मैंने पेटीएम से 2,999 रुपये भेज दिए कल रात नौ बजे", "expected": {"amount": 2999, "paymentApp": "paytm", "time": {"day": -1, "at": "21:00"}}, "tags": ["blind"]}
+{"id": "hi-b03", "lang": "hi", "kind": "story", "text": "गलती से ओटीपी बता दिया, कोटक बैंक से पच्चीस हज़ार निकल गए, अभी पंद्रह मिनट हुए", "expected": {"amount": 25000, "scamType": "otp_shared", "bank": "kotak", "time": {"ago": 15}}, "tags": ["blind"]}
+{"id": "hi-b04", "lang": "hi", "kind": "story", "text": "एक लड़का बोला गलती से आपको पैसे भेज दिए, वापस करो, मैंने गूगल पे से सात सौ पचास रुपये लौटा दिए, सुबह दस बजे", "expected": {"amount": 750, "scamType": "wrong_transfer", "paymentApp": "gpay", "time": {"day": 0, "at": "10:00"}}, "tags": ["blind"]}
+{"id": "hi-b05", "lang": "hi", "kind": "story", "text": "टेलीग्राम पर टास्क वाला काम था, पहले मुनाफा दिया फिर एक लाख बीस हज़ार रुपये डलवा लिए", "expected": {"amount": 120000, "scamType": "investment_task"}, "tags": ["blind"]}
+{"id": "hi-b06", "lang": "hi", "kind": "answer:amount", "text": "लगभग अठारह सौ रुपये", "expected": {"amount": 1800}, "tags": ["blind"], "hint": "amount"}
+{"id": "hi-b07", "lang": "hi", "kind": "answer:time", "text": "आज सुबह साढ़े आठ बजे", "expected": {"time": {"day": 0, "at": "08:30"}}, "tags": ["blind"], "hint": "time"}
+{"id": "hi-b08", "lang": "hi", "kind": "answer:utr", "text": "यूटीआर नंबर है 5 1 2 3 4 4 5 6 6 7 8 9", "expected": {"utr": "512344566789"}, "tags": ["blind"], "hint": "utr"}
+{"id": "hi-b09", "lang": "hi", "kind": "answer:suspect", "text": "उसका नंबर नौ आठ एक शून्य दो दो तीन चार पाँच छह", "expected": {"suspectPhone": "9810223456"}, "tags": ["blind"], "hint": "suspect"}
+{"id": "hi-b10", "lang": "hi", "kind": "answer:bank", "text": "यूनियन बैंक", "expected": {"bank": "union"}, "tags": ["blind"], "hint": "bank"}
+{"id": "hi-b11", "lang": "hi", "kind": "correction", "text": "नहीं, चार हज़ार नहीं, चौदह हज़ार गए थे", "expected": {"amount": 14000}, "tags": ["blind"]}
+{"id": "hi-b12", "lang": "hi", "kind": "answer:scamType", "text": "उसने क्यूआर कोड स्कैन करवाया था", "expected": {"scamType": "qr_scan"}, "tags": ["blind"], "hint": "scamType"}

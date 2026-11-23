@@ -216,6 +216,7 @@ Turbo has only 4 decoder layers, and it loses the most on low-resource languages
 - **Rounds 29+ on large-v3:** "bajay" = baje, दुपट = दुप्पट. Clean 66.2%, held-out 64.7%.
 - **Round 30 on large-v3** (24 Nov): "के वाईसी" (split KYC), hyphen-spelled acronyms with an orphan vowel sign ("आई-सी-ाई-सी-ाई" = ICICI), நிமிண = minutes, క్రతం = ago, கூபுள்/గూబుల్/गूबल = Google, ஹோன்பே = PhonePe, ஆக்சுஸ் = Axis, रूपीज = rupees, debit words in every script, माहिद नाही = don't know; UPI-only handles keep a glued suffix ("rahul.kyc at ybl.ki"); after a reference word, one number word + one digit group making exactly 12 digits is a UTR ("रेफ नो सहा 12345789012"); a dotted digit chain ("5.00.1.00.2.3", "1.500") is no longer a clock time. Two first drafts made wrong values (a lone debit word turned "20 ருபிஸ்" into ₹20; four comma groups became a UTR) and were tightened (debit-only evidence needs ≥ 100; exactly one group). Clean 66.2 → **66.7%**, held-out 64.7 → **65.0%**, 15 dB 58.6 → 60.4%; turbo 52.8 → 53.0% (held-out 51.6 → 51.9%). Every changed run is an improvement on both ASRs.
 - **Round 31 on large-v3** (time words): ಅರ್ಧಗಂಟೆ (glued half-hour), ಸಂಜಿ / সুন্ধা / সন্ধা = evening, ಗಂಟಗೆ / ಗಂಟಿಗೆ = o'clock, গতোকাল / গতুকাল = yesterday, a virama left on a Bengali hour stem (দস্টায় = দশটায়) and -টাই for -টায়; "evening" said with no day and no hour now rolls back to yesterday when it is later than now (the clock branch already did); a correction whose only number is an ungrouped 7+ digit run ("NOMOR BHUL 981112233") asks again instead of filing ₹98 crore. Clean 66.7 → **68.0%**, held-out 65.0 → **66.6%**; turbo 53.0 → **53.7%** (held-out 51.9 → 52.5%). One run got a wrong time where it had none (bn-11: the night word was lost, so দস্টায় reads as 10 am).
+- **Round 32** (hour-and-minute phrases, shared `time.ts` `hourMinutePhrase`): "कल रात 9 बजकर 30 मिनट", "9 மணி 30 நிமிடம் மணிக்கு", "2 గంటల 30 నిమిషాలు కి" are clock times (they were read as "30 minutes ago"), and "3 மணி நேரம் 30 நிமிடம் முன்னாடி" / "2 hours 30 minutes ago" are 210 / 150 minutes ago; a clock time is never an amount ("कल रात 9:30 पर पैसे गए" was ₹30); three or more "N.00" are a digit read-out, not 1 o'clock; రోజల = days; KYC in Kannada / Telugu letters (ಕೇವ ಆಯಸಿ, కెవాయసి). Clean 68.0 → **69.3%**, held-out 66.6 → **67.5%**; turbo 53.7 → **54.2%** (held-out 52.5 → 53.1%). No run got worse on either ASR.
 - **Kit apps on large-v3 speech** (after भाईया / तैल / वॉड): dev khata 63%, health 57%, civic 38% (turbo 60 / 50 / 42); held-out 12 / 33 / 23%.
 - **Extractor-only ceiling on large-v3:** 68.0% of clean runs (we are at 65.7%). By language: hi 98, en 90, mr 73, ta 64, te 56, kn 43, bn 43.
 
@@ -236,6 +237,20 @@ The 600 clean clips were re-transcribed with per-language hotwords (currency, th
 - **By field:** scam type and bank F1 rise (+3 to +5), amount F1 falls about 2 points.
 - **Lesson:** fewer word errors do not mean more correct reports. The words the extractor needs (numbers) did not improve.
 - **Decision:** not adopted. The app uses the phone's own recogniser, which has no hotword control; per-language hotwords (te/ta only) are worth revisiting if we move to a server-side ASR.
+
+## Blind set: new sentences, never tuned on (24 Nov)
+
+The held-out split only changes the *voice*; after 30 tuning rounds the *sentences* are known. So 84 new cases (12 per language, same field mix: stories, answers, corrections; new amounts, banks, apps, names) were written in `corpus/blind/make.py` after round 29, rendered with the same voices, noise and rates (432 clips, `plan_blind.json`), and are scored only in aggregate. Nobody reads the per-case blind failures, and no rule is written from them.
+
+| Extractor | Reference text | large-v3 clean | large-v3 15 dB | turbo clean | turbo 15 dB |
+|---|---|---|---|---|---|
+| round 29 (before the blind set existed) | 90.5% | 59.4% | 58.3% | 50.6% | 39.3% |
+| round 32 | 90.5% | **62.8%** | 61.9% | **51.1%** | 39.3% |
+| *tuning corpus, round 32, for comparison* | *100%* | *69.3%* | *62.9%* | *54.2%* | *42.9%* |
+
+- **The honest headline number is the blind one:** about 63% of brand-new spoken reports come out fully correct on large-v3, 51% on turbo.
+- **Overfitting gap:** about 10 points on clean reference text (90.5% vs 100%) and 6.5 points on large-v3 speech. Rounds 30-32 still gained 3.4 points on the blind set, so the ASR-spelling rules generalise; the text gap is wording the rules have never seen.
+- **Re-run:** `node run_eval.mjs --cases corpus/blind.jsonl --plan plan_blind.json [--transcripts transcripts_lv3] --name blind_x --compare none`. To add clips: `HARNESS_CASES=corpus/blind.jsonl HARNESS_PLAN=plan_blind.json HARNESS_TIERS=base,noise,rate python tts.py` (then noise.py, asr.py / asr_alt.py).
 
 ## What is left
 
