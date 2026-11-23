@@ -28,13 +28,14 @@ node split.mjs <round> [...]   # dev voice vs held-out voice
 | round5 | + Tamil i/e, anusvara/chandrabindu | 100.0% | 39.7% | 43.1% | 34.6% | 27.5% | 66.8 |
 | round6 | + short-multiplier and final-virama repair (found by the mutation fuzz; no change on this corpus) | 100.0% | 39.7% | 43.1% | 34.6% | 27.5% | 66.8 |
 | round7 | + bank names: dotted and letter-by-letter acronyms, आफ for "of", near-miss names before "bank" | 100.0% | 41.0% | 44.1% | 36.1% | 29.3% | 67.8 |
+| round8 | + standard alternate spellings (देड़, धाई, రిండు, mr नव), spaced app names (ফোন পে, पेटी एम), split scam words (केवाई सी), glued half-hour (अर्ध्यातासा); two bare single digits never form one amount | 100.0% | 43.5% | 45.6% | 37.9% | 30.4% | 70.3 |
 
 **Net change:**
 
 | Measure | Before | After |
 |---|---|---|
-| Clean speech, fully correct | 27.2% | 41.0% (+13.8 points, about 1.5×) |
-| Field F1 | 51.0 | 67.8 |
+| Clean speech, fully correct | 27.2% | 43.5% (+16.3 points, about 1.6×) |
+| Field F1 | 51.0 | 70.3 |
 | Reference text, fully correct | 55.7% | 100% |
 
 No round broke a field that an earlier round got right. Each round's diff against the previous one is checked run by run.
@@ -44,13 +45,13 @@ The Round 2 voice kit's fraud app went through the same fixes (`run_eval.mjs --e
 | Measure | Before | After |
 |---|---|---|
 | Reference text | 91.4% | 100% |
-| Clean ASR | 37.5% | 40.5% |
+| Clean ASR | 37.5% | 43.0% |
 
 ## How we kept it honest
 
 - **The reference text was the tuning set.** The 100% on reference text is a training score. The ASR transcripts are the test.
 - **Dev and held-out voices.** Each language has two (English: three) Indian neural voices. We read only the first voice's transcripts when looking for patterns; the other voices are held out.
-  - Held-out gained more than dev: 29.4% → 44.1%, against 24.6% → 37.5% for dev. The fixes generalise and are not fitted to one voice.
+  - Held-out gained about as much as dev: 29.4% → 45.6%, against 24.6% → 41.1% for dev. The fixes generalise and are not fitted to one voice.
 - **Fixes are rules, not word lists.** Examples:
   - Letters that sound alike (ர/ற, ত/ট, ण/न).
   - Vowel length.
@@ -66,6 +67,7 @@ The Round 2 voice kit's fraud app went through the same fixes (`run_eval.mjs --e
 - **False-repair scan.** Every token of all 1,510 real Whisper transcripts was checked for words that turn into numbers only through repair.
   - 28 distinct words did, and all 28 are genuine misspelled numbers: తుమ్మిది = 9, ಎರ್ಡು = 2, কুডি = 20, अडिच = 2½ …
   - Ordinary words are never turned into numbers.
+- **Aliases are vetted.** One candidate, ಆಯಿದು for 5, was dropped: it is also how Whisper writes ಆಯಿತು ("happened").
 - **Plain fuzz:** 14k amounts and 7k times per run, plus 700k each on laptop 2 across 10 seeds, all 100%.
 
 ## Rules vs LLM (NVIDIA NIM, nemotron-3.5-bolt), same transcripts, same scorer

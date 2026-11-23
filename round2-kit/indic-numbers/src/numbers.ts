@@ -18,7 +18,7 @@ add(5, 'पाँच', 'पांच', 'पाच', 'paanch', 'panch', 'five');
 add(6, 'छह', 'छः', 'छे', 'सहा', 'chhe', 'chhah', 'six');
 add(7, 'सात', 'saat', 'seven');
 add(8, 'आठ', 'aath', 'eight');
-add(9, 'नौ', 'नऊ', 'nau', 'nine');
+add(9, 'नौ', 'नऊ', 'नव', 'nau', 'nine'); // नव: Marathi spoken form
 add(10, 'दस', 'दहा', 'das', 'ten');
 add(11, 'ग्यारह', 'अकरा', 'gyarah', 'eleven');
 add(12, 'बारह', 'बारा', 'barah', 'baarah', 'twelve');
@@ -42,7 +42,7 @@ add(80, 'अस्सी', 'ऐंशी', 'assi', 'eighty');
 add(90, 'नब्बे', 'नव्वद', 'nabbe', 'ninety');
 add(99, 'निन्यानवे', 'नव्व्याण्णव');
 add(100, 'सौ', 'शंभर', 'sau', 'hundred');
-add(1.5, 'डेढ़', 'डेढ', 'दीड', 'dedh');
+add(1.5, 'डेढ़', 'डेढ', 'दीड', 'देड़', 'देढ़', 'dedh'); // देड़: how ASR spells डेढ़
 const HI_21_99 = 'इक्कीस बाईस तेईस चौबीस पच्चीस छब्बीस सत्ताईस अट्ठाईस उनतीस तीस इकतीस बत्तीस तैंतीस चौंतीस पैंतीस छत्तीस सैंतीस अड़तीस उनतालीस चालीस इकतालीस बयालीस तैंतालीस चवालीस पैंतालीस छियालीस सैंतालीस अड़तालीस उनचास पचास इक्यावन बावन तिरपन चौवन पचपन छप्पन सत्तावन अट्ठावन उनसठ साठ इकसठ बासठ तिरसठ चौंसठ पैंसठ छियासठ सड़सठ अड़सठ उनहत्तर सत्तर इकहत्तर बहत्तर तिहत्तर चौहत्तर पचहत्तर छिहत्तर सतहत्तर अठहत्तर उन्यासी अस्सी इक्यासी बयासी तिरासी चौरासी पचासी छियासी सत्तासी अट्ठासी नवासी नब्बे इक्यानवे बानवे तिरानवे चौरानवे पचानवे छियानवे सत्तानवे अट्ठानवे निन्यानवे'.split(' ');
 HI_21_99.forEach((w, i) => add(21 + i, w, w.replace(/़/g, '')));
 const HI_21_99_LATIN = 'ikkees baaees teyees chaubees pachchees chhabbees sattaaees atthaaees untees tees ikattees battees taintees chauntees paintees chhattees saintees adtees untaalees chaalees iktaalees bayaalees taintaalees chavaalees paintaalees chhiyaalees saintaalees adtaalees unchaas pachaas ikyaavan baavan tirpan chauvan pachpan chhappan sattaavan atthaavan unsath saath iksath baasath tirsath chausath painsath chhiyaasath sadsath adsath unhattar sattar ikahattar bahattar tihattar chauhattar pachhattar chhihattar satattar athattar unaasee assee ikyaasee bayaasee tiraasee chauraasee pachaasee chhiyaasee sattaasee athaasee navaasee nabbe ikyaanave baanave tiraanave chauraanave pachaanave chhiyaanave sattaanave atthaanave ninyaanave'.split(' ');
@@ -60,7 +60,7 @@ for (const [k, v] of Object.entries(LATIN_KEY)) {
 }
 add(99, 'नव्याण्णव', 'नव्व्याण्णव');
 add(25, 'पंचवीस');
-add(2.5, 'ढाई', 'अडीच', 'dhai', 'adhai');
+add(2.5, 'ढाई', 'धाई', 'अडीच', 'dhai', 'adhai'); // धाई: ASR spelling
 
 // Bengali
 add(1, 'এক');
@@ -109,7 +109,7 @@ add(2.5, 'আড়াই', 'আড়াই');
 
 // Telugu
 add(1, 'ఒకటి', 'ఒక');
-add(2, 'రెండు');
+add(2, 'రెండు', 'రిండు');
 add(3, 'మూడు');
 add(4, 'నాలుగు');
 add(5, 'ఐదు', 'అయిదు');
@@ -142,7 +142,7 @@ add(1, 'ಒಂದು');
 add(2, 'ಎರಡು');
 add(3, 'ಮೂರು');
 add(4, 'ನಾಲ್ಕು');
-add(5, 'ಐದು');
+add(5, 'ಐದು', 'ಅಯಿದು'); // not ಆಯಿದು: that is also ಆಯಿತು ("happened") as ASR writes it
 add(6, 'ಆರು');
 add(7, 'ಏಳು');
 add(8, 'ಎಂಟು');
@@ -550,6 +550,15 @@ export function tokenize(text: string): string[] {
     .filter(Boolean);
 }
 
+/** Every token so far is a single-digit word: digits being read out (an ID), keep them together. */
+function spokenRun(toks: string[], start: number, i: number): boolean {
+  if (i - start < 2) return false;
+  return toks.slice(start, i).every((t) => {
+    const p = wordParts(t);
+    return !!p && p.length === 1 && 'v' in p[0] && Number.isInteger(p[0].v) && p[0].v <= 9;
+  });
+}
+
 /** All number groups in a sentence, with context flags. */
 export function numberGroups(text: string): Group[] {
   const toks = tokenize(text);
@@ -587,6 +596,9 @@ export function numberGroups(text: string): Group[] {
         continue;
       }
       if (/^\d+$/.test(toks[i]) && /^\d+$/.test(toks[i - 1])) break;
+      // two bare single digits are never one amount ("…3 రెండు, 5 వేల" = an ID's last digit, then 5,000)
+      const prev = parts[parts.length - 1];
+      if (prev && 'v' in prev && prev.v < 10 && q.length === 1 && 'v' in q[0] && q[0].v < 10 && !spokenRun(toks, start, i)) break;
       parts.push(...q);
       digitsOnly = digitsOnly && /^\d+$/.test(toks[i]);
       i++;

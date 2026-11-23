@@ -104,6 +104,11 @@ describe('ASR misspellings', () => {
     expect(findAmount('ನಲ್ವತ್ತೇಳು ಸಾವಿರ ರೂಪಾಯಿ')).toBe(47000); // extra virama
     expect(findAmount('అయిదు వేల రూపాయలు')).toBe(5000); // spelling variant of ఐదు
     expect(findAmount('साड़े 3,500 रुपए गेले')).toBe(3500); // half already in the digits
+    expect(findAmount('देड़ लाख रुपए गए हैं')).toBe(150000);
+    expect(findAmount('धाई हजार रुपय कटे')).toBe(2500);
+    expect(findAmount('ಆರು ಸಾವಿರ ರೂಪಾಯಿ ಕಟ್ ಆಯಿದು')).toBe(6000); // ಆಯಿದು = ಆಯಿತು "happened", not 5
+    expect(findAmount('UPI reference 40321 7 6 5 4 3 రిండు 5 వేల రూపాయలు పోయాయి')).toBe(5000); // ID digits, then the amount
+    expect(findAmount('రిండు లక్షల రూపాయలు తీసేసారు')).toBe(200000);
   });
   it('repair never invents numbers from ordinary words', () => {
     expect(findAmountHit('என் அக்கவுண்ட்ல இருந்து பணம் போச்சு')).toBeUndefined();
