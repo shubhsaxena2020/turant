@@ -1,0 +1,18 @@
+{
+  "title": "Turant · report a UPI scam by voice",
+  "url": "http://localhost:4321/",
+  "locale": "hi-IN",
+  "voice": "en-IN-NeerjaNeural",
+  "rate": "+4%",
+  "init": ["localStorage.setItem('turant.lang','hi-IN')"],
+  "steps": [
+    { "say": "When someone in India loses money to a UPI scam, every minute counts. Turant lets them report it just by speaking, in their own language.", "do": [{ "wait": 400 }] },
+    { "say": "Here, a victim tells what happened in Hindi, the way people really talk when they panic.", "do": [{ "click": "testid:sample" }, { "wait": 5500 }] },
+    { "say": "Turant writes the complaint while they speak. Facts are highlighted, and anything still missing shows as a gap.", "do": [{ "waitFor": "testid:letter", "timeout": 30000 }] },
+    { "say": "It asks only for what is missing. Here, the transaction number from the bank SMS. Then it reads the number back to confirm.", "do": [{ "waitFor": "testid:all-right", "timeout": 120000 }] },
+    { "say": "One plain check screen. Anything can be changed by tapping, or simply by saying it.", "do": [{ "wait": 600 }] },
+    { "say": "Then a calm finish. A giant 1930 button, and exactly what to say on the call.", "do": [{ "click": "testid:all-right" }, { "wait": 1200 }] },
+    { "say": "And a complete written complaint for the cyber crime portal, copied in one tap.", "do": [{ "click": "testid:see-written" }, { "wait": 1200 }, { "click": "testid:copy-all" }] },
+    { "say": "Seven Indian languages. Works offline. Built for the next billion users.", "do": [{ "wait": 300 }], "padMs": 1200 }
+  ]
+}
