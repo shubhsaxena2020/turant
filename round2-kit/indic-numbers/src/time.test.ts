@@ -58,3 +58,27 @@ describe('traps', () => {
     expect(hit!.date.getTime()).toBe(at(-1, 22));
   });
 });
+
+// Misspellings Whisper produces for time words (seen in harness/transcripts, dev voices).
+describe('ASR misspellings', () => {
+  const asr: [string, number][] = [
+    ['இன்று காலை பத்து மனிக்கு', at(0, 10)], // மணிக்கு
+    ['அரை மணி நெரத்துக்கு முன்னாடி', ago(30)], // நேரத்துக்கு
+    ['2 மணி நெரத்துக்கு முன்னாடி', ago(120)],
+    ['పది నిమిశాల కృతం', ago(10)], // నిమిషాల క్రితం
+    ['আদ ঘন্টা আগে', ago(30)], // আধ ঘণ্টা
+    ['আজ শকাল দসটায়', at(0, 10)], // সকাল দশটায়
+    ['গতকাল রাত সারে নটায়', at(-1, 21, 30)], // সাড়ে
+    ['গতকাল রাত সারে নতায়', at(-1, 21, 30)], // নটায়
+    ['ফোন পে দিয়ে এই মাত্রো', NOW.getTime()], // এইমাত্র
+  ];
+  for (const [text, want] of asr)
+    it(text, () => {
+      const hit = findTime(text, NOW);
+      expect(hit && new Date(hit.date).getTime(), text).toBe(want);
+    });
+  it('folded matching does not turn ordinary words into time words', () => {
+    expect(findTime('ஒரு மனிதன் கால் பண்ணாங்க', NOW)).toBeUndefined(); // மனிதன் = a person, not மணி
+    expect(findTime('ఒక మనిషి ఫోన్ చేశాడు', NOW)).toBeUndefined();
+  });
+});

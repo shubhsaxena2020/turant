@@ -3,6 +3,10 @@
 // Handles Hinglish (romanised Hindi), English, Devanagari Hindi/Marathi and the
 // most common words in Bengali, Tamil, Telugu and Kannada.
 
+import { findAmountHit } from './indic/numbers.ts';
+import { findTime, type TimeHit } from './indic/time.ts';
+import { findBank } from './indic/bank.ts';
+
 export type FieldKey =
   | 'amount'
   | 'time'
@@ -701,6 +705,43 @@ function extractIds(tokens: string[], runs: NumRun[], opts: ExtractOptions) {
 }
 
 /** Extract every field the rules can find in one utterance (or a whole transcript). */
+// Cross-language backstops from round2-kit/indic-numbers (vendored in ./indic): Tamil/Kannada
+// number compounds, bn/te/kn/mr number words, relative and clock times in all 7 languages, and
+// sound-alike bank names in native scripts. The rules above stay primary; these fill gaps and win
+// a disagreement only when they have stronger evidence (a currency word next to the number, or an
+// explicit clock / "ago" time).
+
+function mergeAmount(k: Extracted<number> | undefined, ind: { value: number; currencyNear: boolean } | undefined, opts: ExtractOptions): Extracted<number> | undefined {
+  if (!ind) return k;
+  const hinted = opts.hint === 'amount';
+  if (!k) return ind.currencyNear || hinted ? { value: ind.value, confidence: ind.currencyNear ? 0.9 : 0.75 } : undefined;
+  if (ind.currencyNear && ind.value !== k.value) return { value: ind.value, confidence: 0.9 };
+  // Answering "how much?": a longer reading of the same spoken number wins ("चार हजार नऊशे नव्याण्णव" = 4999).
+  if (hinted && ind.value > k.value) return { value: ind.value, confidence: 0.85 };
+  return k;
+}
+
+function mergeTime(k: Extracted<string> | undefined, ind: TimeHit | undefined): Extracted<string> | undefined {
+  if (!ind) return k;
+  const sure = ind.kind === 'clock' || ind.kind === 'ago' || ind.kind === 'now';
+  if (k && !(sure && Math.abs(new Date(k.value).getTime() - ind.date.getTime()) > 20 * 60_000)) return k;
+  if (ind.kind === 'day') return k;
+  return { value: ind.date.toISOString(), confidence: ind.kind === 'daypart' ? 0.6 : 0.85 };
+}
+
+const BANK_BY_KEY: Record<string, string> = {
+  sbi: 'State Bank of India (SBI)', hdfc: 'HDFC Bank', icici: 'ICICI Bank', axis: 'Axis Bank', pnb: 'Punjab National Bank (PNB)',
+  bob: 'Bank of Baroda', canara: 'Canara Bank', union: 'Union Bank of India', kotak: 'Kotak Mahindra Bank', indusind: 'IndusInd Bank',
+  yes: 'Yes Bank', idfc: 'IDFC FIRST Bank', boi: 'Bank of India', central: 'Central Bank of India', iob: 'Indian Overseas Bank',
+  indian: 'Indian Bank', federal: 'Federal Bank', bandhan: 'Bandhan Bank', ippb: 'India Post Payments Bank', airtel: 'Airtel Payments Bank', paytm: 'Paytm Payments Bank',
+};
+
+function indicBank(text: string): Extracted<string> | undefined {
+  const hit = findBank(text);
+  const name = hit && BANK_BY_KEY[hit.key];
+  return name ? { value: name, confidence: Math.min(0.9, hit.confidence) } : undefined;
+}
+
 export function extractFields(text: string, opts: ExtractOptions = {}): Extraction {
   const norm = normalize(text);
   const prepped = prepUpi(norm);
@@ -710,13 +751,13 @@ export function extractFields(text: string, opts: ExtractOptions = {}): Extracti
   const runs = findNumberRuns(tokens);
   const out: Extraction = {};
 
-  const amount = extractAmount(tokens, runs, opts);
+  const amount = mergeAmount(extractAmount(tokens, runs, opts), findAmountHit(text), opts);
   if (amount) out.amount = amount;
-  const time = extractTime(cleaned, tokens, runs, opts);
+  const time = mergeTime(extractTime(cleaned, tokens, runs, opts), findTime(text, opts.now ?? new Date()));
   if (time) out.time = time;
   const scam = extractScamType(cleaned, opts);
   if (scam) out.scamType = scam;
-  const bank = extractBank(cleaned, opts);
+  const bank = extractBank(cleaned, opts) ?? indicBank(text);
   if (bank) out.bank = bank;
   const app = extractPaymentApp(cleaned);
   if (app) out.paymentApp = app;

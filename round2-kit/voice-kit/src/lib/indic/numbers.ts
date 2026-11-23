@@ -215,7 +215,7 @@ mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजा
 mul(100000, 'लाख', 'লাখ', 'লক্ষ', 'లక్ష', 'లక్షల', 'లక్షలు', 'ಲಕ್ಷ', 'லட்சம்', 'லட்சத்து', 'lakh', 'lac', 'lakhs');
 mul(10000000, 'करोड़', 'करोड', 'कोटी', 'কোটি', 'కోటి', 'ಕೋಟಿ', 'கோடி', 'crore', 'crores');
 
-const HALF_PREFIX = ['साढ़े', 'साढे', 'साडे', 'সাড়ে', 'saadhe', 'sadhe', 'saade', 'sade', 'saare', 'sare', 'saadey'].map((w) => w.normalize('NFC'));
+const HALF_PREFIX = ['साढ़े', 'साढे', 'साडे', 'সাড়ে', 'সারে', 'saadhe', 'sadhe', 'saade', 'sade', 'saare', 'sare', 'saadey'].map((w) => w.normalize('NFC'));
 
 // ---------- Tamil / Kannada / Telugu / Marathi / Bengali compounds ----------
 const TA_STEM: [string, number][] = [
@@ -363,9 +363,74 @@ export function foldDigits(s: string): string {
 const SCRIPT = (w: string) =>
   /[஀-௿]/.test(w) ? 'ta' : /[ಀ-೿]/.test(w) ? 'kn' : /[ఀ-౿]/.test(w) ? 'te' : /[ঀ-৿]/.test(w) ? 'bn' : /[ऀ-ॿ]/.test(w) ? 'dev' : 'lat';
 
-/** Number parts of one word, or undefined if it is not a number word. */
-export function wordParts(raw: string): Part[] | undefined {
+// ---------- sound-alike repair ----------
+// Whisper often writes an Indian-language number word one letter off: ஆராயிரம் for ஆறாயிரம்,
+// সাডে for সাড়ে, ನಲ್ವತ್ತೇಳು for ನಲವತ್ತೇಳು. If a native word is not a number, try every single
+// edit from a small table of letters that sound alike (or differ only in vowel length), plus adding or
+// dropping a virama / nukta. Accept only when every variant that parses agrees on one value.
+const CONFUSABLE = [
+  'ரற', 'லளழ', 'நணன', 'ிீ', 'ுூ', 'ெே', 'ொோ', // Tamil
+  'তট', 'দড', 'থঠ', 'ধঢ', 'নণ', 'শষস', 'িী', 'ুূ', 'জয', 'রড', // Bengali
+  'తట', 'దడ', 'నణ', 'లళ', 'ిీ', 'ుూొో', 'ెే', // Telugu
+  'ತಟ', 'ದಡ', 'ನಣ', 'ಲಳ', 'ಿೀ', 'ುೂೊೋ', 'ೆೇ', // Kannada
+  'िी', 'ुू', 'नण', 'शषस', 'ेै', 'ोौ', // Devanagari
+].map((g) => [...g.normalize('NFC')]);
+const CONF_OF: Record<string, string[]> = {};
+for (const g of CONFUSABLE) for (const c of g) CONF_OF[c] = [...(CONF_OF[c] ?? []), ...g.filter((x) => x !== c)];
+const CONSONANT = /[क-हক-হக-ஹక-హಕ-ಹ]/;
+const VIRAMA_NUKTA = /[़়्্்్್]/;
+const NUKTA_BASE = /[डढডঢয]/; // ड ढ ড ঢ য take a nukta
+const block = (c: string) => c.codePointAt(0)! & ~0x7f;
+
+function variants(w: string): Set<string> {
+  const ch = [...w];
+  const out = new Set<string>();
+  const at = (i: number, ins: string[], skip = 1) => out.add([...ch.slice(0, i), ...ins, ...ch.slice(i + skip)].join(''));
+  for (let i = 0; i < ch.length; i++) {
+    for (const alt of CONF_OF[ch[i]] ?? []) at(i, [alt]);
+    if (VIRAMA_NUKTA.test(ch[i])) at(i, []);
+    if (CONSONANT.test(ch[i]) && ch[i + 1] && CONSONANT.test(ch[i + 1])) at(i, [ch[i], String.fromCodePoint(block(ch[i]) + 0x4d)]);
+    if (NUKTA_BASE.test(ch[i]) && ch[i + 1] !== '़' && ch[i + 1] !== '়') at(i, [ch[i], String.fromCodePoint(block(ch[i]) + 0x3c)]);
+  }
+  out.delete(w);
+  return out;
+}
+
+const repairCache = new Map<string, Part[] | null>();
+function soundAlike(w: string, minLen: number): Part[] | undefined {
+  if (SCRIPT(w) === 'lat' || [...w].length < minLen) return undefined;
+  const hit = repairCache.get(w);
+  if (hit !== undefined) return hit ?? undefined;
+  let found: Part[] | null = null;
+  let value: number | undefined;
+  for (const v of variants(w)) {
+    const p = exactParts(v);
+    if (!p) continue;
+    const c = combine(p);
+    if (value !== undefined && c !== value) {
+      found = null; // two readings: ambiguous, leave it alone
+      break;
+    }
+    value = c;
+    found = p;
+  }
+  if (repairCache.size > 20000) repairCache.clear();
+  repairCache.set(w, found);
+  return found ?? undefined;
+}
+
+/**
+ * Number parts of one word, or undefined if it is not a number word.
+ * minRepair: shortest native word (in code points) that may be sound-alike repaired. Short words are
+ * too easy to confuse with ordinary words, so only lower it where context already says "number"
+ * (a stem glued to "o'clock", like দস-টায়).
+ */
+export function wordParts(raw: string, minRepair = 4): Part[] | undefined {
   const w = raw.normalize('NFC').toLowerCase();
+  return exactParts(w) ?? soundAlike(w, minRepair);
+}
+
+function exactParts(w: string): Part[] | undefined {
   if (MULT[w] !== undefined) return [{ mul: MULT[w] }];
   if (HALF_PREFIX.includes(w)) return [{ half: true }];
   const digits = foldDigits(w).replace(/^(?:₹|rs\.?|रु\.?|ரூ\.?|రూ\.?|ರೂ\.?)/, '').replace(/,(?=\d{2,3}\b)/g, '');
@@ -403,7 +468,7 @@ export function combine(parts: Part[]): number | undefined {
       continue;
     }
     if ('v' in p) {
-      cur += p.v + (half ? 0.5 : 0);
+      cur += p.v + (half && p.v < 100 ? 0.5 : 0); // "साढ़े 3,500": the half is already in the digits
       half = false;
       any = true;
       continue;
@@ -420,6 +485,26 @@ export function combine(parts: Part[]): number | undefined {
 
 // ---------- amounts in sentences ----------
 const CURRENCY = ['रुपये', 'रुपए', 'रुपया', 'रुपयांचे', 'रूपये', 'rupees', 'rupee', 'rupaye', 'rupaiya', 'rs', 'inr', 'টাকা', 'টাকার', 'ரூபாய்', 'ரூபா', 'రూపాయలు', 'రూపాయల', 'రూపాయి', 'ರೂಪಾಯಿ', 'ರೂ', 'taka', 'paise', 'पैसे'].map((w) => w.normalize('NFC'));
+// Currency words as ASR spells them: ருபாய், ரூபாயி, তাকা, రోపాయలు. Compared after folding
+// sound-alike letters and vowel length (same table as above), by prefix.
+// Folding also merges aspirated / unaspirated letters (আধ ~ আদ, ঘণ্টা ~ গন্টা); those are left out of the
+// number repair above, where they would only add candidates. Union-find keeps the classes transitive.
+const FOLD_ONLY = ['তথটঠ', 'দধডঢ', 'কখ', 'গঘ', 'চছ', 'জঝ', 'বভ', 'পফ', 'తథటఠ', 'దధడఢ', 'కఖ', 'గఘ', 'చఛ', 'జఝ', 'బభ', 'పఫ', 'శషస', 'ತಥಟಠ', 'ದಧಡಢ', 'ಕಖ', 'ಗಘ', 'ಚಛ', 'ಜಝ', 'ಬಭ', 'ಪಫ', 'ಶಷಸ', 'तथटठ', 'दधडढ', 'कख', 'गघ', 'चछ', 'जझ', 'बभ', 'पफ'];
+const ROOT: Record<string, string> = {};
+const root = (c: string): string => (ROOT[c] && ROOT[c] !== c ? (ROOT[c] = root(ROOT[c])) : c);
+for (const g of [...CONFUSABLE, ...FOLD_ONLY.map((x) => [...x.normalize('NFC')])])
+  for (const c of g.slice(1)) {
+    const a = root(g[0]);
+    const b = root(c);
+    if (a !== b) ROOT[b] = a;
+  }
+/** Sound-alike key: confusable letters, vowel length, aspiration, virama and nukta collapsed. For matching small word lists. */
+export const fold = (s: string) => [...s.normalize('NFC').toLowerCase()].map(root).join('').replace(/[़়्্்్್]/g, '');
+const CURRENCY_STEMS = ['ரூபா', 'రూపాయ', 'ರೂಪಾಯ', 'টাকা', 'রুপি', 'रुपय', 'रुपए', 'रुपै', 'rupa', 'rupe', 'rupi', 'rupy'].map(fold);
+const isCurrency = (t: string | undefined) => !!t && (CURRENCY.includes(t.toLowerCase()) || CURRENCY_STEMS.some((s) => fold(t).startsWith(s)));
+// The same stems glued onto the word before ("ಸಾವಿರರೂಪಾಯಿ", "వేలరూపాయలు"), raw and as ASR spells them.
+const GLUED_CURRENCY = /(\S{2,}?)(ரூபா|ருபா|ರೂಪಾಯ|ರುಪಾಯ|రూపాయ|రుపాయ|రోపాయ|টাকা|তাকা|रुपय|रुपए|रुपये|रूपय)/g;
+
 const TIME_AFTER = ['मिनट', 'मिनिट', 'मिनिटांपूर्वी', 'घंटे', 'घंटा', 'तास', 'तासांपूर्वी', 'दिन', 'दिवस', 'दिवसांपूर्वी', 'बजे', 'वाजता', 'मिनिटे', 'মিনিট', 'ঘণ্টা', 'দিন', 'টায়', 'টায়', 'நிமிடங்களுக்கு', 'நிமிஷம்', 'நிமிஷத்துக்கு', 'மணிக்கு', 'மணி', 'நாட்களுக்கு', 'నిమిషాల', 'గంటల', 'గంటలకు', 'రోజుల', 'ನಿಮಿಷ', 'ನಿಮಿಷದ', 'ಗಂಟೆ', 'ಗಂಟೆಗೆ', 'ದಿನ', 'ದಿನಗಳ', 'minute', 'minutes', 'min', 'hour', 'hours', 'baje', 'din', 'days', 'pm', 'am', 'ghante'].map((w) => w.normalize('NFC'));
 const NEGATE = ['नहीं', 'नही', 'नाही', 'nahi', 'nahin', 'no', 'না', 'இல்ல', 'இல்லை', 'కాదు', 'ಅಲ್ಲ', 'ಇಲ್ಲ'].map((w) => w.normalize('NFC'));
 
@@ -434,6 +519,7 @@ interface Group {
 
 export function tokenize(text: string): string[] {
   return foldDigits(text.normalize('NFC'))
+    .replace(GLUED_CURRENCY, '$1 $2')
     .replace(/(\d),(\d{2,3})(?!\d)/g, '$1$2')
     .replace(/(\d),(\d{2,3})(?!\d)/g, '$1$2')
     .replace(/(₹|rs\.?|रु\.?|ரூ\.?|రూ\.?|ರೂ\.?)\s*(\d)/gi, '$1 $2')
@@ -492,7 +578,7 @@ export function numberGroups(text: string): Group[] {
       i - start >= 3 && tokenParts.every((tp) => tp.length === 1 && 'v' in tp[0] && Number.isInteger(tp[0].v) && tp[0].v <= 9);
     const value = spacedDigits || spokenDigits ? NaN : combine(parts);
     if (value === undefined || Number.isNaN(value)) continue;
-    const near = (k: number) => k >= 0 && k < toks.length && CURRENCY.includes(toks[k].toLowerCase());
+    const near = (k: number) => k >= 0 && k < toks.length && isCurrency(toks[k]);
     groups.push({
       value,
       start,

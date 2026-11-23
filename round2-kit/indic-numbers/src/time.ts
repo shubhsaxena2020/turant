@@ -1,7 +1,7 @@
 // When did it happen? Relative ("das minute pehle", "দশ মিনিট আগে", "பத்து நிமிஷம் முன்னாடி")
 // and absolute ("kal shaam 7 baje", "গতকাল সন্ধ্যা সাতটায়", "நேற்று இரவு 9:30 மணிக்கு")
 // in hi/mr/bn/ta/te/kn/en. Returns an absolute Date. Pure, no DOM.
-import { combine, tokenize, wordParts } from './numbers';
+import { combine, fold, tokenize, wordParts } from './numbers';
 
 export interface TimeHit {
   date: Date;
@@ -11,13 +11,19 @@ export interface TimeHit {
 }
 
 const N = (l: string[]) => l.map((w) => w.normalize('NFC'));
-const has = (t: string, list: string[]) => list.some((w) => t === w || t.startsWith(w));
+// ASR spells time words one letter off (மனிக்கு, নিমিশাল, শকাল): also compare sound-alike keys.
+// Short keys must match the whole word: folded மணி would otherwise prefix-match மனிதன் ("person").
+const FOLDED = new Map<string[], string[]>();
+const folded = (list: string[]) => FOLDED.get(list) ?? (FOLDED.set(list, list.map(fold)), FOLDED.get(list)!);
+const fuzzyPrefix = (f: string, k: string) => f === k || ([...k].length >= 4 && f.startsWith(k));
+const has = (t: string, list: string[]) => list.some((w) => t === w || t.startsWith(w)) || folded(list).some((k) => fuzzyPrefix(fold(t), k));
+const is = (t: string, list: string[]) => list.includes(t) || folded(list).includes(fold(t));
 
-const NOW_WORDS = N(['अभी', 'abhi', 'এইমাত্র', 'এখনই', 'இப்பதான்', 'இப்போதான்', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ', 'आत्ताच', 'just']);
+const NOW_WORDS = N(['अभी', 'abhi', 'এইমাত্র', 'এইমাত্রো', 'এখনই', 'இப்பதான்', 'இப்போதான்', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ', 'आत्ताच', 'just']);
 const MIN = N(['मिनट', 'मिनिट', 'minute', 'min', 'মিনিট', 'நிமிட', 'நிமிஷ', 'నిమిష', 'ನಿಮಿಷ']);
 const HOUR = N(['घंटा', 'घंटे', 'घण्टा', 'तास', 'ghanta', 'ghante', 'hour', 'hr', 'ঘণ্টা', 'ঘন্টা', 'மணி நேர', 'நேரத்', 'గంట', 'ಗಂಟೆ']);
 const DAY = N(['दिन', 'दिवस', 'din', 'day', 'দিন', 'நாள', 'நாட்', 'రోజు', 'రోజుల', 'ದಿನ']);
-const AGO = N(['पहले', 'pehle', 'pahle', 'पूर्वी', 'ago', 'back', 'before', 'আগে', 'முன்னாடி', 'முன்பு', 'முன்', 'க்கு', 'క్రితం', 'ಹಿಂದೆ']);
+const AGO = N(['पहले', 'pehle', 'pahle', 'पूर्वी', 'ago', 'back', 'before', 'আগে', 'முன்னாடி', 'முன்பு', 'முன்', 'க்கு', 'క్రితం', 'కృతం', 'ಹಿಂದೆ']);
 const HALF_UNIT_WORDS: [string, number][] = [
   ['अरगंट', 30], ['అరగంట', 30], ['आधा', 0.5], ['आध', 0.5], ['adha', 0.5], ['aadha', 0.5], ['half', 0.5], ['আধ', 0.5], ['আধা', 0.5], ['அரை', 0.5], ['అర', 0.5], ['ಅರ್ಧ', 0.5], ['अर्ध्या', 0.5], ['अर्धा', 0.5],
 ];
@@ -33,14 +39,14 @@ const NIGHT = N(['रात', 'raat', 'rat', 'रात्री', 'night', 'র
 
 const OCLOCK = N(['बजे', 'baje', 'वाजता', 'वाजले', "o'clock", 'oclock', 'মণিক্কু', 'மணிக்கு', 'மணி', 'గంటలకు', 'గంటల', 'ಗಂಟೆಗೆ', 'ಕ್ಕೆ', 'కి', 'pm', 'am', 'baje']);
 // "-টায়" = at … o'clock. Plain "-টা" is also the counting word (একটা = "a"), so it only counts before বাজে.
-const BN_AT = new RegExp('(?:' + N(['টায়', 'টায়']).join('|') + ')$');
+const BN_AT = new RegExp('(?:' + N(['টায়', 'টায়', 'তায়']).join('|') + ')$');
 const BN_TA = new RegExp(N(['টা'])[0] + '$');
 
 function dayOffset(toks: string[]): number | undefined {
   for (const t of toks) {
     if (has(t, DAY_BEFORE)) return -2;
-    if (YESTERDAY.includes(t)) return -1;
-    if (TODAY.includes(t)) return 0;
+    if (is(t, YESTERDAY)) return -1;
+    if (is(t, TODAY)) return 0;
   }
   return undefined;
 }
@@ -78,7 +84,7 @@ function clockHours(text: string, toks: string[]): number | undefined {
     if (bnAt || bnTa) {
       const stem = toks[i].replace(bnAt ? BN_AT : BN_TA, '');
       // "4টায়" is split into "4" + "টায়" by the tokenizer: the hour is the previous token
-      const p = stem ? wordParts(stem) : i > 0 ? wordParts(toks[i - 1]) : undefined;
+      const p = stem ? wordParts(stem, 2) : i > 0 ? wordParts(toks[i - 1]) : undefined;
       if (p) {
         const prev = i > 0 ? wordParts(toks[i - 1]) : undefined;
         const half = prev?.some((x) => 'half' in x) ? 0.5 : 0;
@@ -115,11 +121,11 @@ function agoMinutes(toks: string[]): number | undefined {
     // glued half-hour words (అరగంట)
     const glued = HALF_UNIT_WORDS.find(([w, v]) => v === 30 && t.startsWith(w));
     if (glued) return 30;
-    const unit = has(t, MIN) ? 1 : has(t, HOUR) || (t === 'மணி' && toks[i + 1]?.startsWith('நேர')) ? 60 : has(t, DAY) ? 1440 : 0;
+    const unit = has(t, MIN) ? 1 : has(t, HOUR) || (is(t, ['மணி']) && fold(toks[i + 1] ?? '').startsWith(fold('நேர'))) ? 60 : has(t, DAY) ? 1440 : 0;
     if (!unit) continue;
     // need an "ago" marker in the unit word itself (मिनिटांपूर्वी) or within the next 3 tokens
     const window = [t, ...toks.slice(i + 1, i + 4)];
-    const agoHere = window.some((w) => AGO.some((a) => w === a || w.endsWith(a) || w.startsWith(a)));
+    const agoHere = window.some((w) => AGO.some((a) => w === a || w.endsWith(a) || w.startsWith(a)) || has(w, AGO));
     if (!agoHere) continue;
     // count: number words just before the unit, or half/one
     let j = i - 1;
@@ -129,7 +135,7 @@ function agoMinutes(toks: string[]): number | undefined {
         j--;
         continue;
       }
-      const half = HALF_UNIT_WORDS.find(([w]) => toks[j] === w || toks[j].startsWith(w));
+      const half = HALF_UNIT_WORDS.find(([w]) => toks[j] === w || toks[j].startsWith(w) || fold(toks[j]) === fold(w));
       if (half && half[1] < 1) {
         parts.unshift({ v: half[1] });
         j--;
@@ -152,7 +158,8 @@ export function findTime(text: string, now: Date = new Date()): TimeHit | undefi
   const low = text.toLowerCase();
   const ago = agoMinutes(toks);
   if (ago !== undefined) return { date: new Date(now.getTime() - ago * 60_000), kind: 'ago', tolerance: Math.max(5, ago * 0.15) };
-  if (toks.some((t) => NOW_WORDS.includes(t)) && !/\bjust\b/.test(low.replace('just now', ''))) {
+  const nowWord = toks.some((t, i) => is(t, NOW_WORDS) || (t === 'এই' && is('এই' + (toks[i + 1] ?? ''), NOW_WORDS)));
+  if (nowWord && !/\bjust\b/.test(low.replace('just now', ''))) {
     return { date: new Date(now), kind: 'now', tolerance: 10 };
   }
   if (/\bjust now\b|right now/.test(low)) return { date: new Date(now), kind: 'now', tolerance: 10 };

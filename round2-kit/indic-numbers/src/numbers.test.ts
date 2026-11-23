@@ -1,6 +1,6 @@
 // Held-out cases: written AFTER tuning on the harness corpus, with different numbers and phrasing.
 import { describe, expect, it } from 'vitest';
-import { combine, findAmount, wordParts } from './numbers';
+import { combine, findAmount, findAmountHit, wordParts } from './numbers';
 
 const cases: [string, string, number | undefined][] = [
   // Hindi / Hinglish
@@ -79,5 +79,35 @@ describe('connectors', () => {
   it('"and" / "aur" inside a number joins it', () => {
     expect(findAmount('four thousand nine hundred and ninety nine rupees')).toBe(4999);
     expect(findAmount('do sau aur pachaas rupaye')).toBe(250);
+  });
+});
+
+// Misspellings Whisper produces for Indian-language number and currency words
+// (seen in harness/transcripts). Repaired by single sound-alike edits.
+describe('ASR misspellings', () => {
+  it('currency word variants still count as currency', () => {
+    expect(findAmountHit('ஐயாயிரம் ரூபாயி போச்சு')).toEqual({ value: 5000, currencyNear: true });
+    expect(findAmountHit('ஐயாயிரம் ருபாய் போச்சு')).toEqual({ value: 5000, currencyNear: true });
+    expect(findAmountHit('পাঁচ হাজার তাকা কেটে গেছে')).toEqual({ value: 5000, currencyNear: true });
+    expect(findAmountHit('ఐదు వేల రోపాయలు పోయాయి')).toEqual({ value: 5000, currencyNear: true });
+  });
+  it('currency glued to the number is split off', () => {
+    expect(findAmountHit('ನಲವತ್ತೇಳು ಸಾವಿರರೂಪಾಯಿ ಹಾಕಿದೆ')).toEqual({ value: 47000, currencyNear: true });
+    expect(findAmountHit('ಎರಡು ಲಕ್ಷರೂಪಾಯಿ ತೆಗೆದರು')).toEqual({ value: 200000, currencyNear: true });
+    expect(findAmountHit('అయిదు వేలరూపాయలు పోయాయి')).toEqual({ value: 5000, currencyNear: true });
+  });
+  it('one sound-alike slip in a number word is repaired', () => {
+    expect(findAmount('ஐயாயிரம் இல்லை இல்லை ஆராயிரம் ருபாய் போச்சு')).toBe(6000); // ற -> ர
+    expect(findAmount('সাডে তিন হাজার টাকা চলে গেছে')).toBe(3500); // ড় -> ড
+    expect(findAmount('পাঁচ হাজাড টাকা')).toBe(5000); // র -> ড
+    expect(findAmount('ನಲ್ವತ್ತೇಳು ಸಾವಿರ ರೂಪಾಯಿ')).toBe(47000); // extra virama
+    expect(findAmount('అయిదు వేల రూపాయలు')).toBe(5000); // spelling variant of ఐదు
+    expect(findAmount('साड़े 3,500 रुपए गेले')).toBe(3500); // half already in the digits
+  });
+  it('repair never invents numbers from ordinary words', () => {
+    expect(findAmountHit('என் அக்கவுண்ட்ல இருந்து பணம் போச்சு')).toBeUndefined();
+    expect(findAmountHit('আমার স্টেট ব্যাংক থেকে টাকা চলে গেছে')).toBeUndefined();
+    expect(findAmountHit('ನನ್ನ ಖಾತೆಯಿಂದ ಹಣ ಹೋಯಿತು')).toBeUndefined();
+    expect(findAmountHit('నా అకౌంట్ నుండి డబ్బులు పోయాయి')).toBeUndefined();
   });
 });
