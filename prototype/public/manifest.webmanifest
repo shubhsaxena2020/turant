@@ -1,0 +1,16 @@
+{
+  "name": "Turant - Report payment fraud by voice",
+  "short_name": "Turant",
+  "description": "Report UPI and online payment fraud by voice in your language. Ready for 1930 and cybercrime.gov.in.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F5F1E8",
+  "theme_color": "#12284A",
+  "lang": "hi-IN",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
