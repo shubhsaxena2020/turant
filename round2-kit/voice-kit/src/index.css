@@ -1,0 +1,307 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* "Aa" control: everything is in rem, so one root size scales the app. */
+:root {
+  --scale: 1;
+  /* Theme (space-separated RGB). Overridden at runtime from the domain config (src/lib/theme.ts). */
+  --teal: 14 92 99;
+  --teal-deep: 10 70 76;
+  --teal-wash: 215 235 232;
+  --mint: 143 214 198;
+  --mint-light: 201 239 230;
+  --mint-deep: 63 156 144;
+  --night: 19 35 58;
+  --night-deep: 12 24 41;
+  color-scheme: light;
+}
+html {
+  font-size: calc(100% * var(--scale));
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+  font-size: 1.125rem;
+  line-height: 1.75;
+}
+button,
+a {
+  touch-action: manipulation;
+}
+:focus-visible {
+  outline: 3px solid rgb(var(--teal));
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.on-night :focus-visible {
+  outline-color: rgb(var(--mint));
+}
+
+@layer components {
+  /* The one filled button per screen: 60px, full width, thumb zone. */
+  .btn-main {
+    @apply flex w-full items-center justify-center gap-3 rounded-2xl bg-teal px-6 text-[1.25rem] font-semibold text-white transition-colors active:bg-teal-deep disabled:opacity-50;
+    min-height: 3.75rem;
+  }
+  .btn-main.is-done {
+    @apply bg-ok;
+  }
+  .on-night .btn-main {
+    @apply bg-mint text-night;
+  }
+  /* Text links: secondary actions, 48px hit area. */
+  .link {
+    @apply inline-flex items-center gap-2 font-semibold text-teal underline decoration-2 underline-offset-[6px];
+    min-height: 3rem;
+  }
+  .on-night .link {
+    @apply text-mint;
+  }
+  .link-quiet {
+    @apply inline-flex items-center gap-2 font-medium text-muted underline decoration-1 underline-offset-[6px];
+    min-height: 3rem;
+  }
+  .on-night .link-quiet {
+    @apply text-night-muted;
+  }
+  /* Hairline lists: a rule between rows only. */
+  .rows > * + * {
+    border-top: 1px solid #d9d2c5;
+  }
+  .on-night .rows > * + * {
+    border-top-color: rgba(169, 183, 201, 0.25);
+  }
+  /* Sticky action zone that fades into the canvas (no border, no shadow). */
+  .action-zone {
+    @apply sticky bottom-0 z-20 px-5 pb-5 pt-8;
+    padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+    background: linear-gradient(to bottom, rgba(250, 247, 242, 0), #faf7f2 1.5rem);
+  }
+  .action-zone.on-sand {
+    background: linear-gradient(to bottom, rgba(239, 232, 220, 0), #efe8dc 1.5rem);
+  }
+  .action-zone.on-night {
+    background: linear-gradient(to bottom, rgb(var(--night) / 0), rgb(var(--night)) 1.5rem);
+  }
+  .action-zone.on-ok {
+    background: linear-gradient(to bottom, rgba(227, 239, 230, 0), #e3efe6 1.5rem);
+  }
+  /* Underline-only input (the rare typed fallback): no box. */
+  .line-input {
+    @apply w-full bg-transparent py-3 text-[1.25rem] outline-none;
+    border-bottom: 2px solid #6b665d;
+  }
+  .line-input:focus {
+    border-bottom-color: rgb(var(--teal));
+  }
+  .on-night .line-input {
+    @apply text-night-text;
+    border-bottom-color: #a9b7c9;
+  }
+  .on-night .line-input:focus {
+    border-bottom-color: rgb(var(--mint));
+  }
+}
+
+/* Facts inside the letter: weight + highlighter wash, never a box. */
+.fact {
+  font-weight: 700;
+  background-image: linear-gradient(transparent 58%, rgb(var(--mint) / 0.38) 58%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 0 0.1em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.on-paper .fact {
+  background-image: linear-gradient(transparent 58%, rgb(var(--teal) / 0.16) 58%);
+}
+.fact.is-new {
+  animation: sweep 700ms ease-out both;
+}
+@keyframes sweep {
+  from {
+    background-size: 0% 100%;
+  }
+  to {
+    background-size: 100% 100%;
+  }
+}
+/* A missing fact is a dotted gap inside the sentence. */
+.gap {
+  display: inline-block;
+  min-width: 4.5em;
+  border-bottom: 2px dotted currentColor;
+  opacity: 0.65;
+  transform: translateY(-0.2em);
+  height: 1em;
+}
+.gap.is-asking {
+  opacity: 1;
+  color: rgb(var(--mint));
+  animation: blink 1.6s ease-in-out infinite;
+}
+@keyframes blink {
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* ---------- The presence ---------- */
+.presence {
+  position: relative;
+  width: 9.5rem;
+  height: 9.5rem;
+  border-radius: 9999px;
+  display: grid;
+  place-items: center;
+}
+.presence .glow {
+  position: absolute;
+  inset: -2.25rem;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgb(var(--mint) / 0.55) 0%, rgb(var(--mint) / 0.18) 45%, rgb(var(--mint) / 0) 70%);
+  transform: scale(var(--level, 1));
+  transition: transform 160ms ease-out;
+}
+.presence .core {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, rgb(var(--mint-light)) 0%, rgb(var(--mint)) 38%, rgb(var(--mint-deep)) 100%);
+  box-shadow: inset 0 -10px 30px rgb(var(--night-deep) / 0.35);
+}
+.presence[data-state='idle'] .glow,
+.presence[data-state='idle'] .core {
+  animation: breathe 5s ease-in-out infinite;
+}
+.presence[data-state='listening'] .core {
+  background: radial-gradient(circle at 35% 30%, #ffffff 0%, rgb(var(--mint-light)) 35%, rgb(var(--mint-deep)) 100%);
+}
+.presence[data-state='thinking'] .core {
+  animation: shimmer 2.4s linear infinite;
+  background: conic-gradient(from 0deg, rgb(var(--mint)), rgb(var(--mint-deep)), rgb(var(--mint-light)), rgb(var(--mint)));
+}
+.presence[data-state='speaking'] .ring {
+  animation: ripple 1.6s ease-out infinite;
+}
+.presence .ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  border: 2px solid rgb(var(--mint) / 0.7);
+  opacity: 0;
+}
+.presence[data-state='speaking'] .ring.r2 {
+  animation-delay: 0.8s;
+}
+.presence[data-state='off'] .core {
+  background: transparent;
+  box-shadow: none;
+  border: 2px solid #a9b7c9;
+}
+.presence[data-state='off'] .glow {
+  opacity: 0;
+}
+@keyframes breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+@keyframes shimmer {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.55);
+    opacity: 0;
+  }
+}
+
+/* ---------- Page turn ---------- */
+.page-in {
+  animation: pageIn 240ms ease-out both;
+}
+.page-back {
+  animation: pageBack 240ms ease-out both;
+}
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+}
+@keyframes pageBack {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+}
+.fade-in {
+  animation: fadeIn 300ms ease-out both;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+/* ---------- Success tick draws itself ---------- */
+.tick-circle {
+  animation: pop 320ms ease-out both;
+}
+.tick-path {
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: draw 520ms 220ms ease-out forwards;
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes pop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* Bottom sheet */
+.sheet-in {
+  animation: sheetIn 240ms ease-out both;
+}
+@keyframes sheetIn {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+  .tick-path {
+    stroke-dashoffset: 0;
+  }
+}
