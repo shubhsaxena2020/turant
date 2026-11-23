@@ -2,6 +2,7 @@
 // built on Turant's rules in nlp.ts. Pure functions: no DOM, no network (offline-first).
 import { findAmountHit, fold, numberGroups, readoutDigit, tokenize as indicTokens, wordParts } from './indic/numbers';
 import { findTime } from './indic/time';
+import { unifyScript } from './indic/cleanup';
 import type {
   AmountSlot,
   DigitsSlot,
@@ -543,6 +544,7 @@ function reservedWords(slots: SlotDef[]): Set<string> {
 
 /** Extract every slot the rules can find in one utterance (or a whole story). */
 export function extractAll(cfg: SlotsLike, text: string, opts: ExtractOptions = {}): Extraction {
+  text = unifyScript(text);
   const norm = N.normalize(text);
   const { ids, rest } = N.extractUpis(N.prepUpi(norm));
   const cleaned = rest.replace(/\s+/g, ' ').trim();
@@ -696,6 +698,7 @@ const SHAPE_ORDER: SlotType[] = ['upi', 'digits', 'phone', 'enum', 'datetime', '
 
 /** Parse a spoken correction for exactly one slot (or null). Slot names come from aliases + labels. */
 export function parseCorrection(cfg: QuestionCfg, text: string, opts: { now?: Date } = {}): Correction | null {
+  text = unifyScript(text);
   const s = N.normalize(text);
   let named: SlotDef | undefined;
   let at = { idx: Infinity, len: 0 };

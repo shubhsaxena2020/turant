@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cleanup } from './cleanup';
+import { cleanup, unifyScript } from './cleanup';
 import { findAmount } from './numbers';
 import { findBank } from './bank';
 
@@ -32,5 +32,15 @@ describe('self-corrections', () => {
   });
   it('a bank correction survives cleanup', () => {
     expect(findBank(cleanup('बैंक गलत है, एसबीआई नहीं नहीं, एचडीएफसी था').text)?.key).toBe('hdfc');
+  });
+});
+
+describe('unifyScript', () => {
+  it('reads Kannada letters as Telugu once Telugu is present', () => {
+    expect(unifyScript('నా అకాంట్ నంದಿ 5000 రೂಪಾಯలు')).toBe('నా అకాంట్ నంది 5000 రూపాయలు');
+    expect(findAmount(unifyScript('నా అకాంట్ నంದಿ 5000 రೂಪಾಯలు పోయాయి'))).toBe(5000);
+  });
+  it('leaves Kannada text alone', () => {
+    expect(unifyScript('ಐದು ಸಾವಿರ ರೂಪಾಯಿ')).toBe('ಐದು ಸಾವಿರ ರೂಪಾಯಿ');
   });
 });

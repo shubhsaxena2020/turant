@@ -4,6 +4,7 @@
 // most common words in Bengali, Tamil, Telugu and Kannada.
 
 import { findAmountHit, fold, numberGroups, readoutDigit } from './indic/numbers.ts';
+import { unifyScript } from './indic/cleanup.ts';
 import { findTime, type TimeHit } from './indic/time.ts';
 import { findBank, romanize, soundKey } from './indic/bank.ts';
 
@@ -830,14 +831,6 @@ function indicBank(text: string): Extracted<string> | undefined {
   const hit = findBank(text);
   const name = hit && BANK_BY_KEY[hit.key];
   return name ? { value: name, confidence: Math.min(0.9, hit.confidence) } : undefined;
-}
-
-/** Whisper large-v3 writes some Telugu words in Kannada letters ("రೂಪಾಯలు"). The two Unicode blocks are
- * parallel (+0x80), so once any Telugu letter is present, Kannada letters are read as Telugu.
- * Kannada speech never gets Telugu letters, so Kannada text is untouched. */
-export function unifyScript(text: string): string {
-  if (!/[ఀ-౿]/.test(text)) return text;
-  return text.replace(/[ಀ-೿]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x80));
 }
 
 /** A 12-digit UTR glued to the amount by the recogniser: "UTR है 4032187654325000 रुपए" = 403218765432 + 5000.

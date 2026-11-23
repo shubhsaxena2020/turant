@@ -69,3 +69,11 @@ export function cleanup(input: string): Cleaned {
     .trim();
   return { text, removed, corrected };
 }
+
+/** Whisper large-v3 writes some Telugu words in Kannada letters ("రೂಪಾಯలు"). The two Unicode blocks are
+ * parallel (+0x80), so once any Telugu letter is present, Kannada letters are read as Telugu.
+ * Kannada speech never gets Telugu letters, so Kannada text is untouched. */
+export function unifyScript(text: string): string {
+  if (!/[ఀ-౿]/.test(text)) return text;
+  return text.replace(/[ಀ-೿]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x80));
+}

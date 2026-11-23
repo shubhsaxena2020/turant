@@ -11,6 +11,7 @@
 import type { LangCode } from './lang';
 import { fold } from './indic/numbers';
 import { romanize, soundKey } from './indic/bank';
+import { unifyScript } from './indic/cleanup';
 
 // ---------------------------------------------------------------------------
 // Normalisation
@@ -632,6 +633,7 @@ export const YES_WORDS = ['haan', 'han', 'haa', 'ha', 'ji', 'haan ji', 'yes', 'y
 export const NO_WORDS = ['nahi', 'nahin', 'nhi', 'na', 'no', 'galat', 'wrong', 'नहीं', 'गलत', 'না', 'ভুল', 'இல்லை', 'தவறு', 'కాదు', 'లేదు', 'नाही', 'चूक', 'ಇಲ್ಲ', 'ತಪ್ಪು'];
 
 export function detectIntent(text: string): Intent | null {
+  text = unifyScript(text);
   const s = normalize(text);
   const words = wordCount(s);
   if (phraseIndex(s, SKIP_WORDS) >= 0) return 'skip';
