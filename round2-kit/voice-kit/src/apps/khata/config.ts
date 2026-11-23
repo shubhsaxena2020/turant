@@ -43,7 +43,7 @@ export default defineDomain({
   id: 'khata',
   name: { 'en-IN': 'Hisaab', 'hi-IN': 'हिसाब' },
   tagline: { 'en-IN': 'Your shop ledger, by voice.', 'hi-IN': 'दुकान का खाता, बोलकर।' },
-  theme: { primary: '#5B3A8C', accent: '#C9B6F2' },
+  theme: {}, // Wispr Flow default theme (src/lib/theme.ts)
   languages: ['hi-IN', 'en-IN'],
   slots: [
     {

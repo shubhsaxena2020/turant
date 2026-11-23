@@ -2,6 +2,21 @@
 // light for listening / thinking / speaking). It is also the mic button.
 export type PresenceState = 'idle' | 'listening' | 'thinking' | 'speaking' | 'off';
 
+/** Segmented level meter (Wispr Flow's chord-purple meter): shows the voice is being heard. */
+function LevelMeter({ level }: { level: number }) {
+  const lv = Math.max(0.12, Math.min(1, (level - 1) / 0.18)); // useListen level runs 1 .. 1.18
+  const t = Date.now() / 160;
+  return (
+    <span className="meter" aria-hidden>
+      {Array.from({ length: 9 }, (_, i) => {
+        const shape = 1 - Math.abs(i - 4) / 5;
+        const wobble = 0.55 + 0.45 * Math.abs(Math.sin(t + i * 1.3));
+        return <i key={i} style={{ ['--h' as string]: String(Math.max(0.15, lv * shape * wobble)) }} />;
+      })}
+    </span>
+  );
+}
+
 export function Presence(props: {
   state: PresenceState;
   level?: number;
@@ -43,6 +58,7 @@ export function Presence(props: {
           </svg>
         )}
       </span>
+      {state === 'listening' ? <LevelMeter level={level} /> : null}
       <span className="text-lg font-semibold text-night-text text-center leading-snug max-w-[18rem]" aria-live="polite">
         {label}
       </span>

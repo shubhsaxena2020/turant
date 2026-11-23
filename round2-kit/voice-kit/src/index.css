@@ -6,14 +6,14 @@
 :root {
   --scale: 1;
   /* Theme (space-separated RGB). Overridden at runtime from the domain config (src/lib/theme.ts). */
-  --teal: 14 92 99;
-  --teal-deep: 10 70 76;
-  --teal-wash: 215 235 232;
-  --mint: 143 214 198;
-  --mint-light: 201 239 230;
-  --mint-deep: 63 156 144;
-  --night: 19 35 58;
-  --night-deep: 12 24 41;
+  --teal: 26 26 26;
+  --teal-deep: 0 0 0;
+  --teal-wash: 247 235 255;
+  --mint: 240 215 255;
+  --mint-light: 247 235 255;
+  --mint-deep: 150 90 206;
+  --night: 26 26 26;
+  --night-deep: 15 15 15;
   color-scheme: light;
 }
 html {
@@ -42,7 +42,7 @@ a {
 @layer components {
   /* The one filled button per screen: 60px, full width, thumb zone. */
   .btn-main {
-    @apply flex w-full items-center justify-center gap-3 rounded-2xl bg-teal px-6 text-[1.25rem] font-semibold text-white transition-colors active:bg-teal-deep disabled:opacity-50;
+    @apply flex w-full items-center justify-center gap-3 rounded-full bg-teal px-6 text-[1.25rem] font-semibold text-white transition-colors active:bg-teal-deep disabled:opacity-50;
     min-height: 3.75rem;
   }
   .btn-main.is-done {
@@ -68,37 +68,37 @@ a {
   }
   /* Hairline lists: a rule between rows only. */
   .rows > * + * {
-    border-top: 1px solid #d9d2c5;
+    border-top: 1px solid #deddd7;
   }
   .on-night .rows > * + * {
-    border-top-color: rgba(169, 183, 201, 0.25);
+    border-top-color: rgba(179, 178, 173, 0.22);
   }
   /* Sticky action zone that fades into the canvas (no border, no shadow). */
   .action-zone {
     @apply sticky bottom-0 z-20 px-5 pb-5 pt-8;
     padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
-    background: linear-gradient(to bottom, rgba(250, 247, 242, 0), #faf7f2 1.5rem);
+    background: linear-gradient(to bottom, rgba(252, 252, 251, 0), #fcfcfb 1.5rem);
   }
   .action-zone.on-sand {
-    background: linear-gradient(to bottom, rgba(239, 232, 220, 0), #efe8dc 1.5rem);
+    background: linear-gradient(to bottom, rgba(238, 235, 227, 0), #eeebe3 1.5rem);
   }
   .action-zone.on-night {
     background: linear-gradient(to bottom, rgb(var(--night) / 0), rgb(var(--night)) 1.5rem);
   }
   .action-zone.on-ok {
-    background: linear-gradient(to bottom, rgba(227, 239, 230, 0), #e3efe6 1.5rem);
+    background: linear-gradient(to bottom, rgba(226, 245, 242, 0), #e2f5f2 1.5rem);
   }
   /* Underline-only input (the rare typed fallback): no box. */
   .line-input {
     @apply w-full bg-transparent py-3 text-[1.25rem] outline-none;
-    border-bottom: 2px solid #6b665d;
+    border-bottom: 2px solid #71716e;
   }
   .line-input:focus {
     border-bottom-color: rgb(var(--teal));
   }
   .on-night .line-input {
     @apply text-night-text;
-    border-bottom-color: #a9b7c9;
+    border-bottom-color: #b3b2ad;
   }
   .on-night .line-input:focus {
     border-bottom-color: rgb(var(--mint));
@@ -162,7 +162,7 @@ a {
   position: absolute;
   inset: -2.25rem;
   border-radius: 9999px;
-  background: radial-gradient(circle, rgb(var(--mint) / 0.55) 0%, rgb(var(--mint) / 0.18) 45%, rgb(var(--mint) / 0) 70%);
+  background: radial-gradient(circle, rgb(var(--mint) / 0.5) 0%, rgba(255, 188, 242, 0.22) 42%, rgba(255, 169, 70, 0) 70%);
   transform: scale(var(--level, 1));
   transition: transform 160ms ease-out;
 }
@@ -170,7 +170,9 @@ a {
   position: absolute;
   inset: 0;
   border-radius: 9999px;
-  background: radial-gradient(circle at 35% 30%, rgb(var(--mint-light)) 0%, rgb(var(--mint)) 38%, rgb(var(--mint-deep)) 100%);
+  /* Flow Bar pastels: accent -> blush -> peach */
+  background: radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 38%),
+    linear-gradient(140deg, rgb(var(--mint)) 0%, #ffbcf2 48%, #ffa946 100%);
   box-shadow: inset 0 -10px 30px rgb(var(--night-deep) / 0.35);
 }
 .presence[data-state='idle'] .glow,
@@ -178,11 +180,12 @@ a {
   animation: breathe 5s ease-in-out infinite;
 }
 .presence[data-state='listening'] .core {
-  background: radial-gradient(circle at 35% 30%, #ffffff 0%, rgb(var(--mint-light)) 35%, rgb(var(--mint-deep)) 100%);
+  background: radial-gradient(circle at 30% 24%, #ffffff 0%, rgba(255, 255, 255, 0) 34%),
+    linear-gradient(140deg, rgb(var(--mint-light)) 0%, #ffbcf2 40%, #ff6c4c 78%, #ffa946 100%);
 }
 .presence[data-state='thinking'] .core {
   animation: shimmer 2.4s linear infinite;
-  background: conic-gradient(from 0deg, rgb(var(--mint)), rgb(var(--mint-deep)), rgb(var(--mint-light)), rgb(var(--mint)));
+  background: conic-gradient(from 0deg, rgb(var(--mint)), #ffbcf2, #ffa946, rgb(var(--mint-deep)), rgb(var(--mint)));
 }
 .presence[data-state='speaking'] .ring {
   animation: ripple 1.6s ease-out infinite;
@@ -200,7 +203,7 @@ a {
 .presence[data-state='off'] .core {
   background: transparent;
   box-shadow: none;
-  border: 2px solid #a9b7c9;
+  border: 2px solid #b3b2ad;
 }
 .presence[data-state='off'] .glow {
   opacity: 0;
@@ -304,4 +307,19 @@ a {
   .tick-path {
     stroke-dashoffset: 0;
   }
+}
+
+/* Flow-style segmented level meter (chord purple) under the presence while listening. */
+.meter {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+}
+.meter i {
+  width: 5px;
+  border-radius: 9999px;
+  background: linear-gradient(to top, #965ace, #f0d7ff);
+  height: calc(4px + 16px * var(--h, 0.2));
+  transition: height 120ms ease-out;
 }

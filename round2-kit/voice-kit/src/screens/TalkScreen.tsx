@@ -327,7 +327,7 @@ export function TalkScreen(props: {
       <main className="flex-1 px-5 pb-2">
         {storyMode && !mic.listening && !thinking ? (
           <section className="pt-6 fade-in" data-testid="greeting">
-            <p className="text-lg text-night-muted">{ui.tx(cfg.copy.greeting)}</p>
+            <p className="font-accent italic text-[1.7rem] leading-snug text-mint">{ui.tx(cfg.copy.greeting)}</p>
             <h1 className="mt-2 text-display font-display text-night-text">{ui.tx(cfg.copy.openQ)}</h1>
             <p className="mt-3 text-lg text-night-muted">{ui.tx(cfg.copy.openEx)}</p>
             {micReady ? <p className="mt-6 text-base text-night-muted">{t('likeWhatsapp')}</p> : null}

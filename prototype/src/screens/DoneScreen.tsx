@@ -24,7 +24,7 @@ export function DoneScreen(props: { ui: UI; report: Report; onWritten: () => voi
       <main className="flex-1 page-in">
         <section className="px-5 pt-6">
           <svg viewBox="0 0 96 96" className="w-24 h-24" aria-hidden>
-            <circle className="tick-circle" cx="48" cy="48" r="46" fill="#1E6B43" style={{ transformOrigin: 'center' }} />
+            <circle className="tick-circle" cx="48" cy="48" r="46" fill="#034F46" style={{ transformOrigin: 'center' }} />
             <path className="tick-path" d="M30 49 L43 62 L67 36" fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           <h1 className="mt-5 text-display font-display text-ink" data-testid="ready-title">

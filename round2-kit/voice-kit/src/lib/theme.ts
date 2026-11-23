@@ -2,7 +2,8 @@
 // action colour (teal), the night-band accent (mint) and the night band itself.
 import type { DomainConfig } from '../domain/types';
 
-const DEFAULTS = { primary: '#0E5C63', accent: '#8FD6C6', night: '#13233A' };
+// Default = Wispr Flow design language: black pill actions (vast-950), dawn lilac accent, Flow Bar black.
+const DEFAULTS = { primary: '#1A1A1A', accent: '#F0D7FF', night: '#1A1A1A' };
 
 function rgb(hex: string): [number, number, number] {
   const h = hex.replace('#', '');
@@ -20,7 +21,7 @@ export function themeVars(theme: DomainConfig['theme'] = {}): Record<string, str
   return {
     '--teal': css(p),
     '--teal-deep': css(mix(p, 0, 0.25)),
-    '--teal-wash': css(mix(p, 255, 0.84)),
+    '--teal-wash': theme.primary ? css(mix(p, 255, 0.84)) : '247 235 255', // dawn-300 on the default theme
     '--mint': css(a),
     '--mint-light': css(mix(a, 255, 0.55)),
     '--mint-deep': css(mix(a, 0, 0.32)),

@@ -38,7 +38,7 @@ export default defineDomain({
   id: 'civic',
   name: { 'en-IN': 'Nagarika', 'kn-IN': 'ನಾಗರಿಕ', 'hi-IN': 'नागरिक' },
   tagline: { 'en-IN': 'Report a civic problem by voice.', 'kn-IN': 'ನಗರದ ಸಮಸ್ಯೆಯನ್ನು ಮಾತಿನಲ್ಲೇ ದೂರು ನೀಡಿ.', 'hi-IN': 'शहर की समस्या, बोलकर शिकायत।' },
-  theme: { primary: '#9A3412', accent: '#F5B38A' },
+  theme: {}, // Wispr Flow default theme (src/lib/theme.ts)
   languages: ['kn-IN', 'en-IN', 'hi-IN'],
   slots: [
     {

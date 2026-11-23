@@ -80,7 +80,7 @@ export default defineDomain({
   id: 'health',
   name: { 'en-IN': 'Nalam', 'ta-IN': 'நலம்', 'hi-IN': 'नलम' },
   tagline: { 'en-IN': 'Say the symptoms. The doctor gets an English note.', 'ta-IN': 'அறிகுறிகளைச் சொல்லுங்கள். மருத்துவருக்கு ஆங்கிலக் குறிப்பு கிடைக்கும்.', 'hi-IN': 'लक्षण बोलिए। डॉक्टर को अंग्रेज़ी नोट मिलेगा।' },
-  theme: { primary: '#1F5FA8', accent: '#9CC8F5' },
+  theme: {}, // Wispr Flow default theme (src/lib/theme.ts)
   languages: ['ta-IN', 'en-IN', 'hi-IN'],
   slots: [
     {

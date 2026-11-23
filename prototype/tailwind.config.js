@@ -1,27 +1,35 @@
 /** @type {import('tailwindcss').Config} */
-// Tokens from research/DESIGN_SPEC.md (contrast-checked palette, Indic-safe type).
+// Layout rules: research/DESIGN_SPEC.md. Visual tokens: Wispr Flow design language.
 export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
+      // Wispr Flow design language (research/wispr-flow-teardown.md): sand paper, vast ink,
+      // dawn lilac, fathom teal, chord purple. Class names kept so components didn't change.
       colors: {
-        paper: '#FAF7F2',
-        ink: '#1C1B18',
-        body: '#45423C',
-        muted: '#6B665D',
-        hair: '#D9D2C5',
-        teal: { DEFAULT: '#0E5C63', deep: '#0A464C', wash: '#D7EBE8' },
-        night: { DEFAULT: '#13233A', deep: '#0C1829', text: '#F4EFE6', muted: '#A9B7C9' },
-        mint: '#8FD6C6',
-        sand: '#EFE8DC',
-        ok: { DEFAULT: '#1E6B43', field: '#E3EFE6' },
-        amber: { DEFAULT: '#7A4B00', field: '#FBEFD5' },
+        paper: '#FCFCFB', // sand-50
+        ink: '#1A1A1A', // vast-950
+        body: '#464544', // vast-800
+        muted: '#71716E', // vast-600 (4.6:1 on paper)
+        hair: '#DEDDD7', // vast-100
+        teal: { DEFAULT: '#1A1A1A', deep: '#000000', wash: '#F7EBFF' }, // action = black pill (Wispr primary), wash = dawn-300
+        night: { DEFAULT: '#1A1A1A', deep: '#0F0F0F', text: '#FCFCFB', muted: '#B3B2AD' }, // Flow Bar black
+        mint: '#F0D7FF', // dawn-500, the accent on black
+        sand: '#EEEBE3', // sand-600 band
+        dawn: { 100: '#FCF7FF', 300: '#F7EBFF', 500: '#F0D7FF', 700: '#A26EC1', 800: '#6C358C' },
+        chord: { 500: '#965ACE', 600: '#7232A6' },
+        peach: '#FFA946',
+        coral: '#FF6C4C',
+        blush: '#FFBCF2',
+        ok: { DEFAULT: '#034F46', field: '#E2F5F2' }, // fathom
+        amber: { DEFAULT: '#7A4B00', field: '#FFF1E3' },
         stop: '#A1271B',
       },
       fontFamily: {
-        sans: ['"Noto Sans"', '"Noto Sans Devanagari"', '"Noto Sans Tamil"', '"Noto Sans Bengali"', '"Noto Sans Telugu"', '"Noto Sans Kannada"', '"Nirmala UI"', 'Roboto', 'system-ui', 'sans-serif'],
-        display: ['Mukta', '"Noto Sans"', '"Noto Sans Devanagari"', '"Nirmala UI"', 'system-ui', 'sans-serif'],
-        serif: ['"Tiro Devanagari Hindi"', '"Noto Serif"', '"Noto Serif Devanagari"', 'Georgia', 'serif'],
+        sans: ['Figtree', '"Noto Sans"', '"Noto Sans Devanagari"', '"Noto Sans Tamil"', '"Noto Sans Bengali"', '"Noto Sans Telugu"', '"Noto Sans Kannada"', '"Nirmala UI"', 'system-ui', 'sans-serif'],
+        display: ['Figtree', '"Noto Sans Devanagari"', '"Noto Sans Tamil"', '"Nirmala UI"', 'system-ui', 'sans-serif'],
+        accent: ['"EB Garamond"', '"Tiro Devanagari Hindi"', '"Noto Serif Devanagari"', 'Georgia', 'serif'],
+        serif: ['"EB Garamond"', '"Tiro Devanagari Hindi"', '"Noto Serif"', '"Noto Serif Devanagari"', 'Georgia', 'serif'],
       },
       fontSize: {
         hero: ['3rem', { lineHeight: '1.25', fontWeight: '700' }],

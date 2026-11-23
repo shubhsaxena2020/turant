@@ -22,18 +22,18 @@ a {
   touch-action: manipulation;
 }
 :focus-visible {
-  outline: 3px solid #0e5c63;
+  outline: 3px solid #1a1a1a;
   outline-offset: 3px;
   border-radius: 6px;
 }
 .on-night :focus-visible {
-  outline-color: #8fd6c6;
+  outline-color: #f0d7ff;
 }
 
 @layer components {
   /* The one filled button per screen: 60px, full width, thumb zone. */
   .btn-main {
-    @apply flex w-full items-center justify-center gap-3 rounded-2xl bg-teal px-6 text-[1.25rem] font-semibold text-white transition-colors active:bg-teal-deep disabled:opacity-50;
+    @apply flex w-full items-center justify-center gap-3 rounded-full bg-teal px-6 text-[1.25rem] font-semibold text-white transition-colors active:bg-teal-deep disabled:opacity-50;
     min-height: 3.75rem;
   }
   .btn-main.is-done {
@@ -44,11 +44,11 @@ a {
   }
   /* Text links: secondary actions, 48px hit area. */
   .link {
-    @apply inline-flex items-center gap-2 font-semibold text-teal underline decoration-2 underline-offset-[6px];
+    @apply inline-flex items-center gap-2 font-semibold text-teal underline decoration-2 underline-offset-[6px] decoration-dawn-700;
     min-height: 3rem;
   }
   .on-night .link {
-    @apply text-mint;
+    @apply text-mint decoration-dawn-500;
   }
   .link-quiet {
     @apply inline-flex items-center gap-2 font-medium text-muted underline decoration-1 underline-offset-[6px];
@@ -59,47 +59,47 @@ a {
   }
   /* Hairline lists: a rule between rows only. */
   .rows > * + * {
-    border-top: 1px solid #d9d2c5;
+    border-top: 1px solid #deddd7;
   }
   .on-night .rows > * + * {
-    border-top-color: rgba(169, 183, 201, 0.25);
+    border-top-color: rgba(179, 178, 173, 0.22);
   }
   /* Sticky action zone that fades into the canvas (no border, no shadow). */
   .action-zone {
     @apply sticky bottom-0 z-20 px-5 pb-5 pt-8;
     padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
-    background: linear-gradient(to bottom, rgba(250, 247, 242, 0), #faf7f2 1.5rem);
+    background: linear-gradient(to bottom, rgba(252, 252, 251, 0), #fcfcfb 1.5rem);
   }
   .action-zone.on-sand {
-    background: linear-gradient(to bottom, rgba(239, 232, 220, 0), #efe8dc 1.5rem);
+    background: linear-gradient(to bottom, rgba(238, 235, 227, 0), #eeebe3 1.5rem);
   }
   .action-zone.on-night {
-    background: linear-gradient(to bottom, rgba(19, 35, 58, 0), #13233a 1.5rem);
+    background: linear-gradient(to bottom, rgba(26, 26, 26, 0), #1a1a1a 1.5rem);
   }
   .action-zone.on-ok {
-    background: linear-gradient(to bottom, rgba(227, 239, 230, 0), #e3efe6 1.5rem);
+    background: linear-gradient(to bottom, rgba(226, 245, 242, 0), #e2f5f2 1.5rem);
   }
   /* Underline-only input (the rare typed fallback): no box. */
   .line-input {
     @apply w-full bg-transparent py-3 text-[1.25rem] outline-none;
-    border-bottom: 2px solid #6b665d;
+    border-bottom: 2px solid #71716e;
   }
   .line-input:focus {
-    border-bottom-color: #0e5c63;
+    border-bottom-color: #1a1a1a;
   }
   .on-night .line-input {
     @apply text-night-text;
-    border-bottom-color: #a9b7c9;
+    border-bottom-color: #b3b2ad;
   }
   .on-night .line-input:focus {
-    border-bottom-color: #8fd6c6;
+    border-bottom-color: #f0d7ff;
   }
 }
 
-/* Facts inside the letter: weight + highlighter wash, never a box. */
+/* Facts inside the letter: weight + a lilac highlighter wash (Wispr dawn), never a box. */
 .fact {
   font-weight: 700;
-  background-image: linear-gradient(transparent 58%, rgba(143, 214, 198, 0.38) 58%);
+  background-image: linear-gradient(transparent 58%, rgba(240, 215, 255, 0.34) 58%);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 0 0.1em;
@@ -107,7 +107,7 @@ a {
   box-decoration-break: clone;
 }
 .on-paper .fact {
-  background-image: linear-gradient(transparent 58%, rgba(14, 92, 99, 0.16) 58%);
+  background-image: linear-gradient(transparent 58%, rgba(240, 215, 255, 0.95) 58%);
 }
 .fact.is-new {
   animation: sweep 700ms ease-out both;
@@ -131,7 +131,7 @@ a {
 }
 .gap.is-asking {
   opacity: 1;
-  color: #8fd6c6;
+  color: #f0d7ff;
   animation: blink 1.6s ease-in-out infinite;
 }
 @keyframes blink {
@@ -153,7 +153,8 @@ a {
   position: absolute;
   inset: -2.25rem;
   border-radius: 9999px;
-  background: radial-gradient(circle, rgba(143, 214, 198, 0.55) 0%, rgba(143, 214, 198, 0.18) 45%, rgba(143, 214, 198, 0) 70%);
+  /* Flow Bar pastels: lilac -> blush -> peach */
+  background: radial-gradient(circle, rgba(240, 215, 255, 0.5) 0%, rgba(255, 188, 242, 0.22) 42%, rgba(255, 169, 70, 0) 70%);
   transform: scale(var(--level, 1));
   transition: transform 160ms ease-out;
 }
@@ -161,19 +162,21 @@ a {
   position: absolute;
   inset: 0;
   border-radius: 9999px;
-  background: radial-gradient(circle at 35% 30%, #c9efe6 0%, #8fd6c6 38%, #3f9c90 100%);
-  box-shadow: inset 0 -10px 30px rgba(12, 24, 41, 0.35);
+  background: radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 38%),
+    linear-gradient(140deg, #f0d7ff 0%, #ffbcf2 48%, #ffa946 100%);
+  box-shadow: inset 0 -12px 28px rgba(114, 50, 166, 0.28), 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 .presence[data-state='idle'] .glow,
 .presence[data-state='idle'] .core {
   animation: breathe 5s ease-in-out infinite;
 }
 .presence[data-state='listening'] .core {
-  background: radial-gradient(circle at 35% 30%, #ffffff 0%, #b5ece0 35%, #5cb8a9 100%);
+  background: radial-gradient(circle at 30% 24%, #ffffff 0%, rgba(255, 255, 255, 0) 34%),
+    linear-gradient(140deg, #f7ebff 0%, #ffbcf2 40%, #ff6c4c 78%, #ffa946 100%);
 }
 .presence[data-state='thinking'] .core {
   animation: shimmer 2.4s linear infinite;
-  background: conic-gradient(from 0deg, #8fd6c6, #5cb8a9, #c9efe6, #8fd6c6);
+  background: conic-gradient(from 0deg, #f0d7ff, #ffbcf2, #ffa946, #965ace, #f0d7ff);
 }
 .presence[data-state='speaking'] .ring {
   animation: ripple 1.6s ease-out infinite;
@@ -182,7 +185,7 @@ a {
   position: absolute;
   inset: 0;
   border-radius: 9999px;
-  border: 2px solid rgba(143, 214, 198, 0.7);
+  border: 2px solid rgba(240, 215, 255, 0.75);
   opacity: 0;
 }
 .presence[data-state='speaking'] .ring.r2 {
@@ -191,7 +194,7 @@ a {
 .presence[data-state='off'] .core {
   background: transparent;
   box-shadow: none;
-  border: 2px solid #a9b7c9;
+  border: 2px solid #b3b2ad;
 }
 .presence[data-state='off'] .glow {
   opacity: 0;
@@ -295,4 +298,19 @@ a {
   .tick-path {
     stroke-dashoffset: 0;
   }
+}
+
+/* Flow-style segmented level meter (chord purple) under the presence while listening. */
+.meter {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 22px;
+}
+.meter i {
+  width: 5px;
+  border-radius: 9999px;
+  background: linear-gradient(to top, #965ace, #f0d7ff);
+  height: calc(4px + 16px * var(--h, 0.2));
+  transition: height 120ms ease-out;
 }

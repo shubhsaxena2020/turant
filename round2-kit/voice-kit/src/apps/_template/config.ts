@@ -10,7 +10,7 @@ export default defineDomain({
   id: '__ID__',
   name: { 'en-IN': 'Saathi', 'hi-IN': 'साथी' }, // TODO: app name (top bar)
   tagline: { 'en-IN': 'Say it in your language. I write it down.', 'hi-IN': 'अपनी भाषा में बोलिए। मैं लिख लूँगा।' },
-  theme: { primary: '#0E5C63', accent: '#8FD6C6' }, // TODO: action colour + night accent (keep contrast >= 4.5:1)
+  theme: {}, // Wispr Flow default; override primary/accent/night only if the brief needs it (keep contrast >= 4.5:1)
   languages: ['hi-IN', 'en-IN'], // first one is the default; add 'ta-IN' / 'kn-IN' / 'bn-IN' copy below to add a language
 
   slots: [
