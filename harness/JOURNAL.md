@@ -117,8 +117,7 @@ The one thing it did better, garbled bank names, we then taught the offline matc
 For the Round 2 problem, whatever it turns out to be, this harness scores any voice-kit app on a text corpus, matching every field by its slot type:
 
 ```
-..ound2-kit\indic-numbers
-ode_modules\.bin	sx kit_apps_eval.mjs [app] [--corpus kit|kit-heldout] [--show]
+..\round2-kit\indic-numbers\node_modules\.bin\tsx kit_apps_eval.mjs [app] [--corpus kit|kit-heldout] [--show]
 ```
 
 Results, by corpus:
