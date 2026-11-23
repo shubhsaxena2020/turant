@@ -77,7 +77,8 @@ function clockHours(text: string, toks: string[]): number | undefined {
     const bnTa = !bnAt && BN_TA.test(toks[i]) && (toks[i + 1] ?? '').startsWith('বাজ');
     if (bnAt || bnTa) {
       const stem = toks[i].replace(bnAt ? BN_AT : BN_TA, '');
-      const p = wordParts(stem);
+      // "4টায়" is split into "4" + "টায়" by the tokenizer: the hour is the previous token
+      const p = stem ? wordParts(stem) : i > 0 ? wordParts(toks[i - 1]) : undefined;
       if (p) {
         const prev = i > 0 ? wordParts(toks[i - 1]) : undefined;
         const half = prev?.some((x) => 'half' in x) ? 0.5 : 0;
@@ -85,9 +86,9 @@ function clockHours(text: string, toks: string[]): number | undefined {
         if (v !== undefined && v <= 12) return v + half;
       }
     }
-    if (has(toks[i], OCLOCK) && i > 0) {
-      // number words right before "बजे" (saade nau baje, ढाई बजे, 7 मणिक्कु)
-      let j = i - 1;
+    if ((has(toks[i], OCLOCK) || toks[i] === 'clock') && i > 0) {
+      // number words right before "बजे" (saade nau baje, ढाई बजे, 7 मणिक्कु, "four o'clock")
+      let j = toks[i] === 'clock' && toks[i - 1] === 'o' ? i - 2 : i - 1;
       const parts = [];
       while (j >= 0 && j >= i - 3) {
         const p = wordParts(toks[j]);

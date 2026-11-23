@@ -43,6 +43,21 @@ function render(lang: string): [number, string] {
   return [v, parts.join(' ')];
 }
 
+// Tamil: thousands and hundreds are glued compounds (இரண்டாயிரத்து ஐநூறு).
+const TA_K: Record<number, string> = { 1: 'ஆயிரம்', 2: 'இரண்டாயிரம்', 3: 'மூவாயிரம்', 4: 'நாலாயிரம்', 5: 'ஐயாயிரம்', 6: 'ஆறாயிரம்', 7: 'ஏழாயிரம்', 8: 'எட்டாயிரம்', 9: 'ஒன்பதாயிரம்', 10: 'பத்தாயிரம்', 12: 'பன்னிரண்டாயிரம்', 15: 'பதினைந்தாயிரம்', 20: 'இருபதாயிரம்', 30: 'முப்பதாயிரம்', 40: 'நாற்பதாயிரம்', 47: 'நாற்பத்தேழாயிரம்', 50: 'ஐம்பதாயிரம்', 70: 'எழுபதாயிரம்' };
+const TA_H: Record<number, string> = { 1: 'நூறு', 2: 'இருநூறு', 3: 'முந்நூறு', 4: 'நானூறு', 5: 'ஐநூறு', 6: 'அறுநூறு', 7: 'எழுநூறு', 8: 'எண்ணூறு', 9: 'தொள்ளாயிரம்' };
+function renderTa(): [number, string] {
+  const ks = Object.keys(TA_K).map(Number);
+  const k = pick(ks);
+  let v = k * 1000;
+  let w = TA_K[k];
+  if (rnd() < 0.5) { const h = 1 + Math.floor(rnd() * 9); v += h * 100; w = w.replace(/ம்$/, 'த்து') + ' ' + TA_H[h]; }
+  if (rnd() < 0.2) { const l = 1 + Math.floor(rnd() * 9); v += l * 100000; w = ['ஒரு', 'இரண்டு', 'மூன்று', 'நான்கு', 'ஐந்து', 'ஆறு', 'ஏழு', 'எட்டு', 'ஒன்பது'][l - 1] + ' லட்சம் ' + w; }
+  return [v, w];
+}
+const TA_TPL = ['என் அக்கவுண்ட்ல இருந்து {A} போச்சு', '{T} {A} அனுப்பினேன், {I}'];
+const TA_TIME = ['பத்து நிமிஷத்துக்கு முன்னாடி', 'நேற்று இரவு 10 மணிக்கு'];
+
 const n = Number(process.argv[2] ?? 2000);
 let total = 0, ok = 0;
 const fails: string[] = [];
@@ -53,12 +68,29 @@ for (const lang of Object.keys(L)) {
     let [v, words] = render(lang);
     // a third of the time: digits with Indian commas and ₹
     if (rnd() < 0.33) { words = (rnd() < 0.5 ? '₹' : '') + v.toLocaleString('en-IN'); }
+    else if ((lang === 'en' || lang === 'hi') && rnd() < 0.3 && / (sau|सौ) /.test(words + ' ') && v % 100 === 0) {
+      // "... do sau aur pachaas"
+      const tail = [20, 30, 40, 50][Math.floor(rnd() * 4)];
+      v += tail; words += (lang === 'en' ? ' aur ' : ' और ') + l.tens[tail];
+    }
     const text = pick(l.tpl).replace('{A}', `${words} ${l.cur}`).replace('{T}', pick(l.time)).replace('{I}', pick(l.ids));
     const got = findAmount(text);
     total++;
     if (got === v) { ok++; lok++; } else if (fails.length < 40) fails.push(`${lang} want ${v} got ${got} | ${text}`);
   }
   console.log(lang, `${lok}/${n}`);
+}
+{
+  let lok = 0;
+  for (let k = 0; k < n; k++) {
+    let [v, words] = renderTa();
+    if (rnd() < 0.25) words = '₹' + v.toLocaleString('en-IN');
+    const text = pick(TA_TPL).replace('{A}', `${words} ரூபாய்`).replace('{T}', pick(TA_TIME)).replace('{I}', 'நம்பர் 9876543210');
+    const got = findAmount(text);
+    total++;
+    if (got === v) { ok++; lok++; } else if (fails.length < 60) fails.push(`ta want ${v} got ${got} | ${text}`);
+  }
+  console.log('ta', `${lok}/${n}`);
 }
 console.log('ALL', `${ok}/${total}`, ((100 * ok) / total).toFixed(2) + '%');
 console.log(fails.join('\n'));
