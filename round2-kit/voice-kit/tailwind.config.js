@@ -16,6 +16,7 @@ export default {
         night: { DEFAULT: v('night'), deep: v('night-deep'), text: '#FCFCFB', muted: '#B3B2AD' },
         mint: v('mint'),
         sand: '#EEEBE3',
+        dawn: { 100: '#FCF7FF', 300: '#F7EBFF', 500: '#F0D7FF', 700: '#A26EC1', 800: '#6C358C' },
         ok: { DEFAULT: '#034F46', field: '#E2F5F2' }, // Wispr fathom
         amber: { DEFAULT: '#7A4B00', field: '#FFF1E3' },
         stop: '#A1271B',

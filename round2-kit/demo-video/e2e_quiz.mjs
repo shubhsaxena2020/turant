@@ -1,0 +1,35 @@
+import { chromium } from 'playwright-core';
+import { readdirSync, existsSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
+import { homedir } from 'node:os';
+const out = process.argv[2]; mkdirSync(out, { recursive: true });
+const base = join(homedir(), 'AppData', 'Local', 'ms-playwright');
+const dir = readdirSync(base).filter((d) => /^chromium-\d+$/.test(d)).sort().reverse()[0];
+const exe = ['chrome-win64', 'chrome-win'].map((s) => join(base, dir, s, 'chrome.exe')).find(existsSync);
+const b = await chromium.launch({ executablePath: exe });
+const p = await (await b.newContext({ viewport: { width: 390, height: 844 } })).newPage();
+const errors = [];
+p.on('pageerror', (e) => errors.push(e.message));
+await p.addInitScript(() => { window.speechSynthesis && (window.speechSynthesis.speak = (u) => setTimeout(() => u.onend && u.onend(new Event('end')), 200)); });
+await p.goto('http://localhost:4326/?app=quiz', { waitUntil: 'networkidle' });
+await p.screenshot({ path: join(out, 'q1-pick.png') });
+await p.click('[data-testid="quiz-sample"]');
+const log = [];
+for (let k = 0; k < 6; k++) {
+  const next = p.locator('[data-testid="quiz-next"]');
+  await next.waitFor({ timeout: 60000 });
+  const fb = await p.locator('[data-testid="quiz-feedback"]').innerText();
+  log.push(fb.replace(/\s+/g, ' ').slice(0, 90));
+  if (k === 0) await p.screenshot({ path: join(out, 'q2-right.png') });
+  if (/पता|सही जवाब/.test(fb)) await p.screenshot({ path: join(out, `q3-other-${k}.png`) });
+  const label = await next.innerText();
+  await next.click();
+  if (/नतीजा|See how/.test(label)) break;
+  await p.waitForTimeout(400);
+}
+await p.locator('[data-testid="quiz-done"]').waitFor({ timeout: 20000 });
+await p.waitForTimeout(500);
+await p.screenshot({ path: join(out, 'q4-done.png') });
+console.log(log.join('\n'));
+console.log('errors', errors.length ? errors : 'none');
+await b.close();
