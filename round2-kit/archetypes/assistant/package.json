@@ -1,0 +1,7 @@
+{
+  "name": "assistant-core",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "vitest run" },
+  "devDependencies": { "vitest": "2.1.8", "typescript": "5.6.3" }
+}
