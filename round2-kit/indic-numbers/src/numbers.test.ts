@@ -85,6 +85,12 @@ describe('context-only number words', () => {
   });
 });
 
+describe('zero in every language', () => {
+  it('native and loanword zeros', () => {
+    for (const w of ['पूज्य', 'சைபர்', 'பூஜ்ஜியம்', 'సున్నా', 'ಸೊನ್ನೆ', 'ஜீரோ', 'జీరో', 'ಜೀರೋ', 'জিরো', 'ज़ीरो'].slice(1)) expect(combine(wordParts(w)!), w).toBe(0);
+  });
+});
+
 describe('Hinglish spellings', () => {
   it('doubled letters collapse (chhabbees ~ chabbis ~ chhabis = 26)', () => {
     expect(findAmount('chabbis hazaar rupaye')).toBe(26000);

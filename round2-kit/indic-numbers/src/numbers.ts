@@ -9,7 +9,9 @@ const WORDS: Record<string, number> = {};
 const add = (v: number, ...ws: string[]) => ws.forEach((w) => (WORDS[w.normalize('NFC')] = v));
 
 // Hindi / Marathi (Devanagari + common Latin)
-add(0, 'शून्य', 'shunya', 'zero');
+add(0, 'शून्य', 'shunya', 'zero', 'ज़ीरो', 'जीरो', 'झीरो');
+// zero in ta / te / kn (was missing), and "zero" said in English in every script (phone and UTR read-outs)
+add(0, 'பூஜ்ஜியம்', 'பூஜ்யம்', 'சைபர்', 'ஜீரோ', 'సున్నా', 'సున్న', 'జీరో', 'ಸೊನ್ನೆ', 'ಶೂನ್ಯ', 'ಜೀರೋ', 'জিরো');
 add(1, 'एक', 'ek', 'one');
 add(2, 'दो', 'दोन', 'do', 'don', 'two');
 add(3, 'तीन', 'teen', 'tin', 'three');
