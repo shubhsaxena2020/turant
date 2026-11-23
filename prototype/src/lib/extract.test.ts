@@ -335,3 +335,35 @@ describe('report merge', () => {
     expect(pendingQuestions(report.fields, ['amount', 'utr'])).toEqual(['time', 'scamType', 'bank', 'suspect']);
   });
 });
+
+// Regressions found by harness/ (reference text and Whisper transcripts).
+describe('harness regressions', () => {
+  const x = (t: string, o = {}) => extractFields(t, { now: NOW, ...o });
+  it('cross-language amounts, times and banks', () => {
+    expect(x('என் SBI கணக்கிலிருந்து ஐயாயிரம் ரூபாயி போச்சு').amount?.value).toBe(5000);
+    expect(x('ಎರಡು ಲಕ್ಷರೂಪಾಯಿ ತೆಗೆದರು').amount?.value).toBe(200000);
+    expect(minutesAgo(x('পাঁচ মিনিট আগে কেটে গেছে').time?.value)).toBeCloseTo(5, 5);
+    expect(x('আমার স্টেট ব্যাংক থেকে টাকা গেছে').bank?.value).toBe('State Bank of India (SBI)');
+  });
+  it('investment, PAN-card and blackmail stories in every language', () => {
+    expect(x('টেলিগ্রামে পার্ট টাইম জবের টাস্ক দিয়েছিল, তারপর ইনভেস্ট করতে বলল').scamType?.value).toBe('investment_task');
+    expect(x('அப்புறம் இன்விஸ்ட் பண்ண சொன்னாங்க').scamType?.value).toBe('investment_task'); // ASR spelling
+    expect(x('अडीच लाख रुपये गुंतवणुकीच्या नावाखाली घेतले').scamType?.value).toBe('investment_task');
+    expect(x('बोला पैन कार्ड अपडेट करो वरना अकाउंट ब्लॉक हो जाएगा').scamType?.value).toBe('fake_kyc');
+    expect(x('they recorded it and are now blackmailing me').scamType?.value).toBe('sextortion');
+  });
+  it('IDs read out digit by digit', () => {
+    expect(x('पैसे कट गए, यूटीआर नंबर है 4 0 3 2 1 8 7 6 5 4 3 2, पाँच हज़ार रुपये').utr?.value).toBe('403218765432');
+    expect(x('যে অ্যাকাউন্টে টাকা গেছে তার নম্বর 5 0 1 0 0 2 3 4 5 6 7 8 1 2').suspectAccount?.value).toBe('50100234567812');
+    expect(x('ওর নম্বর নয় নয় আট আট সাত সাত ছয় ছয় পাঁচ পাঁচ').suspectPhone?.value).toBe('9988776655');
+    expect(x('அவன் நம்பர் ஒன்பது ஒன்பது எட்டு எட்டு ஏழு ஏழு ஆறு ஆறு ஐந்து ஐந்து').suspectPhone?.value).toBe('9988776655');
+    expect(x('The number that called me was plus 91 70112 23344').suspectPhone?.value).toBe('7011223344');
+  });
+  it('false positives the harness caught', () => {
+    expect(x('around 4,999 rupees').time).toBeUndefined();
+    expect(x('ರೆಕಾರ್ಡ್ ಮಾಡಿ ಈಗ ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್ ಮಾಡುತ್ತಿದ್ದಾರೆ').time).toBeUndefined();
+    expect(x('कस्टमर केयर का नंबर गूगल पे सर्च किया था').paymentApp).toBeUndefined();
+    expect(x('no, the bank was HDFC not SBI', { preferLast: true }).bank?.value).toBe('HDFC Bank');
+    expect(x('பேங்க் தப்பு SBI إல்லா HDFC', { preferLast: true }).bank?.value).toBe('HDFC Bank'); // garbled negator: last name wins
+  });
+});

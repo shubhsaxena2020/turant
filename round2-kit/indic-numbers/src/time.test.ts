@@ -80,5 +80,6 @@ describe('ASR misspellings', () => {
   it('folded matching does not turn ordinary words into time words', () => {
     expect(findTime('ஒரு மனிதன் கால் பண்ணாங்க', NOW)).toBeUndefined(); // மனிதன் = a person, not மணி
     expect(findTime('ఒక మనిషి ఫోన్ చేశాడు', NOW)).toBeUndefined();
+    expect(findTime('around 4,999 rupees', NOW)).toBeUndefined(); // an amount, not 4 o'clock
   });
 });

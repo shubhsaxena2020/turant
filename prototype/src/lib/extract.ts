@@ -3,7 +3,7 @@
 // Handles Hinglish (romanised Hindi), English, Devanagari Hindi/Marathi and the
 // most common words in Bengali, Tamil, Telugu and Kannada.
 
-import { findAmountHit } from './indic/numbers.ts';
+import { findAmountHit, fold, wordParts } from './indic/numbers.ts';
 import { findTime, type TimeHit } from './indic/time.ts';
 import { findBank } from './indic/bank.ts';
 
@@ -221,7 +221,7 @@ const DAY_WORDS: [number, string[]][] = [
   [-1, ['kal', 'kaal', 'yesterday', 'कल', 'काल', 'গতকাল', 'কাল', 'நேற்று', 'నిన్న', 'ನಿನ್ನೆ']],
   [-2, ['parso', 'parson', 'parsoon', 'परसों', 'परसो', 'परवा', 'পরশু', 'முந்தாநாள்', 'మొన్న', 'ಮೊನ್ನೆ']],
 ];
-const NOW_WORDS = ['abhi', 'abhi abhi', 'just now', 'right now', 'abhi turant', 'अभी', 'अभी अभी', 'आत्ता', 'आताच', 'এইমাত্র', 'এখনই', 'இப்போது', 'இப்பொழுது', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ', 'ಈಗ'];
+const NOW_WORDS = ['abhi', 'abhi abhi', 'just now', 'right now', 'abhi turant', 'अभी', 'अभी अभी', 'आत्ता', 'आताच', 'এইমাত্র', 'এখনই', 'இப்போது', 'இப்பொழுது', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ'];
 
 const DEBIT_EXACT = set(['kat', 'kaat', 'kate', 'kati', 'kata', 'cut', 'debit', 'debited', 'deducted', 'gaye', 'gaya', 'gye', 'gya', 'lost', 'loss', 'nikal', 'nikle', 'nikla', 'transfer', 'transferred', 'bheja', 'bheje', 'bhej', 'sent', 'paid', 'liya', 'liye', 'chale', 'chala', 'withdrawn', 'fraud']);
 const DEBIT_PREFIX = ['कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ'].map(nw);
@@ -294,6 +294,8 @@ export function findNumberRuns(tokens: string[]): NumRun[] {
     while (j < tokens.length) {
       const k = numKind(tokens[j]);
       if (!k) break;
+      // Digits read out one by one are an ID; the next number word starts a new quantity ("…3 2, पाँच हज़ार").
+      if (kinds.length >= 2 && k.kind !== 'digits' && kinds.every((x) => x.kind === 'digits' && x.raw.length === 1)) break;
       // A long digit block never belongs to a spoken quantity ("ref no 4567...").
       if (isLongDigits(k) && kinds.some((x) => x.kind !== 'digits')) break;
       if (kinds.some(isLongDigits) && k.kind !== 'digits') break;
@@ -441,6 +443,11 @@ function hasPhrase(text: string, phrases: string[]): number {
       idx = m ? m.index + m[1].length : -1;
     } else {
       idx = text.indexOf(k);
+      // ASR spells native words a letter off (இன்விஸ்ட் for இன்வெஸ்ட்): compare sound-alike keys too.
+      if (idx < 0) {
+        const fk = fold(k);
+        if ([...fk].length >= 4) idx = fold(text).indexOf(fk);
+      }
     }
     if (idx >= 0 && (found < 0 || idx < found)) found = idx;
   }
@@ -550,11 +557,11 @@ function extractTime(text: string, tokens: string[], runs: NumRun[], opts: Extra
 }
 
 const SCAM_RULES: [ScamType, string[]][] = [
-  ['sextortion', ['sextortion', 'nude', 'naked', 'video call record', 'blackmail', 'viral kar', 'obscene', 'अश्लील', 'ब्लैकमेल', 'न्यूड', 'ব্ল্যাকমেইল', 'மிரட்டல்', 'బ్లాక్‌మెయిల్', 'ब्लॅकमेल', 'ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್']],
-  ['investment_task', ['investment', 'invest', 'trading', 'stock tip', 'crypto', 'bitcoin', 'task', 'tasks', 'part time job', 'part-time job', 'work from home', 'youtube like', 'like karne', 'rating task', 'telegram', 'paisa double', 'double ho', 'high return', 'निवेश', 'टास्क', 'ट्रेडिंग', 'टेलीग्राम', 'বিনিয়োগ', 'முதலீடு', 'పెట్టుబడి', 'गुंतवणूक', 'ಹೂಡಿಕೆ']],
+  ['sextortion', ['sextortion', 'nude', 'naked', 'video call record', 'blackmail', 'blackmailing', 'blackmailed', 'viral kar', 'obscene', 'अश्लील', 'ब्लैकमेल', 'न्यूड', 'ব্ল্যাকমেইল', 'மிரட்டல்', 'బ్లాక్‌మెయిల్', 'ब्लॅकमेल', 'ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್']],
+  ['investment_task', ['investment', 'invest', 'trading', 'stock tip', 'crypto', 'bitcoin', 'task', 'tasks', 'part time job', 'part-time job', 'work from home', 'youtube like', 'like karne', 'rating task', 'telegram', 'paisa double', 'double ho', 'high return', 'निवेश', 'टास्क', 'ट्रेडिंग', 'टेलीग्राम', 'इन्वेस्ट', 'डबल हो', 'दुप्पट', 'गुंतवणु', 'বিনিয়োগ', 'ইনভেস্ট', 'ডাবল', 'টেলিগ্রাম', 'টাস্ক', 'முதலீடு', 'இன்வெஸ்ட்', 'டெலிகிராம்', 'டாஸ்க்', 'పెట్టుబడి', 'ఇన్వెస్ట్', 'టెలిగ్రామ్', 'టాస్క్', 'गुंतवणूक', 'ಹೂಡಿಕೆ', 'ಇನ್ವೆಸ್ಟ್', 'ಟೆಲಿಗ್ರಾಮ್', 'ಟಾಸ್ಕ್']],
   ['qr_scan', ['qr', 'qr code', 'scan', 'scanner', 'scanned', 'क्यूआर', 'स्कैन', 'স্ক্যান', 'কিউআর', 'ஸ்கேன்', 'స్కాన్', 'स्कॅन', 'ಸ್ಕ್ಯಾನ್']],
   ['fake_customer_care', ['customer care', 'customer service', 'customer support', 'helpline number', 'care number', 'anydesk', 'any desk', 'teamviewer', 'screen share', 'quick support', 'कस्टमर केयर', 'कस्टमर केअर', 'কাস্টমার কেয়ার', 'கஸ்டமர் கேர்', 'కస్టమర్ కేర్', 'ಕಸ್ಟಮರ್ ಕೇರ್']],
-  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद']],
+  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
   ['wrong_transfer', ['galti se', 'galati se', 'by mistake', 'mistakenly', 'wrong transfer', 'wrongly sent', 'refund', 'paise wapas', 'paisa wapas', 'wapas bhej', 'return the money', 'गलती से', 'वापस भेज', 'रिफंड', 'ভুল করে', 'রিফান্ড', 'தவறுதலாக', 'పొరపాటున', 'चुकून', 'ತಪ್ಪಾಗಿ']],
   ['otp_shared', ['otp', 'ओटीपी', 'ওটিপি', 'ஓடிபி', 'ఓటీపీ', 'ಒಟಿಪಿ', 'code bataya', 'code bata diya', 'pin bataya', 'pin bata diya']],
 ];
@@ -638,6 +645,8 @@ function extractPaymentApp(text: string): Extracted<string> | undefined {
     const idx = hasPhrase(text, app.keys);
     if (idx >= 0 && (!best || idx < best.idx)) best = { name: app.name, idx };
   }
+  // "गूगल पे सर्च किया" = searched on Google, not Google Pay.
+  if (best?.name === 'Google Pay' && /(google pe|गूगल पे)\s+(search|सर्च|ढूंढ|देख)/.test(text) && hasPhrase(text, ['gpay', 'google pay se', 'गूगल पे से']) < 0) best = undefined;
   if (!best) {
     // "phone pe" in Hindi also means "on the phone"; accept it only as an app mention.
     const m = /(^|[^a-z])(phone pe|फोन पे)\s+(se|app|ऐप|से|upi|यूपीआई)/.exec(text);
@@ -677,19 +686,45 @@ function extractUpis(prepped: string): { ids: string[]; rest: string } {
   return { ids, rest };
 }
 
+// Native-script ID context words, matched as stems on the sound-alike key (অ্যাকাউন্টে, खात्यात, அக்கவுண்ட்ல).
+const ACCOUNT_STEMS = ['अकाउंट', 'खात', 'অ্যাকাউন্ট', 'একাউন্ট', 'খাত', 'அக்கவுண்ட்', 'கணக்க', 'అకౌంట్', 'ఖాతా', 'ಅಕೌಂಟ್', 'ಖಾತೆ'].map(fold);
+const UTR_STEMS = ['यूटीआर', 'यूपीआय रेफरन्स', 'रेफरन्स', 'रेफरेंस', 'ইউটিআর', 'রেফারেন্স', 'யூடிஆர்', 'యూటీఆర్', 'ಯುಟಿಆರ್'].map(fold);
+const nativeStem = (t: string, stems: string[]) => /[^\x00-\x7f]/.test(t) && stems.some((st) => fold(t).startsWith(st));
+
+/** Native-script digits read out one word at a time (নয় নয় আট আট…, ஒன்பது ஒன்பது எட்டு…): an ID, never an amount. */
+function spokenDigitRuns(tokens: string[]): { start: number; digits: string }[] {
+  const out: { start: number; digits: string }[] = [];
+  const digit = (t: string) => {
+    if (!/[^\x00-\x7f]/.test(t)) return undefined;
+    // inside a read-out run, short words may be repaired too (normalize() drops the nukta: নয় -> নয)
+    const p = wordParts(t, 2);
+    return p?.length === 1 && 'v' in p[0] && Number.isInteger(p[0].v) && p[0].v <= 9 ? String(p[0].v) : undefined;
+  };
+  let i = 0;
+  while (i < tokens.length) {
+    let j = i;
+    let d = '';
+    for (let x = digit(tokens[j]); x !== undefined && j < tokens.length; x = digit(tokens[++j])) d += x;
+    if (d.length >= 7) out.push({ start: i, digits: d });
+    i = Math.max(j, i + 1);
+  }
+  return out;
+}
+
 function extractIds(tokens: string[], runs: NumRun[], opts: ExtractOptions) {
   const out: Pick<Extraction, 'utr' | 'suspectPhone' | 'suspectAccount'> = {};
-  for (const r of runs) {
-    if (!r.isSeq) continue;
+  const seqs = [...runs.filter((r) => r.isSeq).map((r) => ({ start: r.start, digits: r.digits })), ...spokenDigitRuns(tokens)].sort((a, b) => a.start - b.start);
+  for (const r of seqs) {
     const d = r.digits;
-    const ctx = tokens.slice(Math.max(0, r.start - 4), r.start);
-    const ctxUtr = ctx.some((t) => UTR_CTX.has(t));
+    const ctx = tokens.slice(Math.max(0, r.start - 6), r.start);
+    const ctxUtr = ctx.some((t) => UTR_CTX.has(t) || nativeStem(t, UTR_STEMS));
     const ctxPhone = ctx.some((t) => PHONE_CTX.has(t));
-    const ctxAcct = ctx.some((t) => ACCOUNT_CTX.has(t));
+    const ctxAcct = ctx.some((t) => ACCOUNT_CTX.has(t) || nativeStem(t, ACCOUNT_STEMS));
+    const plus = tokens[r.start - 1] === 'plus' || tokens[r.start - 1] === '+';
     const put = <K extends keyof typeof out>(k: K, v: string, c: number) => {
       if (!out[k] || opts.preferLast) out[k] = { value: v, confidence: c };
     };
-    if (d.length === 12 && !(ctxPhone && /^91[6-9]/.test(d)) && !(ctxAcct && !ctxUtr)) {
+    if (d.length === 12 && !((ctxPhone || plus) && /^91[6-9]/.test(d)) && !(ctxAcct && !ctxUtr)) {
       put('utr', d, ctxUtr || opts.hint === 'utr' ? 0.95 : 0.85);
     } else if (d.length === 10 && /^[6-9]/.test(d)) {
       put('suspectPhone', d, ctxPhone || opts.hint === 'suspect' ? 0.95 : 0.85);
@@ -757,7 +792,9 @@ export function extractFields(text: string, opts: ExtractOptions = {}): Extracti
   if (time) out.time = time;
   const scam = extractScamType(cleaned, opts);
   if (scam) out.scamType = scam;
-  const bank = extractBank(cleaned, opts) ?? indicBank(text);
+  // In a correction ("HDFC, not SBI") the cross-language matcher reads the negation; the rule only takes the last name.
+  const negated = /(^|[^a-z])(not|no|nahi)([^a-z]|$)/i.test(text) || /नहीं|नही|नाही|না|இல்ல|కాదు|ಅಲ್ಲ|ಇಲ್ಲ/.test(text.normalize('NFC'));
+  const bank = opts.preferLast && negated ? (indicBank(text) ?? extractBank(cleaned, opts)) : (extractBank(cleaned, opts) ?? indicBank(text));
   if (bank) out.bank = bank;
   const app = extractPaymentApp(cleaned);
   if (app) out.paymentApp = app;

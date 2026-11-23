@@ -109,7 +109,7 @@ function clockHours(text: string, toks: string[]): number | undefined {
   // "7 pm" written as one token, or "around 10" next to a day part
   const pm = text.match(/\b(\d{1,2})\s*(am|pm)\b/i);
   if (pm) return Number(pm[1]) + (pm[2].toLowerCase() === 'pm' && Number(pm[1]) < 12 ? 12 : 0);
-  const around = text.match(/(?:around|at|about|karib|lagbhag)\s+(\d{1,2})\b/i);
+  const around = text.match(/(?:around|at|about|karib|lagbhag)\s+(\d{1,2})\b(?![,.]\d)/i); // not \"around 4,999 rupees\"
   if (around && Number(around[1]) <= 12) return Number(around[1]);
   return undefined;
 }

@@ -370,10 +370,10 @@ const SCRIPT = (w: string) =>
 // dropping a virama / nukta. Accept only when every variant that parses agrees on one value.
 const CONFUSABLE = [
   'ரற', 'லளழ', 'நணன', 'ிீ', 'ுூ', 'ெே', 'ொோ', // Tamil
-  'তট', 'দড', 'থঠ', 'ধঢ', 'নণ', 'শষস', 'িী', 'ুূ', 'জয', 'রড', // Bengali
+  'তট', 'দড', 'থঠ', 'ধঢ', 'নণ', 'শষস', 'িী', 'ুূ', 'জয', 'রড', 'ঁং', // Bengali (ঁ/ং: chandrabindu vs anusvara)
   'తట', 'దడ', 'నణ', 'లళ', 'ిీ', 'ుూొో', 'ెే', // Telugu
   'ತಟ', 'ದಡ', 'ನಣ', 'ಲಳ', 'ಿೀ', 'ುೂೊೋ', 'ೆೇ', // Kannada
-  'िी', 'ुू', 'नण', 'शषस', 'ेै', 'ोौ', // Devanagari
+  'िी', 'ुू', 'नण', 'शषस', 'ेै', 'ोौ', 'ँं', // Devanagari
 ].map((g) => [...g.normalize('NFC')]);
 const CONF_OF: Record<string, string[]> = {};
 for (const g of CONFUSABLE) for (const c of g) CONF_OF[c] = [...(CONF_OF[c] ?? []), ...g.filter((x) => x !== c)];
@@ -488,8 +488,9 @@ const CURRENCY = ['रुपये', 'रुपए', 'रुपया', 'रु�
 // Currency words as ASR spells them: ருபாய், ரூபாயி, তাকা, రోపాయలు. Compared after folding
 // sound-alike letters and vowel length (same table as above), by prefix.
 // Folding also merges aspirated / unaspirated letters (আধ ~ আদ, ঘণ্টা ~ গন্টা); those are left out of the
-// number repair above, where they would only add candidates. Union-find keeps the classes transitive.
-const FOLD_ONLY = ['তথটঠ', 'দধডঢ', 'কখ', 'গঘ', 'চছ', 'জঝ', 'বভ', 'পফ', 'తథటఠ', 'దధడఢ', 'కఖ', 'గఘ', 'చఛ', 'జఝ', 'బభ', 'పఫ', 'శషస', 'ತಥಟಠ', 'ದಧಡಢ', 'ಕಖ', 'ಗಘ', 'ಚಛ', 'ಜಝ', 'ಬಭ', 'ಪಫ', 'ಶಷಸ', 'तथटठ', 'दधडढ', 'कख', 'गघ', 'चछ', 'जझ', 'बभ', 'पफ'];
+// number repair above, where they would only add candidates. Tamil ி/ெ (i/e) too: இன்விஸ்ட் ~ இன்வெஸ்ட்.
+// Union-find keeps the classes transitive.
+const FOLD_ONLY = ['ிெ', 'তথটঠ', 'দধডঢ', 'কখ', 'গঘ', 'চছ', 'জঝ', 'বভ', 'পফ', 'తథటఠ', 'దధడఢ', 'కఖ', 'గఘ', 'చఛ', 'జఝ', 'బభ', 'పఫ', 'శషస', 'ತಥಟಠ', 'ದಧಡಢ', 'ಕಖ', 'ಗಘ', 'ಚಛ', 'ಜಝ', 'ಬಭ', 'ಪಫ', 'ಶಷಸ', 'तथटठ', 'दधडढ', 'कख', 'गघ', 'चछ', 'जझ', 'बभ', 'पफ'];
 const ROOT: Record<string, string> = {};
 const root = (c: string): string => (ROOT[c] && ROOT[c] !== c ? (ROOT[c] = root(ROOT[c])) : c);
 for (const g of [...CONFUSABLE, ...FOLD_ONLY.map((x) => [...x.normalize('NFC')])])

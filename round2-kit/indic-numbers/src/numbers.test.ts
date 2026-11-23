@@ -100,6 +100,7 @@ describe('ASR misspellings', () => {
     expect(findAmount('ஐயாயிரம் இல்லை இல்லை ஆராயிரம் ருபாய் போச்சு')).toBe(6000); // ற -> ர
     expect(findAmount('সাডে তিন হাজার টাকা চলে গেছে')).toBe(3500); // ড় -> ড
     expect(findAmount('পাঁচ হাজাড টাকা')).toBe(5000); // র -> ড
+    expect(findAmount('পাংচ হাজার টাকা')).toBe(5000); // ং for ঁ
     expect(findAmount('ನಲ್ವತ್ತೇಳು ಸಾವಿರ ರೂಪಾಯಿ')).toBe(47000); // extra virama
     expect(findAmount('అయిదు వేల రూపాయలు')).toBe(5000); // spelling variant of ఐదు
     expect(findAmount('साड़े 3,500 रुपए गेले')).toBe(3500); // half already in the digits
