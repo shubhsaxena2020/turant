@@ -30,13 +30,15 @@ node split.mjs <round> [...]   # dev voice vs held-out voice
 | round7 | + bank names: dotted and letter-by-letter acronyms, आफ for "of", near-miss names before "bank" | 100.0% | 41.0% | 44.1% | 36.1% | 29.3% | 67.8 |
 | round8 | + standard alternate spellings (देड़, धाई, రిండు, mr नव), spaced app names (ফোন পে, पेटी एम), split scam words (केवाई सी), glued half-hour (अर्ध्यातासा); two bare single digits never form one amount | 100.0% | 43.5% | 45.6% | 37.9% | 30.4% | 70.3 |
 | round9 | + a bare "thousand" after an unreadable word is not ₹1,000 (abstain, the app asks); a rule that read only "thousand" defers to the full reading | 100.0% | 43.5% | 45.6% | 37.9% | 30.4% | 71.5 |
+| round10-13 | + Telugu నూట, kit generic fixes, a `\x01` regex bug fix (no change here); ಆಯಿದು before a multiplier, read-out split before "<digit> thousand", sound-alike hour before o'clock (साथ वाजता), kn/te i/e, ಬಳಿಗ್ಗೆ, masked "ACXX" digits not money; Devanagari-vs-Latin keywords by sound | 100.0% | 44.0% | 45.9% | 37.9% | 30.4% | 72.0 |
+| round14 | + Whisper's Hindi spellings (साधे, सुभा, ज्यारा, "के YC", "पेटी इन"); UTR digit groups that run into "<amount> रुपए" | 100.0% | 45.2% | 46.3% | 38.6% | 30.4% | 72.4 |
 
 **Net change:** (round9 changed no outcome to correct; it turned 87 wrong amounts into "ask again", raising clean-ASR amount precision from 67% to 76%)
 
 | Measure | Before | After |
 |---|---|---|
-| Clean speech, fully correct | 27.2% | 43.5% (+16.3 points, about 1.6×) |
-| Field F1 | 51.0 | 70.3 |
+| Clean speech, fully correct | 27.2% | 45.2% (+18.0 points, about 1.7×) |
+| Field F1 | 51.0 | 72.4 |
 | Reference text, fully correct | 55.7% | 100% |
 
 No round broke a field that an earlier round got right. Each round's diff against the previous one is checked run by run.
