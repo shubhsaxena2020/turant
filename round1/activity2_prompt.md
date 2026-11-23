@@ -1,37 +1,41 @@
-Build "Turant", a mobile-first installable web app (PWA) where a victim of UPI or online payment fraud in India reports it by voice, in their own language, within minutes, and leaves with a complete complaint for the 1930 helpline and cybercrime.gov.in.
+Build "Turant", a mobile-first PWA (React + Vite + Tailwind, no login) where a UPI-fraud victim in India reports it by voice in their own language and leaves with a complete complaint for the 1930 helpline and cybercrime.gov.in.
 
-Users: people who just lost money to a scam: elders, first-time smartphone users, shopkeepers, gig workers. Assume low literacy, a cheap Android phone, shaky 3G, noise and panic.
+Users: scam victims who are elders, first-time smartphone users, shopkeepers or gig workers, often with low literacy, cheap Android phones, noise and panic. Languages: Hindi, English, Hinglish, Bengali, Tamil, Telugu, Marathi, Kannada, with regional accents and code-mixing ("mere SBI account se 5000 kat gaye"). Preselect the language from the phone (changeable in the top bar); all text and spoken lines come from one translation file.
 
-Interaction model: a calm phone call with a helper who writes the complaint while you talk. Not a form, not a chat; never show empty input fields.
+Model: a calm phone call with a helper who writes the complaint while you talk; never show empty form fields. One glowing circle at the bottom is the mic: tap to talk, tap to stop, auto-stop after 2 seconds of silence. Each state (idle, listening, thinking, speaking) gets motion, a short sound, vibration and a label. Speech uses the Web Speech API behind a SpeechService interface (swappable for Bhashini). Extraction runs on the phone, so it works offline.
 
-Design rules: no cards, bordered boxes or textareas. Separate content with full-bleed colour bands, large type and hairlines between list rows. One filled 60px button per screen in the thumb zone, plus text links. Text never below 16px. Calm palette: warm paper, night blue, teal actions; urgency in amber, red only for "never share an OTP". A "1930" call link on every screen, and an "Aa" text-size control.
+Voice flow:
 
-Languages: Hindi, English, Hinglish, Bengali, Tamil, Telugu, Marathi, Kannada, from one translation file keyed by language code. Language is never a gate: preselect it from the phone, changeable from the top bar.
+1. App shows and says: "Namaste. I am Turant, an app. What happened? Tell me in your own words. For example: someone called saying he was from the bank and ₹5,000 was taken."
 
-Tech: React + Vite + Tailwind, no login. Web Speech API speech-to-text and speechSynthesis behind a SpeechService interface (swappable for Bhashini). Extraction runs on the device; reports in IndexedDB.
+2. User tells the story freely. Their words appear live in large text. The app extracts: amount ("paanch hazaar", "saade teen hazaar", "do lakh"), time ("das minute pehle", "kal shaam 7 baje"), scam type (fake KYC call, OTP shared, fake customer care, refund trick, QR scan, task job, sextortion), bank, payment app, 12-digit UTR, suspect UPI ID, phone and account.
 
-Screens and voice steps:
+3. App says what it caught and what is left: "Noted: ₹5,000, SBI, fake KYC call. Just one more thing." The complaint appears as first-person sentences in the user's language, facts highlighted, each missing fact a dotted gap.
 
-1. Talk (night blue). Greeting: "Namaste. I am Turant, an app. What happened? Tell me in your own words", plus an example. At the bottom, one breathing glowing circle is the mic: tap to talk, tap to stop, auto-stop after 2 seconds of silence. Four states, each shown by motion, sound, vibration and a text label: idle, listening (brighter, reacts to voice), thinking ("Writing it down…") and speaking (ripples). While listening, the user's words stream in large text.
+4. App asks only for what is missing, one short question with an example at a time: "Please read the 12-digit UTR number from the bank SMS." Reading the whole SMS aloud works too.
 
-2. The letter. After the first answer, show the complaint as 4 to 6 first-person sentences in the user's language: "It happened 10 minutes ago. My SBI account lost ₹5,000…". Facts are bold with a highlighter wash, and a missing fact is a dotted gap inside the sentence. Extract amount ("4999", "paanch hazaar", "saade teen hazaar", "do lakh", Devanagari numerals), time ("das minute pehle", "kal shaam 7 baje"), scam type (fake KYC call, OTP shared, fake customer care, refund trick, QR scan, investment/task job, sextortion, other), bank, payment app, 12-digit UTR (also from a bank SMS read aloud), suspect UPI ID, phone and account.
+5. Amounts and numbers are read back, digits in groups: "I heard 4567, 8901, 2345. Is that right?" User says "haan"/"yes" or taps Yes. "Nahi" re-asks; saying a new value replaces it.
 
-3. One question at a time, only for what is missing, in one breath with an example: "Which bank is your account in?". Say "Noted: ₹5,000, SBI. Just two more things." Read amounts and IDs back, digits in groups ("4567, 8901, 2345"), and ask "Is that right?"; accept a spoken "haan" or a tap. Explain jargon: "money-transfer number (UTR), from the bank SMS". Links: "Press the numbers", "Choose from a list", "Type it", "Skip, 1930 will ask".
+6. Check screen "Is this right?": the amount large, then a plain list with "Change" links, read aloud. One-step corrections: "amount galat hai, 5999 tha" changes only the amount; the app replies "Changed: ₹5,999."
 
-4. Check: "Is this right?" Amount in 48px as the hero, then a list with a label above each value, a "Change" link and hairlines between rows. Missing facts show "Not known yet" in amber. Read the summary aloud. "Change" opens a bottom sheet: Listen, Say it again, Press numbers, Choose, or Type. "Change something by speaking" accepts one-step corrections like "amount galat hai, 5999 tha".
+7. Done: "Your complaint is ready. You did the right thing, at the right time. The next 2 hours matter most." A giant "Call 1930 now" button and 4 lines to say on the call, which the app reads aloud.
 
-5. Done (soft green). A tick draws itself: "Your complaint is ready. You did the right thing, at the right time." Then "The next 2 hours matter most" in amber, a giant 1930 and "Call 1930 now". Below: 4 lines to say on the call, a warning never to pay anyone to "get money back", and a "what happens next" timeline. No confetti.
+8. Written complaint in English, in cybercrime.gov.in order, with one "Copy" button. The description is at least 200 characters with none of # $ @ ^ * ~ | ! (the portal rejects them), so UPI IDs stay in the suspect field. Plus a bank message and a safety checklist.
 
-6. Written complaint. The English complaint in the cybercrime.gov.in financial-fraud order, typeset in a serif font on a sand band like a document. The incident description is at least 200 characters without # $ @ ^ * ~ | ! (the portal rejects them, so UPI IDs stay in the suspect field). A sticky "Copy the whole complaint" button turns green and says "Copied" in place, with no vanishing toast. Also: copy description only, open portal, WhatsApp to family, the bank message, a tick-off checklist and the acknowledgement number.
+When things go wrong:
 
-7. Past complaints: plain list, Draft or Ready, "Delete all".
+- Misheard or nothing usable, 1st time: never repeat word for word and blame the app, not the accent: "Sorry, my mistake. How many rupees? Like five thousand."
+- 2nd miss: open a big number keypad (amount, UTR, phone) or a tap list (bank, scam type).
+- 3rd miss: "No problem, the 1930 team will ask you this," skip, and show "(to be added later)" in the letter.
+- Noise: confidence under 0.6 or a story under 3 words counts as a miss; always show what was heard.
+- Silence: "I'm listening. Take your time." Never time out.
+- Mixed languages and accents: accept Hinglish, Devanagari and Latin spellings, native digits and bank names in any script ("एसबीआई" = SBI).
+- Contradictions ("5000", then later "2000"): ask "Which one is right?" with both values.
+- No device voice for the language: speak Hindi or English, keep text in the chosen language.
+- Microphone denied or recognition failing offline: say so in one line and switch to typing, keypad and lists.
+- "Tell quietly" mode: no sound.
+- Save the draft after every answer; offer "Continue your unfinished complaint".
 
-Speech errors: never repeat a prompt verbatim; blame the app, not the accent. On the 1st miss, ask a shorter question. On the 2nd, open the keypad or list. On the 3rd, say "No problem, the 1930 team will ask you this" and skip. Low confidence (under 0.6) or a story under 3 words counts as a miss. Never auto-advance a decision or time out.
+Design: no cards or boxed inputs; one 60px button per screen in the thumb zone; text at least 16px; a 1930 call link and text-size control on every screen. Nothing leaves the phone unless the user taps Copy, Share or Call.
 
-Low connectivity: a service worker caches the app and rules. Save the draft after every answer and offer "Continue your unfinished complaint" on reopening. Show an offline note. Everything is built offline. If speech recognition needs the network and fails, say so and switch to typing.
-
-Error states: microphone denied (how to allow it, plus typing), no speech support (typing), no device voice (speak Hindi or English), contradictory answers ("Which one is right?"), over ₹1,00,000 or older than 3 days (also visit the cyber police station). "Tell quietly" mode turns off all sound and switches to typing and lists.
-
-Privacy: nothing leaves the phone unless the user taps Copy, Share or Call; account numbers show only the last 4 digits.
-
-Acceptance test: say "Mere account se paanch hazaar rupaye kat gaye, das minute pehle ek aadmi ne bola KYC update karo, SBI ka account hai, UPI ID tha rahul.kyc@ybl". The letter fills ₹5,000, 10 minutes ago, fake KYC call, SBI and rahul.kyc@ybl. The app asks only for the UTR, reads it back, then shows Check and the Hindi 1930 script.
+Acceptance test: "Mere account se paanch hazaar rupaye kat gaye, das minute pehle ek aadmi ne bola KYC update karo, SBI ka account hai, UPI ID tha rahul.kyc@ybl" fills ₹5,000, 10 minutes ago, fake KYC, SBI and rahul.kyc@ybl, then asks only for the UTR.
