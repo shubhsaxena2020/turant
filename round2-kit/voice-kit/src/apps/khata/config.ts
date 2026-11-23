@@ -64,7 +64,7 @@ export default defineDomain({
     },
     {
       key: 'amount', type: 'amount', required: true, confirm: 'explicit', keypad: true,
-      cues: ['udhaar', 'udhar', 'baaki', 'baki', 'credit', 'total', 'hisaab', 'jama', 'diye', 'उधार', 'बाकी', 'कुल', 'हिसाब', 'जमा', 'दिए'],
+      cues: ['udhaar', 'udhar', 'baaki', 'baki', 'credit', 'total', 'hisaab', 'jama', 'diye', 'उधार', 'बाकी', 'कुल', 'हिसाब', 'जमा', 'दिए', 'टोटल', 'kul', 'दिया', 'मोट', 'মোট', 'மொத்தம்', 'మొత్తం', 'ಒಟ್ಟು'],
       label: { 'en-IN': 'Amount', 'hi-IN': 'रकम' },
       q: { 'en-IN': 'How much is the total?', 'hi-IN': 'कुल कितने रुपये हुए?' },
       rq: { 'en-IN': 'How many rupees?', 'hi-IN': 'कितने रुपये?' },

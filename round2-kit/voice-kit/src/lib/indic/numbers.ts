@@ -629,6 +629,8 @@ function spokenRun(toks: string[], start: number, i: number): boolean {
 const POSSESSIVE = ['मेरे', 'मेरा', 'मेरी', 'हमारे', 'आपके', 'उसके', 'उनके', 'माझे', 'माझा', 'আমার', 'আমাদের', 'என்னுடைய', 'எங்க', 'నాకు', 'మా', 'ನನ್ನ', 'ನಮ್ಮ'].map((w) => w.normalize('NFC'));
 // Words that mean "one thousand" on their own (Tamil ஆயிரம், Telugu singular వెయ్యి; misheard "X thousand" uses వేల).
 const ONE_THOUSAND = ['ஆயிரம்', 'ஆயிரத்து', 'వెయ్యి'].map((w) => fold(w));
+// Multipliers only between numbers: "चार सो पचास" = 450, but सो alone is "sleep" / "so".
+const CONTEXT_MULT: Record<string, number> = { [('सो').normalize('NFC')]: 100 };
 // Number only right before "thousand / lakh": ಆಯಿದು ಸಾವಿರ = 5,000, but "ಕಟ್ ಆಯಿದು" = "got cut" (ಆಯಿತು).
 const BEFORE_MULT: Record<string, number> = Object.fromEntries(
   Object.entries({ 'ಆಯಿದು': 5, 'শোয': 6, 'ছযি': 6 }).map(([w, v]) => [w.normalize('NFC'), v]), // শোয(়) alone = "lie down"
@@ -661,7 +663,7 @@ export function numberGroups(text: string): Group[] {
       }
       const last = parts[parts.length - 1];
       const nextIsMul = !!toks[i + 1] && !!wordParts(toks[i + 1])?.every((x) => 'mul' in x && x.mul >= 1000);
-      const q = wordParts(toks[i]) ?? (last && 'v' in last ? shortMultiplier(toks[i]) : undefined) ?? (nextIsMul && BEFORE_MULT[toks[i]] !== undefined ? [{ v: BEFORE_MULT[toks[i]] }] : undefined);
+      const q = wordParts(toks[i]) ?? (last && 'v' in last ? (shortMultiplier(toks[i]) ?? (CONTEXT_MULT[toks[i]] ? [{ mul: CONTEXT_MULT[toks[i]] }] : undefined)) : undefined) ?? (nextIsMul && BEFORE_MULT[toks[i]] !== undefined ? [{ v: BEFORE_MULT[toks[i]] }] : undefined);
       if (!q) break;
       // a read-out ID (single spaced digits) never runs into number words
       const prevDigit = /^\d$/.test(toks[i - 1]);
