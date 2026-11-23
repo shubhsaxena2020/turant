@@ -437,6 +437,25 @@ function shortMultiplier(raw: string): Part[] | undefined {
   return muls.size === 1 ? [{ mul: [...muls][0] }] : undefined;
 }
 
+/** Number words keyed by their sound-alike fold (built lazily: fold is defined further down). */
+let FOLD_NUM: Map<string, number | null> | undefined;
+/**
+ * A word whose sound-alike fold equals a number word's (साथ ~ सात). Only for strong contexts, e.g. right
+ * before "o'clock": साथ also means "with". Ambiguous folds are dropped.
+ */
+export function foldParts(raw: string): Part[] | undefined {
+  if (!FOLD_NUM) {
+    FOLD_NUM = new Map();
+    for (const [w, v] of Object.entries(WORDS)) {
+      if (SCRIPT(w) === 'lat') continue;
+      const k = fold(w);
+      FOLD_NUM.set(k, FOLD_NUM.has(k) && FOLD_NUM.get(k) !== v ? null : v);
+    }
+  }
+  const v = FOLD_NUM.get(fold(raw));
+  return v === undefined || v === null ? undefined : [{ v }];
+}
+
 /**
  * Number parts of one word, or undefined if it is not a number word.
  * minRepair: shortest native word (in code points) that may be sound-alike repaired. Short words are
@@ -508,7 +527,7 @@ const CURRENCY = ['रुपये', 'रुपए', 'रुपया', 'रु�
 // Folding also merges aspirated / unaspirated letters (আধ ~ আদ, ঘণ্টা ~ গন্টা); those are left out of the
 // number repair above, where they would only add candidates. Tamil ி/ெ (i/e) too: இன்விஸ்ட் ~ இன்வெஸ்ட்.
 // Union-find keeps the classes transitive.
-const FOLD_ONLY = ['ிெ', 'তথটঠ', 'দধডঢ', 'কখ', 'গঘ', 'চছ', 'জঝ', 'বভ', 'পফ', 'తథటఠ', 'దధడఢ', 'కఖ', 'గఘ', 'చఛ', 'జఝ', 'బభ', 'పఫ', 'శషస', 'ತಥಟಠ', 'ದಧಡಢ', 'ಕಖ', 'ಗಘ', 'ಚಛ', 'ಜಝ', 'ಬಭ', 'ಪಫ', 'ಶಷಸ', 'तथटठ', 'दधडढ', 'कख', 'गघ', 'चछ', 'जझ', 'बभ', 'पफ'];
+const FOLD_ONLY = ['ிெ', 'ಿೆ', 'ిె', 'তথটঠ', 'দধডঢ', 'কখ', 'গঘ', 'চছ', 'জঝ', 'বভ', 'পফ', 'తథటఠ', 'దధడఢ', 'కఖ', 'గఘ', 'చఛ', 'జఝ', 'బభ', 'పఫ', 'శషస', 'ತಥಟಠ', 'ದಧಡಢ', 'ಕಖ', 'ಗಘ', 'ಚಛ', 'ಜಝ', 'ಬಭ', 'ಪಫ', 'ಶಷಸ', 'तथटठ', 'दधडढ', 'कख', 'गघ', 'चछ', 'जझ', 'बभ', 'पफ'];
 const ROOT: Record<string, string> = {};
 const root = (c: string): string => (ROOT[c] && ROOT[c] !== c ? (ROOT[c] = root(ROOT[c])) : c);
 for (const g of [...CONFUSABLE, ...FOLD_ONLY.map((x) => [...x.normalize('NFC')])])
@@ -563,6 +582,8 @@ function spokenRun(toks: string[], start: number, i: number): boolean {
 
 // Words that mean "one thousand" on their own (Tamil ஆயிரம், Telugu singular వెయ్యి; misheard "X thousand" uses వేల).
 const ONE_THOUSAND = ['ஆயிரம்', 'ஆயிரத்து', 'వెయ్యి'].map((w) => fold(w));
+// Number only right before "thousand / lakh": ಆಯಿದು ಸಾವಿರ = 5,000, but "ಕಟ್ ಆಯಿದು" = "got cut" (ಆಯಿತು).
+const BEFORE_MULT: Record<string, number> = { [('ಆಯಿದು').normalize('NFC')]: 5 };
 // Words that may stand right before a bare "thousand": "a thousand", "around thousand rupees".
 const BARE_OK = ['a', 'one', 'about', 'around', 'approx', 'only', 'just', 'karib', 'lagbhag', 'sirf', 'bas', 'करीब', 'लगभग', 'सिर्फ', 'बस', 'and', 'aur', 'और'];
 
@@ -572,7 +593,8 @@ export function numberGroups(text: string): Group[] {
   const groups: Group[] = [];
   let i = 0;
   while (i < toks.length) {
-    const p = toks[i] === '|' ? undefined : wordParts(toks[i]);
+    const beforeMul = !!toks[i + 1] && !!wordParts(toks[i + 1])?.every((x) => 'mul' in x && x.mul >= 1000);
+    const p = toks[i] === '|' ? undefined : (wordParts(toks[i]) ?? (beforeMul && BEFORE_MULT[toks[i]] !== undefined ? [{ v: BEFORE_MULT[toks[i]] }] : undefined));
     if (!p) {
       i++;
       continue;
@@ -589,7 +611,8 @@ export function numberGroups(text: string): Group[] {
         continue;
       }
       const last = parts[parts.length - 1];
-      const q = wordParts(toks[i]) ?? (last && 'v' in last ? shortMultiplier(toks[i]) : undefined);
+      const nextIsMul = !!toks[i + 1] && !!wordParts(toks[i + 1])?.every((x) => 'mul' in x && x.mul >= 1000);
+      const q = wordParts(toks[i]) ?? (last && 'v' in last ? shortMultiplier(toks[i]) : undefined) ?? (nextIsMul && BEFORE_MULT[toks[i]] !== undefined ? [{ v: BEFORE_MULT[toks[i]] }] : undefined);
       if (!q) break;
       // a read-out ID (single spaced digits) never runs into number words
       const prevDigit = /^\d$/.test(toks[i - 1]);
@@ -606,6 +629,8 @@ export function numberGroups(text: string): Group[] {
       // two bare single digits are never one amount ("…3 రెండు, 5 వేల" = an ID's last digit, then 5,000)
       const prev = parts[parts.length - 1];
       if (prev && 'v' in prev && prev.v < 10 && q.length === 1 && 'v' in q[0] && q[0].v < 10 && !spokenRun(toks, start, i)) break;
+      const nextMul = !!toks[i + 1] && !!wordParts(toks[i + 1])?.every((x) => 'mul' in x && x.mul >= 1000);
+      if (nextMul && q.length === 1 && 'v' in q[0] && q[0].v < 10 && spokenRun(toks, start, i)) break;
       parts.push(...q);
       digitsOnly = digitsOnly && /^\d+$/.test(toks[i]);
       i++;

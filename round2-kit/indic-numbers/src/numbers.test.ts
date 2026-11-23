@@ -75,6 +75,16 @@ describe('parts', () => {
   });
 });
 
+describe('context-only number words', () => {
+  it('ಆಯಿದು is 5 only right before thousand/lakh', () => {
+    expect(findAmount('ಆಯಿದು ಸಾವಿರ ರೂಪಾಯ ಹೋಯಿತು')).toBe(5000);
+    expect(findAmount('ಆರು ಸಾವಿರ ರೂಪಾಯಿ ಕಟ್ ಆಯಿದು')).toBe(6000);
+  });
+  it('a digit read-out ends before "<digit> thousand"', () => {
+    expect(findAmount('ರೆಫ್ರೆನ್ಸ್ ನಂಬರ್ ನಾಲ್ಕು ಸೊನ್ನೆ ಮೂರು ಎರ್ಡು ಒಂಡು ಎಂಟು ಆಯಿದು ಸಾವಿರ ರೂಪಾಯ ಹೋಯಿತು')).toBe(5000);
+  });
+});
+
 describe('Hinglish spellings', () => {
   it('doubled letters collapse (chhabbees ~ chabbis ~ chhabis = 26)', () => {
     expect(findAmount('chabbis hazaar rupaye')).toBe(26000);

@@ -155,6 +155,7 @@ function extractAmount(c: Ctx, s: AmountSlot): Extracted | undefined {
   let best: { score: number; value: number; conf: number; i: number } | undefined;
   for (const { r, i } of freeRuns(c)) {
     if (r.value <= 0 || r.value >= 1e9) continue;
+    if (/x{2,}/i.test(c.tokens[r.start - 1] ?? '')) continue; // bank SMS "A/c XX4321": masked account digits, not money
     const tokens = c.tokens;
     const next = tokens[r.end];
     if (N.unitMs(next) || N.isClockMarker(next)) continue;
@@ -265,7 +266,7 @@ function findItem(c: Ctx, from: number, items: ItemDef[] | undefined): { name: s
     const joined = window.join(' ');
     let best: { name: string; idx: number; len: number } | undefined;
     for (const it of items) {
-      const m = N.phraseMatch(joined, it.keywords);
+      const m = N.phraseMatch(joined, it.keywords, false, 3); // right after a quantity: short names are safe (5 kilo आता)
       if (m && (!best || m.idx < best.idx || (m.idx === best.idx && m.len > best.len))) best = { name: it.name['en-IN'] ?? Object.values(it.name)[0]!, ...m };
     }
     // Only accept a catalogue hit that starts at the first or second word.

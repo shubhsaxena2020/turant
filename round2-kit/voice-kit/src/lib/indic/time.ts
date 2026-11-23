@@ -1,7 +1,7 @@
 // When did it happen? Relative ("das minute pehle", "দশ মিনিট আগে", "பத்து நிமிஷம் முன்னாடி")
 // and absolute ("kal shaam 7 baje", "গতকাল সন্ধ্যা সাতটায়", "நேற்று இரவு 9:30 மணிக்கு")
 // in hi/mr/bn/ta/te/kn/en. Returns an absolute Date. Pure, no DOM.
-import { combine, fold, tokenize, wordParts } from './numbers';
+import { combine, fold, foldParts, tokenize, wordParts } from './numbers';
 
 export interface TimeHit {
   date: Date;
@@ -32,7 +32,7 @@ const TODAY = N(['आज', 'aaj', 'today', 'আজ', 'இன்று', 'இன�
 const YESTERDAY = N(['कल', 'kal', 'काल', 'yesterday', 'গতকাল', 'কাল', 'நேற்று', 'நேத்து', 'నిన్న', 'ನಿನ್ನೆ']);
 const DAY_BEFORE = N(['परसों', 'parso', 'parson', 'परवा', 'পরশু', 'முந்தாநாள்', 'మొన్న', 'ಮೊನ್ನೆ']);
 
-const MORNING = N(['सुबह', 'subah', 'सकाळी', 'सकाळ', 'morning', 'সকাল', 'সকালে', 'காலை', 'காலைல', 'ఉదయం', 'ಬೆಳಿಗ್ಗೆ', 'ಬೆಳಗ್ಗೆ', 'am']);
+const MORNING = N(['सुबह', 'subah', 'सकाळी', 'सकाळ', 'ಬಳಿಗ್ಗೆ', 'ಬಳಿಗೆ', 'morning', 'সকাল', 'সকালে', 'காலை', 'காலைல', 'ఉదయం', 'ಬೆಳಿಗ್ಗೆ', 'ಬೆಳಗ್ಗೆ', 'am']);
 const AFTERNOON = N(['दोपहर', 'dopahar', 'dopehar', 'दुपारी', 'afternoon', 'দুপুর', 'দুপুরে', 'மதியம்', 'మధ్యాహ్నం', 'ಮಧ್ಯಾಹ್ನ']);
 const EVENING = N(['शाम', 'shaam', 'sham', 'संध्याकाळी', 'संध्या', // संध्याकाली / संध्याकारी (ASR)
   'evening', 'সন্ধ্যা', 'সন্ধ্যায়', 'বিকেল', 'বিকেলে', 'மாலை', 'சாயங்காலம்', 'సాయంత్రం', 'ಸಂಜೆ', 'pm']);
@@ -98,7 +98,8 @@ function clockHours(text: string, toks: string[]): number | undefined {
       let j = toks[i] === 'clock' && toks[i - 1] === 'o' ? i - 2 : i - 1;
       const parts = [];
       while (j >= 0 && j >= i - 3) {
-        const p = wordParts(toks[j]);
+        // right before "o'clock" a sound-alike number is safe: साथ वाजता = सात (7) वाजता
+        const p = wordParts(toks[j]) ?? (j === i - 1 ? foldParts(toks[j]) : undefined);
         if (!p) break;
         parts.unshift(...p);
         j--;

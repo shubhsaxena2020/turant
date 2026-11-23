@@ -142,6 +142,23 @@ The generic fixes that came out of this:
 - **Quantities:** "half a kilo".
 - **English keywords** match their inflections ("coughing" for "cough").
 
+**On speech** (`kit_apps_eval.mjs --asr plan_kit.json`, 136 Whisper transcripts, 2 voices per language, clean):
+
+| Set | khata | health | civic |
+|---|---|---|---|
+| dev, first run (fair scoring) | 40% | 37% | 15% |
+| dev, after speech fixes | 46% | 40% | 38% |
+| held-out, first run | 12% | 27% | 23% |
+
+"Fair scoring" means text fields are compared by sound across scripts, so Whisper writing "स्टेशन रोड" for "station road" isn't marked wrong.
+
+The speech fixes were generic:
+- **Unit words** match by sound: हफते = हफ्ते.
+- **Latin keywords** match words spoken in Devanagari by sound: आता = aata, डूढ = doodh, नकत = nakad. Whisper and Chrome write Hinglish this way.
+- **Misheard "ward":** वाड, wad, watt.
+
+Speech, not text, is the bottleneck for every app, and the gap is largest in bn/ta/te/kn.
+
 **Lesson for Round 2:** what's left on the held-out set is almost entirely domain vocabulary in each language:
 
 - फोनपे written in Devanagari

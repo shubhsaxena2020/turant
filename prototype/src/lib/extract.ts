@@ -409,6 +409,7 @@ function extractAmount(tokens: string[], runs: NumRun[], opts: ExtractOptions): 
   let best: { score: number; value: number; conf: number } | undefined;
   for (const r of runs) {
     if (r.isSeq || r.value <= 0 || r.value >= 1e9) continue;
+    if (/x{2,}/i.test(tokens[r.start - 1] ?? '')) continue; // bank SMS "A/c XX4321": masked account digits, not money
     const next = tokens[r.end];
     if (unitMs(next) || isClockMarker(next)) continue;
     if (/^\d{1,2}(am|pm)$/.test(next ?? '')) continue;

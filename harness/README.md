@@ -63,3 +63,23 @@ and renders/transcribes only the clips that are missing.
 - noise: one voice per case, with one of pink, babble or traffic at 15 dB and 5 dB (560).
 - rate: one voice per case at -15% or +15% (280).
 - auto: every 4th case transcribed with language auto-detect instead of the forced token (70).
+
+## Added 23 Nov 2026
+
+| File | What it does |
+|---|---|
+| `JOURNAL.md` | Round-by-round results, honesty checks, rules vs LLM, and what is left. Start here. |
+| `split.mjs` | `node split.mjs round8 round9`: dev voice vs held-out voice per report. Tune only on what the dev voice shows. |
+| `calib.mjs` | Precision of returned values by confidence band (is low confidence really less right?). |
+| `llm_fill.mjs` + `run_eval.mjs --llm <slug> --policy <p>` | Rules vs LLM vs hybrids on the same transcripts and scorer. Policies: `rules`, `llm`, `fill`, `fillcat`, `fillcheck`, or a field list such as `bank,amount:check`. |
+| `run_eval.mjs --extractor kit` | Run under `tsx`. Scores the Round 2 voice kit's fraud app instead of Turant. |
+| `kit_apps_eval.mjs` | Run under `tsx`. Scores ANY kit app by slot type on `corpus/kit/<app>.jsonl` (or `--corpus kit-heldout`), or on Whisper transcripts with `--asr plan_kit.json [--set kit|kit-heldout]`. |
+| `corpus/kit/`, `corpus/kit-heldout/` | Text cases for khata / health / civic. `build.py` writes them. The held-out set is not for tuning. |
+
+Running the audio pipeline on another corpus (caches are shared, keyed by case id):
+
+```powershell
+$env:HARNESS_CASES='corpus/kit/_all.jsonl'; $env:HARNESS_PLAN='plan_kit.json'; $env:HARNESS_TIERS='base'
+python common.py; python tts.py; python asr.py      # not python -I: edge_tts is in the user site-packages
+..\round2-kit\indic-numbers\node_modules\.bin\tsx kit_apps_eval.mjs --asr plan_kit.json
+```

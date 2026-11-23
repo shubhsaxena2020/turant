@@ -77,7 +77,7 @@ export default defineDomain({
         // "wapas de gaya purane udhaar ke" = paid back old dues: repay is checked before credit
         { value: 'repay', label: { 'en-IN': 'Paid back old dues', 'hi-IN': 'पुराना हिसाब चुकाया' }, keywords: ['purane udhaar', 'purana udhaar', 'wapas de', 'वापस दे', 'पुराना उधार', 'jama', 'jama kiye', 'wapas', 'lautaye', 'chukaya', 'chuka diye', 'purana hisaab', 'paid back', 'cleared', 'जमा', 'लौटाए', 'चुकाए', 'चुकाया'] },
         { value: 'credit', label: { 'en-IN': 'On credit (udhaar)', 'hi-IN': 'उधार' }, keywords: ['বাকি', 'கடன்', 'అప్పు', 'ಸಾಲ', 'udhaar', 'udhar', 'udhari', 'credit', 'baaki', 'baki', 'baad mein', 'baad me', 'likh do', 'likh lo', 'khate mein', 'later', 'उधार', 'बाकी', 'बाद में', 'लिख दो', 'खाते में'] },
-        { value: 'upi', label: { 'en-IN': 'Paid by UPI', 'hi-IN': 'UPI से दिए' }, keywords: ['upi', 'gpay', 'google pay', 'phonepe', 'paytm', 'online', 'qr', 'यूपीआई', 'ऑनलाइन'] },
+        { value: 'upi', label: { 'en-IN': 'Paid by UPI', 'hi-IN': 'UPI से दिए' }, keywords: ['जीपे', 'जी पे', 'upi', 'gpay', 'google pay', 'phonepe', 'paytm', 'online', 'qr', 'यूपीआई', 'ऑनलाइन'] },
         { value: 'paid', label: { 'en-IN': 'Paid in cash', 'hi-IN': 'नकद दिए' }, keywords: ['nakad', 'naqad', 'cash', 'paid', 'de diye', 'de diya', 'paise diye', 'नकद', 'कैश', 'दे दिए'] },
       ],
       label: { 'en-IN': 'Paid or credit', 'hi-IN': 'नकद या उधार' },

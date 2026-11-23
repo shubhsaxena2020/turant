@@ -363,6 +363,7 @@ describe('harness regressions', () => {
   });
   it('false positives the harness caught', () => {
     expect(x('around 4,999 rupees').time).toBeUndefined();
+    expect(x('Your ACXX 4321 has been debited via UPI. Not you? Call your bank.').amount).toBeUndefined(); // masked account
     expect(x('ರೆಕಾರ್ಡ್ ಮಾಡಿ ಈಗ ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್ ಮಾಡುತ್ತಿದ್ದಾರೆ').time).toBeUndefined();
     expect(x('कस्टमर केयर का नंबर गूगल पे सर्च किया था').paymentApp).toBeUndefined();
     expect(x('no, the bank was HDFC not SBI', { preferLast: true }).bank?.value).toBe('HDFC Bank');

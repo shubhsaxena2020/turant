@@ -1,0 +1,2826 @@
+{
+ "name": "asr2-kit",
+ "apps": {
+  "civic": {
+   "cases": 26,
+   "fullyCorrect": 10,
+   "fields": {
+    "issue": {
+     "tp": 20,
+     "wrong": 0,
+     "fn": 2,
+     "fp": 0
+    },
+    "location": {
+     "tp": 12,
+     "wrong": 5,
+     "fn": 5,
+     "fp": 0
+    },
+    "ward": {
+     "tp": 14,
+     "wrong": 0,
+     "fn": 10,
+     "fp": 0
+    },
+    "since": {
+     "tp": 8,
+     "wrong": 3,
+     "fn": 4,
+     "fp": 0
+    },
+    "phone": {
+     "tp": 5,
+     "wrong": 0,
+     "fn": 2,
+     "fp": 0
+    }
+   },
+   "runs": [
+    {
+     "id": "c-hi-01__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "सडक पे बड़ा गड़ा है स्टेशन रोड पे पेट्रॉल पंप के पास वार्ड 12 दो हफते से मेरा नमबर 9-8-12-345670",
+     "expected": {
+      "issue": "pothole",
+      "location": [
+       "station road"
+      ],
+      "ward": [
+       "12"
+      ],
+      "since": 14,
+      "phone": "9812345670"
+     },
+     "got": {
+      "issue": "pothole",
+      "location": "स्टेशन रोड पे पेट्रॉल पंप के पास",
+      "ward": "सडक पे बड़ा गड़ा है स्टेशन रोड पे पेट्रॉल पंप के पास वार्ड 12 दो हफते से मेरा नमबर 9-8-12-345670",
+      "since": 98,
+      "phone": "9812345670"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "wrong",
+      "ward": "tp",
+      "since": "wrong",
+      "phone": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-hi-01__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "सड़क पे बड़ा गड़ा है स्टेशन रोड पे पेट्रॉल पंप के पास वार 12 दो हाफते से मेरा नमबर 9812345670",
+     "expected": {
+      "issue": "pothole",
+      "location": [
+       "station road"
+      ],
+      "ward": [
+       "12"
+      ],
+      "since": 14,
+      "phone": "9812345670"
+     },
+     "got": {
+      "issue": "pothole",
+      "location": "स्टेशन रोड पे पेट्रॉल पंप के पास",
+      "phone": "9812345670"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "wrong",
+      "ward": "fn",
+      "since": "fn",
+      "phone": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-hi-02__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "हमारी गली की स्ट्रीट लाइट तीन दिन से बंध है शिव मंदिर वाली गली वाड साथ",
+     "expected": {
+      "issue": "streetlight",
+      "location": [
+       "शिव मंदिर"
+      ],
+      "ward": [
+       "7"
+      ],
+      "since": 3
+     },
+     "got": {
+      "issue": "streetlight",
+      "location": "शिव मंदिर वाली गली",
+      "ward": "हमारी गली की स्ट्रीट लाइट तीन दिन से बंध है शिव मंदिर वाली गली वाड साथ",
+      "since": 3
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "tp",
+      "since": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "c-hi-02__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "हमारी गली की स्ट्रीट लाइट तीन दिन से बंध है शिव मंदिर वाली गली वाड साथ",
+     "expected": {
+      "issue": "streetlight",
+      "location": [
+       "शिव मंदिर"
+      ],
+      "ward": [
+       "7"
+      ],
+      "since": 3
+     },
+     "got": {
+      "issue": "streetlight",
+      "location": "शिव मंदिर वाली गली",
+      "ward": "हमारी गली की स्ट्रीट लाइट तीन दिन से बंध है शिव मंदिर वाली गली वाड साथ",
+      "since": 3
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "tp",
+      "since": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "c-en-03__Neerja__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "There is no water supply for four days in Gandhinagar, WAD 22. My number is 9988001122.",
+     "expected": {
+      "issue": "water",
+      "location": [
+       "gandhi nagar"
+      ],
+      "ward": [
+       "22"
+      ],
+      "since": 4,
+      "phone": "9988001122"
+     },
+     "got": {
+      "issue": "water",
+      "location": "Gandhinagar",
+      "ward": "WAD 22",
+      "since": 4,
+      "phone": "9988001122"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "tp",
+      "since": "tp",
+      "phone": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "c-en-03__Prabhat__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "There is no water supply for 4 days in Gandhinagar. WARD 22. My number is 9988-001122.",
+     "expected": {
+      "issue": "water",
+      "location": [
+       "gandhi nagar"
+      ],
+      "ward": [
+       "22"
+      ],
+      "since": 4,
+      "phone": "9988001122"
+     },
+     "got": {
+      "issue": "water",
+      "location": "Gandhinagar",
+      "ward": "WARD 22",
+      "since": 4,
+      "phone": "9988001122"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "tp",
+      "since": "tp",
+      "phone": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "c-en-03__NeerjaExpressive__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "There is no water supply for four days in Gandhinagar, Watt 22. My number is 998-800-1122.",
+     "expected": {
+      "issue": "water",
+      "location": [
+       "gandhi nagar"
+      ],
+      "ward": [
+       "22"
+      ],
+      "since": 4,
+      "phone": "9988001122"
+     },
+     "got": {
+      "issue": "water",
+      "location": "Gandhinagar",
+      "ward": "Watt 22",
+      "since": 4,
+      "phone": "9988001122"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "tp",
+      "since": "tp",
+      "phone": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "c-en-04__Neerja__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "The drain is overflowing near the bus stand, Watt 5.",
+     "expected": {
+      "issue": "drainage",
+      "location": [
+       "bus stand"
+      ],
+      "ward": [
+       "5"
+      ]
+     },
+     "got": {
+      "issue": "drainage",
+      "location": "near the bus stand",
+      "ward": "Watt 5"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "c-en-04__Prabhat__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "The drain is overflowing near the bus stand, ward 5.",
+     "expected": {
+      "issue": "drainage",
+      "location": [
+       "bus stand"
+      ],
+      "ward": [
+       "5"
+      ]
+     },
+     "got": {
+      "issue": "drainage",
+      "location": "near the bus stand",
+      "ward": "ward 5"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "c-en-04__NeerjaExpressive__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "The drain is overflowing near the bus stand, WAD 5.",
+     "expected": {
+      "issue": "drainage",
+      "location": [
+       "bus stand"
+      ],
+      "ward": [
+       "5"
+      ]
+     },
+     "got": {
+      "issue": "drainage",
+      "location": "near the bus stand",
+      "ward": "WAD 5"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "c-kn-05__Gagan__r0__kn",
+     "lang": "kn",
+     "kind": "story",
+     "text": "ನಮ್ಮ ರಸ್ತೆ ಎಲ್ಲಿ ಕಸಬಿದ್ದಿದೆ. ಬಸ್ತ್ ನಿಲ್ದಾಣದ ಹತ್ತಿರ ವಾಡ್ ಹದಿನೆ ವಂದು ವಾರದಿಂದ.",
+     "expected": {
+      "issue": "garbage",
+      "location": [
+       "ಬಸ್ ನಿಲ್ದಾಣ"
+      ],
+      "ward": [
+       "18"
+      ],
+      "since": 7
+     },
+     "got": {
+      "issue": "garbage",
+      "location": "ಬಸ್ತ್ ನಿಲ್ದಾಣದ ಹತ್ತಿರ",
+      "since": 7
+     },
+     "out": {
+      "issue": "tp",
+      "location": "wrong",
+      "ward": "fn",
+      "since": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-kn-05__Sapna__r0__kn",
+     "lang": "kn",
+     "kind": "story",
+     "text": "ನಮ್ಮ ರಸ್ತೆಯಲಿ ಕಸಬಿದ್ದಿದೆ. ಬಸ್ ನಿಲ್ದಾಣದ ಹತ್ತಿರ ವಾಡ್ ಹದಿನೆಂಟು ಒಂದುವಾರದಿಂದ.",
+     "expected": {
+      "issue": "garbage",
+      "location": [
+       "ಬಸ್ ನಿಲ್ದಾಣ"
+      ],
+      "ward": [
+       "18"
+      ],
+      "since": 7
+     },
+     "got": {
+      "issue": "garbage",
+      "location": "ಬಸ್ ನಿಲ್ದಾಣದ ಹತ್ತಿರ"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "fn",
+      "since": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-ta-06__Pallavi__r0__ta",
+     "lang": "ta",
+     "kind": "story",
+     "text": "எங்க திருவில் குப்பைக் குவின்றிறக்கு பழிக்கோடம் பக்கத்துல வாடு ஒன்பது?",
+     "expected": {
+      "issue": "garbage",
+      "location": [
+       "பள்ளிக்கூட"
+      ],
+      "ward": [
+       "9"
+      ]
+     },
+     "got": {
+      "issue": "garbage",
+      "location": "திருவில் குப்பைக் குவின்றிறக்கு பழிக்கோடம் பக்கத்துல"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-ta-06__Valluvar__r0__ta",
+     "lang": "ta",
+     "kind": "story",
+     "text": "எங்க தருவில் குப்பைக் குவின்சிருக்கு பழிக்கூடம் பக்கத்துல வாழ்டு ஒன்பது",
+     "expected": {
+      "issue": "garbage",
+      "location": [
+       "பள்ளிக்கூட"
+      ],
+      "ward": [
+       "9"
+      ]
+     },
+     "got": {
+      "issue": "garbage",
+      "location": "தருவில் குப்பைக் குவின்சிருக்கு பழிக்கூடம் பக்கத்துல"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-bn-07__Bashkar__r0__bn",
+     "lang": "bn",
+     "kind": "story",
+     "text": "রাস্তায় বর্ব বর্ব বর্ব বর্ব বর�",
+     "expected": {
+      "issue": "pothole",
+      "location": [
+       "বাজার"
+      ],
+      "ward": [
+       "3"
+      ],
+      "since": 10
+     },
+     "got": {},
+     "out": {
+      "issue": "fn",
+      "location": "fn",
+      "ward": "fn",
+      "since": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-bn-07__Tanishaa__r0__bn",
+     "lang": "bn",
+     "kind": "story",
+     "text": "রাস্তায় বড গার্ত হোয় ছে বাজারের কাছে বড তিন দাস দিন ধুডে",
+     "expected": {
+      "issue": "pothole",
+      "location": [
+       "বাজার"
+      ],
+      "ward": [
+       "3"
+      ],
+      "since": 10
+     },
+     "got": {
+      "location": "গার্ত হোয় ছে বাজারের কাছে"
+     },
+     "out": {
+      "issue": "fn",
+      "location": "tp",
+      "ward": "fn",
+      "since": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-te-08__Mohan__r0__te",
+     "lang": "te",
+     "kind": "story",
+     "text": "మా వీధిలో వీధి దీపం పని చేడం లేదు గుడి దగర వాడు పదకొండు.",
+     "expected": {
+      "issue": "streetlight",
+      "location": [
+       "గుడి"
+      ],
+      "ward": [
+       "11"
+      ]
+     },
+     "got": {
+      "issue": "streetlight"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "fn",
+      "ward": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-te-08__Shruti__r0__te",
+     "lang": "te",
+     "kind": "story",
+     "text": "మా వీధిలో వీధి దీపం పని చేడం లేదు గుడి దగరా వాడు పదకొండు.",
+     "expected": {
+      "issue": "streetlight",
+      "location": [
+       "గుడి"
+      ],
+      "ward": [
+       "11"
+      ]
+     },
+     "got": {
+      "issue": "streetlight"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "fn",
+      "ward": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-mr-09__Aarohi__r0__mr",
+     "lang": "mr",
+     "kind": "story",
+     "text": "आमचा गल्लीत पाणी येत नाही, शारेजवर वार्ड चार आठवड्या पासून।",
+     "expected": {
+      "issue": "water",
+      "location": [
+       "शाळे"
+      ],
+      "ward": [
+       "4"
+      ],
+      "since": 7
+     },
+     "got": {
+      "issue": "water",
+      "ward": "शारेजवर वार्ड चार आठवड्या पासून",
+      "since": 28
+     },
+     "out": {
+      "issue": "tp",
+      "location": "fn",
+      "ward": "tp",
+      "since": "wrong"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-mr-09__Manohar__r0__mr",
+     "lang": "mr",
+     "kind": "story",
+     "text": "आमच्या गल्लित पाणी एत नाही, शालेज वर्थ वार्ड चार आठवड्या पासून.",
+     "expected": {
+      "issue": "water",
+      "location": [
+       "शाळे"
+      ],
+      "ward": [
+       "4"
+      ],
+      "since": 7
+     },
+     "got": {
+      "issue": "water",
+      "ward": "शालेज वर्थ वार्ड चार आठवड्या पासून",
+      "since": 28
+     },
+     "out": {
+      "issue": "tp",
+      "location": "fn",
+      "ward": "tp",
+      "since": "wrong"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-hi-10__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "वर्ड नमबर पंदरह है",
+     "expected": {
+      "ward": [
+       "15"
+      ]
+     },
+     "got": {
+      "ward": "वर्ड नमबर पंदरह है"
+     },
+     "out": {
+      "ward": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "c-hi-10__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "वाड नमबा पंद्रा",
+     "expected": {
+      "ward": [
+       "15"
+      ]
+     },
+     "got": {
+      "ward": "वाड नमबा पंद्रा"
+     },
+     "out": {
+      "ward": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "c-hi-11__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "9, 8, 7, 6, 5, 4, 3, 2, 1",
+     "expected": {
+      "phone": "9876543210"
+     },
+     "got": {},
+     "out": {
+      "phone": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-hi-11__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "9, 8, 7, 6, 5, 4, 3, 2, 1, 0",
+     "expected": {
+      "phone": "9876543210"
+     },
+     "got": {},
+     "out": {
+      "phone": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-hi-12__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "नाली बंध है नहरू चौक के पास वाड 30 कल से",
+     "expected": {
+      "issue": "drainage",
+      "location": [
+       "nehru chowk"
+      ],
+      "ward": [
+       "30"
+      ],
+      "since": 1
+     },
+     "got": {
+      "issue": "drainage",
+      "location": "नहरू चौक के पास",
+      "ward": "नाली बंध है नहरू चौक के पास वाड 30 कल से",
+      "since": 1
+     },
+     "out": {
+      "issue": "tp",
+      "location": "wrong",
+      "ward": "tp",
+      "since": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "c-hi-12__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "नाली बंध है नहरू चौक के पास वार्ट 30 कल से",
+     "expected": {
+      "issue": "drainage",
+      "location": [
+       "nehru chowk"
+      ],
+      "ward": [
+       "30"
+      ],
+      "since": 1
+     },
+     "got": {
+      "issue": "drainage",
+      "location": "नहरू चौक के पास",
+      "since": 1
+     },
+     "out": {
+      "issue": "tp",
+      "location": "wrong",
+      "ward": "fn",
+      "since": "tp"
+     },
+     "correct": false
+    }
+   ]
+  },
+  "health": {
+   "cases": 30,
+   "fullyCorrect": 11,
+   "fields": {
+    "patient": {
+     "tp": 18,
+     "wrong": 1,
+     "fn": 5,
+     "fp": 0
+    },
+    "age": {
+     "tp": 13,
+     "wrong": 2,
+     "fn": 11,
+     "fp": 0
+    },
+    "symptoms": {
+     "tp": 11,
+     "wrong": 9,
+     "fn": 4,
+     "fp": 0
+    },
+    "days": {
+     "tp": 18,
+     "wrong": 2,
+     "fn": 6,
+     "fp": 0
+    },
+    "temp": {
+     "tp": 5,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0
+    },
+    "pregnant": {
+     "tp": 4,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0
+    }
+   },
+   "runs": [
+    {
+     "id": "h-hi-01__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "मरीज का नाम रामू है, उमर 45 साल, दो दिन से बुखार और खासी है, बुखार 102 था.",
+     "expected": {
+      "patient": "Ramu",
+      "age": 45,
+      "symptoms": [
+       "fever",
+       "cough"
+      ],
+      "days": 2,
+      "temp": 102
+     },
+     "got": {
+      "patient": "रामू",
+      "age": 45,
+      "symptoms": [
+       "fever"
+      ],
+      "days": 2,
+      "temp": 102
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "wrong",
+      "days": "tp",
+      "temp": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-hi-01__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "मरीज का नाम रामू है, उमर 45 साल, दो दिन से बुखार और खासी है, बुखार 102 था",
+     "expected": {
+      "patient": "Ramu",
+      "age": 45,
+      "symptoms": [
+       "fever",
+       "cough"
+      ],
+      "days": 2,
+      "temp": 102
+     },
+     "got": {
+      "patient": "रामू",
+      "age": 45,
+      "symptoms": [
+       "fever"
+      ],
+      "days": 2,
+      "temp": 102
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "wrong",
+      "days": "tp",
+      "temp": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-hi-02__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "मरीज का नाम सीता है उम्र 30 साल पांच दिन से दस्ट और पेट में दर्ध है गरभवती है",
+     "expected": {
+      "patient": "सीता",
+      "age": 30,
+      "symptoms": [
+       "diarrhoea",
+       "stomach_pain"
+      ],
+      "days": 5,
+      "pregnant": true
+     },
+     "got": {
+      "patient": "सीता",
+      "age": 30,
+      "symptoms": [
+       "stomach_pain"
+      ],
+      "days": 5,
+      "pregnant": true
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "wrong",
+      "days": "tp",
+      "pregnant": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-hi-02__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "मरीज का नाम सीता है उम्र 30 साल पांच दिन से दस्त और पेट में दर्ध है गर्भवती है",
+     "expected": {
+      "patient": "सीता",
+      "age": 30,
+      "symptoms": [
+       "diarrhoea",
+       "stomach_pain"
+      ],
+      "days": 5,
+      "pregnant": true
+     },
+     "got": {
+      "patient": "सीता",
+      "age": 30,
+      "symptoms": [
+       "diarrhoea",
+       "stomach_pain"
+      ],
+      "days": 5,
+      "pregnant": true
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "tp",
+      "days": "tp",
+      "pregnant": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "h-en-03__Neerja__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Patient is Mohan, 70 years old, breathless since yesterday, some chest pain too.",
+     "expected": {
+      "patient": "Mohan",
+      "age": 70,
+      "symptoms": [
+       "breathless",
+       "chest_pain"
+      ],
+      "days": 1
+     },
+     "got": {
+      "patient": "Mohan",
+      "age": 70,
+      "symptoms": [
+       "breathless",
+       "chest_pain"
+      ],
+      "days": 1
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "tp",
+      "days": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "h-en-03__Prabhat__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Patient is Mohan, 70 years old, breathless since yesterday, some chest pain too.",
+     "expected": {
+      "patient": "Mohan",
+      "age": 70,
+      "symptoms": [
+       "breathless",
+       "chest_pain"
+      ],
+      "days": 1
+     },
+     "got": {
+      "patient": "Mohan",
+      "age": 70,
+      "symptoms": [
+       "breathless",
+       "chest_pain"
+      ],
+      "days": 1
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "tp",
+      "days": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "h-en-03__NeerjaExpressive__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Patient is Mohan, 70 years old, breathless since yesterday, some chest pain too.",
+     "expected": {
+      "patient": "Mohan",
+      "age": 70,
+      "symptoms": [
+       "breathless",
+       "chest_pain"
+      ],
+      "days": 1
+     },
+     "got": {
+      "patient": "Mohan",
+      "age": 70,
+      "symptoms": [
+       "breathless",
+       "chest_pain"
+      ],
+      "days": 1
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "tp",
+      "days": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "h-en-04__Neerja__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Name Priya, age 8, rash and fever for 3 days, temperature 100.",
+     "expected": {
+      "patient": "Priya",
+      "age": 8,
+      "symptoms": [
+       "rash",
+       "fever"
+      ],
+      "days": 3,
+      "temp": 100
+     },
+     "got": {
+      "patient": "Priya",
+      "age": 8,
+      "symptoms": [
+       "fever",
+       "rash"
+      ],
+      "days": 3,
+      "temp": 100
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "tp",
+      "days": "tp",
+      "temp": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "h-en-04__Prabhat__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Nain Priya, age 8, rash and fever for 3 days, temperature 100.",
+     "expected": {
+      "patient": "Priya",
+      "age": 8,
+      "symptoms": [
+       "rash",
+       "fever"
+      ],
+      "days": 3,
+      "temp": 100
+     },
+     "got": {
+      "age": 8,
+      "symptoms": [
+       "fever",
+       "rash"
+      ],
+      "days": 3,
+      "temp": 100
+     },
+     "out": {
+      "patient": "fn",
+      "age": "tp",
+      "symptoms": "tp",
+      "days": "tp",
+      "temp": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-en-04__NeerjaExpressive__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Name Priya, 8-8, ration fever for 3 days, temperature 100.",
+     "expected": {
+      "patient": "Priya",
+      "age": 8,
+      "symptoms": [
+       "rash",
+       "fever"
+      ],
+      "days": 3,
+      "temp": 100
+     },
+     "got": {
+      "patient": "Priya",
+      "symptoms": [
+       "fever"
+      ],
+      "days": 3,
+      "temp": 100
+     },
+     "out": {
+      "patient": "tp",
+      "age": "fn",
+      "symptoms": "wrong",
+      "days": "tp",
+      "temp": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-hi-05__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "नाम कमला देवी 60 साल एक हाफते से चक्कर आ रहे हैं",
+     "expected": {
+      "patient": "Kamla Devi",
+      "age": 60,
+      "symptoms": [
+       "dizziness"
+      ],
+      "days": 7
+     },
+     "got": {
+      "patient": "कमला देवी",
+      "age": 60,
+      "symptoms": [
+       "dizziness"
+      ]
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "tp",
+      "days": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-hi-05__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "नाम कमला देवी 60 साल एक हाफते से चक्कर आ रहे हैं",
+     "expected": {
+      "patient": "Kamla Devi",
+      "age": 60,
+      "symptoms": [
+       "dizziness"
+      ],
+      "days": 7
+     },
+     "got": {
+      "patient": "कमला देवी",
+      "age": 60,
+      "symptoms": [
+       "dizziness"
+      ]
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "tp",
+      "days": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-ta-06__Pallavi__r0__ta",
+     "lang": "ta",
+     "kind": "story",
+     "text": "நோயாலி பெயர் செல்வி வயது முப்பத்தேந்து இரண்டு நாளாக வாந்தி மற்றும் தலைவிலி.",
+     "expected": {
+      "patient": "செல்வி",
+      "age": 35,
+      "symptoms": [
+       "vomiting",
+       "headache"
+      ],
+      "days": 2
+     },
+     "got": {
+      "patient": "செல்வி",
+      "symptoms": [
+       "vomiting"
+      ],
+      "days": 2
+     },
+     "out": {
+      "patient": "tp",
+      "age": "fn",
+      "symptoms": "wrong",
+      "days": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-ta-06__Valluvar__r0__ta",
+     "lang": "ta",
+     "kind": "story",
+     "text": "நோயாளி பெயர் செல்வி 5.3.24 வாந்தி மற்றும் தலைவலி",
+     "expected": {
+      "patient": "செல்வி",
+      "age": 35,
+      "symptoms": [
+       "vomiting",
+       "headache"
+      ],
+      "days": 2
+     },
+     "got": {
+      "patient": "செல்வி",
+      "symptoms": [
+       "headache",
+       "vomiting"
+      ]
+     },
+     "out": {
+      "patient": "tp",
+      "age": "fn",
+      "symptoms": "tp",
+      "days": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-bn-07__Bashkar__r0__bn",
+     "lang": "bn",
+     "kind": "story",
+     "text": "রোরো র৾রো র৾রো রোরো রোরো রোরো রোরো র�",
+     "expected": {
+      "patient": "মিনা",
+      "age": 28,
+      "symptoms": [
+       "fever",
+       "cold"
+      ],
+      "days": 3
+     },
+     "got": {},
+     "out": {
+      "patient": "fn",
+      "age": "fn",
+      "symptoms": "fn",
+      "days": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-bn-07__Tanishaa__r0__bn",
+     "lang": "bn",
+     "kind": "story",
+     "text": "রো্বীর નাম মিনা বয়েস আটাস তিন দিন ধুরে জার আশোরদি",
+     "expected": {
+      "patient": "মিনা",
+      "age": 28,
+      "symptoms": [
+       "fever",
+       "cold"
+      ],
+      "days": 3
+     },
+     "got": {
+      "days": 3
+     },
+     "out": {
+      "patient": "fn",
+      "age": "fn",
+      "symptoms": "fn",
+      "days": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-te-08__Mohan__r0__te",
+     "lang": "te",
+     "kind": "story",
+     "text": "పేశన్ట పేరు లక్షమి వేసు యాభే నాలుగు రోజలుగా దగు మరీం జ్వరమ్",
+     "expected": {
+      "patient": "లక్ష్మి",
+      "age": 50,
+      "symptoms": [
+       "cough",
+       "fever"
+      ],
+      "days": 4
+     },
+     "got": {
+      "patient": "లక్షమి వేసు యాభే"
+     },
+     "out": {
+      "patient": "wrong",
+      "age": "fn",
+      "symptoms": "fn",
+      "days": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-te-08__Shruti__r0__te",
+     "lang": "te",
+     "kind": "story",
+     "text": "పేశన్ పేరు లక్షమి వయసు యాభే నాలుగు రోజలుగా దగు మరివు జ్వరమ్",
+     "expected": {
+      "patient": "లక్ష్మి",
+      "age": 50,
+      "symptoms": [
+       "cough",
+       "fever"
+      ],
+      "days": 4
+     },
+     "got": {
+      "patient": "లక్షమి",
+      "age": 4
+     },
+     "out": {
+      "patient": "tp",
+      "age": "wrong",
+      "symptoms": "fn",
+      "days": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-mr-09__Aarohi__r0__mr",
+     "lang": "mr",
+     "kind": "story",
+     "text": "रुग्णाचे नाव गणेश वै चालीस दोन दिवसांपासून ताप आनी अम्रदुखी",
+     "expected": {
+      "patient": "गणेश",
+      "age": 40,
+      "symptoms": [
+       "fever",
+       "body_pain"
+      ],
+      "days": 2
+     },
+     "got": {
+      "patient": "गणेश वै चालीस",
+      "symptoms": [
+       "fever"
+      ],
+      "days": 42
+     },
+     "out": {
+      "patient": "tp",
+      "age": "fn",
+      "symptoms": "wrong",
+      "days": "wrong"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-mr-09__Manohar__r0__mr",
+     "lang": "mr",
+     "kind": "story",
+     "text": "रुग्णाचे नाव गणेश वय 40 दोन दिवसान पासून ताप आने अंगदुखी।",
+     "expected": {
+      "patient": "गणेश",
+      "age": 40,
+      "symptoms": [
+       "fever",
+       "body_pain"
+      ],
+      "days": 2
+     },
+     "got": {
+      "patient": "गणेश",
+      "age": 42,
+      "symptoms": [
+       "fever",
+       "body_pain"
+      ],
+      "days": 42
+     },
+     "out": {
+      "patient": "tp",
+      "age": "wrong",
+      "symptoms": "tp",
+      "days": "wrong"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-kn-10__Gagan__r0__kn",
+     "lang": "kn",
+     "kind": "story",
+     "text": "ರೋಗಿಯ ಹಸರು ರವಿ ವೇಸು ಆಯವತ್ತಯಿದು ಮೂರು ದಿನದಿಂದ ಜುವರಾ ಮತ್ತು ಕೆಮ್ಮು.",
+     "expected": {
+      "patient": "ರವಿ",
+      "age": 55,
+      "symptoms": [
+       "fever",
+       "cough"
+      ],
+      "days": 3
+     },
+     "got": {
+      "symptoms": [
+       "cough"
+      ],
+      "days": 3
+     },
+     "out": {
+      "patient": "fn",
+      "age": "fn",
+      "symptoms": "wrong",
+      "days": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-kn-10__Sapna__r0__kn",
+     "lang": "kn",
+     "kind": "story",
+     "text": "ರೋಗಿಯ ಹೇಸರು ರವಿ ವೇಸು ಆಯವತ್ತೆಯದು ಮೂರು ದಿನ ದಿಂದ ಜ್ವರಾ ಮತ್ತು ಕೆಮ್ಮು.",
+     "expected": {
+      "patient": "ರವಿ",
+      "age": 55,
+      "symptoms": [
+       "fever",
+       "cough"
+      ],
+      "days": 3
+     },
+     "got": {
+      "symptoms": [
+       "fever",
+       "cough"
+      ],
+      "days": 3
+     },
+     "out": {
+      "patient": "fn",
+      "age": "fn",
+      "symptoms": "tp",
+      "days": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-hi-11__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "बावन साल",
+     "expected": {
+      "age": 52
+     },
+     "got": {
+      "age": 52
+     },
+     "out": {
+      "age": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "h-hi-11__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "बावन साल",
+     "expected": {
+      "age": 52
+     },
+     "got": {
+      "age": 52
+     },
+     "out": {
+      "age": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "h-hi-12__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "तीन दिन से",
+     "expected": {
+      "days": 3
+     },
+     "got": {
+      "days": 3
+     },
+     "out": {
+      "days": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "h-hi-12__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "तीन दिन से",
+     "expected": {
+      "days": 3
+     },
+     "got": {
+      "days": 3
+     },
+     "out": {
+      "days": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "h-hi-13__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "नहीं",
+     "expected": {
+      "pregnant": false
+     },
+     "got": {
+      "pregnant": false
+     },
+     "out": {
+      "pregnant": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "h-hi-13__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "नहीं.",
+     "expected": {
+      "pregnant": false
+     },
+     "got": {
+      "pregnant": false
+     },
+     "out": {
+      "pregnant": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "h-hi-14__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "बच्चे का नाम अर्जुन फाइव साल का कल से उल्टी और डास्ट हो रहे हैं",
+     "expected": {
+      "patient": "Arjun",
+      "age": 5,
+      "symptoms": [
+       "vomiting",
+       "diarrhoea"
+      ],
+      "days": 1
+     },
+     "got": {
+      "patient": "अर्जुन फाइव",
+      "symptoms": [
+       "vomiting"
+      ],
+      "days": 1
+     },
+     "out": {
+      "patient": "tp",
+      "age": "fn",
+      "symptoms": "wrong",
+      "days": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "h-hi-14__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "बच्चे का नाम अर्जुन फाइव साल का कल से उल्टी और डास्ट हो रहे है",
+     "expected": {
+      "patient": "Arjun",
+      "age": 5,
+      "symptoms": [
+       "vomiting",
+       "diarrhoea"
+      ],
+      "days": 1
+     },
+     "got": {
+      "patient": "अर्जुन फाइव",
+      "symptoms": [
+       "vomiting"
+      ],
+      "days": 1
+     },
+     "out": {
+      "patient": "tp",
+      "age": "fn",
+      "symptoms": "wrong",
+      "days": "tp"
+     },
+     "correct": false
+    }
+   ]
+  },
+  "khata": {
+   "cases": 35,
+   "fullyCorrect": 14,
+   "fields": {
+    "customer": {
+     "tp": 19,
+     "wrong": 5,
+     "fn": 4,
+     "fp": 0
+    },
+    "items": {
+     "tp": 13,
+     "wrong": 10,
+     "fn": 6,
+     "fp": 0
+    },
+    "amount": {
+     "tp": 17,
+     "wrong": 5,
+     "fn": 8,
+     "fp": 0
+    },
+    "payment": {
+     "tp": 24,
+     "wrong": 0,
+     "fn": 6,
+     "fp": 0
+    },
+    "phone": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 2,
+     "fp": 0
+    }
+   },
+   "runs": [
+    {
+     "id": "k-hi-01__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "सुरेश भया ने 5 कीलो आता और 1 कीलो चीनी ली 320 रुपए उधार लिखडू",
+     "expected": {
+      "customer": "Suresh",
+      "items": [
+       {
+        "qty": 5,
+        "unit": "kg",
+        "item": "Wheat flour"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Sugar"
+       }
+      ],
+      "amount": 320,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "भया",
+      "items": [
+       {
+        "qty": 5,
+        "unit": "kg",
+        "item": "आता"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Sugar"
+       }
+      ],
+      "amount": 320,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "wrong",
+      "items": "wrong",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-hi-01__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "सुरेश भाया ने 5 कीलो आता और 1 कीलो चीनी ली 320 रुपए उधार लिख डू",
+     "expected": {
+      "customer": "Suresh",
+      "items": [
+       {
+        "qty": 5,
+        "unit": "kg",
+        "item": "Wheat flour"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Sugar"
+       }
+      ],
+      "amount": 320,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "भाया",
+      "items": [
+       {
+        "qty": 5,
+        "unit": "kg",
+        "item": "आता"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Sugar"
+       }
+      ],
+      "amount": 320,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "wrong",
+      "items": "wrong",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-hi-02__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "गीता दीदी ने दो पैकेट डूढ लिया, सत्तर रुपए नकत दे दिये.",
+     "expected": {
+      "customer": "गीता",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "packet",
+        "item": "Milk"
+       }
+      ],
+      "amount": 70,
+      "payment": "paid"
+     },
+     "got": {
+      "customer": "गीता",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "packet",
+        "item": "डूढ"
+       }
+      ],
+      "amount": 70
+     },
+     "out": {
+      "customer": "tp",
+      "items": "wrong",
+      "amount": "tp",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-hi-02__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "गीता दीधी ने दो पैकेट दूद लिया, सत्तर रुपे नकत दे दिये",
+     "expected": {
+      "customer": "गीता",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "packet",
+        "item": "Milk"
+       }
+      ],
+      "amount": 70,
+      "payment": "paid"
+     },
+     "got": {
+      "customer": "दीधी",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "packet",
+        "item": "दूद"
+       }
+      ],
+      "amount": 70
+     },
+     "out": {
+      "customer": "wrong",
+      "items": "wrong",
+      "amount": "tp",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-en-03__Neerja__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Mrs. Fernandez took two dozen eggs and one litre milk, 210 rupees, she paid by UPI.",
+     "expected": {
+      "customer": "Fernandes",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "dozen",
+        "item": "Eggs"
+       },
+       {
+        "qty": 1,
+        "unit": "L",
+        "item": "Milk"
+       }
+      ],
+      "amount": 210,
+      "payment": "upi"
+     },
+     "got": {
+      "customer": "Fernandez",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "dozen",
+        "item": "Eggs"
+       },
+       {
+        "qty": 1,
+        "unit": "L",
+        "item": "Milk"
+       }
+      ],
+      "amount": 210,
+      "payment": "upi"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "k-en-03__Prabhat__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Mrs. Fernandez took two dozen eggs and one liter milk, 210 rupees, she paid by UPI.",
+     "expected": {
+      "customer": "Fernandes",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "dozen",
+        "item": "Eggs"
+       },
+       {
+        "qty": 1,
+        "unit": "L",
+        "item": "Milk"
+       }
+      ],
+      "amount": 210,
+      "payment": "upi"
+     },
+     "got": {
+      "customer": "Fernandez",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "dozen",
+        "item": "Eggs"
+       },
+       {
+        "qty": 1,
+        "unit": "L",
+        "item": "Milk"
+       }
+      ],
+      "amount": 210,
+      "payment": "upi"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "k-en-03__NeerjaExpressive__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Mrs. Fernandez took two dozen eggs and one litre milk, 210 rupees, she paid by UPI.",
+     "expected": {
+      "customer": "Fernandes",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "dozen",
+        "item": "Eggs"
+       },
+       {
+        "qty": 1,
+        "unit": "L",
+        "item": "Milk"
+       }
+      ],
+      "amount": 210,
+      "payment": "upi"
+     },
+     "got": {
+      "customer": "Fernandez",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "dozen",
+        "item": "Eggs"
+       },
+       {
+        "qty": 1,
+        "unit": "L",
+        "item": "Milk"
+       }
+      ],
+      "amount": 210,
+      "payment": "upi"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "k-hi-04__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "पप्पु आया था 500 रुपई वापस दे गया पुराणे उधार के।",
+     "expected": {
+      "customer": "Pappu",
+      "amount": 500,
+      "payment": "repay"
+     },
+     "got": {
+      "customer": "पप्पु",
+      "amount": 500,
+      "payment": "repay"
+     },
+     "out": {
+      "customer": "tp",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "k-hi-04__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "पप्पु आया था 500 रुपै वापस दे गया पुराने उधार के।",
+     "expected": {
+      "customer": "Pappu",
+      "amount": 500,
+      "payment": "repay"
+     },
+     "got": {
+      "customer": "पप्पु",
+      "amount": 500,
+      "payment": "repay"
+     },
+     "out": {
+      "customer": "tp",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "k-hi-05__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "रमेश जी ने 10 कीलो चावल और 2 लीटर तेल लिया, टोटल 950 जी पेसे दे दिया",
+     "expected": {
+      "customer": "Ramesh",
+      "items": [
+       {
+        "qty": 10,
+        "unit": "kg",
+        "item": "Rice"
+       },
+       {
+        "qty": 2,
+        "unit": "L",
+        "item": "Oil"
+       }
+      ],
+      "amount": 950,
+      "payment": "upi"
+     },
+     "got": {
+      "customer": "रमेश",
+      "items": [
+       {
+        "qty": 10,
+        "unit": "kg",
+        "item": "Rice"
+       },
+       {
+        "qty": 2,
+        "unit": "L",
+        "item": "Oil"
+       }
+      ]
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "fn",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-hi-05__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "रमेश जी ने 10 कीलो चावल और 2 लीटर टेल लिया, टोटल 950 जीपे से दे दिया",
+     "expected": {
+      "customer": "Ramesh",
+      "items": [
+       {
+        "qty": 10,
+        "unit": "kg",
+        "item": "Rice"
+       },
+       {
+        "qty": 2,
+        "unit": "L",
+        "item": "Oil"
+       }
+      ],
+      "amount": 950,
+      "payment": "upi"
+     },
+     "got": {
+      "customer": "रमेश",
+      "items": [
+       {
+        "qty": 10,
+        "unit": "kg",
+        "item": "Rice"
+       },
+       {
+        "qty": 2,
+        "unit": "L",
+        "item": "टेल"
+       }
+      ]
+     },
+     "out": {
+      "customer": "tp",
+      "items": "wrong",
+      "amount": "fn",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-hi-06__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "कमला ने आधा किलो चाय पत्ती ली 180 रुपए खाते में लिख दो.",
+     "expected": {
+      "customer": "कमला",
+      "items": [
+       {
+        "qty": 0.5,
+        "unit": "kg",
+        "item": "Tea"
+       }
+      ],
+      "amount": 180,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "कमला",
+      "items": [
+       {
+        "qty": 0.5,
+        "unit": "kg",
+        "item": "Tea"
+       }
+      ],
+      "amount": 180,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "k-hi-06__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "कमला ने आधा किलो चाय पत्ती ली 180 रुपए खाते में लिख दो",
+     "expected": {
+      "customer": "कमला",
+      "items": [
+       {
+        "qty": 0.5,
+        "unit": "kg",
+        "item": "Tea"
+       }
+      ],
+      "amount": 180,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "कमला",
+      "items": [
+       {
+        "qty": 0.5,
+        "unit": "kg",
+        "item": "Tea"
+       }
+      ],
+      "amount": 180,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "k-bn-07__Bashkar__r0__bn",
+     "lang": "bn",
+     "kind": "story",
+     "text": "রহিন দুই কেজি চাল আরেক কেজি চিনিনেছে দুশো সাত তাকা বাকি রাখো।",
+     "expected": {
+      "customer": "রহিম",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Rice"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Sugar"
+       }
+      ],
+      "amount": 260,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "রহিন",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Rice"
+       }
+      ],
+      "amount": 207,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "wrong",
+      "items": "wrong",
+      "amount": "wrong",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-bn-07__Tanishaa__r0__bn",
+     "lang": "bn",
+     "kind": "story",
+     "text": "রোহিম দুই কেজি চাল আরে কেজি চিনি নিয়ে ছে দুশো সাট তাকা বাকি রাখো।",
+     "expected": {
+      "customer": "রহিম",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Rice"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Sugar"
+       }
+      ],
+      "amount": 260,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "রোহিম",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Rice"
+       }
+      ],
+      "amount": 200,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "wrong",
+      "items": "wrong",
+      "amount": "wrong",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-ta-08__Pallavi__r0__ta",
+     "lang": "ta",
+     "kind": "story",
+     "text": "मुरुगन 4 किलो अरिसी वांगिनार 155 रूबाय कडन",
+     "expected": {
+      "customer": "முருகன்",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "kg",
+        "item": "Rice"
+       }
+      ],
+      "amount": 150,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "मुरुगन",
+      "items": [
+       {
+        "qty": 4,
+        "unit": "kg",
+        "item": "अरिसी"
+       }
+      ]
+     },
+     "out": {
+      "customer": "tp",
+      "items": "wrong",
+      "amount": "fn",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-ta-08__Valluvar__r0__ta",
+     "lang": "ta",
+     "kind": "story",
+     "text": "முறுகன் மோன்று கிலோ அரசி வாங்கினார் 150 ரூபாய் கடன்",
+     "expected": {
+      "customer": "முருகன்",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "kg",
+        "item": "Rice"
+       }
+      ],
+      "amount": 150,
+      "payment": "credit"
+     },
+     "got": {
+      "amount": 150,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "fn",
+      "items": "fn",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-mr-09__Aarohi__r0__mr",
+     "lang": "mr",
+     "kind": "story",
+     "text": "सुनील ने दोन किलो साखर घितली अईशी रुपे उधार",
+     "expected": {
+      "customer": "सुनील",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       }
+      ],
+      "amount": 80,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "सुनील",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       }
+      ],
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "fn",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-mr-09__Manohar__r0__mr",
+     "lang": "mr",
+     "kind": "story",
+     "text": "सुनिल ने दोन किलो साखर घेत ली, अईशी रुपे उधार.",
+     "expected": {
+      "customer": "सुनील",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       }
+      ],
+      "amount": 80,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "सुनिल",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       }
+      ],
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "fn",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-en-10__Neerja__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Anil bought three packets of Mahangi, Rs. 120 cash.",
+     "expected": {
+      "customer": "Anil",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "packet",
+        "item": "Noodles"
+       }
+      ],
+      "amount": 120,
+      "payment": "paid"
+     },
+     "got": {
+      "customer": "Anil",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "packet",
+        "item": "Mahangi"
+       }
+      ],
+      "amount": 120,
+      "payment": "paid"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "wrong",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-en-10__Prabhat__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Anil bought 3 packets of Maggi, 120 rupees cash.",
+     "expected": {
+      "customer": "Anil",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "packet",
+        "item": "Noodles"
+       }
+      ],
+      "amount": 120,
+      "payment": "paid"
+     },
+     "got": {
+      "customer": "Anil",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "packet",
+        "item": "Noodles"
+       }
+      ],
+      "amount": 120,
+      "payment": "paid"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "k-en-10__NeerjaExpressive__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Anil bought 3 packets of Mahgi, 120 rupees cash.",
+     "expected": {
+      "customer": "Anil",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "packet",
+        "item": "Noodles"
+       }
+      ],
+      "amount": 120,
+      "payment": "paid"
+     },
+     "got": {
+      "customer": "Anil",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "packet",
+        "item": "Mahgi"
+       }
+      ],
+      "amount": 120,
+      "payment": "paid"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "wrong",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-hi-11__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "शर्मा जी नमबर 9-8-7-6-5-4-3-2-1-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4-0-4",
+     "expected": {
+      "customer": "Sharma",
+      "phone": "9876543210",
+      "items": [
+       {
+        "qty": 4,
+        "unit": "kg",
+        "item": "Potato"
+       },
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Onion"
+       }
+      ],
+      "amount": 180,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "शर्मा"
+     },
+     "out": {
+      "customer": "tp",
+      "phone": "fn",
+      "items": "fn",
+      "amount": "fn",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-hi-11__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "शर्माजी, नम्बर नौ आठ, साथ छे पांच चार तीन दो एक शून्य, फो कीलो आलू और टू कीलो प्याज, वन हंडर्ड एन एटी रुपे उधार.",
+     "expected": {
+      "customer": "Sharma",
+      "phone": "9876543210",
+      "items": [
+       {
+        "qty": 4,
+        "unit": "kg",
+        "item": "Potato"
+       },
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Onion"
+       }
+      ],
+      "amount": 180,
+      "payment": "credit"
+     },
+     "got": {
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "fn",
+      "phone": "fn",
+      "items": "fn",
+      "amount": "fn",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-te-12__Mohan__r0__te",
+     "lang": "te",
+     "kind": "story",
+     "text": "రాజు రిండు కిలోల బియం తీస్కునాడు 12 రూపాయలు అప్పు.",
+     "expected": {
+      "customer": "రాజు",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Rice"
+       }
+      ],
+      "amount": 120,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "రాజు",
+      "amount": 12,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "fn",
+      "amount": "wrong",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-te-12__Shruti__r0__te",
+     "lang": "te",
+     "kind": "story",
+     "text": "రాజు రండు కిలోల బియం తీస్కునాడు 12 రూపయలు అప్పు.",
+     "expected": {
+      "customer": "రాజు",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Rice"
+       }
+      ],
+      "amount": 120,
+      "payment": "credit"
+     },
+     "got": {
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "fn",
+      "items": "fn",
+      "amount": "fn",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-kn-13__Gagan__r0__kn",
+     "lang": "kn",
+     "kind": "story",
+     "text": "ಮಂಜು ಐದು ಕೆಜಿ ಅಕ್ಕಿತಗೊಂಡ ಮುನ್ನುರು ರೂಪಾಯಿ ಸಾಲ.",
+     "expected": {
+      "customer": "ಮಂಜು",
+      "items": [
+       {
+        "qty": 5,
+        "unit": "kg",
+        "item": "Rice"
+       }
+      ],
+      "amount": 300,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "ಮಂಜು",
+      "items": [
+       {
+        "qty": 5,
+        "unit": "kg",
+        "item": "Rice"
+       }
+      ],
+      "amount": 300,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "k-kn-13__Sapna__r0__kn",
+     "lang": "kn",
+     "kind": "story",
+     "text": "ಮಂಜು ಅಯದು ಕೆಜಿ ಅಕಿತಗೊಂಡ ಮುನ್ನುರು ರೂಪಾಯ ಸಾಲ.",
+     "expected": {
+      "customer": "ಮಂಜು",
+      "items": [
+       {
+        "qty": 5,
+        "unit": "kg",
+        "item": "Rice"
+       }
+      ],
+      "amount": 300,
+      "payment": "credit"
+     },
+     "got": {
+      "amount": 300,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "fn",
+      "items": "fn",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-hi-14__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "चार साव पचास",
+     "expected": {
+      "amount": 450
+     },
+     "got": {
+      "amount": 50
+     },
+     "out": {
+      "amount": "wrong"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-hi-14__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "चार साव पचास",
+     "expected": {
+      "amount": 450
+     },
+     "got": {
+      "amount": 50
+     },
+     "out": {
+      "amount": "wrong"
+     },
+     "correct": false
+    },
+    {
+     "id": "k-hi-15__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "उधार कर डो",
+     "expected": {
+      "payment": "credit"
+     },
+     "got": {
+      "payment": "credit"
+     },
+     "out": {
+      "payment": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "k-hi-15__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "उधार कर डू",
+     "expected": {
+      "payment": "credit"
+     },
+     "got": {
+      "payment": "credit"
+     },
+     "out": {
+      "payment": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "k-en-16__Neerja__r0__en",
+     "lang": "en",
+     "kind": "answer",
+     "text": "2 kilos of sugar and half a kilo of dal.",
+     "expected": {
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       },
+       {
+        "qty": 0.5,
+        "unit": "kg",
+        "item": "Dal"
+       }
+      ]
+     },
+     "got": {
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       },
+       {
+        "qty": 0.5,
+        "unit": "kg",
+        "item": "Dal"
+       }
+      ]
+     },
+     "out": {
+      "items": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "k-en-16__Prabhat__r0__en",
+     "lang": "en",
+     "kind": "answer",
+     "text": "2 kilos of sugar and half a kilo of dal.",
+     "expected": {
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       },
+       {
+        "qty": 0.5,
+        "unit": "kg",
+        "item": "Dal"
+       }
+      ]
+     },
+     "got": {
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       },
+       {
+        "qty": 0.5,
+        "unit": "kg",
+        "item": "Dal"
+       }
+      ]
+     },
+     "out": {
+      "items": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "k-en-16__NeerjaExpressive__r0__en",
+     "lang": "en",
+     "kind": "answer",
+     "text": "2 kilos of sugar and half a kilo of dal.",
+     "expected": {
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       },
+       {
+        "qty": 0.5,
+        "unit": "kg",
+        "item": "Dal"
+       }
+      ]
+     },
+     "got": {
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       },
+       {
+        "qty": 0.5,
+        "unit": "kg",
+        "item": "Dal"
+       }
+      ]
+     },
+     "out": {
+      "items": "tp"
+     },
+     "correct": true
+    }
+   ]
+  }
+ }
+}

@@ -10,6 +10,7 @@
 
 import type { LangCode } from './lang';
 import { fold } from './indic/numbers';
+import { romanize, soundKey } from './indic/bank';
 
 // ---------------------------------------------------------------------------
 // Normalisation
@@ -202,7 +203,35 @@ export function phraseIndex(text: string, phrases: string[]): number {
   return phraseMatch(text, phrases)?.idx ?? -1;
 }
 
-export function phraseMatch(text: string, phrases: string[], last = false): { idx: number; len: number } | null {
+/**
+ * Latin keywords against native-script speech: Whisper and Chrome write Hinglish in Devanagari
+ * ("आता" = aata, "डूढ" = doodh, "नकत" = nakad). Words are romanised and compared on sound keys.
+ * minKey: shortest keyword sound key to trust (short keys collide with ordinary words: आता also means "comes").
+ */
+function crossScript(text: string, phrases: string[], last: boolean, minKey: number): { idx: number; len: number } | null {
+  if (!/[^\x00-\x7f]/.test(text)) return null;
+  const words: { k: string; at: number; len: number }[] = [];
+  for (const m of text.matchAll(/\S+/g)) {
+    const w = m[0].replace(/[.,!?;:।]+$/, '');
+    words.push({ k: soundKey(isLatin(w) ? w : romanize(w)), at: m.index ?? 0, len: w.length });
+  }
+  let found: { idx: number; len: number } | null = null;
+  for (const p of phrases) {
+    if (!isLatin(p)) continue;
+    const pk = p.split(/\s+/).map((w) => soundKey(w));
+    if (pk.join('').length < minKey || pk.some((k) => !k)) continue;
+    for (let i = 0; i + pk.length <= words.length; i++) {
+      if (!pk.every((k, j) => words[i + j].k === k)) continue;
+      const idx = words[i].at;
+      const len = words[i + pk.length - 1].at + words[i + pk.length - 1].len - idx;
+      if (!found || (last ? idx > found.idx : idx < found.idx)) found = { idx, len };
+      if (!last) break;
+    }
+  }
+  return found;
+}
+
+export function phraseMatch(text: string, phrases: string[], last = false, crossMinKey = 4): { idx: number; len: number } | null {
   let found: { idx: number; len: number } | null = null;
   for (const p of phrases) {
     const k = nw(p);
@@ -231,11 +260,21 @@ export function phraseMatch(text: string, phrases: string[], last = false): { id
     const better = !found || (last ? idx > found.idx || (idx === found.idx && k.length > found.len) : idx < found.idx || (idx === found.idx && k.length > found.len));
     if (better) found = { idx, len: k.length };
   }
-  return found;
+  return found ?? crossScript(text, phrases, last, crossMinKey);
 }
 
+const foldCache = new Map<string, string>();
+const folded = (w: string) => {
+  let k = foldCache.get(w);
+  if (k === undefined) foldCache.set(w, (k = fold(w)));
+  return k;
+};
 export function startsWithAny(tok: string, prefixes: string[]): boolean {
-  return prefixes.some((p) => tok.startsWith(p));
+  if (prefixes.some((p) => tok.startsWith(p))) return true;
+  // ASR spells native words a letter off (हफते for हफ्ते): compare sound-alike keys of 3+ letters
+  if (isLatin(tok)) return false;
+  const ft = folded(tok);
+  return prefixes.some((p) => !isLatin(p) && [...folded(p)].length >= 3 && ft.startsWith(folded(p)));
 }
 
 /** Token equals a Latin word, or (Indian scripts) starts with it. */

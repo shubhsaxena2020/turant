@@ -1,0 +1,1457 @@
+{
+ "name": "asr-kit-heldout",
+ "apps": {
+  "civic": {
+   "cases": 13,
+   "fullyCorrect": 3,
+   "fields": {
+    "issue": {
+     "tp": 7,
+     "wrong": 0,
+     "fn": 6,
+     "fp": 0
+    },
+    "location": {
+     "tp": 5,
+     "wrong": 0,
+     "fn": 8,
+     "fp": 0
+    },
+    "ward": {
+     "tp": 5,
+     "wrong": 2,
+     "fn": 6,
+     "fp": 0
+    },
+    "since": {
+     "tp": 6,
+     "wrong": 1,
+     "fn": 2,
+     "fp": 0
+    },
+    "phone": {
+     "tp": 3,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0
+    }
+   },
+   "runs": [
+    {
+     "id": "ch-hi-01__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "भया हमारे मुहले में पानी नहीं आ रहा तीन दिन से राम नगर वार्ड नमबर 14",
+     "expected": {
+      "issue": "water",
+      "location": [
+       "ram nagar"
+      ],
+      "ward": [
+       "14"
+      ],
+      "since": 3
+     },
+     "got": {
+      "issue": "water",
+      "ward": "भया हमारे मुहले में पानी नहीं आ रहा तीन दिन से राम नगर वार्ड नमबर 14",
+      "since": 3
+     },
+     "out": {
+      "issue": "tp",
+      "location": "fn",
+      "ward": "tp",
+      "since": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "ch-hi-01__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "भैया हमारे महले में पानी नहीं आ रहा तीन दिन से राम नगर वार्ड नमबर फोटीन",
+     "expected": {
+      "issue": "water",
+      "location": [
+       "ram nagar"
+      ],
+      "ward": [
+       "14"
+      ],
+      "since": 3
+     },
+     "got": {
+      "issue": "water",
+      "ward": "भैया हमारे महले में पानी नहीं आ रहा तीन दिन से राम नगर वार्ड नमबर फोटीन",
+      "since": 3
+     },
+     "out": {
+      "issue": "tp",
+      "location": "fn",
+      "ward": "wrong",
+      "since": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "ch-en-02__Neerja__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Streetlight is broken opposite the post office, Ward 9. For two weeks now, call me on 912-345-6780.",
+     "expected": {
+      "issue": "streetlight",
+      "location": [
+       "post office"
+      ],
+      "ward": [
+       "9"
+      ],
+      "since": 14,
+      "phone": "9123456780"
+     },
+     "got": {
+      "issue": "streetlight",
+      "location": "opposite the post office",
+      "ward": "Ward 9",
+      "since": 14,
+      "phone": "9123456780"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "tp",
+      "since": "tp",
+      "phone": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "ch-en-02__Prabhat__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Street light is broken opposite the post office, Ward 9, for two weeks now. Call me on 912-3456780.",
+     "expected": {
+      "issue": "streetlight",
+      "location": [
+       "post office"
+      ],
+      "ward": [
+       "9"
+      ],
+      "since": 14,
+      "phone": "9123456780"
+     },
+     "got": {
+      "issue": "streetlight",
+      "location": "opposite the post office",
+      "ward": "Ward 9",
+      "since": 14,
+      "phone": "9123456780"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "tp",
+      "since": "tp",
+      "phone": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "ch-en-02__NeerjaExpressive__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Street light is broken opposite the post office, Ward 9. For two weeks now, call me on 912-345-6780.",
+     "expected": {
+      "issue": "streetlight",
+      "location": [
+       "post office"
+      ],
+      "ward": [
+       "9"
+      ],
+      "since": 14,
+      "phone": "9123456780"
+     },
+     "got": {
+      "issue": "streetlight",
+      "location": "opposite the post office",
+      "ward": "Ward 9",
+      "since": 14,
+      "phone": "9123456780"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "tp",
+      "ward": "tp",
+      "since": "tp",
+      "phone": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "ch-hi-03__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "कूडे का धेर लगा है सबजी मंडी के पास वाड 21 एक हफते से कोई नहीं आया",
+     "expected": {
+      "issue": "garbage",
+      "location": [
+       "सब्ज़ी मंडी"
+      ],
+      "ward": [
+       "21"
+      ],
+      "since": 7
+     },
+     "got": {
+      "location": "सबजी मंडी के पास"
+     },
+     "out": {
+      "issue": "fn",
+      "location": "tp",
+      "ward": "fn",
+      "since": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "ch-hi-03__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "कूडे का धेर लगा है सबजी मंडी के पास वार्ड 21 एक हफते से कोई नहीं आया",
+     "expected": {
+      "issue": "garbage",
+      "location": [
+       "सब्ज़ी मंडी"
+      ],
+      "ward": [
+       "21"
+      ],
+      "since": 7
+     },
+     "got": {
+      "location": "सबजी मंडी के पास",
+      "ward": "कूडे का धेर लगा है सबजी मंडी के पास वार्ड 21 एक हफते से कोई नहीं आया"
+     },
+     "out": {
+      "issue": "fn",
+      "location": "tp",
+      "ward": "tp",
+      "since": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "ch-ta-04__Pallavi__r0__ta",
+     "lang": "ta",
+     "kind": "story",
+     "text": "பஸ் சடார்த் அறுகில் சாலையில் பெரியகுறி இருக்கு வார்து ஆரு",
+     "expected": {
+      "issue": "pothole",
+      "location": [
+       "பஸ் ஸ்டாண்ட்"
+      ],
+      "ward": [
+       "6"
+      ]
+     },
+     "got": {},
+     "out": {
+      "issue": "fn",
+      "location": "fn",
+      "ward": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "ch-ta-04__Valluvar__r0__ta",
+     "lang": "ta",
+     "kind": "story",
+     "text": "பஸ்டான்ட் அறுகள் சாலையில் பெரியக் கொழு இருக்கு வார்டு ஆரு",
+     "expected": {
+      "issue": "pothole",
+      "location": [
+       "பஸ் ஸ்டாண்ட்"
+      ],
+      "ward": [
+       "6"
+      ]
+     },
+     "got": {
+      "ward": "பஸ்டான்ட் அறுகள் சாலையில் பெரியக் கொழு இருக்கு வார்டு ஆரு"
+     },
+     "out": {
+      "issue": "fn",
+      "location": "fn",
+      "ward": "wrong"
+     },
+     "correct": false
+    },
+    {
+     "id": "ch-te-05__Mohan__r0__te",
+     "lang": "te",
+     "kind": "story",
+     "text": "మా కాలనిలో డ్రైనేస్ బ్లాక ఎింది పాటసాల దగర వాడు రెండు వారంనుంచి.",
+     "expected": {
+      "issue": "drainage",
+      "location": [
+       "పాఠశాల"
+      ],
+      "ward": [
+       "2"
+      ],
+      "since": 7
+     },
+     "got": {
+      "since": 14
+     },
+     "out": {
+      "issue": "fn",
+      "location": "fn",
+      "ward": "fn",
+      "since": "wrong"
+     },
+     "correct": false
+    },
+    {
+     "id": "ch-te-05__Shruti__r0__te",
+     "lang": "te",
+     "kind": "story",
+     "text": "మా కాలనిలో డ్రాయ్నేస్ బ్లాక అయింది పాతి సాల దడ్డిరా వాడు రిండు వారం నుంచి.",
+     "expected": {
+      "issue": "drainage",
+      "location": [
+       "పాఠశాల"
+      ],
+      "ward": [
+       "2"
+      ],
+      "since": 7
+     },
+     "got": {
+      "since": 7
+     },
+     "out": {
+      "issue": "fn",
+      "location": "fn",
+      "ward": "fn",
+      "since": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "ch-bn-06__Bashkar__r0__bn",
+     "lang": "bn",
+     "kind": "story",
+     "text": "আমাদের পারায় রাস্তার আলো জোল ছেনা মোস্জি দের শানে ওয়ে ওয়ে দ্য়ে আমাদের পারায়ে রাস্তার আলো জোল ছেনা মোস্জি দের শানে ওয়ে ওয়ে আলে আলে আলে আলে",
+     "expected": {
+      "issue": "streetlight",
+      "location": [
+       "মসজিদ"
+      ],
+      "ward": [
+       "12"
+      ]
+     },
+     "got": {
+      "issue": "streetlight"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "fn",
+      "ward": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "ch-bn-06__Tanishaa__r0__bn",
+     "lang": "bn",
+     "kind": "story",
+     "text": "আমাদের পাডায় রাস্তার আলো জোলছেনা মস্জিদের শামনে ঵াড বারো",
+     "expected": {
+      "issue": "streetlight",
+      "location": [
+       "মসজিদ"
+      ],
+      "ward": [
+       "12"
+      ]
+     },
+     "got": {
+      "issue": "streetlight"
+     },
+     "out": {
+      "issue": "tp",
+      "location": "fn",
+      "ward": "fn"
+     },
+     "correct": false
+    }
+   ]
+  },
+  "health": {
+   "cases": 15,
+   "fullyCorrect": 4,
+   "fields": {
+    "patient": {
+     "tp": 10,
+     "wrong": 2,
+     "fn": 1,
+     "fp": 0
+    },
+    "age": {
+     "tp": 4,
+     "wrong": 0,
+     "fn": 9,
+     "fp": 0
+    },
+    "symptoms": {
+     "tp": 7,
+     "wrong": 2,
+     "fn": 4,
+     "fp": 0
+    },
+    "days": {
+     "tp": 10,
+     "wrong": 0,
+     "fn": 3,
+     "fp": 0
+    },
+    "temp": {
+     "tp": 2,
+     "wrong": 0,
+     "fn": 2,
+     "fp": 0
+    },
+    "pregnant": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 2,
+     "fp": 0
+    }
+   },
+   "runs": [
+    {
+     "id": "hh-hi-01__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "जी, इनका नाम गीता है, उमर 50 साल, 4 दिन से पेट दर्द और उल्टी हो रही है.",
+     "expected": {
+      "patient": "Geeta",
+      "age": 50,
+      "symptoms": [
+       "stomach_pain",
+       "vomiting"
+      ],
+      "days": 4
+     },
+     "got": {
+      "patient": "गीता",
+      "age": 50,
+      "symptoms": [
+       "vomiting",
+       "stomach_pain"
+      ],
+      "days": 4
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "tp",
+      "days": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "hh-hi-01__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "जी, इनका नाम गीता है, उमर पचास साल, चार दिन से पेट दर्द और उल्टी हो रही है",
+     "expected": {
+      "patient": "Geeta",
+      "age": 50,
+      "symptoms": [
+       "stomach_pain",
+       "vomiting"
+      ],
+      "days": 4
+     },
+     "got": {
+      "patient": "गीता",
+      "age": 50,
+      "symptoms": [
+       "vomiting",
+       "stomach_pain"
+      ],
+      "days": 4
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "tp",
+      "days": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "hh-en-02__Neerja__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "This is Rahul, he is 12, coughing for a week, no fever.",
+     "expected": {
+      "patient": "Rahul",
+      "age": 12,
+      "symptoms": [
+       "cough"
+      ],
+      "days": 7
+     },
+     "got": {
+      "patient": "Rahul",
+      "symptoms": [
+       "cough"
+      ],
+      "days": 7
+     },
+     "out": {
+      "patient": "tp",
+      "age": "fn",
+      "symptoms": "tp",
+      "days": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "hh-en-02__Prabhat__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "This is Rahul. He is 12, coughing for a week, no fever.",
+     "expected": {
+      "patient": "Rahul",
+      "age": 12,
+      "symptoms": [
+       "cough"
+      ],
+      "days": 7
+     },
+     "got": {
+      "patient": "Rahul",
+      "symptoms": [
+       "cough"
+      ],
+      "days": 7
+     },
+     "out": {
+      "patient": "tp",
+      "age": "fn",
+      "symptoms": "tp",
+      "days": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "hh-en-02__NeerjaExpressive__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "This is Rahul. He is 12, coughing for a week, no fever.",
+     "expected": {
+      "patient": "Rahul",
+      "age": 12,
+      "symptoms": [
+       "cough"
+      ],
+      "days": 7
+     },
+     "got": {
+      "patient": "Rahul",
+      "symptoms": [
+       "cough"
+      ],
+      "days": 7
+     },
+     "out": {
+      "patient": "tp",
+      "age": "fn",
+      "symptoms": "tp",
+      "days": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "hh-hi-03__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "मरीज रमेश 65 साल सास लेने में तकलीफ है और सीने में दर्थ कल रात से",
+     "expected": {
+      "patient": "रमेश",
+      "age": 65,
+      "symptoms": [
+       "breathless",
+       "chest_pain"
+      ],
+      "days": 1
+     },
+     "got": {
+      "patient": "रमेश",
+      "age": 65,
+      "days": 1
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "fn",
+      "days": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "hh-hi-03__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "मरीज रमेश 65 साल सांस लेने में तकलीफ है और सीने में दर्द कल रात से",
+     "expected": {
+      "patient": "रमेश",
+      "age": 65,
+      "symptoms": [
+       "breathless",
+       "chest_pain"
+      ],
+      "days": 1
+     },
+     "got": {
+      "patient": "रमेश",
+      "age": 65,
+      "symptoms": [
+       "breathless",
+       "chest_pain"
+      ],
+      "days": 1
+     },
+     "out": {
+      "patient": "tp",
+      "age": "tp",
+      "symptoms": "tp",
+      "days": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "hh-ta-04__Pallavi__r0__ta",
+     "lang": "ta",
+     "kind": "story",
+     "text": "பெயர் முத்து வைது நாற்பது மூன்று நாலாக காய்சல் 101 דிகிரி.",
+     "expected": {
+      "patient": "முத்து",
+      "age": 40,
+      "symptoms": [
+       "fever"
+      ],
+      "days": 3,
+      "temp": 101
+     },
+     "got": {
+      "patient": "முத்து வைது நாற்பது"
+     },
+     "out": {
+      "patient": "tp",
+      "age": "fn",
+      "symptoms": "fn",
+      "days": "fn",
+      "temp": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "hh-ta-04__Valluvar__r0__ta",
+     "lang": "ta",
+     "kind": "story",
+     "text": "பெயர் முத்து வைது நாற்பது மோன்று நாழாக காய்சல் 101டிகிரி",
+     "expected": {
+      "patient": "முத்து",
+      "age": 40,
+      "symptoms": [
+       "fever"
+      ],
+      "days": 3,
+      "temp": 101
+     },
+     "got": {
+      "patient": "முத்து வைது நாற்பது",
+      "temp": 101
+     },
+     "out": {
+      "patient": "tp",
+      "age": "fn",
+      "symptoms": "fn",
+      "days": "fn",
+      "temp": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "hh-bn-05__Bashkar__r0__bn",
+     "lang": "bn",
+     "kind": "story",
+     "text": "রো্র નામ রোમ্র বোય্র বোય্র বোય্র বোય্র ব�",
+     "expected": {
+      "patient": "রুমা",
+      "age": 26,
+      "symptoms": [
+       "headache",
+       "dizziness"
+      ],
+      "days": 2,
+      "pregnant": true
+     },
+     "got": {},
+     "out": {
+      "patient": "fn",
+      "age": "fn",
+      "symptoms": "fn",
+      "days": "fn",
+      "pregnant": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "hh-bn-05__Tanishaa__r0__bn",
+     "lang": "bn",
+     "kind": "story",
+     "text": "রোগির নাম রুমা বয়শ ছাব্য়েশ দুই দিন ধুরে মাথা বেথা আর মাথা গোরা গার্ভোম্তি.",
+     "expected": {
+      "patient": "রুমা",
+      "age": 26,
+      "symptoms": [
+       "headache",
+       "dizziness"
+      ],
+      "days": 2,
+      "pregnant": true
+     },
+     "got": {
+      "patient": "রুমা বয়শ ছাব্য়েশ",
+      "symptoms": [
+       "dizziness"
+      ],
+      "days": 2
+     },
+     "out": {
+      "patient": "tp",
+      "age": "fn",
+      "symptoms": "wrong",
+      "days": "tp",
+      "pregnant": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "hh-kn-06__Gagan__r0__kn",
+     "lang": "kn",
+     "kind": "story",
+     "text": "ಹೆಸರು ಶಾಂತ ವೈಸು ಎಪ್ಪತು ಒಂದು ವಾರದಿಂದ ಕೆಂಮು ಮತ್ತು ಉಸಿರಾಟದ ತೊಂದರೆ.",
+     "expected": {
+      "patient": "ಶಾಂತಾ",
+      "age": 70,
+      "symptoms": [
+       "cough",
+       "breathless"
+      ],
+      "days": 7
+     },
+     "got": {
+      "patient": "ಶಾಂತ ವೈಸು ಎಪ್ಪತು",
+      "symptoms": [
+       "breathless"
+      ],
+      "days": 7
+     },
+     "out": {
+      "patient": "wrong",
+      "age": "fn",
+      "symptoms": "wrong",
+      "days": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "hh-kn-06__Sapna__r0__kn",
+     "lang": "kn",
+     "kind": "story",
+     "text": "ಹೆಸರು ಶಾಂತ ವೇಸು ಎಪತು ಒಂದು ವಾರದಿಂದ ಕೆಮ್ಮು ಮತ್ತು ಉಸಿರಾಟದ ತುಂದರೆ.",
+     "expected": {
+      "patient": "ಶಾಂತಾ",
+      "age": 70,
+      "symptoms": [
+       "cough",
+       "breathless"
+      ],
+      "days": 7
+     },
+     "got": {
+      "patient": "ಶಾಂತ ವೇಸು ಎಪತು",
+      "symptoms": [
+       "cough",
+       "breathless"
+      ],
+      "days": 7
+     },
+     "out": {
+      "patient": "wrong",
+      "age": "fn",
+      "symptoms": "tp",
+      "days": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "hh-hi-07__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "एक साव डू डिग्री",
+     "expected": {
+      "temp": 102
+     },
+     "got": {},
+     "out": {
+      "temp": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "hh-hi-07__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "102 डिग्री",
+     "expected": {
+      "temp": 102
+     },
+     "got": {
+      "temp": 102
+     },
+     "out": {
+      "temp": "tp"
+     },
+     "correct": true
+    }
+   ]
+  },
+  "khata": {
+   "cases": 17,
+   "fullyCorrect": 2,
+   "fields": {
+    "customer": {
+     "tp": 14,
+     "wrong": 1,
+     "fn": 0,
+     "fp": 0
+    },
+    "items": {
+     "tp": 5,
+     "wrong": 4,
+     "fn": 4,
+     "fp": 0
+    },
+    "amount": {
+     "tp": 10,
+     "wrong": 4,
+     "fn": 3,
+     "fp": 0
+    },
+    "payment": {
+     "tp": 6,
+     "wrong": 0,
+     "fn": 9,
+     "fp": 0
+    }
+   },
+   "runs": [
+    {
+     "id": "kh-hi-01__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "हाँ तु लिख लो मोहनने टीन कीलो आलू एक कीलो प्याज लिया कुल मिला के एक साव दस रुपए बाद में देगा",
+     "expected": {
+      "customer": "Mohan",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "kg",
+        "item": "Potato"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Onion"
+       }
+      ],
+      "amount": 110,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "मिला",
+      "amount": 10,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "wrong",
+      "items": "fn",
+      "amount": "wrong",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-hi-01__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "हाटू लिख लो मोहन ने तीन कीलो आलू एक कीलो प्याज लिया कुल मिला के एक साउ दस रुपे बाद में देगा",
+     "expected": {
+      "customer": "Mohan",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "kg",
+        "item": "Potato"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Onion"
+       }
+      ],
+      "amount": 110,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "मोहन",
+      "amount": 10,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "fn",
+      "amount": "wrong",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-hi-02__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "अनीता जी दो किलो चीनी एक लीटर तेल कुल दो सो नब्बे पैसे फोन पे से भीज दिये",
+     "expected": {
+      "customer": "अनीता",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       },
+       {
+        "qty": 1,
+        "unit": "L",
+        "item": "Oil"
+       }
+      ],
+      "amount": 290,
+      "payment": "upi"
+     },
+     "got": {
+      "customer": "अनीता",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       },
+       {
+        "qty": 1,
+        "unit": "L",
+        "item": "Oil"
+       }
+      ],
+      "amount": 90
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "wrong",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-hi-02__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "अनीता जी, दो किलो चीनी, एक लीटर तेल, कुल दो सो नब्बे, पैसे फोन पे से भेज दिये.",
+     "expected": {
+      "customer": "अनीता",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       },
+       {
+        "qty": 1,
+        "unit": "L",
+        "item": "Oil"
+       }
+      ],
+      "amount": 290,
+      "payment": "upi"
+     },
+     "got": {
+      "customer": "अनीता",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "kg",
+        "item": "Sugar"
+       },
+       {
+        "qty": 1,
+        "unit": "L",
+        "item": "Oil"
+       }
+      ],
+      "amount": 90
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "wrong",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-en-03__Neerja__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Write it down, Ravi owes me 650 rupees for 5 kilo rice and 1 kilo dal.",
+     "expected": {
+      "customer": "Ravi",
+      "items": [
+       {
+        "qty": 5,
+        "unit": "kg",
+        "item": "Rice"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Dal"
+       }
+      ],
+      "amount": 650,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "Ravi",
+      "items": [
+       {
+        "qty": 5,
+        "unit": "kg",
+        "item": "Rice"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Dal"
+       }
+      ],
+      "amount": 650
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "tp",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-en-03__Prabhat__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Write it down, Ravi owes me 650 rupees for 5 kilo rice and 1 kilo dal.",
+     "expected": {
+      "customer": "Ravi",
+      "items": [
+       {
+        "qty": 5,
+        "unit": "kg",
+        "item": "Rice"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Dal"
+       }
+      ],
+      "amount": 650,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "Ravi",
+      "items": [
+       {
+        "qty": 5,
+        "unit": "kg",
+        "item": "Rice"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Dal"
+       }
+      ],
+      "amount": 650
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "tp",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-en-03__NeerjaExpressive__r0__en",
+     "lang": "en",
+     "kind": "story",
+     "text": "Write it down, Ravi owes me 650 rupees for 5 kilo rice and 1 kilo dal.",
+     "expected": {
+      "customer": "Ravi",
+      "items": [
+       {
+        "qty": 5,
+        "unit": "kg",
+        "item": "Rice"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Dal"
+       }
+      ],
+      "amount": 650,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "Ravi",
+      "items": [
+       {
+        "qty": 5,
+        "unit": "kg",
+        "item": "Rice"
+       },
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Dal"
+       }
+      ],
+      "amount": 650
+     },
+     "out": {
+      "customer": "tp",
+      "items": "tp",
+      "amount": "tp",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-hi-04__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "सलीम भाई ने अपना पुराना हिसाब चुकाया 1200 रुपए कैश",
+     "expected": {
+      "customer": "Salim",
+      "amount": 1200,
+      "payment": "repay"
+     },
+     "got": {
+      "customer": "सलीम",
+      "amount": 1200,
+      "payment": "repay"
+     },
+     "out": {
+      "customer": "tp",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "kh-hi-04__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "story",
+     "text": "सलीम भाई ने अपना पुराना हिसाब चुकाया 1,200 रुपे कैश",
+     "expected": {
+      "customer": "Salim",
+      "amount": 1200,
+      "payment": "repay"
+     },
+     "got": {
+      "customer": "सलीम",
+      "amount": 1200,
+      "payment": "repay"
+     },
+     "out": {
+      "customer": "tp",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": true
+    },
+    {
+     "id": "kh-bn-05__Bashkar__r0__bn",
+     "lang": "bn",
+     "kind": "story",
+     "text": "সুমন এক কেজি ছিনি আর দুই পাকেট বিসকুট নিল এক শো বিশ তাকা পরে দেরে.",
+     "expected": {
+      "customer": "সুমন",
+      "items": [
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Sugar"
+       },
+       {
+        "qty": 2,
+        "unit": "packet",
+        "item": "Biscuits"
+       }
+      ],
+      "amount": 120,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "সুমন",
+      "items": [
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Sugar"
+       }
+      ],
+      "amount": 120
+     },
+     "out": {
+      "customer": "tp",
+      "items": "wrong",
+      "amount": "tp",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-bn-05__Tanishaa__r0__bn",
+     "lang": "bn",
+     "kind": "story",
+     "text": "শুমন এক কেজি চিনি আর দুই পাকেট বিসকুট নিল এক্য় সো বিস টাকা পরে দেবে.",
+     "expected": {
+      "customer": "সুমন",
+      "items": [
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Sugar"
+       },
+       {
+        "qty": 2,
+        "unit": "packet",
+        "item": "Biscuits"
+       }
+      ],
+      "amount": 120,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "শুমন",
+      "items": [
+       {
+        "qty": 1,
+        "unit": "kg",
+        "item": "Sugar"
+       }
+      ]
+     },
+     "out": {
+      "customer": "tp",
+      "items": "wrong",
+      "amount": "fn",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-ta-06__Pallavi__r0__ta",
+     "lang": "ta",
+     "kind": "story",
+     "text": "செல்வம் 2 λிட்டர் பால வாங்கினார் 80ருபாய் ஜிபே மோலம் குடுத்தார்",
+     "expected": {
+      "customer": "செல்வம்",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "L",
+        "item": "Milk"
+       }
+      ],
+      "amount": 80,
+      "payment": "upi"
+     },
+     "got": {
+      "customer": "செல்வம்",
+      "amount": 80
+     },
+     "out": {
+      "customer": "tp",
+      "items": "fn",
+      "amount": "tp",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-ta-06__Valluvar__r0__ta",
+     "lang": "ta",
+     "kind": "story",
+     "text": "செல்வம் 2 λிட்டர் பால் வாங்கினார் 80 ரூபாய் ஜிபை மூலன் கொடுத்தார்",
+     "expected": {
+      "customer": "செல்வம்",
+      "items": [
+       {
+        "qty": 2,
+        "unit": "L",
+        "item": "Milk"
+       }
+      ],
+      "amount": 80,
+      "payment": "upi"
+     },
+     "got": {
+      "customer": "செல்வம்",
+      "amount": 80
+     },
+     "out": {
+      "customer": "tp",
+      "items": "fn",
+      "amount": "tp",
+      "payment": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-mr-07__Aarohi__r0__mr",
+     "lang": "mr",
+     "kind": "story",
+     "text": "प्रकाश 3 किलो तांदूल घेउन गेला 210 रुपे उधारित लिहा.",
+     "expected": {
+      "customer": "प्रकाश",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "kg",
+        "item": "Rice"
+       }
+      ],
+      "amount": 210,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "प्रकाश",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "kg",
+        "item": "तांदूल"
+       }
+      ],
+      "amount": 210,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "wrong",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-mr-07__Manohar__r0__mr",
+     "lang": "mr",
+     "kind": "story",
+     "text": "प्रकाश 3 किलो तांदूल घेऊन गेला 210 रुपे उधारितलिहा.",
+     "expected": {
+      "customer": "प्रकाश",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "kg",
+        "item": "Rice"
+       }
+      ],
+      "amount": 210,
+      "payment": "credit"
+     },
+     "got": {
+      "customer": "प्रकाश",
+      "items": [
+       {
+        "qty": 3,
+        "unit": "kg",
+        "item": "तांदूल"
+       }
+      ],
+      "amount": 210,
+      "payment": "credit"
+     },
+     "out": {
+      "customer": "tp",
+      "items": "wrong",
+      "amount": "tp",
+      "payment": "tp"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-hi-08__Madhur__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "धाई साव",
+     "expected": {
+      "amount": 250
+     },
+     "got": {},
+     "out": {
+      "amount": "fn"
+     },
+     "correct": false
+    },
+    {
+     "id": "kh-hi-08__Swara__r0__hi",
+     "lang": "hi",
+     "kind": "answer",
+     "text": "धाई साव",
+     "expected": {
+      "amount": 250
+     },
+     "got": {},
+     "out": {
+      "amount": "fn"
+     },
+     "correct": false
+    }
+   ]
+  }
+ }
+}

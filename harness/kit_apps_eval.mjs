@@ -43,6 +43,7 @@ const lev = (a, b) => {
 const HONORIFIC = /\b(mr|mrs|ms|shri|smt|ji|bhaiya|bhai|didi|aunty|uncle|sahab|saheb)\b|\b(जी|दीदी|भैया|साहब)\b/gi;
 const nameKey = (s) => soundKey(String(s).replace(HONORIFIC, ' ').split(/\s+/).filter(Boolean).map((w) => (/^[\x00-\x7f]+$/.test(w) ? w : romanize(w))).join(''));
 const digits = (v) => String(v ?? '').replace(/\D/g, '');
+const textKey = (s) => soundKey(foldDigits(String(s)).split(/\s+/).filter(Boolean).map((w) => (/^[\x00-\x7f]+$/.test(w) ? w : romanize(w))).join('')).replace(/[aeiouy]/g, '');
 
 function matches(slot, exp, got) {
   if (got === undefined || got === null) return false;
@@ -65,8 +66,10 @@ function matches(slot, exp, got) {
       return !!a && !!b && (a === b || a.includes(b) || b.includes(a) || 1 - lev(a, b) / Math.max(a.length, b.length) >= 0.8);
     }
     case 'text': {
+      // fair across scripts and spacing: "स्टेशन रोड" = "station road", "Gandhinagar" = "gandhi nagar"
       const g = fold(foldDigits(String(got)));
-      return (Array.isArray(exp) ? exp : [exp]).every((k) => g.includes(fold(foldDigits(String(k)))));
+      const gs = textKey(got);
+      return (Array.isArray(exp) ? exp : [exp]).every((k) => g.includes(fold(foldDigits(String(k)))) || gs.includes(textKey(k)));
     }
     case 'quantity+unit': {
       if (!Array.isArray(got) || got.length !== exp.length) return false;
