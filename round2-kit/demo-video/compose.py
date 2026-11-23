@@ -25,7 +25,7 @@ WrapStyle: 0
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Cap,Nirmala UI,{font_size},&H00F4EFE6,&H00F4EFE6,&H003A2313,&H803A2313,1,0,0,0,100,100,0,0,3,14,0,{align},{margin_l},{margin_r},{margin_v},1
+Style: Cap,Nirmala UI,{font_size},&H00F4EFE6,&H00F4EFE6,&H001A1A1A,&H801A1A1A,1,0,0,0,100,100,0,0,3,14,0,{align},{margin_l},{margin_r},{margin_v},1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -71,10 +71,10 @@ def main(scenario_path, out):
         else:
             write_ass(os.path.join(out, ass), caps, W, H, fs, mv, mlr)
         vf = (
-            f"[0:v]fps=30,scale=-2:{ph}:flags=lanczos,format=yuv420p[ph];"
+            f"[0:v]fps=30,scale=-2:{ph}:flags=lanczos,pad=iw+10:ih+10:5:5:color=0x464544,format=yuv420p[ph];"
             f"color=c={bg}:s={W}x{H}:d={total_ms / 1000:.2f}[bg];"
             f"[bg][ph]overlay=x={px}:y={py}:shortest=1[v1];"
-            f"[v1]drawtext=text='{title}':fontfile='C\\:/Windows/Fonts/Nirmala.ttc':fontsize=54:fontcolor=0x8FD6C6:x={tx}:y={ty}[v2];"
+            f"[v1]drawtext=text='{title}':fontfile='C\\:/Windows/Fonts/Nirmala.ttc':fontsize=54:fontcolor=0xF0D7FF:x={tx}:y={ty}[v2];"
             f"[v2]subtitles={ass}:fontsdir='C\\:/Windows/Fonts'[vout];"
         )
         cmd = ["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", "frames.txt", *audio_inputs,
