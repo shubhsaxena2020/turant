@@ -174,3 +174,21 @@ describe('ASR misspellings', () => {
     expect(findAmountHit('నా అకౌంట్ నుండి డబ్బులు పోయాయి')).toBeUndefined();
   });
 });
+
+describe('round 27 spellings (Whisper large-v3)', () => {
+  it('reads misspelled numbers and multipliers in number context', () => {
+    expect(findAmount('छै हजार रुपए कट गए')).toBe(6000);
+    expect(findAmount('बारा सौं')).toBe(1200);
+    expect(findAmount('Do laak paachas hazaar rupai')).toBe(250000);
+    expect(findAmount('দুই লাক তাকা')).toBe(200000);
+    expect(findAmount('পাঁছ হাজার তাকা')).toBe(5000);
+    expect(findAmount('ಆಯದು ಸಾವಿರು ರೂಪಾಯಿ')).toBe(5000);
+    expect(findAmount('ವನ್ದು ವರೆ ಲಕ್ಷ ರೂಪಾಯಿ')).toBe(150000);
+    expect(findAmount('ಇರ್ಡು ವರೆ ಲಕ್ಷ ರೂಪಾಯ್')).toBe(250000);
+    expect(findAmount('இரண்டறே லட்சம் ரூபாய்')).toBe(250000);
+  });
+  it('adds the half to round digits after साढ़े, not to digits that already hold it', () => {
+    expect(findAmount('Saade 3000')).toBe(3500);
+    expect(findAmount('साढ़े 3,500 रुपये')).toBe(3500);
+  });
+});

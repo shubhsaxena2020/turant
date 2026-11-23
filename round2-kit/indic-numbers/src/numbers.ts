@@ -20,7 +20,7 @@ add(2, 'दो', 'दोन', 'do', 'don', 'two');
 add(3, 'तीन', 'teen', 'tin', 'three');
 add(4, 'चार', 'char', 'chaar', 'four');
 add(5, 'पाँच', 'पांच', 'पाच', 'paanch', 'panch', 'five');
-add(6, 'छह', 'छः', 'छे', 'सहा', 'chhe', 'chhah', 'six');
+add(6, 'छह', 'छः', 'छे', 'छै', 'सहा', 'chhe', 'chhah', 'six');
 add(7, 'सात', 'saat', 'seven');
 add(8, 'आठ', 'aath', 'eight');
 add(9, 'नौ', 'नऊ', 'नव', 'nau', 'nine'); // नव: Marathi spoken form
@@ -145,8 +145,8 @@ add(90, 'తొంభై');
 add(1.5, 'ఒకటిన్నర');
 
 // Kannada
-add(1, 'ಒಂದು', 'ವಂದು'); // Kannada as Whisper writes it (ವಂದು, ಇರಡು, ಆಯದು, ಇಳು, …)
-add(2, 'ಎರಡು', 'ಇರಡು');
+add(1, 'ಒಂದು', 'ವಂದು', 'ವನ್ದು', 'ಒನ್ದು'); // Kannada as Whisper writes it (ವಂದು, ಇರಡು, ಆಯದು, ಇಳು, …)
+add(2, 'ಎರಡು', 'ಇರಡು', 'ಎರ್ಡು', 'ಇರ್ಡು');
 add(3, 'ಮೂರು');
 add(4, 'ನಾಲ್ಕು');
 add(5, 'ಐದು', 'ಅಯಿದು'); // not ಆಯದು / ಆಯಿದು: also how Whisper writes ಆಯಿತು ("happened"); see READOUT_ONLY // not ಆಯಿದು: that is also ಆಯಿತು ("happened") as ASR writes it
@@ -176,7 +176,7 @@ add(200, 'ಇನ್ನೂರು');
 add(300, 'ಮುನ್ನೂರು');
 add(400, 'ನಾನೂರು');
 add(500, 'ಐನೂರು', 'ಆಯನೂರು');
-add(0.5, 'ಅರೆ', 'ಒರೆ'); // "ವಂದು ಅರೆ ಲಕ್ಷ" = 1.5 lakh, "ಎರಡು ಒರೆ ಸಾವಿರ" = 2,500
+add(0.5, 'ಅರೆ', 'ಒರೆ', 'ವರೆ'); // "ವಂದು ಅರೆ ಲಕ್ಷ" = 1.5 lakh, "ಎರಡು ಒರೆ ಸಾವಿರ" = 2,500
 add(600, 'ಆರುನೂರು');
 add(700, 'ಏಳುನೂರು');
 add(800, 'ಎಂಟುನೂರು');
@@ -213,13 +213,13 @@ add(700, 'எழுநூறு');
 add(800, 'எண்ணூறு');
 add(900, 'தொள்ளாயிரம்');
 add(1.5, 'ஒன்றரை', 'ஒந்தரை');
-add(2.5, 'இரண்டரை');
+add(2.5, 'இரண்டரை', 'இரண்டறே', 'இரண்டரே');
 add(0.5, 'அரை');
 
 const MULT: Record<string, number> = {};
 const mul = (v: number, ...ws: string[]) => ws.forEach((w) => (MULT[w.normalize('NFC')] = v));
-mul(100, 'सौ', 'शे', 'শো', 'শ', 'వంద', 'వందల', 'వందలు', 'వందలా', 'నూట', 'నూరు', 'ನೂರು', 'நூறு', 'हंड्रेड', 'hundred', 'sau');
-mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजारो', 'হাজার', 'হজার', 'হাজাত', 'వేలు', 'వేల', 'వేలా', 'వెయ్యి', 'ಸಾವರದ', 'ಸಾವರ', 'ಸಾವರಿದ', 'ಸಾವಿರ', 'ಸಾವಿರದ', 'தாயிரம்', 'தாயரம்', 'ஆயிரம்', 'ஆயிரத்து', 'थाउज़ेंड', 'थाउजेंड', 'thousand', 'hazaar', 'hazar', 'k');
+mul(100, 'सौ', 'सौं', 'सौँ', 'शे', 'শো', 'শ', 'వంద', 'వందల', 'వందలు', 'వందలా', 'నూట', 'నూరు', 'ನೂರು', 'நூறு', 'हंड्रेड', 'hundred', 'sau');
+mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजारो', 'হাজার', 'হজার', 'হাজাত', 'వేలు', 'వేల', 'వేలా', 'వెయ్యి', 'ಸಾವರದ', 'ಸಾವರ', 'ಸಾವರಿದ', 'ಸಾವಿರ', 'ಸಾವಿರದ', 'ಸಾವಿರು', 'ಸಾವಿಳ', 'ಸಾವಿಲ', 'தாயிரம்', 'தாயரம்', 'ஆயிரம்', 'ஆயிரத்து', 'थाउज़ेंड', 'थाउजेंड', 'thousand', 'hazaar', 'hazar', 'k');
 mul(100000, 'लाख', 'লাখ', 'লক্ষ', 'లక్ష', 'లక్షల', 'లక్షలు', 'ಲಕ್ಷ', 'லட்சம்', 'லட்சத்து', 'lakh', 'lac', 'lakhs');
 mul(10000000, 'करोड़', 'करोड', 'कोटी', 'কোটি', 'కోటి', 'ಕೋಟಿ', 'கோடி', 'crore', 'crores');
 
@@ -553,7 +553,8 @@ export function combine(parts: Part[]): number | undefined {
       continue;
     }
     if ('v' in p) {
-      cur += p.v + (half && p.v < 100 ? 0.5 : 0); // "साढ़े 3,500": the half is already in the digits
+      // "साढ़े 3,500": the half is already in the digits; "saade 3000" (साढ़े तीन हज़ार written as digits) = 3,500
+      cur += p.v + (!half ? 0 : p.v < 100 ? 0.5 : p.v % 100000 === 0 && p.v < 10000000 ? 50000 : p.v % 1000 === 0 && p.v < 100000 ? 500 : 0);
       half = false;
       any = true;
       continue;
@@ -633,10 +634,12 @@ const POSSESSIVE = ['मेरे', 'मेरा', 'मेरी', 'हमा�
 // Words that mean "one thousand" on their own (Tamil ஆயிரம், Telugu singular వెయ్యి; misheard "X thousand" uses వేల).
 const ONE_THOUSAND = ['ஆயிரம்', 'ஆயிரத்து', 'వెయ్యి'].map((w) => fold(w));
 // Multipliers only between numbers: "चार सो पचास" = 450, but सो alone is "sleep" / "so".
-const CONTEXT_MULT: Record<string, number> = { [('सो').normalize('NFC')]: 100 };
+const CONTEXT_MULT: Record<string, number> = Object.fromEntries(
+  Object.entries({ 'सो': 100, 'লাক': 100000, 'laak': 100000, 'ಸಾವರು': 1000 }).map(([w, v]) => [w.normalize('NFC'), v]),
+); // লাক alone = "luck"
 // Number only right before "thousand / lakh": ಆಯಿದು ಸಾವಿರ = 5,000, but "ಕಟ್ ಆಯಿದು" = "got cut" (ಆಯಿತು).
 const BEFORE_MULT: Record<string, number> = Object.fromEntries(
-  Object.entries({ 'ಆಯಿದು': 5, 'ಆಯದು': 5, 'শোয': 6, 'ছযি': 6, 'देड': 1.5, 'डेड': 1.5 }).map(([w, v]) => [w.normalize('NFC'), v]), // শোয(়) alone = "lie down"
+  Object.entries({ 'ಆಯಿದು': 5, 'ಆಯದು': 5, 'শোয': 6, 'ছযি': 6, 'সোয': 6, 'পাঁছ': 5, 'পাছ': 5, 'আঠ': 8, 'देड': 1.5, 'डेड': 1.5 }).map(([w, v]) => [w.normalize('NFC'), v]), // শোয(়) alone = "lie down"
 );
 // Words that may stand right before a bare "thousand": "a thousand", "around thousand rupees".
 const BARE_OK = ['a', 'one', 'about', 'around', 'approx', 'only', 'just', 'karib', 'lagbhag', 'sirf', 'bas', 'करीब', 'लगभग', 'सिर्फ', 'बस', 'and', 'aur', 'और'];
