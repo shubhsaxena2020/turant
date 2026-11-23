@@ -483,7 +483,11 @@ export function numberGroups(text: string): Group[] {
       i++;
     }
     const spacedDigits = toks.slice(start, i).every((t) => /^\d$/.test(t)) && i - start >= 4;
-    const value = spacedDigits ? NaN : combine(parts);
+    // digits read out as words ("नौ आठ सात छह पाँच", "nine eight seven"): an ID or phone, never an amount
+    const tokenParts = toks.slice(start, i).map((t) => wordParts(t) ?? []);
+    const spokenDigits =
+      i - start >= 3 && tokenParts.every((tp) => tp.length === 1 && 'v' in tp[0] && Number.isInteger(tp[0].v) && tp[0].v <= 9);
+    const value = spacedDigits || spokenDigits ? NaN : combine(parts);
     if (value === undefined || Number.isNaN(value)) continue;
     const near = (k: number) => k >= 0 && k < toks.length && CURRENCY.includes(toks[k].toLowerCase());
     groups.push({

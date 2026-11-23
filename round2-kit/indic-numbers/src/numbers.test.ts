@@ -51,6 +51,9 @@ describe('traps', () => {
   });
   it('a phone number is not an amount', () => {
     expect(findAmount('उसका नंबर 9876543210 था')).toBeUndefined();
+    expect(findAmount('उसका नंबर नौ आठ सात छह पाँच, चार तीन दो एक शून्य')).toBeUndefined();
+    expect(findAmount('his number was nine eight seven six five')).toBeUndefined();
+    expect(findAmount('அவன் நம்பர் ஒன்பது எட்டு ஏழு ஆறு ஐந்து')).toBeUndefined();
   });
   it('a read-out UTR is not an amount, the real amount still wins', () => {
     expect(findAmount('UTR 4 0 3 2 1 8 7 6 5 4 3 2')).toBeUndefined();
