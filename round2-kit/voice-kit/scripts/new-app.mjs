@@ -79,9 +79,50 @@ describe(cfg.id, () => {
   return dest;
 }
 
+/**
+ * Measure from the first hour: if the harness sits next to the kit (../../harness), add a dev and a held-out
+ * corpus for the new app with one example case each. Score with kit_apps_eval.mjs (by slot type).
+ */
+function writeCorpus() {
+  const H = resolve(KIT, '..', '..', 'harness');
+  if (!existsSync(join(H, 'kit_apps_eval.mjs'))) return null;
+  const example = (set) =>
+    JSON.stringify({
+      id: `${name}-hi-${set === 'kit' ? '01' : 'h01'}`,
+      lang: 'hi',
+      kind: 'story',
+      text: 'REPLACE: what a real user says, as the recogniser would write it',
+      expected: {},
+      ignore: [],
+    }) + '\n';
+  const made = [];
+  for (const set of ['kit', 'kit-heldout']) {
+    const f = join(H, 'corpus', set, `${name}.jsonl`);
+    if (existsSync(f)) continue;
+    mkdirSync(dirname(f), { recursive: true });
+    writeFileSync(f, example(set));
+    made.push(f);
+  }
+  return { H, made };
+}
+
 if (flag('--here')) {
   const dest = writeApp(KIT);
   console.log(`Added ${dest}\nRun: npm run dev, then open http://localhost:5173/?app=${name}`);
+  const c = writeCorpus();
+  if (c) {
+    for (const f of c.made) console.log(`Corpus stub: ${f}`);
+    console.log(
+      [
+        'Measure it (see harness/JOURNAL.md, "Lesson for Round 2"):',
+        '  1. write 30-50 cases in corpus/kit/' + name + '.jsonl and 15 more in corpus/kit-heldout/ that nobody tunes on',
+        '     ({id, lang, kind: story|answer, hint?, text, expected: {slot: value}, ignore?: [slot]})',
+        `  2. cd ${c.H}`,
+        `     ..\\round2-kit\\indic-numbers\\node_modules\\.bin\\tsx kit_apps_eval.mjs ${name} --show`,
+        '  3. fix keywords / config, re-run (seconds); score the held-out set once with --corpus kit-heldout',
+      ].join('\n'),
+    );
+  }
   process.exit(0);
 }
 
