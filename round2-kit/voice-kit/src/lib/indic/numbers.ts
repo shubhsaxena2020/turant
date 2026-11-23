@@ -529,6 +529,8 @@ const NEGATE = ['नहीं', 'नही', 'नाही', 'nahi', 'nahin', 'n
 
 interface Group {
   value: number;
+  /** Just "thousand / lakh" after a word we could not read (শোয হাজার = misheard ছয় হাজার): don't guess 1000. */
+  unsure: boolean;
   start: number;
   end: number;
   currencyNear: boolean;
@@ -558,6 +560,11 @@ function spokenRun(toks: string[], start: number, i: number): boolean {
     return !!p && p.length === 1 && 'v' in p[0] && Number.isInteger(p[0].v) && p[0].v <= 9;
   });
 }
+
+// Words that mean "one thousand" on their own (Tamil ஆயிரம், Telugu singular వెయ్యి; misheard "X thousand" uses వేల).
+const ONE_THOUSAND = ['ஆயிரம்', 'ஆயிரத்து', 'వెయ్యి'].map((w) => fold(w));
+// Words that may stand right before a bare "thousand": "a thousand", "around thousand rupees".
+const BARE_OK = ['a', 'one', 'about', 'around', 'approx', 'only', 'just', 'karib', 'lagbhag', 'sirf', 'bas', 'करीब', 'लगभग', 'सिर्फ', 'बस', 'and', 'aur', 'और'];
 
 /** All number groups in a sentence, with context flags. */
 export function numberGroups(text: string): Group[] {
@@ -611,7 +618,11 @@ export function numberGroups(text: string): Group[] {
     const value = spacedDigits || spokenDigits ? NaN : combine(parts);
     if (value === undefined || Number.isNaN(value)) continue;
     const near = (k: number) => k >= 0 && k < toks.length && isCurrency(toks[k]);
+    const before = toks[start - 1];
+    const bare = parts.every((x) => 'mul' in x) && parts.some((x) => 'mul' in x && x.mul >= 1000);
+    const unsure = bare && !!before && before !== '|' && !BARE_OK.includes(before.toLowerCase()) && !isCurrency(before) && !ONE_THOUSAND.includes(fold(toks[start]));
     groups.push({
+      unsure,
       value,
       start,
       end: i,
@@ -634,7 +645,7 @@ export function findAmount(text: string): number | undefined {
 
 /** Like findAmount, plus whether the number sat next to a currency word (strong evidence). */
 export function findAmountHit(text: string): { value: number; currencyNear: boolean } | undefined {
-  const groups = numberGroups(text).filter((g) => !g.timeAfter && g.value >= 1 && g.value < 1e9 && !(g.digitsOnly && String(g.value).length >= 10));
+  const groups = numberGroups(text).filter((g) => !g.unsure && !g.timeAfter && g.value >= 1 && g.value < 1e9 && !(g.digitsOnly && String(g.value).length >= 10));
   if (!groups.length) return undefined;
   const toks = tokenize(text).map((t) => t.toLowerCase());
   const corrected = toks.some((t) => NEGATE.includes(t));

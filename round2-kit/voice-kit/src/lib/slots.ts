@@ -1,6 +1,6 @@
 // Generic, config-driven slot extraction. One typed extractor per slot type, all
 // built on Turant's rules in nlp.ts. Pure functions: no DOM, no network (offline-first).
-import { findAmountHit, fold, wordParts } from './indic/numbers';
+import { findAmountHit, fold, numberGroups, wordParts } from './indic/numbers';
 import { findTime } from './indic/time';
 import type {
   AmountSlot,
@@ -521,6 +521,14 @@ export function extractAll(cfg: SlotsLike, text: string, opts: ExtractOptions = 
     // Backstop: the cross-language amount parser (Tamil/Kannada compounds, bn/te number words).
     // It wins a disagreement only with a currency word right next to its number.
     const ind = findAmountHit(text);
+    // The rule read only "thousand" (বারো হাজার -> 1000): take the full reading, or ask if the number was misheard.
+    if (k && [1000, 100000, 10000000].includes(Number(k.value))) {
+      if (ind && ind.value > Number(k.value) && ind.value % Number(k.value) === 0) {
+        put(s.key, { value: ind.value, confidence: 0.85 });
+        continue;
+      }
+      if (numberGroups(text).some((g) => g.unsure && g.value === Number(k.value))) continue;
+    }
     if (!k && ind && (ind.currencyNear || hinted(s, opts))) put(s.key, { value: ind.value, confidence: ind.currencyNear ? 0.9 : 0.75 });
     else if (k && ind && ind.currencyNear && ind.value !== Number(k.value)) put(s.key, { value: ind.value, confidence: 0.9 });
     // Answering "how much?": a longer reading of the same spoken number wins ("चार हजार नऊशे नव्याण्णव" = 4999, not 4000).

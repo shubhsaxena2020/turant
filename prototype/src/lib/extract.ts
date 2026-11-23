@@ -3,7 +3,7 @@
 // Handles Hinglish (romanised Hindi), English, Devanagari Hindi/Marathi and the
 // most common words in Bengali, Tamil, Telugu and Kannada.
 
-import { findAmountHit, fold, wordParts } from './indic/numbers.ts';
+import { findAmountHit, fold, numberGroups, wordParts } from './indic/numbers.ts';
 import { findTime, type TimeHit } from './indic/time.ts';
 import { findBank } from './indic/bank.ts';
 
@@ -746,7 +746,15 @@ function extractIds(tokens: string[], runs: NumRun[], opts: ExtractOptions) {
 // a disagreement only when they have stronger evidence (a currency word next to the number, or an
 // explicit clock / "ago" time).
 
-function mergeAmount(k: Extracted<number> | undefined, ind: { value: number; currencyNear: boolean } | undefined, opts: ExtractOptions): Extracted<number> | undefined {
+const BARE_MULTS = [1000, 100000, 10000000];
+
+function mergeAmount(k: Extracted<number> | undefined, ind: { value: number; currencyNear: boolean } | undefined, opts: ExtractOptions, text: string): Extracted<number> | undefined {
+  // The rule read only "thousand" (বারো হাজার -> 1000): the cross-language reading has the number in front.
+  if (k && BARE_MULTS.includes(k.value)) {
+    if (ind && ind.value > k.value && ind.value % k.value === 0) return { value: ind.value, confidence: 0.85 };
+    // "শোয হাজার": a misheard number before "thousand". Ask, don't guess 1000.
+    if (numberGroups(text).some((g) => g.unsure && g.value === k.value)) return undefined;
+  }
   if (!ind) return k;
   const hinted = opts.hint === 'amount';
   if (!k) return ind.currencyNear || hinted ? { value: ind.value, confidence: ind.currencyNear ? 0.9 : 0.75 } : undefined;
@@ -786,7 +794,7 @@ export function extractFields(text: string, opts: ExtractOptions = {}): Extracti
   const runs = findNumberRuns(tokens);
   const out: Extraction = {};
 
-  const amount = mergeAmount(extractAmount(tokens, runs, opts), findAmountHit(text), opts);
+  const amount = mergeAmount(extractAmount(tokens, runs, opts), findAmountHit(text), opts, text);
   if (amount) out.amount = amount;
   const time = mergeTime(extractTime(cleaned, tokens, runs, opts), findTime(text, opts.now ?? new Date()));
   if (time) out.time = time;

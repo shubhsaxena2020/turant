@@ -106,7 +106,12 @@ describe('ASR misspellings', () => {
     expect(findAmount('साड़े 3,500 रुपए गेले')).toBe(3500); // half already in the digits
     expect(findAmount('देड़ लाख रुपए गए हैं')).toBe(150000);
     expect(findAmount('धाई हजार रुपय कटे')).toBe(2500);
-    expect(findAmount('ಆರು ಸಾವಿರ ರೂಪಾಯಿ ಕಟ್ ಆಯಿದು')).toBe(6000); // ಆಯಿದು = ಆಯಿತು "happened", not 5
+    expect(findAmount('ಆರು ಸಾವಿರ ರೂಪಾಯಿ ಕಟ್ ಆಯಿದು')).toBe(6000);
+    // an unreadable word before "thousand" is a misheard number: abstain rather than say 1000
+    expect(findAmount('না না শোয হাজার তাকা কেটেছে')).toBeUndefined();
+    expect(findAmount('ఇరావాయ వేలు రుపీస్ డెబిటాయి')).toBeUndefined();
+    expect(findAmount('a thousand rupees were taken')).toBe(1000);
+    expect(findAmount('हज़ार रुपये कट गए')).toBe(1000); // ಆಯಿದು = ಆಯಿತು "happened", not 5
     expect(findAmount('UPI reference 40321 7 6 5 4 3 రిండు 5 వేల రూపాయలు పోయాయి')).toBe(5000); // ID digits, then the amount
     expect(findAmount('రిండు లక్షల రూపాయలు తీసేసారు')).toBe(200000);
   });
