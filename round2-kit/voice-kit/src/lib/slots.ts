@@ -92,7 +92,9 @@ function idSequences(c: Ctx): IdSeq[] {
       seqs.splice(i, 2, { start: a.start, end: b.end, digits: d, runs: [...a.runs, ...b.runs] });
   }
   // shared with Turant (indic/numbers.ts): exact-ish first digit, looser slips and read-out-only words inside the run
+  // single digits may sit inside a spoken read-out ("9, 8, 7, 6, 5, 4, 3, 2, 1 பூஜ்யம்"); such a run needs a number word
   const digit = (t: string | undefined, inside = true) => {
+    if (t && /^\d$/.test(t)) return t;
     const v = readoutDigit(t, !inside);
     return v === undefined ? undefined : String(v);
   };
@@ -107,7 +109,7 @@ function idSequences(c: Ctx): IdSeq[] {
     }
     // the kit's own reader may have taken part of this read-out (it stops at साथ / ಎಳು): the longer reading wins
     const overlapping = seqs.filter((s) => s.start < j && i < s.end);
-    if (d.length >= 7 && overlapping.every((s) => s.digits.length < d.length)) {
+    if (d.length >= 7 && c.tokens.slice(i, j).some((t) => !/^\d+$/.test(t)) && overlapping.every((s) => s.digits.length < d.length)) {
       for (const s of overlapping) seqs.splice(seqs.indexOf(s), 1);
       seqs.push({ start: i, end: j, digits: d, runs: overlapping.flatMap((s) => s.runs) });
     }
