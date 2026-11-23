@@ -23,7 +23,8 @@ const NOW_WORDS = N(['अभी', 'abhi', 'এইমাত্র', 'এইমা
 const MIN = N(['मिनट', 'मिनिट', 'minute', 'min', 'মিনিট', 'நிமிட', 'நிமிஷ', 'నిమిష', 'ನಿಮಿಷ']);
 const HOUR = N(['घंटा', 'घंटे', 'घण्टा', 'तास', 'ghanta', 'ghante', 'hour', 'hr', 'ঘণ্টা', 'ঘন্টা', 'மணி நேர', 'நேரத்', 'గంట', 'ಗಂಟೆ']);
 const DAY = N(['दिन', 'दिवस', 'din', 'day', 'দিন', 'நாள', 'நாட்', 'రోజు', 'రోజుల', 'ದಿನ']);
-const AGO = N(['पहले', 'pehle', 'pahle', 'पूर्वी', 'ago', 'back', 'before', 'আগে', 'முன்னாடி', 'முன்பு', 'முன்', 'க்கு', 'క్రితం', 'కృతం', 'ಹಿಂದೆ']);
+const AGO = N(['पहले', 'pehle', 'pahle', 'पूर्वी', 'कूर्वी', 'कूरवी', // कूर्वी: how Whisper writes Marathi पूर्वी
+  'ago', 'back', 'before', 'আগে', 'முன்னாடி', 'முன்பு', 'முன்', 'க்கு', 'క్రితం', 'కృతం', 'ಹಿಂದೆ']);
 const HALF_UNIT_WORDS: [string, number][] = [
   ['अरगंट', 30], ['అరగంట', 30], ['अर्ध्यातास', 30], ['अर्धातास', 30], ['आधा', 0.5], ['आध', 0.5], ['adha', 0.5], ['aadha', 0.5], ['half', 0.5], ['আধ', 0.5], ['আধা', 0.5], ['அரை', 0.5], ['అర', 0.5], ['ಅರ್ಧ', 0.5], ['अर्ध्या', 0.5], ['अर्धा', 0.5],
 ];
@@ -99,7 +100,7 @@ function clockHours(text: string, toks: string[]): number | undefined {
       const parts = [];
       while (j >= 0 && j >= i - 3) {
         // right before "o'clock" a sound-alike number is safe: साथ वाजता = सात (7) वाजता
-        const p = wordParts(toks[j]) ?? (j === i - 1 ? foldParts(toks[j]) : undefined);
+        const p = wordParts(toks[j]) ?? (j === i - 1 ? foldParts(toks[j], (v) => v >= 1 && v <= 12) : undefined);
         if (!p) break;
         parts.unshift(...p);
         j--;

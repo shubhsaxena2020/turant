@@ -3,7 +3,7 @@
 // Handles Hinglish (romanised Hindi), English, Devanagari Hindi/Marathi and the
 // most common words in Bengali, Tamil, Telugu and Kannada.
 
-import { findAmountHit, fold, numberGroups, wordParts } from './indic/numbers.ts';
+import { findAmountHit, fold, foldParts, numberGroups, wordParts } from './indic/numbers.ts';
 import { findTime, type TimeHit } from './indic/time.ts';
 import { findBank, romanize, soundKey } from './indic/bank.ts';
 
@@ -581,7 +581,7 @@ const SCAM_RULES: [ScamType, string[]][] = [
   ['sextortion', ['sextortion', 'nude', 'naked', 'video call record', 'blackmail', 'blackmailing', 'blackmailed', 'ब्लाकमेल', 'ಬ್ಲಾಕ್ ಮೇಲ್', 'ಬ್ಲಾಕ್‌ಮೇಲ್', 'viral kar', 'obscene', 'अश्लील', 'ब्लैकमेल', 'न्यूड', 'ব্ল্যাকমেইল', 'மிரட்டல்', 'బ్లాక్‌మెయిల్', 'ब्लॅकमेल', 'ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್']],
   ['investment_task', ['investment', 'invest', 'trading', 'stock tip', 'crypto', 'bitcoin', 'task', 'tasks', 'part time job', 'part-time job', 'work from home', 'youtube like', 'like karne', 'rating task', 'telegram', 'paisa double', 'double ho', 'high return', 'निवेश', 'टास्क', 'ट्रेडिंग', 'टेलीग्राम', 'इन्वेस्ट', 'डबल हो', 'दुप्पट', 'गुंतवणु', 'বিনিয়োগ', 'ইনভেস্ট', 'ডাবল', 'টেলিগ্রাম', 'টাস্ক', 'முதலீடு', 'இன்வெஸ்ட்', 'டெலிகிராம்', 'டாஸ்க்', 'పెట్టుబడి', 'ఇన్వెస్ట్', 'టెలిగ్రామ్', 'టాస్క్', 'गुंतवणूक', 'ಹೂಡಿಕೆ', 'ಇನ್ವೆಸ್ಟ್', 'ಟೆಲಿಗ್ರಾಮ್', 'ಟಾಸ್ಕ್']],
   ['qr_scan', ['qr', 'qr code', 'scan', 'scanner', 'scanned', 'क्यूआर', 'स्कैन', 'স্ক্যান', 'কিউআর', 'ஸ்கேன்', 'స్కాన్', 'स्कॅन', 'ಸ್ಕ್ಯಾನ್']],
-  ['fake_customer_care', ['customer care', 'customer service', 'customer support', 'helpline number', 'care number', 'anydesk', 'any desk', 'teamviewer', 'screen share', 'quick support', 'कस्टमर केयर', 'कस्टमर केअर', 'কাস্টমার কেয়ার', 'கஸ்டமர் கேர்', 'కస్టమర్ కేర్', 'ಕಸ್ಟಮರ್ ಕೇರ್']],
+  ['fake_customer_care', ['customer care', 'customer service', 'customer support', 'helpline number', 'care number', 'anydesk', 'any desk', 'teamviewer', 'screen share', 'quick support', 'कस्टमर केयर', 'कस्टमर केअर', 'कस्टमर केर', 'কাস্টমার কেয়ার', 'கஸ்டமர் கேர்', 'కస్టమర్ కేర్', 'ಕಸ್ಟಮರ್ ಕೇರ್']],
   ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'केवाई सी', 'केवाय सी', 'के yc', 'yc अपडेट', 'yc update', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
   ['wrong_transfer', ['galti se', 'galati se', 'by mistake', 'mistakenly', 'wrong transfer', 'wrongly sent', 'refund', 'paise wapas', 'paisa wapas', 'wapas bhej', 'return the money', 'गलती से', 'वापस भेज', 'रिफंड', 'ভুল করে', 'রিফান্ড', 'தவறுதலாக', 'పొరపాటున', 'चुकून', 'ತಪ್ಪಾಗಿ']],
   ['otp_shared', ['otp', 'ओटीपी', 'ওটিপি', 'ஓடிபி', 'ఓటీపీ', 'ಒಟಿಪಿ', 'code bataya', 'code bata diya', 'pin bataya', 'pin bata diya']],
@@ -715,17 +715,24 @@ const nativeStem = (t: string, stems: string[]) => /[^\x00-\x7f]/.test(t) && ste
 /** Native-script digits read out one word at a time (নয় নয় আট আট…, ஒன்பது ஒன்பது எட்டு…): an ID, never an amount. */
 function spokenDigitRuns(tokens: string[]): { start: number; digits: string }[] {
   const out: { start: number; digits: string }[] = [];
-  const digit = (t: string) => {
-    if (!/[^\x00-\x7f]/.test(t)) return undefined;
+  // the first word: a digit word or one-letter slip of one (নয় loses its nukta in normalize), but never the
+  // "number" abbreviation ("ref नो" is not नौ); looser sound matches (साथ = सात) only inside the run
+  const digit = (t: string | undefined, inside = true) => {
+    if (!t || !/[^\x00-\x7f]/.test(t)) return undefined;
+    if (!inside) {
+      if (['नो', 'नं', 'नं.'].includes(t)) return undefined;
+      const e = wordParts(t, 2);
+      return e?.length === 1 && 'v' in e[0] && Number.isInteger(e[0].v) && e[0].v <= 9 ? String(e[0].v) : undefined;
+    }
     // inside a read-out run, short words may be repaired too (normalize() drops the nukta: নয় -> নয)
-    const p = wordParts(t, 2);
+    const p = wordParts(t, 2) ?? foldParts(t, (v) => Number.isInteger(v) && v <= 9); // डोन = दोन, साथ = सात (not साठ) inside a read-out
     return p?.length === 1 && 'v' in p[0] && Number.isInteger(p[0].v) && p[0].v <= 9 ? String(p[0].v) : undefined;
   };
   let i = 0;
   while (i < tokens.length) {
     let j = i;
     let d = '';
-    for (let x = digit(tokens[j]); x !== undefined && j < tokens.length; x = digit(tokens[++j])) d += x;
+    for (let x = digit(tokens[j], false); x !== undefined && j < tokens.length; x = digit(tokens[++j])) d += x;
     if (d.length >= 7) out.push({ start: i, digits: d });
     i = Math.max(j, i + 1);
   }

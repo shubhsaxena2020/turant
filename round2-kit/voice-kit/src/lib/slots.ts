@@ -1,6 +1,6 @@
 // Generic, config-driven slot extraction. One typed extractor per slot type, all
 // built on Turant's rules in nlp.ts. Pure functions: no DOM, no network (offline-first).
-import { findAmountHit, fold, numberGroups, tokenize as indicTokens, wordParts } from './indic/numbers';
+import { findAmountHit, fold, foldParts, numberGroups, tokenize as indicTokens, wordParts } from './indic/numbers';
 import { findTime } from './indic/time';
 import type {
   AmountSlot,
@@ -87,15 +87,22 @@ function idSequences(c: Ctx): IdSeq[] {
     if (b.start === a.end + 1 && c.tokens[a.end] === N.BOUNDARY && a.digits.length >= 3 && b.digits.length >= 3 && ((d.length === 10 && /^[6-9]/.test(d)) || d.length === 12))
       seqs.splice(i, 2, { start: a.start, end: b.end, digits: d, runs: [...a.runs, ...b.runs] });
   }
-  const digit = (t: string | undefined) => {
+  // the first word: a digit word or one-letter slip of one (নয় loses its nukta in normalize), but never the
+  // "number" abbreviation ("ref नो" is not नौ); looser sound matches (साथ = सात) only inside the run
+  const digit = (t: string | undefined, inside = true) => {
     if (!t || !/[^\x00-\x7f]/.test(t)) return undefined;
-    const p = wordParts(t, 2); // inside a read-out, short words may be repaired (normalize drops the nukta: নয় -> নয)
+    if (!inside) {
+      if (['नो', 'नं', 'नं.'].includes(t)) return undefined;
+      const e = wordParts(t, 2);
+      return e?.length === 1 && 'v' in e[0] && Number.isInteger(e[0].v) && e[0].v <= 9 ? String(e[0].v) : undefined;
+    }
+    const p = wordParts(t, 2) ?? foldParts(t, (v) => Number.isInteger(v) && v <= 9); // inside a read-out: নয় -> নয (nukta dropped), डोन = दोन, साथ = सात (not साठ)
     return p?.length === 1 && 'v' in p[0] && Number.isInteger(p[0].v) && p[0].v <= 9 ? String(p[0].v) : undefined;
   };
   for (let i = 0; i < c.tokens.length; ) {
     let j = i;
     let d = '';
-    for (let x = digit(c.tokens[j]); x !== undefined; x = digit(c.tokens[++j])) d += x;
+    for (let x = digit(c.tokens[j], false); x !== undefined; x = digit(c.tokens[++j])) d += x;
     if (d.length >= 7 && !seqs.some((s) => s.start <= i && i < s.end)) seqs.push({ start: i, end: j, digits: d, runs: [] });
     i = Math.max(j, i + 1);
   }

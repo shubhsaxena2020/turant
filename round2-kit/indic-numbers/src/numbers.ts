@@ -217,6 +217,10 @@ mul(10000000, 'करोड़', 'करोड', 'कोटी', 'কোটি',
 
 const HALF_PREFIX = ['साढ़े', 'साढे', 'साडे', 'साधे', 'সাড়ে', 'সারে', 'saadhe', 'sadhe', 'saade', 'sade', 'saare', 'sare', 'saadey'].map((w) => w.normalize('NFC'));
 
+// Half prefixes accepted only glued onto a number: Whisper writes साडेतीन as सालेतीन, but a separate
+// "साले" is a common Hindi insult, never "and a half".
+const GLUED_HALF = ['साले'].map((w) => w.normalize('NFC'));
+
 // ---------- Tamil / Kannada / Telugu / Marathi / Bengali compounds ----------
 const TA_STEM: [string, number][] = [
   ['பன்னிரண்ட', 12], ['பதினைந்த', 15], ['பதினொன்ற', 11], ['பதினாற', 16], ['பதினேழ', 17], ['பதினெட்ட', 18], ['பத்தொன்பத', 19],
@@ -329,7 +333,7 @@ function splitTelugu(w: string): Part[] | undefined {
 function splitDevanagari(w: string): Part[] | undefined {
   if (WORDS[w] !== undefined) return [{ v: WORDS[w] }];
   // Marathi "साडेतीन" (3.5), "पाचशे" (500)
-  for (const h of HALF_PREFIX) if (w.startsWith(h) && WORDS[w.slice(h.length)] !== undefined) return [{ v: WORDS[w.slice(h.length)] + 0.5 }];
+  for (const h of [...HALF_PREFIX, ...GLUED_HALF]) if (w.startsWith(h) && WORDS[w.slice(h.length)] !== undefined) return [{ v: WORDS[w.slice(h.length)] + 0.5 }];
   if (w.endsWith('शे') && WORDS[w.slice(0, -2)] !== undefined) return [{ v: WORDS[w.slice(0, -2)] * 100 }];
   return undefined;
 }
@@ -438,22 +442,25 @@ function shortMultiplier(raw: string): Part[] | undefined {
 }
 
 /** Number words keyed by their sound-alike fold (built lazily: fold is defined further down). */
-let FOLD_NUM: Map<string, number | null> | undefined;
+let FOLD_NUM: Map<string, number[]> | undefined;
 /**
- * A word whose sound-alike fold equals a number word's (साथ ~ सात). Only for strong contexts, e.g. right
- * before "o'clock": साथ also means "with". Ambiguous folds are dropped.
+ * A word whose sound-alike fold equals a number word's (साथ ~ सात). Only for strong contexts: साथ also means
+ * "with", and folds like both सात (7) and साठ (60). `allowed` says which values the context permits (a digit
+ * read-out: 0-9; before "o'clock": 1-12); the word is read only if exactly one allowed value matches.
  */
-export function foldParts(raw: string): Part[] | undefined {
+export function foldParts(raw: string, allowed: (v: number) => boolean = () => true): Part[] | undefined {
   if (!FOLD_NUM) {
     FOLD_NUM = new Map();
     for (const [w, v] of Object.entries(WORDS)) {
       if (SCRIPT(w) === 'lat') continue;
       const k = fold(w);
-      FOLD_NUM.set(k, FOLD_NUM.has(k) && FOLD_NUM.get(k) !== v ? null : v);
+      const vs = FOLD_NUM.get(k) ?? [];
+      if (!vs.includes(v)) vs.push(v);
+      FOLD_NUM.set(k, vs);
     }
   }
-  const v = FOLD_NUM.get(fold(raw));
-  return v === undefined || v === null ? undefined : [{ v }];
+  const vs = (FOLD_NUM.get(fold(raw)) ?? []).filter(allowed);
+  return vs.length === 1 ? [{ v: vs[0] }] : undefined;
 }
 
 /**

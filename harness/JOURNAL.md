@@ -32,13 +32,15 @@ node split.mjs <round> [...]   # dev voice vs held-out voice
 | round9 | + a bare "thousand" after an unreadable word is not ₹1,000 (abstain, the app asks); a rule that read only "thousand" defers to the full reading | 100.0% | 43.5% | 45.6% | 37.9% | 30.4% | 71.5 |
 | round10-13 | + Telugu నూట, kit generic fixes, a `\x01` regex bug fix (no change here); ಆಯಿದು before a multiplier, read-out split before "<digit> thousand", sound-alike hour before o'clock (साथ वाजता), kn/te i/e, ಬಳಿಗ್ಗೆ, masked "ACXX" digits not money; Devanagari-vs-Latin keywords by sound | 100.0% | 44.0% | 45.9% | 37.9% | 30.4% | 72.0 |
 | round14 | + Whisper's Hindi spellings (साधे, सुभा, ज्यारा, "के YC", "पेटी इन"); UTR digit groups that run into "<amount> रुपए" | 100.0% | 45.2% | 46.3% | 38.6% | 30.4% | 72.4 |
+| round15 | + "fon pay" = PhonePe; a Latin bank acronym one letter off (HTFC = HDFC, 4+ letters only) | 100.0% | 45.5% | 46.3% | 38.6% | 30.4% | 72.6 |
+| round16 | + Marathi Whisper forms (कूर्वी = पूर्वी, glued सालेतीन); digit read-outs accept sound slips inside the run (डोन = दोन, साथ = सात, never साठ: the context allows only 0-9), never starting on "ref नो" | 100.0% | 47.0% | 46.9% | 38.6% | 30.7% | 73.4 |
 
 **Net change:** (round9 changed no outcome to correct; it turned 87 wrong amounts into "ask again", raising clean-ASR amount precision from 67% to 76%)
 
 | Measure | Before | After |
 |---|---|---|
-| Clean speech, fully correct | 27.2% | 45.2% (+18.0 points, about 1.7×) |
-| Field F1 | 51.0 | 72.4 |
+| Clean speech, fully correct | 27.2% | 47.0% (+19.8 points, about 1.7×) |
+| Field F1 | 51.0 | 73.4 |
 | Reference text, fully correct | 55.7% | 100% |
 
 No round broke a field that an earlier round got right. Each round's diff against the previous one is checked run by run.

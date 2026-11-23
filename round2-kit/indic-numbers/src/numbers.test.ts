@@ -128,7 +128,9 @@ describe('ASR misspellings', () => {
     expect(findAmount('না না শোয হাজার তাকা কেটেছে')).toBeUndefined();
     expect(findAmount('ఇరావాయ వేలు రుపీస్ డెబిటాయి')).toBeUndefined();
     expect(findAmount('a thousand rupees were taken')).toBe(1000);
-    expect(findAmount('हज़ार रुपये कट गए')).toBe(1000); // ಆಯಿದು = ಆಯಿತು "happened", not 5
+    expect(findAmount('हज़ार रुपये कट गए')).toBe(1000);
+    expect(findAmount('माझा खात्यातून सालेतीन हजार रुपे गेले')).toBe(3500); // साडेतीन as Whisper writes it
+    expect(findAmount('साले पाँच हज़ार रुपये ले गए')).toBe(5000); // a separate साले is not a half // ಆಯಿದು = ಆಯಿತು "happened", not 5
     expect(findAmount('UPI reference 40321 7 6 5 4 3 రిండు 5 వేల రూపాయలు పోయాయి')).toBe(5000); // ID digits, then the amount
     expect(findAmount('రిండు లక్షల రూపాయలు తీసేసారు')).toBe(200000);
   });

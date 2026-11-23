@@ -359,6 +359,7 @@ describe('harness regressions', () => {
     expect(x('पैसे कट गए UTR नंबर है 403218 765 432 5000 रुपए').utr?.value).toBe('403218765432'); // groups run into the amount
     expect(x('যে অ্যাকাউন্টে টাকা গেছে তার নম্বর 5 0 1 0 0 2 3 4 5 6 7 8 1 2').suspectAccount?.value).toBe('50100234567812');
     expect(x('ওর নম্বর নয় নয় আট আট সাত সাত ছয় ছয় পাঁচ পাঁচ').suspectPhone?.value).toBe('9988776655');
+    expect(x('रेफ नो चार पाच सहा साथ आठ नौ शून्य एक डोन तीन चार पाच').utr?.value).toBe('456789012345'); // साथ = सात, डोन = दोन
     expect(x('அவன் நம்பர் ஒன்பது ஒன்பது எட்டு எட்டு ஏழு ஏழு ஆறு ஆறு ஐந்து ஐந்து').suspectPhone?.value).toBe('9988776655');
     expect(x('The number that called me was plus 91 70112 23344').suspectPhone?.value).toBe('7011223344');
   });
