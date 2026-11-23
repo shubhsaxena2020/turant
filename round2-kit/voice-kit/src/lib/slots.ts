@@ -1,8 +1,8 @@
 // Generic, config-driven slot extraction. One typed extractor per slot type, all
 // built on Turant's rules in nlp.ts. Pure functions: no DOM, no network (offline-first).
 import { findAmountHit, fold, numberGroups, readoutDigit, tokenize as indicTokens, wordParts } from './indic/numbers';
-import { findTime } from './indic/time';
-import { unifyScript } from './indic/cleanup';
+import { findTime, hourMinutePhrase } from './indic/time';
+import { joinSpelled, unifyScript } from './indic/cleanup';
 import type {
   AmountSlot,
   DigitsSlot,
@@ -77,7 +77,7 @@ interface IdSeq {
  * joined only when the halves make a mobile or a 12-digit UTR), and native-script digits read one word
  * at a time (নয় নয় আট আট…, ஒன்பது ஒன்பது எட்டு…).
  */
-const UTR_WORDS = N.wordSet(['utr', 'ref', 'reference', 'refno', 'rrn', 'transaction', 'txn', 'upi']);
+const UTR_WORDS = N.wordSet(['utr', 'ref', 'reference', 'refno', 'rrn', 'transaction', 'txn', 'upi', 'रेफ', 'রেফ', 'ரெஃப்', 'రెఫ్', 'ರೆಫ್']);
 const UTR_STEMS = ['यूटीआर', 'रेफरन्स', 'रेफरेंस', 'ইউটিআর', 'রেফারেন্স', 'யூடிஆர்', 'యూటీఆర్', 'ಯುಟಿಆರ್'].map(fold);
 
 function idSequences(c: Ctx): IdSeq[] {
@@ -195,7 +195,8 @@ function extractAmount(c: Ctx, s: AmountSlot): Extracted | undefined {
     for (let k = Math.max(0, r.start - 5); k < Math.min(tokens.length, r.end + 5); k++) {
       if (N.isDebitWord(tokens[k], cues)) debit = true;
     }
-    if (!cur && !r.hasMult && r.value < 10 && !hint) continue;
+    // a debit word alone is weak evidence for a tiny number ("20 ருபிஸ் டெபிட்" = 20 thousand, misheard)
+    if (!cur && !r.hasMult && r.value < 100 && !hint) continue;
     if (!cur && !r.hasMult && !debit && !hint) continue;
     const score = (cur ? 3 : 0) + (r.hasMult ? 1.5 : 0) + (debit ? 1 : 0) + (hint ? 1 : 0);
     const conf = cur ? 0.95 : r.hasMult ? 0.85 : hint ? 0.85 : 0.6;
@@ -546,7 +547,7 @@ function reservedWords(slots: SlotDef[]): Set<string> {
 
 /** Extract every slot the rules can find in one utterance (or a whole story). */
 export function extractAll(cfg: SlotsLike, text: string, opts: ExtractOptions = {}): Extraction {
-  text = unifyScript(text);
+  text = hourMinutePhrase(joinSpelled(unifyScript(text)));
   const norm = N.normalize(text);
   const { ids, rest } = N.extractUpis(N.prepUpi(norm));
   const cleaned = rest.replace(/\s+/g, ' ').trim();

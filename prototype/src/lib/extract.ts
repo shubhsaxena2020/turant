@@ -4,7 +4,7 @@
 // most common words in Bengali, Tamil, Telugu and Kannada.
 
 import { findAmountHit, fold, numberGroups, readoutDigit } from './indic/numbers.ts';
-import { unifyScript } from './indic/cleanup.ts';
+import { joinSpelled, unifyScript } from './indic/cleanup.ts';
 import { findTime, hourMinutePhrase, type TimeHit } from './indic/time.ts';
 import { findBank, romanize, soundKey } from './indic/bank.ts';
 
@@ -881,13 +881,6 @@ function indicBank(text: string): Extracted<string> | undefined {
 /** A 12-digit UTR glued to the amount by the recogniser: "UTR है 4032187654325000 रुपए" = 403218765432 + 5000.
  * No amount has 15+ digits; split only when the tail is one digit and zeros (5000, not 25000: a misheard extra digit
  * shifts the split) right before a currency word. */
-/** Whisper spells acronyms with hyphens and can orphan a vowel sign: "आई-सी-ाई-सी-ाई" = आईसीआईसीआई (ICICI). */
-export function joinSpelled(text: string): string {
-  return text.replace(/(?<![ऀ-෿])(?:[ऀ-෿]{1,3}-){2,}[ऀ-෿]{1,3}(?![ऀ-෿])/gu, (m) =>
-    m.replace(/(^|-)ा/g, '$1आ').replace(/-/g, ''),
-  );
-}
-
 export function splitGluedUtr(text: string): string {
   return text.replace(/(^|\D)(\d{12})([1-9]0{2,4})(?=\s?(?:rs|rupe|rupa|रुप|रूप|টাকা|ரூ|ரு|రూ|ರೂ))/gi, '$1$2 $3');
 }

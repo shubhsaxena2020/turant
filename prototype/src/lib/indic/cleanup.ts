@@ -73,6 +73,13 @@ export function cleanup(input: string): Cleaned {
 /** Whisper large-v3 writes some Telugu words in Kannada letters ("రೂಪಾಯలు"). The two Unicode blocks are
  * parallel (+0x80), so once any Telugu letter is present, Kannada letters are read as Telugu.
  * Kannada speech never gets Telugu letters, so Kannada text is untouched. */
+/** Whisper spells acronyms with hyphens and can orphan a vowel sign: "आई-सी-ाई-सी-ाई" = आईसीआईसीआई (ICICI). */
+export function joinSpelled(text: string): string {
+  return text.replace(/(?<![ऀ-෿])(?:[ऀ-෿]{1,3}-){2,}[ऀ-෿]{1,3}(?![ऀ-෿])/gu, (m) =>
+    m.replace(/(^|-)ा/g, '$1आ').replace(/-/g, ''),
+  );
+}
+
 export function unifyScript(text: string): string {
   if (!/[ఀ-౿]/.test(text)) return text;
   return text.replace(/[ಀ-೿]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x80));

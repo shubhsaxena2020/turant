@@ -36,19 +36,22 @@ The harness takes 280 spoken reports in 7 languages through TTS, noise and Whisp
 
 | Measure | Before (23 Nov) | Whisper turbo, now | Whisper large-v3, now (24 Nov) |
 |---|---|---|---|
-| Clean speech, report fully correct | 27.2% | **52.8%** | **66.2%** |
-| Held-out voices | 29.4% | **51.6%** | **64.7%** |
-| Noise 5 dB | 19.3% | 31.8% | 43.9% |
-| Field F1 | 51 | 78 | 84 |
+| Clean speech, report fully correct | 27.2% | **54.2%** | **69.3%** |
+| Held-out voices | 29.4% | **53.1%** | **67.5%** |
+| **Blind set: 84 new sentences, never tuned on** | n/a | **51.1%** | **62.8%** |
+| Noise 5 dB | 19.3% | 32.5% | 45.7% |
+| Field F1 | 51 | 80 | 87 |
 
-- **Second recogniser:** large-v3 (`harness/asr_alt.py`, local GPU) replaced turbo as the closer stand-in for a good Indic recogniser. The swap alone gave +8 points, and rounds 25-29 added the spellings it writes. Tamil went 23% → 63%, Telugu 40% → 55%. Bengali didn't move (39%).
+- **Second recogniser:** large-v3 (`harness/asr_alt.py`, local GPU) replaced turbo as the closer stand-in for a good Indic recogniser. The swap alone gave +8 points, and rounds 25-32 added the spellings it writes and hour-and-minute phrases ("9 बजकर 30 मिनट"). By language: hi 98%, en 90%, mr 70%, ta 66%, te 61%, kn 46%, bn 44%.
+
+- **Blind set (the honest number to quote):** after round 29, 84 brand-new sentences were written and are scored only in aggregate, never tuned on (`harness/corpus/blind/`). About 63% of new spoken reports come out fully correct on large-v3 (51% on turbo); clean text 90.5%. The gap to the tuning corpus (69%) is the overfitting so far.
 
 - **What changed:** the extractor now reads numbers, times, banks and IDs in all 7 languages, including the misspellings speech recognisers make.
 - **Fuzz checks:** all clean. One mutation is recovered in 99.6-100% of cases, and no ordinary word in 1,510 real transcripts gets turned into a number.
 - **Rules vs LLM:** measured head to head. On-device rules match the best LLM hybrid (41.2%); the LLM alone scores 16.5% because it invents fields. The decision is to stay offline-first.
 - **Other voice-kit apps:** `kit_apps_eval.mjs` scores khata, health and civic on text or speech. On held-out text the first run scored 38%, 71% and 50%; the remaining gaps are domain words in each language, which is the Round 2 day-1 lesson.
 - **Asking instead of guessing:** an amount under ₹100 is offered back as one-tap "₹5,000?" or "₹5,00,000?"; a bare "thousand" after a misheard word is asked about rather than read as ₹1,000.
-- **Remaining errors:** mostly speech recognition, in bn and kn above all. On large-v3 the extractor-only ceiling is 68% (we are at 66%). Next levers: IndicConformer (a gated Hugging Face download Shubh must accept), Sarvam (key needed), or a real-phone test.
+- **Remaining errors:** mostly speech recognition, in bn and kn above all. On large-v3 the extractor-only ceiling is 71% (we are at 69%). Next levers: IndicConformer (a gated Hugging Face download Shubh must accept), Sarvam (key needed), or a real-phone test.
 - **Re-run:** `cd harness; .\run.ps1 -Name x` (about 5 s, cached), then `node split.mjs x`.
 
 ## Round 2 (27–29 Nov): `round2-kit/ROUND2_PLAYBOOK.md`

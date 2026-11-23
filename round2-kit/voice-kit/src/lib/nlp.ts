@@ -159,14 +159,14 @@ const STANDALONE = map({
 const REPEAT = map({ double: 2, triple: 3, 'डबल': 2, 'ट्रिपल': 3 });
 
 const CURRENCY_EXACT = wordSet(['rs', 'inr', '₹', 'rupaye', 'rupaiye', 'rupay', 'rupee', 'rupees', 'rupiya', 'rupiye', 'rupya', 'rupaiya', 'টাকা', 'টাকার']);
-const CURRENCY_PREFIX = ['rupa', 'rupe', 'rupi', 'rupy', 'रुपय', 'रुपए', 'रुपये', 'रूपय', 'रूपए', 'रुपै', 'রুপি', 'টাকা', 'ரூபா', 'రూపాయ', 'ರೂಪಾಯ'].map(nw);
+const CURRENCY_PREFIX = ['rupa', 'rupe', 'rupi', 'rupy', 'रूपीज', 'रुपीज', 'रुपय', 'रुपए', 'रुपये', 'रूपय', 'रूपए', 'रुपै', 'রুপি', 'টাকা', 'ரூபா', 'రూపాయ', 'ರೂಪಾಯ'].map(nw);
 
-const MINUTE_UNITS = ['minute', 'minutes', 'min', 'mins', 'minat', 'mint', 'mnt', 'मिनट', 'मिनिट', 'মিনিট', 'நிமிட', 'నిమిష', 'ನಿಮಿಷ'].map(nw);
+const MINUTE_UNITS = ['minute', 'minutes', 'min', 'mins', 'minat', 'mint', 'mnt', 'நிமிண', 'मिनट', 'मिनिट', 'মিনিট', 'நிமிட', 'నిమిష', 'ನಿಮಿಷ'].map(nw);
 const HOUR_UNITS = ['hour', 'hours', 'hr', 'hrs', 'ghanta', 'ghante', 'ghanton', 'घंटा', 'घंटे', 'घंटों', 'तास', 'ঘণ্টা', 'ঘন্টা', 'மணிநேர', 'மணி நேர', 'గంట', 'ಗಂಟೆ'].map(nw);
-const DAY_UNITS = ['day', 'days', 'din', 'dino', 'dinon', 'दिन', 'दिवस', 'দিন', 'நாள', 'நாட்க', 'రోజు', 'రోజుల', 'ದಿನ'].map(nw);
+const DAY_UNITS = ['day', 'days', 'din', 'dino', 'dinon', 'दिन', 'दिवस', 'দিন', 'நாள', 'நாட்க', 'రోజు', 'రోజుల', 'రోజల', 'ದಿನ'].map(nw);
 const WEEK_UNITS = ['week', 'weeks', 'hafta', 'hafte', 'hafton', 'haftey', 'saptah', 'हफ्ता', 'हफ्ते', 'हफ्तों', 'हाफते', 'हाफ्ते', 'सप्ताह', 'आठवडा', 'आठवडे', 'आठवड्या', 'সপ্তাহ', 'வார', 'వారం', 'వారాల', 'ವಾರ'].map(nw);
 const MONTH_UNITS = ['month', 'months', 'mahina', 'mahine', 'mahino', 'mahinon', 'महीना', 'महीने', 'महिना', 'महिने', 'মাস', 'மாத', 'నెల', 'ತಿಂಗಳ'].map(nw);
-export const AGO = ['pehle', 'pahle', 'phele', 'pehele', 'pahile', 'ago', 'back', 'before', 'पहले', 'पहिले', 'पूर्वी', 'आधी', 'আগে', 'முன்', 'முன்பு', 'முன்னாடி', 'క్రితం', 'ಹಿಂದೆ'].map(nw);
+export const AGO = ['pehle', 'క్రతం', 'pahle', 'phele', 'pehele', 'pahile', 'ago', 'back', 'before', 'पहले', 'पहिले', 'पूर्वी', 'आधी', 'আগে', 'முன்', 'முன்பு', 'முன்னாடி', 'క్రితం', 'ಹಿಂದೆ'].map(nw);
 const ELAPSED = wordSet(['hua', 'hue', 'huye', 'hogaye', 'ho', 'हुआ', 'हुए', 'हो']);
 
 const CLOCK_MARKERS = wordSet(['baje', 'bje', 'baj', 'bajhe', 'oclock', 'बजे', 'बज', 'वाजता', 'वाजे', 'মণিক্কு', 'மணிக்கு', 'మణి', 'గంటలకు', 'ಗಂಟೆಗೆ']);
@@ -190,7 +190,7 @@ export const DAY_WORDS: [number, string[]][] = [
 const NOW_WORDS = ['abhi', 'abhi abhi', 'just now', 'right now', 'abhi turant', 'अभी', 'अभी अभी', 'आत्ता', 'आताच', 'এইমাত্র', 'এখনই', 'இப்போது', 'இப்பொழுது', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ'];
 
 const DEBIT_EXACT = wordSet(['kat', 'kaat', 'kate', 'kati', 'kata', 'cut', 'debit', 'debited', 'deducted', 'gaye', 'gaya', 'gye', 'gya', 'lost', 'loss', 'nikal', 'nikle', 'nikla', 'transfer', 'transferred', 'bheja', 'bheje', 'bhej', 'sent', 'paid', 'liya', 'liye', 'chale', 'chala', 'withdrawn', 'fraud']);
-const DEBIT_PREFIX = ['कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ'].map(nw);
+const DEBIT_PREFIX = ['डेविट', 'देविट', 'देबिट', 'ডেবিট', 'டெபிட்', 'డెబిట్', 'ಡೆಬಿಟ್', 'कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ'].map(nw);
 
 // ---------------------------------------------------------------------------
 // Phrase matching
@@ -590,6 +590,8 @@ export function parsePastTime(text: string, tokens: string[], runs: NumRun[], no
 // UPI IDs ("rahul dot kyc at ybl")
 // ---------------------------------------------------------------------------
 
+const UPI_ONLY = new Set(['ybl', 'ibl', 'axl', 'okaxis', 'okhdfcbank', 'okicici', 'oksbi', 'ptyes', 'ptaxis', 'pthdfc', 'ptsbi', 'apl', 'yapl', 'ikwik', 'waicici', 'wahdfcbank', 'waaxis', 'wasbi', 'abfspay', 'pingpay', 'superyes', 'okbizaxis', 'yesg', 'naviaxis', 'tapicici', 'axisb']);
+
 const UPI_HANDLES = [
   'ybl', 'ibl', 'axl', 'okaxis', 'okhdfcbank', 'okicici', 'oksbi', 'paytm', 'ptyes', 'ptaxis', 'pthdfc', 'ptsbi', 'upi', 'apl', 'yapl',
   'ikwik', 'freecharge', 'axisbank', 'icici', 'sbi', 'hdfcbank', 'kotak', 'kmbl', 'yesbank', 'idfcfirst', 'federal', 'pnb', 'barodampay',
@@ -614,7 +616,9 @@ const UPI_RE = /([a-z0-9][a-z0-9._-]{1,63})@([a-z][a-z0-9]{1,30})(\.[a-z]{2,})?/
 export function extractUpis(prepped: string): { ids: string[]; rest: string } {
   const ids: string[] = [];
   const rest = prepped.replace(UPI_RE, (m, _id: string, _h: string, tld: string | undefined) => {
-    if (tld) return ' '; // looks like an e-mail address
+    // e-mail-like, unless the handle is UPI-only (ybl, okaxis…): "rahul.kyc at ybl.ki" is speech
+    if (tld && !UPI_ONLY.has(_h)) return ' ';
+    if (tld) m = m.slice(0, m.length - tld.length);
     ids.push(m.replace(/\.$/, ''));
     return ' ';
   });
@@ -627,7 +631,7 @@ export function extractUpis(prepped: string): { ids: string[]; rest: string } {
 
 export type Intent = 'skip' | 'wait' | 'yes' | 'no';
 
-const SKIP_WORDS = ['skip', 'skip karo', 'pata nahi', 'pata nhi', 'nahi pata', 'nahin pata', 'maloom nahi', 'malum nahi', 'nahi maloom', "don't know", 'dont know', 'do not know', 'no idea', 'not sure', 'aage badho', 'छोड़ो', 'छोडो', 'पता नहीं', 'मालूम नहीं', 'स्किप', 'জানি না', 'தெரியாது', 'తెలియదు', 'माहित नाही', 'ಗೊತ್ತಿಲ್ಲ'];
+const SKIP_WORDS = ['माहिद नाही', 'skip', 'skip karo', 'pata nahi', 'pata nhi', 'nahi pata', 'nahin pata', 'maloom nahi', 'malum nahi', 'nahi maloom', "don't know", 'dont know', 'do not know', 'no idea', 'not sure', 'aage badho', 'छोड़ो', 'छोडो', 'पता नहीं', 'मालूम नहीं', 'स्किप', 'জানি না', 'தெரியாது', 'తెలియదు', 'माहित नाही', 'ಗೊತ್ತಿಲ್ಲ'];
 const WAIT_WORDS = ['ek minute ruko', 'ek minute', 'ek min', 'ruko', 'ruk jao', 'rukiye', 'wait', 'hold on', 'one minute', 'रुको', 'रुकिए', 'एक मिनट', 'এক মিনিট', 'দাঁড়ান', 'ஒரு நிமிடம்', 'ஒரு நிமிஷம்', 'ఒక్క నిమిషం', 'थांबा', 'एक मिनिट', 'ಒಂದು ನಿಮಿಷ'];
 export const YES_WORDS = ['haan', 'han', 'haa', 'ha', 'ji', 'haan ji', 'yes', 'yeah', 'yep', 'sahi', 'sahi hai', 'theek hai', 'thik hai', 'correct', 'right', 'ok', 'okay', 'हाँ', 'हां', 'जी', 'सही', 'ठीक', 'হ্যাঁ', 'ঠিক', 'ஆம்', 'ஆமா', 'சரி', 'అవును', 'సరే', 'होय', 'बरोबर', 'ಹೌದು', 'ಸರಿ'];
 export const NO_WORDS = ['nahi', 'nahin', 'nhi', 'na', 'no', 'galat', 'wrong', 'नहीं', 'गलत', 'না', 'ভুল', 'இல்லை', 'தவறு', 'కాదు', 'లేదు', 'नाही', 'चूक', 'ಇಲ್ಲ', 'ತಪ್ಪು'];
