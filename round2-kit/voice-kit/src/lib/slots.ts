@@ -397,7 +397,7 @@ const NOT_NAMES = N.wordSet([
 ]);
 const PARTICLES: string[][] = [['ne', 'ने'], ['ko', 'को'], ['ji', 'जी'], ['aaya', 'aayi', 'aaye', 'aya', 'आया', 'आई', 'आए'], ['ka', 'ki', 'ke', 'का', 'की', 'के']];
 // Titles said around a name ("Suresh bhaiya ne", "गीता दीदी"): never the name itself.
-const HONORIFICS = N.wordSet(['ji', 'जी', 'bhaiya', 'bhai', 'भैया', 'भया', 'भाया', 'भइया', 'भाई', 'didi', 'दीदी', 'दीधी', 'दिदी', 'aunty', 'uncle', 'अंकल', 'आंटी', 'sir', 'madam', 'mr', 'mrs', 'ms', 'shri', 'श्री', 'sahab', 'saheb', 'साहब', 'garu', 'గారు', 'அண்ணா', 'ಅಣ್ಣ', 'দা', 'দি']);
+const HONORIFICS = N.wordSet(['ji', 'जी', 'bhaiya', 'bhai', 'भैया', 'भया', 'भाया', 'भइया', 'भाईया', 'भईया', 'भाई', 'didi', 'दीदी', 'दीधी', 'दिदी', 'aunty', 'uncle', 'अंकल', 'आंटी', 'sir', 'madam', 'mr', 'mrs', 'ms', 'shri', 'श्री', 'sahab', 'saheb', 'साहब', 'garu', 'గారు', 'அண்ணா', 'ಅಣ್ಣ', 'দা', 'দি']);
 const EN_VERBS = N.wordSet(['took', 'bought', 'borrowed', 'owes', 'paid', 'purchased', 'has', 'gave', 'took']);
 
 function rawWords(raw: string): { w: string; n: string }[] {

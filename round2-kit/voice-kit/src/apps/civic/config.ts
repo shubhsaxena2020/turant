@@ -63,7 +63,7 @@ export default defineDomain({
       aliases: ['location', 'place', 'jagah', 'address', 'ಜಾಗ', 'ವಿಳಾಸ', 'जगह', 'पता'],
     },
     {
-      key: 'ward', type: 'text', required: true, markers: [{ words: ['ward', 'wad', 'watt', 'वाड', 'वार्ड', 'वॉर्ड', 'ವಾರ್ಡ್', 'வார்டு', 'ওয়ার্ড', 'వార్డు', 'వార్డ్'], take: 'clause' }],
+      key: 'ward', type: 'text', required: true, markers: [{ words: ['ward', 'wad', 'watt', 'वाड', 'वार्ड', 'वॉर्ड', 'वॉड', 'ವಾರ್ಡ್', 'வார்டு', 'ওয়ার্ড', 'వార్డు', 'వార్డ్'], take: 'clause' }],
       label: { 'en-IN': 'Ward / area', 'kn-IN': 'ವಾರ್ಡ್ / ಪ್ರದೇಶ', 'hi-IN': 'वार्ड / इलाक़ा' },
       q: { 'en-IN': 'Which area or ward is it in?', 'kn-IN': 'ಯಾವ ಪ್ರದೇಶ ಅಥವಾ ವಾರ್ಡ್?', 'hi-IN': 'कौन सा इलाक़ा या वार्ड?' },
       rq: { 'en-IN': 'The area name?', 'kn-IN': 'ಪ್ರದೇಶದ ಹೆಸರು?', 'hi-IN': 'इलाक़े का नाम?' },

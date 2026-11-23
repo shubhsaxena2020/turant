@@ -7,7 +7,7 @@ const ITEMS: ItemDef[] = [
   { name: { 'en-IN': 'Rice', 'hi-IN': 'चावल' }, keywords: ['బియ్యం', 'तांदूळ', 'rice', 'chawal', 'chaawal', 'chaval', 'चावल', 'அரிசி', 'ಅಕ್ಕಿ', 'চাল'] },
   { name: { 'en-IN': 'Wheat flour', 'hi-IN': 'आटा' }, keywords: ['atta', 'aata', 'flour', 'आटा', 'கோதுமை மாவு', 'ಹಿಟ್ಟು', 'আটা'] },
   { name: { 'en-IN': 'Sugar', 'hi-IN': 'चीनी' }, keywords: ['साखर', 'చక్కెర', 'sugar', 'cheeni', 'chini', 'shakkar', 'चीनी', 'शक्कर', 'சர்க்கரை', 'ಸಕ್ಕರೆ', 'চিনি'] },
-  { name: { 'en-IN': 'Oil', 'hi-IN': 'तेल' }, keywords: ['నూనె', 'oil', 'tel', 'तेल', 'எண்ணெய்', 'ಎಣ್ಣೆ', 'তেল'] },
+  { name: { 'en-IN': 'Oil', 'hi-IN': 'तेल' }, keywords: ['నూనె', 'oil', 'tel', 'तेल', 'तैल', 'எண்ணெய்', 'ಎಣ್ಣೆ', 'তেল'] },
   { name: { 'en-IN': 'Dal', 'hi-IN': 'दाल' }, keywords: ['dal', 'daal', 'lentils', 'दाल', 'பருப்பு', 'ಬೇಳೆ', 'ডাল'] },
   { name: { 'en-IN': 'Milk', 'hi-IN': 'दूध' }, keywords: ['పాలు', 'milk', 'doodh', 'dudh', 'दूध', 'பால்', 'ಹಾಲು', 'দুধ'] },
   { name: { 'en-IN': 'Salt', 'hi-IN': 'नमक' }, keywords: ['salt', 'namak', 'नमक', 'உப்பு', 'ಉಪ್ಪು', 'লবণ', 'নুন'] },
