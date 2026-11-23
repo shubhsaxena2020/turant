@@ -133,7 +133,13 @@ describe('police advice', () => {
 
 describe('translations', () => {
   it('falls back to English for missing keys', () => {
-    expect(t('ta-IN', 'deleteAll')).toBe('Delete all');
+    expect(t('ta-IN', 'langSpeak')).toBe('Say your language');
+  });
+  it('every language has the v2 screen strings (no English fallback on screen)', () => {
+    const keys = ['back', 'send', 'save', 'iHeard', 'typeHere', 'f_utr', 'f_suspectUpi', 'f_suspectPhone', 'f_paymentApp', 'statusDraft', 'statusReady', 'deleteAll', 'noReports', 'privacyNote', 'copy', 'copyDesc', 'openPortal', 'bankMsgTitle', 'whatsappFamily', 'ackLabel', 'newReport', 'policeAdvice', 'conflictTitle', 'summaryIntro', 'familyMsg', 'sayMore', 'continue'] as const;
+    for (const [lang, s] of Object.entries(STRINGS)) {
+      for (const k of keys) expect(s[k], `${lang}.${k}`).toBeTruthy();
+    }
   });
   it('every language has the key screen strings and spoken questions', () => {
     const keys = ['homeMic', 'alertStrip', 'sorryRetry', 'q_amount', 'q_time', 'q_scamType', 'q_bank', 'q_utr', 'q_suspect', 'reviewTitle', 'actionTitle', 'script1', 'check_otp'] as const;
