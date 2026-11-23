@@ -606,8 +606,13 @@ function extractScamType(text: string, opts: ExtractOptions): Extracted<ScamType
     return { value: pick.type, confidence: pick.type === 'otp_shared' ? 0.75 : 0.88 };
   }
   if (opts.hint === 'scamType' && hasPhrase(text, OTHER_WORDS) >= 0) return { value: 'other', confidence: 0.7 };
+  if (KYC_UPDATE.test(text)) return { value: 'fake_kyc', confidence: 0.7 };
   return undefined;
 }
+
+// "KYC update" with KYC garbled by the recogniser (কাইক আপডেট, ಕೆಕ್ ಅಪ್ಪೇಟ್, ಕೇಕ್ಷ ಅಪ್ಟೇಟ್): a short word that starts
+// with a k-sound and has a second k- or s-sound, right before an "update" word. Not "कुछ अपडेट" (some update).
+const KYC_UPDATE = /(?:^|\s)[कকಕకக](?=[^\s]{0,4}[कखसषকখসষಕಖಸಷకఖసషகச])[^\s]{1,5}\s+[अআঅಅఅஅ][पপಪపப][^\s]{0,5}[टটಟటட]/u;
 
 export const BANKS: { name: string; keys: string[] }[] = [
   { name: 'State Bank of India (SBI)', keys: ['sbi', 'state bank', 'state bank of india', 'yono', 'एसबीआई', 'स्टेट बैंक', 'স্টেট ব্যাংক', 'এসবিআই', 'எஸ்பிஐ', 'ஸ்டேட் பேங்க்', 'ఎస్బీఐ', 'ఎస్‌బీఐ', 'ఎస్బిఐ', 'స్టేట్ బ్యాంక్', 'ಎಸ್‌ಬಿಐ', 'ಎಸ್ಬಿಐ', 'ಸ್ಟೇಟ್ ಬ್ಯಾಂಕ್'] },
@@ -720,7 +725,11 @@ const nativeStem = (t: string, stems: string[]) => /[^\x00-\x7f]/.test(t) && ste
 function spokenDigitRuns(tokens: string[]): { start: number; digits: string }[] {
   const out: { start: number; digits: string }[] = [];
   // shared with the voice kit (indic/numbers.ts): exact-ish first digit, looser slips inside the run
+  // Single digits may sit inside a spoken read-out ("9, 8, 7, 6, 5, 4, 3, 2, 1 பூஜ்யம்"); such a run counts only
+  // if it has a number word (all-digit runs are findNumberRuns' job). Not digit groups: "98765 ನಾಲ್ಕು 3710" mixes
+  // are mostly misheard, and a wrong phone number is worse than asking.
   const digit = (t: string | undefined, inside = true) => {
+    if (t && /^\d$/.test(t)) return t;
     const v = readoutDigit(t, !inside);
     return v === undefined ? undefined : String(v);
   };
@@ -734,7 +743,7 @@ function spokenDigitRuns(tokens: string[]): { start: number; digits: string }[] 
       if (tokens[j] === 'ఒంటి' && /^గంటా?$/.test(tokens[j + 1] ?? '')) j++;
       else if (tokens[j] === 'ఒంటి' && /^గంటసున్నా?$/.test(tokens[j + 1] ?? '')) (d += '0'), j++;
     }
-    if (d.length >= 7) out.push({ start: i, digits: d });
+    if (d.length >= 7 && tokens.slice(i, j).some((t) => !/^\d+$/.test(t))) out.push({ start: i, digits: d });
     i = Math.max(j, i + 1);
   }
   return out;
@@ -780,7 +789,8 @@ function extractIds(tokens: string[], runs: NumRun[], opts: ExtractOptions) {
       put('suspectPhone', d.slice(1), 0.9);
     } else if (d.length === 12 && /^91[6-9]/.test(d)) {
       put('suspectPhone', d.slice(2), 0.9);
-    } else if (d.length >= 9 && d.length <= 18 && (ctxAcct || opts.hint === 'suspect' || opts.hint === 'suspectAccount')) {
+    // Without an account word, 9-10 digits after "who was it?" are a phone number with a digit lost, not an account.
+    } else if (d.length >= 9 && d.length <= 18 && (ctxAcct || opts.hint === 'suspectAccount' || (opts.hint === 'suspect' && d.length >= 11))) {
       put('suspectAccount', d, ctxAcct ? 0.85 : 0.65);
     }
   }
