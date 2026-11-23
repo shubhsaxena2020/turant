@@ -840,8 +840,15 @@ export function unifyScript(text: string): string {
   return text.replace(/[ಀ-೿]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x80));
 }
 
+/** A 12-digit UTR glued to the amount by the recogniser: "UTR है 4032187654325000 रुपए" = 403218765432 + 5000.
+ * No amount has 15+ digits; split only when the tail is one digit and zeros (5000, not 25000: a misheard extra digit
+ * shifts the split) right before a currency word. */
+export function splitGluedUtr(text: string): string {
+  return text.replace(/(^|\D)(\d{12})([1-9]0{2,4})(?=\s?(?:rs|rupe|rupa|रुप|रूप|টাকা|ரூ|ரு|రూ|ರೂ))/gi, '$1$2 $3');
+}
+
 export function extractFields(text: string, opts: ExtractOptions = {}): Extraction {
-  text = unifyScript(text);
+  text = splitGluedUtr(unifyScript(text));
   const norm = normalize(text);
   const prepped = prepUpi(norm);
   const { ids, rest } = extractUpis(prepped);
@@ -921,7 +928,7 @@ const FIELD_WORDS: [FieldKey, string[]][] = [
   ['suspectAccount', ['account number', 'account no', 'khata number', 'खाता नंबर', 'अकाउंट नंबर']],
   ['utr', ['utr', 'reference', 'ref no', 'transaction id', 'transaction number', 'txn', 'यूटीआर']],
   ['suspectUpi', ['upi id', 'upi', 'यूपीआई']],
-  ['suspectPhone', ['phone', 'mobile', 'number', 'फोन', 'मोबाइल', 'नंबर']],
+  ['suspectPhone', ['phone', 'mobile', 'number', 'फोन', 'मोबाइल', 'नंबर', 'नमबर']],
   ['paymentApp', ['app', 'ऐप', 'एप']],
   ['bank', ['bank', 'बैंक', 'ব্যাংক', 'வங்கி', 'బ్యాంక్', 'बँक', 'ಬ್ಯಾಂಕ್']],
   ['time', ['time', 'samay', 'waqt', 'vakt', 'date', 'tarikh', 'kab', 'समय', 'वक्त', 'वक़्त', 'तारीख', 'कब', 'সময়', 'நேரம்', 'సమయం', 'वेळ', 'ಸಮಯ']],
@@ -963,7 +970,8 @@ export function parseCorrection(text: string, opts: { now?: Date } = {}): Correc
     // "phone"/"number" may actually carry a UTR or a UPI ID; trust the value shape.
     if (!hit && field === 'suspectPhone') {
       for (const alt of ['utr', 'suspectUpi', 'suspectAccount', 'amount'] as FieldKey[]) {
-        if (ext[alt]) {
+        // a 7+ digit run under "number" is a phone with a digit lost, not a ₹98 crore amount: ask again
+        if (ext[alt] && !(alt === 'amount' && Number(ext[alt]!.value) >= 1_000_000)) {
           field = alt;
           hit = ext[alt];
           break;
