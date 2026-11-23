@@ -39,7 +39,7 @@ const EVENING = N(['शाम', 'shaam', 'sham', 'संध्याकाळी
   'evening', 'সন্ধ্যা', 'সন্ধ্যায়', 'বিকেল', 'বিকেলে', 'மாலை', 'சாயங்காலம்', 'సాయంత్రం', 'ಸಂಜೆ', 'pm']);
 const NIGHT = N(['रात', 'raat', 'rat', 'रात्री', 'night', 'রাত', 'রাতে', 'இரவு', 'ராத்திரி', 'రాత్రి', 'ರಾತ್ರಿ']);
 
-const OCLOCK = N(['बजे', 'baje', 'वाजता', 'वाजले', "o'clock", 'oclock', 'মণিক্কু', 'மணிக்கு', 'மணி', 'గంటలకు', 'గంటల', 'ಗಂಟೆಗೆ', 'ಕ್ಕೆ', 'కి', 'pm', 'am', 'baje']);
+const OCLOCK = N(['बजे', 'baje', 'bajay', 'bajey', 'वाजता', 'वाजले', "o'clock", 'oclock', 'মণিক্কু', 'மணிக்கு', 'மணி', 'గంటలకు', 'గంటల', 'ಗಂಟೆಗೆ', 'ಕ್ಕೆ', 'కి', 'pm', 'am', 'baje']);
 // "-টায়" = at … o'clock. Plain "-টা" is also the counting word (একটা = "a"), so it only counts before বাজে.
 const BN_AT = new RegExp('(?:' + N(['টায়', 'টায়', 'তায়']).join('|') + ')$');
 const BN_TA = new RegExp(N(['টা'])[0] + '$');
