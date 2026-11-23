@@ -39,6 +39,8 @@ const en = {
   err_noWords: "I could hear you, but this browser didn't turn your voice into words. Try once more, use Chrome or Edge, or type below.",
   err_silent: "I can't hear anything from your microphone. Check it isn't muted or that the right mic is selected, then tap Speak again.",
   speakingIn: 'Speaking {lang}',
+  state_transcribing: 'Turning your voice into words…',
+  modelLoading: 'Getting voice typing ready on this device (first time only, about 100 MB): {p}%',
   heroA: 'Lost money to a scam?',
   heroB: 'Just tell me what happened.',
   voiceFallback: 'This phone has no {lang} voice, so I will speak in {fallback}.',

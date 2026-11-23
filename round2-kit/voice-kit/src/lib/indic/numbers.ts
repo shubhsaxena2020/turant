@@ -635,11 +635,11 @@ const POSSESSIVE = ['मेरे', 'मेरा', 'मेरी', 'हमा�
 const ONE_THOUSAND = ['ஆயிரம்', 'ஆயிரத்து', 'వెయ్యి'].map((w) => fold(w));
 // Multipliers only between numbers: "चार सो पचास" = 450, but सो alone is "sleep" / "so".
 const CONTEXT_MULT: Record<string, number> = Object.fromEntries(
-  Object.entries({ 'सो': 100, 'লাক': 100000, 'laak': 100000, 'ಸಾವರು': 1000 }).map(([w, v]) => [w.normalize('NFC'), v]),
+  Object.entries({ 'सो': 100, 'লাক': 100000, 'laak': 100000, 'ಸಾವರು': 1000, lock: 100000, lack: 100000, locks: 100000 }).map(([w, v]) => [w.normalize('NFC'), v]),
 ); // লাক alone = "luck"
 // Number only right before "thousand / lakh": ಆಯಿದು ಸಾವಿರ = 5,000, but "ಕಟ್ ಆಯಿದು" = "got cut" (ಆಯಿತು).
 const BEFORE_MULT: Record<string, number> = Object.fromEntries(
-  Object.entries({ 'ಆಯಿದು': 5, 'ಆಯದು': 5, 'শোয': 6, 'ছযি': 6, 'সোয': 6, 'পাঁছ': 5, 'পাছ': 5, 'আঠ': 8, 'देड': 1.5, 'डेड': 1.5 }).map(([w, v]) => [w.normalize('NFC'), v]), // শোয(়) alone = "lie down"
+  Object.entries({ 'ಆಯಿದು': 5, 'ಆಯದು': 5, 'শোয': 6, 'ছযি': 6, 'সোয': 6, 'পাঁছ': 5, 'পাছ': 5, 'আঠ': 8, 'देड': 1.5, 'डेड': 1.5, to: 2, too: 2 }).map(([w, v]) => [w.normalize('NFC'), v]), // শোয(়) alone = "lie down"
 );
 // Words that may stand right before a bare "thousand": "a thousand", "around thousand rupees".
 const BARE_OK = ['a', 'one', 'about', 'around', 'approx', 'only', 'just', 'karib', 'lagbhag', 'sirf', 'bas', 'करीब', 'लगभग', 'सिर्फ', 'बस', 'and', 'aur', 'और'];
@@ -650,7 +650,8 @@ export function numberGroups(text: string): Group[] {
   const groups: Group[] = [];
   let i = 0;
   while (i < toks.length) {
-    const beforeMul = !!toks[i + 1] && !!wordParts(toks[i + 1])?.every((x) => 'mul' in x && x.mul >= 1000);
+    // English "to lock rupees" (Whisper for "two lakh"): a context-only multiplier counts here too.
+    const beforeMul = !!toks[i + 1] && (!!wordParts(toks[i + 1])?.every((x) => 'mul' in x && x.mul >= 1000) || (CONTEXT_MULT[toks[i + 1]] ?? 0) >= 1000);
     const p = toks[i] === '|' ? undefined : (wordParts(toks[i]) ?? (beforeMul && BEFORE_MULT[toks[i]] !== undefined ? [{ v: BEFORE_MULT[toks[i]] }] : undefined));
     if (!p) {
       i++;

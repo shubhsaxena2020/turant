@@ -24,6 +24,8 @@ export interface ListenOptions {
 export interface ListenHandle {
   /** Stop and deliver what was heard so far ("Done"). */
   stop(): void;
+  /** Voice heard by our own meter: keep the turn open (the speech service may be returning nothing). */
+  poke?(): void;
   /** Stop and discard. */
   abort(): void;
 }
@@ -208,6 +210,9 @@ export class WebSpeechService implements SpeechService {
         } catch {
           /* ignore */
         }
+      },
+      poke: () => {
+        if (!finished) arm(silenceMs);
       },
       abort: () => {
         aborted = true;

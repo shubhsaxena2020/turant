@@ -8,6 +8,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { simulateListen, speech, type ListenHandle, type SpeechErrorCode } from './speech';
 import { cue } from './cues';
+import { transcribe } from './whisper';
 
 /** 'no-words': sound reached the mic but the speech service returned nothing. 'silent': the mic gave no sound. */
 export type ListenErrorCode = SpeechErrorCode | 'no-words' | 'silent';
@@ -35,6 +36,10 @@ const canMeter = () =>
 
 interface Meter {
   peak: number;
+  /** Called on every frame where the microphone hears a voice-level sound. */
+  onVoice?: () => void;
+  /** Stop recording and return what was recorded (null if this browser cannot record). */
+  stopRecording(): Promise<Blob | null>;
   close(): void;
 }
 
@@ -51,9 +56,39 @@ async function openMeter(onBars: (b: number[]) => void): Promise<Meter> {
   let bars = quietBars();
   let raf = 0;
   let last = 0;
+  // Keep a recording too: if the browser's speech service returns nothing, Whisper reads this instead.
+  const chunks: Blob[] = [];
+  let rec: MediaRecorder | null = null;
+  try {
+    rec = new MediaRecorder(stream);
+    rec.ondataavailable = (e) => e.data.size && chunks.push(e.data);
+    rec.start(250);
+  } catch {
+    rec = null;
+  }
   const m: Meter = {
     peak: 0,
+    stopRecording() {
+      if (!rec) return Promise.resolve(null);
+      const r = rec;
+      rec = null;
+      return new Promise((resolve) => {
+        const done = () => resolve(chunks.length ? new Blob(chunks, { type: r.mimeType || 'audio/webm' }) : null);
+        if (r.state === 'inactive') return done();
+        r.onstop = done;
+        try {
+          r.stop();
+        } catch {
+          done();
+        }
+      });
+    },
     close() {
+      try {
+        rec?.stop();
+      } catch {
+        /* already stopped */
+      }
       cancelAnimationFrame(raf);
       stream.getTracks().forEach((t) => t.stop());
       void ctx.close().catch(() => undefined);
@@ -71,6 +106,7 @@ async function openMeter(onBars: (b: number[]) => void): Promise<Meter> {
     }
     const rms = Math.sqrt(sum / buf.length);
     m.peak = Math.max(m.peak, rms);
+    if (rms > 0.03) m.onVoice?.();
     const h = Math.min(1, Math.max(0.06, Math.sqrt(rms) * 2.2)); // sqrt: quiet speech still moves the bars
     bars = [...bars.slice(1), h];
     onBars(bars);
@@ -84,6 +120,10 @@ export function useListen() {
   const [live, setLive] = useState('');
   const [level, setLevel] = useState(1);
   const [bars, setBars] = useState<number[]>(quietBars);
+  /** Whisper is reading the recording (after the browser's speech service returned nothing). */
+  const [transcribing, setTranscribing] = useState(false);
+  /** One-time model download, 0..1 (undefined once it is cached / not downloading). */
+  const [modelProgress, setModelProgress] = useState<number | undefined>(undefined);
   const handle = useRef<ListenHandle | null>(null);
   const meter = useRef<Meter | null>(null);
   const cancelled = useRef(false);
@@ -122,10 +162,11 @@ export function useListen() {
     cue('open');
     let result: { text: string; conf: number } | null = null;
     let error: ListenErrorCode | null = null;
-    const finish = () => {
+    const finish = async () => {
       handle.current = null;
       const m = meter.current;
       meter.current = null;
+      const recording = m ? await m.stopRecording() : null;
       m?.close();
       if (!alive.current) return;
       setListening(false);
@@ -133,10 +174,29 @@ export function useListen() {
       if (cancelled.current) return;
       cue('close');
       if (result) return req.onOutcome({ kind: 'heard', text: result.text, confidence: result.conf, simulated: !!req.simulate });
-      if (error && error !== 'no-speech' && error !== 'aborted') return req.onOutcome({ kind: 'error', code: error });
       if (error === 'aborted') return;
+      const spoke = !!m && m.peak > 0.045;
+      // The browser's speech service gave nothing (or failed) although the person spoke: read the recording ourselves.
+      if (recording && spoke && (!error || error === 'no-speech' || error === 'network' || error === 'other')) {
+        setTranscribing(true);
+        try {
+          const text = await transcribe(recording, req.lang, (f) => alive.current && setModelProgress(f < 1 ? f : undefined));
+          if (!alive.current || cancelled.current) return;
+          console.info('[turant] in-page Whisper heard:', text);
+          if (text) return req.onOutcome({ kind: 'heard', text, confidence: 0, simulated: false });
+        } catch (e) {
+          console.warn('[turant] in-page Whisper failed', e); // model could not load (offline?): fall through to the message
+        } finally {
+          if (alive.current) {
+            setTranscribing(false);
+            setModelProgress(undefined);
+          }
+        }
+        return req.onOutcome({ kind: 'error', code: error === 'network' ? 'network' : 'no-words' });
+      }
+      if (error && error !== 'no-speech') return req.onOutcome({ kind: 'error', code: error });
       // Nothing came back. With a meter we know whether the person actually spoke.
-      if (m && m.peak > 0.045) return req.onOutcome({ kind: 'error', code: 'no-words' });
+      if (spoke) return req.onOutcome({ kind: 'error', code: 'no-words' });
       if (m && m.peak < 0.008) return req.onOutcome({ kind: 'error', code: 'silent' });
       req.onOutcome({ kind: 'nothing' });
     };
@@ -149,7 +209,7 @@ export function useListen() {
       onError: (code: SpeechErrorCode) => {
         error = code;
       },
-      onEnd: finish,
+      onEnd: () => void finish(),
     };
     if (req.simulate) {
       handle.current = simulateListen(req.simulate, cb, 150);
@@ -157,12 +217,14 @@ export function useListen() {
     }
     if (!speech.canListen) {
       error = 'unsupported';
-      setTimeout(finish, 0);
+      setTimeout(() => void finish(), 0);
       return;
     }
     const begin = () => {
-      if (cancelled.current || !alive.current) return finish();
+      if (cancelled.current || !alive.current) return void finish();
       handle.current = speech.listen(req.lang, cb, { silenceMs: req.silenceMs ?? 2000, initialSilenceMs: 9000 });
+      // While the person is talking, keep the turn open even if the speech service sends nothing back.
+      if (meter.current) meter.current.onVoice = () => handle.current?.poke?.();
     };
     if (!canMeter()) return begin();
     // Ask for the microphone ourselves first: a clear permission prompt, and a real waveform.
@@ -181,7 +243,7 @@ export function useListen() {
         handle.current = null;
         if (pendingAbort) {
           cancelled.current = true;
-          return finish();
+          return void finish();
         }
         begin();
       })
@@ -189,7 +251,7 @@ export function useListen() {
         handle.current = null;
         const name = (e as { name?: string })?.name ?? '';
         error = name === 'NotAllowedError' || name === 'SecurityError' ? 'not-allowed' : name === 'NotFoundError' || name === 'NotReadableError' || name === 'OverconstrainedError' ? 'audio-capture' : null;
-        if (error) return finish();
+        if (error) return void finish();
         begin(); // no meter, but the speech service may still work
       });
   }, []);
@@ -205,5 +267,5 @@ export function useListen() {
     setBars(quietBars());
   }, []);
 
-  return { listening, live, level, bars, start, stop, abort };
+  return { listening, live, level, bars, transcribing, modelProgress, start, stop, abort };
 }

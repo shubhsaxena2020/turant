@@ -285,8 +285,8 @@ export function TalkScreen(props: {
 
   // ---------- view ----------
   const micReady = canMic || sampleRun || switchToMic;
-  const state: PresenceState = mic.listening ? 'listening' : thinking ? 'thinking' : ui.speaking ? 'speaking' : micReady ? 'idle' : 'off';
-  const label = mic.listening ? t('state_listening') : thinking ? t('state_thinking') : ui.speaking ? t('state_speaking') : micReady ? t('state_idle') : t('state_off');
+  const state: PresenceState = mic.listening ? 'listening' : thinking || mic.transcribing ? 'thinking' : ui.speaking ? 'speaking' : micReady ? 'idle' : 'off';
+  const label = mic.listening ? t('state_listening') : mic.transcribing ? t('state_transcribing') : thinking ? t('state_thinking') : ui.speaking ? t('state_speaking') : micReady ? t('state_idle') : t('state_off');
   const question = q ? (misses[q] ? t(`rq_${q}` as StrKey) : t(`q_${q}` as StrKey)) : null;
   const kpField = q ? keypadField(q) : null;
   const speakName: Record<string, string> = { 'en-IN': 'English', 'hi-IN': 'Hindi', 'bn-IN': 'Bengali', 'ta-IN': 'Tamil', 'te-IN': 'Telugu', 'mr-IN': 'Marathi', 'kn-IN': 'Kannada' };
@@ -294,7 +294,7 @@ export function TalkScreen(props: {
   return (
     <div className="flex flex-1 flex-col">
       <main className="flex-1 px-5 pb-2">
-        {storyMode && !mic.listening && !thinking ? (
+        {storyMode && !mic.listening && !thinking && !mic.transcribing ? (
           <section className="pt-9 fade-in" data-testid="greeting">
             <p className="eyebrow">{t('greetHello')}</p>
             <h1 className="headline mt-3">
@@ -360,12 +360,20 @@ export function TalkScreen(props: {
 
         {storyMode && line && !mic.listening ? <p className="mt-6 text-lg font-medium text-fathom">{line}</p> : null}
 
-        {mic.listening || thinking ? (
+        {mic.listening || thinking || mic.transcribing ? (
           <section className="pt-9">
-            <p className="eyebrow">{mic.listening ? t('state_listening') : t('state_thinking')}</p>
+            <p className="eyebrow">{mic.listening ? t('state_listening') : mic.transcribing ? t('state_transcribing') : t('state_thinking')}</p>
             <p className="mt-3 text-[1.55rem] leading-[1.45] font-medium min-h-[6rem] break-words" data-testid="live" aria-live="polite">
-              {mic.live || <span className="text-ink/45">{t('listenHint')}</span>}
+              {mic.live || <span className="text-ink/45">{mic.transcribing ? '' : t('listenHint')}</span>}
             </p>
+            {mic.modelProgress !== undefined ? (
+              <div className="mt-2" data-testid="model-progress">
+                <p className="text-base text-ink/70">{t('modelLoading', { p: Math.round(mic.modelProgress * 100) })}</p>
+                <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-sand">
+                  <div className="h-full rounded-full bg-chord-500 transition-[width]" style={{ width: `${Math.round(mic.modelProgress * 100)}%` }} />
+                </div>
+              </div>
+            ) : null}
           </section>
         ) : null}
 
@@ -391,7 +399,7 @@ export function TalkScreen(props: {
           </div>
         ) : (
           <>
-            {problem && !mic.listening ? (
+            {problem && !mic.listening && !mic.transcribing ? (
               <div className="notice w-full mb-2 fade-in" role="alert" data-testid="mic-problem">
                 {problem}
               </div>

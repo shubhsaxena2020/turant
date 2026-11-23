@@ -12,7 +12,12 @@ function serviceWorker(): Plugin {
     name: 'turant-sw',
     apply: 'build',
     generateBundle(_opts, bundle) {
-      const files = Object.keys(bundle).filter((f) => !f.endsWith('.map'));
+      // Large files (the in-page Whisper runtime, loaded only when needed) stay out of the install-time cache.
+      const size = (f: string) => {
+        const o = bundle[f] as { code?: string; source?: string | Uint8Array };
+        return o.code?.length ?? (typeof o.source === 'string' ? o.source.length : o.source?.byteLength ?? 0);
+      };
+      const files = Object.keys(bundle).filter((f) => !f.endsWith('.map') && size(f) < 1_000_000);
       const template = readFileSync(fileURLToPath(new URL('./src/sw-template.js', import.meta.url)), 'utf8');
       const precache = ['./', ...files.map((f) => './' + f), './manifest.webmanifest', './icon.svg'];
       const source = template
