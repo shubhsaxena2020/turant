@@ -38,13 +38,14 @@ node split.mjs <round> [...]   # dev voice vs held-out voice
 | round18 | + zero in Tamil / Telugu / Kannada (was missing) and "zero" as a loanword in every script (no change here; needed for real read-outs) | 100.0% | 48.3% | 47.5% | 39.6% | 30.7% | 73.9 |
 | round19 | + Telugu Whisper spellings (అయదు, ఇరావాయ, తుమేది, glued రిండునరవేల), ఒంటి గంట = the digit 1 inside a read-out, independent-vowel slips (ఏ/ఎ), time units by sound; no amount if the money itself was misheard and no readable amount sits next to a currency word | 100.0% | 50.0% | 48.4% | 40.4% | 31.1% | 75.7 |
 | round20 | + Tamil Whisper forms (70தாயிரம், அயாயிரம், பதனேந்தாயிரம், ஒந்தரை, மோன்று), Tamil scam words; Bandhan only before "bank" (பண்டாங்க = "did") | 100.0% | 50.7% | 48.8% | 40.4% | 31.1% | 76.5 |
+| round21 | + Kannada Whisper forms (ಸಾವರದ, ವಂದು ಅರೆ ಲಕ್ಷ, ಯಪತ್ತು …), "just now" split in two words, short/long vowel letters; one shared read-out digit reader (ಆಯದು = 5 only inside a read-out); an amount followed by an unreadable number-like word is incomplete: ask (21 wrong amounts → ask, 0 right ones lost) | 100.0% | 51.5% | 49.4% | 40.7% | 31.1% | 77.4 |
 
 **Net change:** (round9 changed no outcome to correct; it turned 87 wrong amounts into "ask again", raising clean-ASR amount precision from 67% to 76%)
 
 | Measure | Before | After |
 |---|---|---|
-| Clean speech, fully correct | 27.2% | 50.7% (+23.5 points, about 1.9×) |
-| Field F1 | 51.0 | 76.5 |
+| Clean speech, fully correct | 27.2% | 51.5% (+24.3 points, about 1.9×) |
+| Field F1 | 51.0 | 77.4 |
 | Reference text, fully correct | 55.7% | 100% |
 
 No round broke a field that an earlier round got right. Each round's diff against the previous one is checked run by run.

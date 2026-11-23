@@ -142,41 +142,42 @@ add(90, 'తొంభై');
 add(1.5, 'ఒకటిన్నర');
 
 // Kannada
-add(1, 'ಒಂದು');
-add(2, 'ಎರಡು');
+add(1, 'ಒಂದು', 'ವಂದು'); // Kannada as Whisper writes it (ವಂದು, ಇರಡು, ಆಯದು, ಇಳು, …)
+add(2, 'ಎರಡು', 'ಇರಡು');
 add(3, 'ಮೂರು');
 add(4, 'ನಾಲ್ಕು');
-add(5, 'ಐದು', 'ಅಯಿದು'); // not ಆಯಿದು: that is also ಆಯಿತು ("happened") as ASR writes it
+add(5, 'ಐದು', 'ಅಯಿದು'); // not ಆಯದು / ಆಯಿದು: also how Whisper writes ಆಯಿತು ("happened"); see READOUT_ONLY // not ಆಯಿದು: that is also ಆಯಿತು ("happened") as ASR writes it
 add(6, 'ಆರು');
-add(7, 'ಏಳು');
+add(7, 'ಏಳು', 'ಇಳು');
 add(8, 'ಎಂಟು');
 add(9, 'ಒಂಬತ್ತು');
 add(10, 'ಹತ್ತು');
 add(11, 'ಹನ್ನೊಂದು');
-add(12, 'ಹನ್ನೆರಡು');
+add(12, 'ಹನ್ನೆರಡು', 'ಹನ್ನೆಡು');
 add(13, 'ಹದಿಮೂರು');
 add(14, 'ಹದಿನಾಲ್ಕು');
-add(15, 'ಹದಿನೈದು');
+add(15, 'ಹದಿನೈದು', 'ಹದಿನೆಯಿದು');
 add(16, 'ಹದಿನಾರು');
 add(17, 'ಹದಿನೇಳು');
 add(18, 'ಹದಿನೆಂಟು');
 add(19, 'ಹತ್ತೊಂಬತ್ತು');
-add(20, 'ಇಪ್ಪತ್ತು');
+add(20, 'ಇಪ್ಪತ್ತು', 'ಇಪಟ್ಟು');
 add(30, 'ಮೂವತ್ತು');
 add(40, 'ನಲವತ್ತು');
 add(50, 'ಐವತ್ತು');
 add(60, 'ಅರವತ್ತು');
-add(70, 'ಎಪ್ಪತ್ತು');
+add(70, 'ಎಪ್ಪತ್ತು', 'ಯಪತ್ತು', 'ಎಪತ್ತು');
 add(80, 'ಎಂಬತ್ತು');
 add(90, 'ತೊಂಬತ್ತು');
 add(200, 'ಇನ್ನೂರು');
 add(300, 'ಮುನ್ನೂರು');
 add(400, 'ನಾನೂರು');
-add(500, 'ಐನೂರು');
+add(500, 'ಐನೂರು', 'ಆಯನೂರು');
+add(0.5, 'ಅರೆ', 'ಒರೆ'); // "ವಂದು ಅರೆ ಲಕ್ಷ" = 1.5 lakh, "ಎರಡು ಒರೆ ಸಾವಿರ" = 2,500
 add(600, 'ಆರುನೂರು');
 add(700, 'ಏಳುನೂರು');
 add(800, 'ಎಂಟುನೂರು');
-add(900, 'ಒಂಬೈನೂರು', 'ಒಂಬತ್ತುನೂರು');
+add(900, 'ಒಂಬೈನೂರು', 'ಒಂಬತ್ತುನೂರು', 'ಒಂಬೆಯಿನೂರ');
 add(0.5, 'ಅರ್ಧ');
 
 // Tamil (standalone forms; compounds are handled by splitTamil)
@@ -215,7 +216,7 @@ add(0.5, 'அரை');
 const MULT: Record<string, number> = {};
 const mul = (v: number, ...ws: string[]) => ws.forEach((w) => (MULT[w.normalize('NFC')] = v));
 mul(100, 'सौ', 'शे', 'শো', 'শ', 'వంద', 'వందల', 'వందలు', 'వందలా', 'నూట', 'నూరు', 'ನೂರು', 'நூறு', 'hundred', 'sau');
-mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजारो', 'হাজার', 'হজার', 'হাজাত', 'వేలు', 'వేల', 'వేలా', 'వెయ్యి', 'ಸಾವಿರ', 'ಸಾವಿರದ', 'தாயிரம்', 'தாயரம்', 'ஆயிரம்', 'ஆயிரத்து', 'thousand', 'hazaar', 'hazar', 'k');
+mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजारो', 'হাজার', 'হজার', 'হাজাত', 'వేలు', 'వేల', 'వేలా', 'వెయ్యి', 'ಸಾವರದ', 'ಸಾವರ', 'ಸಾವರಿದ', 'ಸಾವಿರ', 'ಸಾವಿರದ', 'தாயிரம்', 'தாயரம்', 'ஆயிரம்', 'ஆயிரத்து', 'thousand', 'hazaar', 'hazar', 'k');
 mul(100000, 'लाख', 'লাখ', 'লক্ষ', 'లక్ష', 'లక్షల', 'లక్షలు', 'ಲಕ್ಷ', 'லட்சம்', 'லட்சத்து', 'lakh', 'lac', 'lakhs');
 mul(10000000, 'करोड़', 'करोड', 'कोटी', 'কোটি', 'కోటి', 'ಕೋಟಿ', 'கோடி', 'crore', 'crores');
 
@@ -311,8 +312,9 @@ function splitKannada(w: string): Part[] | undefined {
     const base = WORDS[w.slice(0, -'ೂವರೆ'.length) + 'ು'];
     if (base !== undefined) return [{ v: base + 0.5 }];
   }
-  if (w.endsWith('ಸಾವಿರ') && w.length > 5) {
-    const pre = splitKannada(w.slice(0, -5));
+  for (const suf of ['ಸಾವಿರದ', 'ಸಾವಿರ']) {
+    if (!w.endsWith(suf) || w.length <= suf.length) continue;
+    const pre = splitKannada(w.slice(0, -suf.length)); // "ಎಳುಸಾವಿರದ" = 7 thousand
     if (pre) return [...pre, { mul: 1000 }];
   }
   for (const [stem, tv] of KN_TENS) {
@@ -461,6 +463,22 @@ function shortMultiplier(raw: string): Part[] | undefined {
   return muls.size === 1 ? [{ mul: [...muls][0] }] : undefined;
 }
 
+/** Words that are digits only inside a digit read-out (alone they are ordinary words: ಆಯದು = ಆಯಿತು "happened"). */
+const READOUT_ONLY: Record<string, number> = Object.fromEntries(Object.entries({ 'ಆಯದು': 5, 'ಆಯಿದು': 5 }).map(([w, v]) => [w.normalize('NFC'), v]));
+
+/**
+ * One digit (0-9) of a number read out word by word ("ನಾಲ್ಕು ಸೊನ್ನೆ ಮೂರು…", "चार पाच सहा साथ…").
+ * first: the first word of the run must be a digit word or a one-letter slip of one; inside the run, looser
+ * sound matches (साथ = सात) and read-out-only words are accepted too. "ref नो" never starts a run.
+ */
+export function readoutDigit(t: string | undefined, first = false): number | undefined {
+  if (!t || !/[^\x00-\x7f]/.test(t)) return undefined;
+  const one = (p: Part[] | undefined) => (p?.length === 1 && 'v' in p[0] && Number.isInteger(p[0].v) && p[0].v <= 9 ? p[0].v : undefined);
+  if (first) return ['नो', 'नं', 'नं.'].includes(t) ? undefined : one(wordParts(t, 2));
+  const w = t.normalize('NFC');
+  return READOUT_ONLY[w] ?? one(wordParts(w, 2) ?? foldParts(w, (v) => Number.isInteger(v) && v <= 9));
+}
+
 /** Number words keyed by their sound-alike fold (built lazily: fold is defined further down). */
 let FOLD_NUM: Map<string, number[]> | undefined;
 /**
@@ -554,7 +572,7 @@ const CURRENCY = ['দাকা', 'रुपये', 'रुपए', 'रुप�
 // Folding also merges aspirated / unaspirated letters (আধ ~ আদ, ঘণ্টা ~ গন্টা); those are left out of the
 // number repair above, where they would only add candidates. Tamil ி/ெ (i/e) too: இன்விஸ்ட் ~ இன்வெஸ்ட்.
 // Union-find keeps the classes transitive.
-const FOLD_ONLY = ['ிெ', 'ಿೆ', 'ిె', 'তথটঠ', 'দধডঢ', 'কখ', 'গঘ', 'চছ', 'জঝ', 'বভ', 'পফ', 'తథటఠ', 'దధడఢ', 'కఖ', 'గఘ', 'చఛ', 'జఝ', 'బభ', 'పఫ', 'శషస', 'ತಥಟಠ', 'ದಧಡಢ', 'ಕಖ', 'ಗಘ', 'ಚಛ', 'ಜಝ', 'ಬಭ', 'ಪಫ', 'ಶಷಸ', 'तथटठ', 'दधडढ', 'कख', 'गघ', 'चछ', 'जझ', 'बभ', 'पफ'];
+const FOLD_ONLY = ['ிெ', 'ಿೆ', 'ిె', 'ಇಈ', 'ఇఈ', 'இஈ', 'इई', 'ইঈ', 'ಉಊ', 'ఉఊ', 'உஊ', 'उऊ', 'উঊ', 'তথটঠ', 'দধডঢ', 'কখ', 'গঘ', 'চছ', 'জঝ', 'বভ', 'পফ', 'తథటఠ', 'దధడఢ', 'కఖ', 'గఘ', 'చఛ', 'జఝ', 'బభ', 'పఫ', 'శషస', 'ತಥಟಠ', 'ದಧಡಢ', 'ಕಖ', 'ಗಘ', 'ಚಛ', 'ಜಝ', 'ಬಭ', 'ಪಫ', 'ಶಷಸ', 'तथटठ', 'दधडढ', 'कख', 'गघ', 'चछ', 'जझ', 'बभ', 'पफ'];
 const ROOT: Record<string, string> = {};
 const root = (c: string): string => (ROOT[c] && ROOT[c] !== c ? (ROOT[c] = root(ROOT[c])) : c);
 for (const g of [...CONFUSABLE, ...FOLD_ONLY.map((x) => [...x.normalize('NFC')])])
@@ -659,7 +677,7 @@ export function numberGroups(text: string): Group[] {
       if (/^\d+$/.test(toks[i]) && /^\d+$/.test(toks[i - 1])) break;
       // two bare single digits are never one amount ("…3 రెండు, 5 వేల" = an ID's last digit, then 5,000)
       const prev = parts[parts.length - 1];
-      if (prev && 'v' in prev && prev.v < 10 && q.length === 1 && 'v' in q[0] && q[0].v < 10 && !spokenRun(toks, start, i)) break;
+      if (prev && 'v' in prev && prev.v < 10 && q.length === 1 && 'v' in q[0] && q[0].v < 10 && Number.isInteger(q[0].v) && !spokenRun(toks, start, i)) break; // a half (ಅರೆ) joins
       const nextMul = !!toks[i + 1] && !!wordParts(toks[i + 1])?.every((x) => 'mul' in x && x.mul >= 1000);
       if (nextMul && q.length === 1 && 'v' in q[0] && q[0].v < 10 && spokenRun(toks, start, i)) break;
       parts.push(...q);
@@ -679,7 +697,9 @@ export function numberGroups(text: string): Group[] {
     // a bare "hundred" too, but only after an unreadable native word ("తుమ్నిది వందలా" = misheard ఎనిమిది వందల);
     // "सौ रुपये" alone or "मेरे सौ रुपये" is a real 100
     const bareHundred = parts.length === 1 && 'mul' in parts[0] && parts[0].mul === 100 && !!before && /[^\x00-\x7f]/.test(before) && [...before].length >= 4 && !wordParts(before) && !POSSESSIVE.includes(before);
-    const unsure = (bare && !!before && before !== '|' && !BARE_OK.includes(before.toLowerCase()) && !isCurrency(before) && !ONE_THOUSAND.includes(fold(toks[start]))) || bareHundred;
+    // the number goes on in a word we can't read ("ನಾಲ್ಕು ಸಾವರದ ಒಂಬೆಯಿನೂರ ತೊಂಬತೊ" = 4,99? not 4,900): incomplete, ask
+    const trailing = !!toks[i] && toks[i] !== '|' && !isCurrency(toks[i]) && numberLike(toks[i]);
+    const unsure = (bare && !!before && before !== '|' && !BARE_OK.includes(before.toLowerCase()) && !isCurrency(before) && !ONE_THOUSAND.includes(fold(toks[start]))) || bareHundred || trailing;
     groups.push({
       unsure,
       value,
@@ -691,6 +711,37 @@ export function numberGroups(text: string): Group[] {
     });
   }
   return groups;
+}
+
+/** Folded native number words per script, for numberLike (built lazily). */
+let NUM_FOLDS: Map<string, string[]> | undefined;
+/**
+ * An unreadable native word that sounds like a number word (ತೊಂಬತೊ ~ ತೊಂಬತ್ತು): >= 0.75 similar on the
+ * sound-alike key to some number word of the same script, and 4+ letters. Used only right after a number.
+ */
+function numberLike(raw: string): boolean {
+  const w = raw.normalize('NFC');
+  if (SCRIPT(w) === 'lat' || [...w].length < 4 || wordParts(w)) return false;
+  if (!NUM_FOLDS) {
+    NUM_FOLDS = new Map();
+    for (const k of [...Object.keys(WORDS), ...Object.keys(MULT)]) {
+      if (SCRIPT(k) === 'lat' || [...k].length < 3) continue;
+      const list = NUM_FOLDS.get(SCRIPT(k)) ?? [];
+      list.push(fold(k));
+      NUM_FOLDS.set(SCRIPT(k), list);
+    }
+  }
+  const f = fold(w);
+  const sim = (a: string, b: string) => {
+    let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+    for (let x = 1; x <= a.length; x++) {
+      const cur = [x];
+      for (let y = 1; y <= b.length; y++) cur[y] = Math.min(prev[y] + 1, cur[y - 1] + 1, prev[y - 1] + (a[x - 1] === b[y - 1] ? 0 : 1));
+      prev = cur;
+    }
+    return 1 - prev[b.length] / Math.max(a.length, b.length);
+  };
+  return (NUM_FOLDS.get(SCRIPT(w)) ?? []).some((k) => sim(f, k) >= 0.75);
 }
 
 /**

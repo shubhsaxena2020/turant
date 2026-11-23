@@ -36,8 +36,8 @@ The harness takes 280 spoken reports in 7 languages through TTS, noise and Whisp
 
 | Measure | Before (23 Nov) | Now |
 |---|---|---|
-| Clean speech, report fully correct | 27.2% | **50.7%** |
-| Held-out voices | 29.4% | **48.8%** |
+| Clean speech, report fully correct | 27.2% | **51.5%** |
+| Held-out voices | 29.4% | **49.4%** |
 | Field F1 | 51 | 77 |
 
 - **What changed:** the extractor now reads numbers, times, banks and IDs in all 7 languages, including the misspellings speech recognisers make.

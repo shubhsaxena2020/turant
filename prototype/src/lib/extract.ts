@@ -3,7 +3,7 @@
 // Handles Hinglish (romanised Hindi), English, Devanagari Hindi/Marathi and the
 // most common words in Bengali, Tamil, Telugu and Kannada.
 
-import { findAmountHit, fold, foldParts, numberGroups, wordParts } from './indic/numbers.ts';
+import { findAmountHit, fold, numberGroups, readoutDigit } from './indic/numbers.ts';
 import { findTime, type TimeHit } from './indic/time.ts';
 import { findBank, romanize, soundKey } from './indic/bank.ts';
 
@@ -582,7 +582,7 @@ const SCAM_RULES: [ScamType, string[]][] = [
   ['investment_task', ['investment', 'invest', 'trading', 'stock tip', 'crypto', 'bitcoin', 'task', 'tasks', 'part time job', 'part-time job', 'work from home', 'youtube like', 'like karne', 'rating task', 'telegram', 'paisa double', 'double ho', 'high return', 'निवेश', 'टास्क', 'ट्रेडिंग', 'टेलीग्राम', 'इन्वेस्ट', 'डबल हो', 'दुप्पट', 'गुंतवणु', 'বিনিয়োগ', 'ইনভেস্ট', 'ডাবল', 'টেলিগ্রাম', 'টাস্ক', 'முதலீடு', 'இன்வெஸ்ட்', 'டெலிகிராம்', 'டாஸ்க்', 'పెట్టుబడి', 'పిటుబడి', 'ఇన్వెస్ట్', 'టెలిగ్రామ్', 'టాస్క్', 'गुंतवणूक', 'ಹೂಡಿಕೆ', 'ಇನ್ವೆಸ್ಟ್', 'ಟೆಲಿಗ್ರಾಮ್', 'ಟಾಸ್ಕ್']],
   ['qr_scan', ['qr', 'qr code', 'scan', 'scanner', 'scanned', 'क्यूआर', 'स्कैन', 'স্ক্যান', 'কিউআর', 'ஸ்கேன்', 'స్కాన్', 'క్యువార', 'క్యూఆర్', 'स्कॅन', 'ಸ್ಕ್ಯಾನ್']],
   ['fake_customer_care', ['customer care', 'customer service', 'customer support', 'helpline number', 'care number', 'anydesk', 'any desk', 'teamviewer', 'screen share', 'quick support', 'कस्टमर केयर', 'कस्टमर केअर', 'कस्टमर केर', 'কাস্টমার কেয়ার', 'கஸ்டமர் கேர்', 'కస్టమర్ కేర్', 'ಕಸ್ಟಮರ್ ಕೇರ್']],
-  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'கேவாயசி', 'கேவைசி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'केवाई सी', 'केवाय सी', 'के yc', 'yc अपडेट', 'yc update', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
+  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'கேவாயசி', 'கேவைசி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'ಕೈಕ ಅಪ್', 'ಕೈಕ್ಕ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'केवाई सी', 'केवाय सी', 'के yc', 'yc अपडेट', 'yc update', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
   ['wrong_transfer', ['galti se', 'galati se', 'by mistake', 'mistakenly', 'wrong transfer', 'wrongly sent', 'refund', 'paise wapas', 'paisa wapas', 'wapas bhej', 'return the money', 'गलती से', 'वापस भेज', 'रिफंड', 'ভুল করে', 'রিফান্ড', 'தவறுதலாக', 'தவர்தலா', 'పొరపాటున', 'चुकून', 'ತಪ್ಪಾಗಿ']],
   ['otp_shared', ['otp', 'ओटीपी', 'ওটিপি', 'ஓடிபி', 'ஓட்டிப்', 'ஓட்டிபி', 'ఓటీపీ', 'ఓటి పీ', 'ಒಟಿಪಿ', 'code bataya', 'code bata diya', 'pin bataya', 'pin bata diya']],
 ];
@@ -653,7 +653,7 @@ function extractBank(text: string, opts: ExtractOptions): Extracted<string> | un
 const APPS: { name: string; keys: string[] }[] = [
   { name: 'PhonePe', keys: ['phonepe', 'phone pay', 'phonpe', 'phone-pe', 'fon pay', 'fon pe', 'fonpe', 'फोनपे', 'ফোনপে', 'போன்பே', 'ఫోన్‌పే', 'ఫోన్పే', 'ಫೋನ್‌ಪೇ', 'ফোন পে', 'ఫోన్ పే', 'போன் பே', 'ಫೋನ್ ಪೇ', 'फोन पे वरून', 'फोन पे द्वारे'] },
   { name: 'Google Pay', keys: ['google pay', 'gpay', 'g pay', 'googlepay', 'tez', 'गूगल पे', 'গুগল পে', 'கூகுள் பே', 'గూగుల్ పే', 'ಗೂಗಲ್ ಪೇ'] },
-  { name: 'Paytm', keys: ['paytm', 'pay tm', 'पेटीएम', 'পেটিএম', 'பேடிஎம்', 'పేటీఎం', 'పేటియం', 'ಪೇಟಿಎಂ', 'पेटी एम', 'पे टी एम', 'पेटी इन', 'பேடியம்', 'পেটি এম'] },
+  { name: 'Paytm', keys: ['paytm', 'pay tm', 'पेटीएम', 'পেটিএম', 'பேடிஎம்', 'పేటీఎం', 'పేటియం', 'ಪೇಟಿಎಂ', 'ಪೇಟಿಯೆ', 'पेटी एम', 'पे टी एम', 'पेटी इन', 'பேடியம்', 'পেটি এম'] },
   { name: 'BHIM', keys: ['bhim', 'भीम ऐप', 'भीम यूपीआई'] },
   { name: 'Amazon Pay', keys: ['amazon pay', 'अमेज़न पे'] },
   { name: 'CRED', keys: ['cred'] },
@@ -715,18 +715,10 @@ const nativeStem = (t: string, stems: string[]) => /[^\x00-\x7f]/.test(t) && ste
 /** Native-script digits read out one word at a time (নয় নয় আট আট…, ஒன்பது ஒன்பது எட்டு…): an ID, never an amount. */
 function spokenDigitRuns(tokens: string[]): { start: number; digits: string }[] {
   const out: { start: number; digits: string }[] = [];
-  // the first word: a digit word or one-letter slip of one (নয় loses its nukta in normalize), but never the
-  // "number" abbreviation ("ref नो" is not नौ); looser sound matches (साथ = सात) only inside the run
+  // shared with the voice kit (indic/numbers.ts): exact-ish first digit, looser slips inside the run
   const digit = (t: string | undefined, inside = true) => {
-    if (!t || !/[^\x00-\x7f]/.test(t)) return undefined;
-    if (!inside) {
-      if (['नो', 'नं', 'नं.'].includes(t)) return undefined;
-      const e = wordParts(t, 2);
-      return e?.length === 1 && 'v' in e[0] && Number.isInteger(e[0].v) && e[0].v <= 9 ? String(e[0].v) : undefined;
-    }
-    // inside a read-out run, short words may be repaired too (normalize() drops the nukta: নয় -> নয)
-    const p = wordParts(t, 2) ?? foldParts(t, (v) => Number.isInteger(v) && v <= 9); // डोन = दोन, साथ = सात (not साठ) inside a read-out
-    return p?.length === 1 && 'v' in p[0] && Number.isInteger(p[0].v) && p[0].v <= 9 ? String(p[0].v) : undefined;
+    const v = readoutDigit(t, !inside);
+    return v === undefined ? undefined : String(v);
   };
   let i = 0;
   while (i < tokens.length) {

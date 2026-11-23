@@ -79,6 +79,7 @@ describe('ASR misspellings', () => {
     ['आज सुभा साधे 10 बजे', at(0, 10, 30)], // सुबह, साढ़े as Whisper writes them
     ['सुभा ज्यारा बजे एक कॉल आया', at(0, 11)],
     ['पंधरा मिनिटान कूरवी', ago(15)], // Marathi पूर्वी as Whisper writes it
+    ['ಫೋನ್ಪೇ ಮೂಲಕ ಇಗ ಸ್ಟೇ ಆಯಿತು', NOW.getTime()], // ಈಗಷ್ಟೇ split in two
     ['ಇಂದು ಬಳಿಗೆ ಹತ್ತು ಗಂಟಿಗೆ', at(0, 10)], // ಬೆಳಿಗ್ಗೆ, ಗಂಟೆಗೆ
   ];
   for (const [text, want] of asr)

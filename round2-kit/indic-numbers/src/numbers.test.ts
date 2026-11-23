@@ -152,6 +152,11 @@ describe('ASR misspellings', () => {
     expect(findAmount('அயாயிரம் ருபாய் போச்சு')).toBe(5000);
     expect(findAmount('என் பதனேந்தாயிரம் ரோபாய் போயிடுச்சு')).toBe(15000);
     expect(findAmount('ஒந்தரை லட்சம் ருபாய் போயிடுத்து')).toBe(150000);
+    // Kannada as Whisper writes it
+    expect(findAmount('ವಂದು ಅರೆ ಲಕ್ಷ ರೂಪಾಈ ಹೋಈತು')).toBe(150000);
+    expect(findAmount('ಎರಡು ಒರೆ ಸಾವಿರ ರೂಪಾಯಿ ಕಟ್ಆಯತು')).toBe(2500);
+    expect(findAmount('ಯಪತ್ತು ಸಾವಿರರೂಪಾಯಿ ಮಾಯಾ')).toBe(70000);
+    expect(findAmount('ಹನ್ನೆಡು ಸಾವರದ ಆಯನೂರು ರೂಪಾಯಿ')).toBe(12500);
     expect(findAmount('माझा खात्यातून सालेतीन हजार रुपे गेले')).toBe(3500); // साडेतीन as Whisper writes it
     expect(findAmount('साले पाँच हज़ार रुपये ले गए')).toBe(5000); // a separate साले is not a half // ಆಯಿದು = ಆಯಿತು "happened", not 5
     expect(findAmount('UPI reference 40321 7 6 5 4 3 రిండు 5 వేల రూపాయలు పోయాయి')).toBe(5000); // ID digits, then the amount
