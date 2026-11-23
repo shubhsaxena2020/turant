@@ -29,8 +29,9 @@ node split.mjs <round> [...]   # dev voice vs held-out voice
 | round6 | + short-multiplier and final-virama repair (found by the mutation fuzz; no change on this corpus) | 100.0% | 39.7% | 43.1% | 34.6% | 27.5% | 66.8 |
 | round7 | + bank names: dotted and letter-by-letter acronyms, आफ for "of", near-miss names before "bank" | 100.0% | 41.0% | 44.1% | 36.1% | 29.3% | 67.8 |
 | round8 | + standard alternate spellings (देड़, धाई, రిండు, mr नव), spaced app names (ফোন পে, पेटी एम), split scam words (केवाई सी), glued half-hour (अर्ध्यातासा); two bare single digits never form one amount | 100.0% | 43.5% | 45.6% | 37.9% | 30.4% | 70.3 |
+| round9 | + a bare "thousand" after an unreadable word is not ₹1,000 (abstain, the app asks); a rule that read only "thousand" defers to the full reading | 100.0% | 43.5% | 45.6% | 37.9% | 30.4% | 71.5 |
 
-**Net change:**
+**Net change:** (round9 changed no outcome to correct; it turned 87 wrong amounts into "ask again", raising clean-ASR amount precision from 67% to 76%)
 
 | Measure | Before | After |
 |---|---|---|
