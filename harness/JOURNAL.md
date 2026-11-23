@@ -212,6 +212,9 @@ Turbo has only 4 decoder layers, and it loses the most on low-resource languages
 - **A new large-v3 quirk:** in 21 of 80 Telugu transcripts it writes some words in Kannada letters. `unifyScript` (shared `indic/cleanup.ts`) maps them back.
 - **Kit fraud app on large-v3:** 63.7% clean.
 - **Product meaning:** this is still a stand-in for the phone recogniser. A server-side large-v3 (or IndicConformer, which needs a gated Hugging Face download that Shubh has to accept) is a real option for a low-end-phone or kiosk mode. It also gives a more realistic tuning target than turbo, whose Tamil WER was 134%.
+- **Beam search (`--beams 4`) is not run:** OpenVINO's Whisper pipeline on this GPU rejects it ("Not Implemented" / "Logits batch size doesn't match the number of beams"). On the CPU it would break the 75% CPU cap for about 45 minutes, so it is left out.
+- **Rounds 29+ on large-v3:** "bajay" = baje, दुपट = दुप्पट. Clean 66.2%, held-out 64.7%.
+- **Kit apps on large-v3 speech** (after भाईया / तैल / वॉड): dev khata 63%, health 57%, civic 38% (turbo 60 / 50 / 42); held-out 12 / 33 / 23%.
 - **Extractor-only ceiling on large-v3:** 68.0% of clean runs (we are at 65.7%). By language: hi 98, en 90, mr 73, ta 64, te 56, kn 43, bn 43.
 
 ## Experiment: biasing Whisper with domain words (`asr_hotwords.py`), not adopted

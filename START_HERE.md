@@ -34,18 +34,21 @@ Still open: the masterclass RSVP (Tue 24 Nov) showed "coming soon". The 18+ age 
 ## Speech-to-report accuracy: `harness/` (see `harness/JOURNAL.md`)
 The harness takes 280 spoken reports in 7 languages through TTS, noise and Whisper into the extractor, and scores every field.
 
-| Measure | Before (23 Nov) | Now |
-|---|---|---|
-| Clean speech, report fully correct | 27.2% | **51.5%** |
-| Held-out voices | 29.4% | **49.4%** |
-| Field F1 | 51 | 77 |
+| Measure | Before (23 Nov) | Whisper turbo, now | Whisper large-v3, now (24 Nov) |
+|---|---|---|---|
+| Clean speech, report fully correct | 27.2% | **52.8%** | **66.2%** |
+| Held-out voices | 29.4% | **51.6%** | **64.7%** |
+| Noise 5 dB | 19.3% | 31.8% | 43.9% |
+| Field F1 | 51 | 78 | 84 |
+
+- **Second recogniser:** large-v3 (`harness/asr_alt.py`, local GPU) replaced turbo as the closer stand-in for a good Indic recogniser. The swap alone gave +8 points, and rounds 25-29 added the spellings it writes. Tamil went 23% → 63%, Telugu 40% → 55%. Bengali didn't move (39%).
 
 - **What changed:** the extractor now reads numbers, times, banks and IDs in all 7 languages, including the misspellings speech recognisers make.
 - **Fuzz checks:** all clean. One mutation is recovered in 99.6-100% of cases, and no ordinary word in 1,510 real transcripts gets turned into a number.
 - **Rules vs LLM:** measured head to head. On-device rules match the best LLM hybrid (41.2%); the LLM alone scores 16.5% because it invents fields. The decision is to stay offline-first.
 - **Other voice-kit apps:** `kit_apps_eval.mjs` scores khata, health and civic on text or speech. On held-out text the first run scored 38%, 71% and 50%; the remaining gaps are domain words in each language, which is the Round 2 day-1 lesson.
 - **Asking instead of guessing:** an amount under ₹100 is offered back as one-tap "₹5,000?" or "₹5,00,000?"; a bare "thousand" after a misheard word is asked about rather than read as ₹1,000.
-- **Remaining errors:** 92% are speech recognition, mostly in bn/ta/te/kn. On clean speech Hindi is 91% fully correct and Tamil 21%. A better Indic ASR (Sarvam key needed) is the next big lever.
+- **Remaining errors:** mostly speech recognition, in bn and kn above all. On large-v3 the extractor-only ceiling is 68% (we are at 66%). Next levers: IndicConformer (a gated Hugging Face download Shubh must accept), Sarvam (key needed), or a real-phone test.
 - **Re-run:** `cd harness; .\run.ps1 -Name x` (about 5 s, cached), then `node split.mjs x`.
 
 ## Round 2 (27–29 Nov): `round2-kit/ROUND2_PLAYBOOK.md`
