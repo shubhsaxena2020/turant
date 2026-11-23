@@ -22,8 +22,13 @@ const args = process.argv.slice(2);
 const NAME = args.includes('--name') ? args[args.indexOf('--name') + 1] : 'latest';
 const SHOW = args.includes('--show');
 const CORPUS = args.includes('--corpus') ? args[args.indexOf('--corpus') + 1] : 'kit'; // corpus/<dir>/<app>.jsonl
-const apps = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--name' && args[i - 1] !== '--corpus');
-const list = apps.length ? apps : fs.readdirSync(path.join(HERE, 'corpus', CORPUS)).filter((f) => f.endsWith('.jsonl')).map((f) => f.replace('.jsonl', ''));
+// --asr plan_kit.json: score Whisper transcripts of corpus/kit/_all.jsonl instead of the text (one run per voice).
+// --set kit|kit-heldout: only cases from that corpus (with --asr).
+const ASR = args.includes('--asr') ? args[args.indexOf('--asr') + 1] : null;
+const SET = args.includes('--set') ? args[args.indexOf('--set') + 1] : null;
+const ALL = ASR ? fs.readFileSync(path.join(HERE, 'corpus', 'kit', '_all.jsonl'), 'utf8').trim().split(/\r?\n/).map((l) => JSON.parse(l)).filter((c) => !SET || c.set === SET) : [];
+const apps = args.filter((a, i) => !a.startsWith('--') && !['--name', '--corpus', '--asr', '--set'].includes(args[i - 1]));
+const list = apps.length ? apps : ASR ? [...new Set(ALL.map((c) => c.app))] : fs.readdirSync(path.join(HERE, 'corpus', CORPUS)).filter((f) => f.endsWith('.jsonl')).map((f) => f.replace('.jsonl', ''));
 const NOW = new Date(2026, 10, 21, 12, 0, 0);
 
 const lev = (a, b) => {
@@ -76,6 +81,14 @@ function matches(slot, exp, got) {
   }
 }
 
+function asrCases(app) {
+  const plan = JSON.parse(fs.readFileSync(path.join(HERE, ASR), 'utf8'));
+  const byId = Object.fromEntries(ALL.filter((c) => c.app === app).map((c) => [c.id, c]));
+  return plan.jobs
+    .filter((j) => byId[j.case] && fs.existsSync(path.join(HERE, 'transcripts', `${j.tid}.json`)))
+    .map((j) => ({ ...byId[j.case], id: j.tid, text: JSON.parse(fs.readFileSync(path.join(HERE, 'transcripts', `${j.tid}.json`), 'utf8')).text }));
+}
+
 const report = { name: NAME, apps: {} };
 for (const app of list) {
   const cfgFile = path.join(KD, 'apps', app, 'config.ts');
@@ -85,7 +98,7 @@ for (const app of list) {
     continue;
   }
   const slots = Object.fromEntries(cfg.slots.map((s) => [s.key, s]));
-  const cases = fs.readFileSync(path.join(HERE, 'corpus', CORPUS, `${app}.jsonl`), 'utf8').trim().split(/\r?\n/).map((l) => JSON.parse(l));
+  const cases = ASR ? asrCases(app) : fs.readFileSync(path.join(HERE, 'corpus', CORPUS, `${app}.jsonl`), 'utf8').trim().split(/\r?\n/).map((l) => JSON.parse(l));
   const st = {};
   const runs = [];
   for (const c of cases) {

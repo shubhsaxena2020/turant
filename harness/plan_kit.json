@@ -1,0 +1,2864 @@
+{
+ "clips": [
+  {
+   "clip": "c-hi-01__Madhur__r0",
+   "case": "c-hi-01",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-hi-01__Swara__r0",
+   "case": "c-hi-01",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-hi-02__Madhur__r0",
+   "case": "c-hi-02",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-hi-02__Swara__r0",
+   "case": "c-hi-02",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-en-03__Neerja__r0",
+   "case": "c-en-03",
+   "lang": "en",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-en-03__Prabhat__r0",
+   "case": "c-en-03",
+   "lang": "en",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-en-03__NeerjaExpressive__r0",
+   "case": "c-en-03",
+   "lang": "en",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-en-04__Neerja__r0",
+   "case": "c-en-04",
+   "lang": "en",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-en-04__Prabhat__r0",
+   "case": "c-en-04",
+   "lang": "en",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-en-04__NeerjaExpressive__r0",
+   "case": "c-en-04",
+   "lang": "en",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-kn-05__Gagan__r0",
+   "case": "c-kn-05",
+   "lang": "kn",
+   "voice": "kn-IN-GaganNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-kn-05__Sapna__r0",
+   "case": "c-kn-05",
+   "lang": "kn",
+   "voice": "kn-IN-SapnaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-ta-06__Pallavi__r0",
+   "case": "c-ta-06",
+   "lang": "ta",
+   "voice": "ta-IN-PallaviNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-ta-06__Valluvar__r0",
+   "case": "c-ta-06",
+   "lang": "ta",
+   "voice": "ta-IN-ValluvarNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-bn-07__Bashkar__r0",
+   "case": "c-bn-07",
+   "lang": "bn",
+   "voice": "bn-IN-BashkarNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-bn-07__Tanishaa__r0",
+   "case": "c-bn-07",
+   "lang": "bn",
+   "voice": "bn-IN-TanishaaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-te-08__Mohan__r0",
+   "case": "c-te-08",
+   "lang": "te",
+   "voice": "te-IN-MohanNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-te-08__Shruti__r0",
+   "case": "c-te-08",
+   "lang": "te",
+   "voice": "te-IN-ShrutiNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-mr-09__Aarohi__r0",
+   "case": "c-mr-09",
+   "lang": "mr",
+   "voice": "mr-IN-AarohiNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-mr-09__Manohar__r0",
+   "case": "c-mr-09",
+   "lang": "mr",
+   "voice": "mr-IN-ManoharNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-hi-10__Madhur__r0",
+   "case": "c-hi-10",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-hi-10__Swara__r0",
+   "case": "c-hi-10",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-hi-11__Madhur__r0",
+   "case": "c-hi-11",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-hi-11__Swara__r0",
+   "case": "c-hi-11",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-hi-12__Madhur__r0",
+   "case": "c-hi-12",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "c-hi-12__Swara__r0",
+   "case": "c-hi-12",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-01__Madhur__r0",
+   "case": "h-hi-01",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-01__Swara__r0",
+   "case": "h-hi-01",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-02__Madhur__r0",
+   "case": "h-hi-02",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-02__Swara__r0",
+   "case": "h-hi-02",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-en-03__Neerja__r0",
+   "case": "h-en-03",
+   "lang": "en",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-en-03__Prabhat__r0",
+   "case": "h-en-03",
+   "lang": "en",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-en-03__NeerjaExpressive__r0",
+   "case": "h-en-03",
+   "lang": "en",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-en-04__Neerja__r0",
+   "case": "h-en-04",
+   "lang": "en",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-en-04__Prabhat__r0",
+   "case": "h-en-04",
+   "lang": "en",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-en-04__NeerjaExpressive__r0",
+   "case": "h-en-04",
+   "lang": "en",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-05__Madhur__r0",
+   "case": "h-hi-05",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-05__Swara__r0",
+   "case": "h-hi-05",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-ta-06__Pallavi__r0",
+   "case": "h-ta-06",
+   "lang": "ta",
+   "voice": "ta-IN-PallaviNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-ta-06__Valluvar__r0",
+   "case": "h-ta-06",
+   "lang": "ta",
+   "voice": "ta-IN-ValluvarNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-bn-07__Bashkar__r0",
+   "case": "h-bn-07",
+   "lang": "bn",
+   "voice": "bn-IN-BashkarNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-bn-07__Tanishaa__r0",
+   "case": "h-bn-07",
+   "lang": "bn",
+   "voice": "bn-IN-TanishaaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-te-08__Mohan__r0",
+   "case": "h-te-08",
+   "lang": "te",
+   "voice": "te-IN-MohanNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-te-08__Shruti__r0",
+   "case": "h-te-08",
+   "lang": "te",
+   "voice": "te-IN-ShrutiNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-mr-09__Aarohi__r0",
+   "case": "h-mr-09",
+   "lang": "mr",
+   "voice": "mr-IN-AarohiNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-mr-09__Manohar__r0",
+   "case": "h-mr-09",
+   "lang": "mr",
+   "voice": "mr-IN-ManoharNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-kn-10__Gagan__r0",
+   "case": "h-kn-10",
+   "lang": "kn",
+   "voice": "kn-IN-GaganNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-kn-10__Sapna__r0",
+   "case": "h-kn-10",
+   "lang": "kn",
+   "voice": "kn-IN-SapnaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-11__Madhur__r0",
+   "case": "h-hi-11",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-11__Swara__r0",
+   "case": "h-hi-11",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-12__Madhur__r0",
+   "case": "h-hi-12",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-12__Swara__r0",
+   "case": "h-hi-12",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-13__Madhur__r0",
+   "case": "h-hi-13",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-13__Swara__r0",
+   "case": "h-hi-13",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-14__Madhur__r0",
+   "case": "h-hi-14",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "h-hi-14__Swara__r0",
+   "case": "h-hi-14",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-01__Madhur__r0",
+   "case": "k-hi-01",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-01__Swara__r0",
+   "case": "k-hi-01",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-02__Madhur__r0",
+   "case": "k-hi-02",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-02__Swara__r0",
+   "case": "k-hi-02",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-en-03__Neerja__r0",
+   "case": "k-en-03",
+   "lang": "en",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-en-03__Prabhat__r0",
+   "case": "k-en-03",
+   "lang": "en",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-en-03__NeerjaExpressive__r0",
+   "case": "k-en-03",
+   "lang": "en",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-04__Madhur__r0",
+   "case": "k-hi-04",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-04__Swara__r0",
+   "case": "k-hi-04",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-05__Madhur__r0",
+   "case": "k-hi-05",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-05__Swara__r0",
+   "case": "k-hi-05",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-06__Madhur__r0",
+   "case": "k-hi-06",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-06__Swara__r0",
+   "case": "k-hi-06",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-bn-07__Bashkar__r0",
+   "case": "k-bn-07",
+   "lang": "bn",
+   "voice": "bn-IN-BashkarNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-bn-07__Tanishaa__r0",
+   "case": "k-bn-07",
+   "lang": "bn",
+   "voice": "bn-IN-TanishaaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-ta-08__Pallavi__r0",
+   "case": "k-ta-08",
+   "lang": "ta",
+   "voice": "ta-IN-PallaviNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-ta-08__Valluvar__r0",
+   "case": "k-ta-08",
+   "lang": "ta",
+   "voice": "ta-IN-ValluvarNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-mr-09__Aarohi__r0",
+   "case": "k-mr-09",
+   "lang": "mr",
+   "voice": "mr-IN-AarohiNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-mr-09__Manohar__r0",
+   "case": "k-mr-09",
+   "lang": "mr",
+   "voice": "mr-IN-ManoharNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-en-10__Neerja__r0",
+   "case": "k-en-10",
+   "lang": "en",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-en-10__Prabhat__r0",
+   "case": "k-en-10",
+   "lang": "en",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-en-10__NeerjaExpressive__r0",
+   "case": "k-en-10",
+   "lang": "en",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-11__Madhur__r0",
+   "case": "k-hi-11",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-11__Swara__r0",
+   "case": "k-hi-11",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-te-12__Mohan__r0",
+   "case": "k-te-12",
+   "lang": "te",
+   "voice": "te-IN-MohanNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-te-12__Shruti__r0",
+   "case": "k-te-12",
+   "lang": "te",
+   "voice": "te-IN-ShrutiNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-kn-13__Gagan__r0",
+   "case": "k-kn-13",
+   "lang": "kn",
+   "voice": "kn-IN-GaganNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-kn-13__Sapna__r0",
+   "case": "k-kn-13",
+   "lang": "kn",
+   "voice": "kn-IN-SapnaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-14__Madhur__r0",
+   "case": "k-hi-14",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-14__Swara__r0",
+   "case": "k-hi-14",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-15__Madhur__r0",
+   "case": "k-hi-15",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-hi-15__Swara__r0",
+   "case": "k-hi-15",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-en-16__Neerja__r0",
+   "case": "k-en-16",
+   "lang": "en",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-en-16__Prabhat__r0",
+   "case": "k-en-16",
+   "lang": "en",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "k-en-16__NeerjaExpressive__r0",
+   "case": "k-en-16",
+   "lang": "en",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "ch-hi-01__Madhur__r0",
+   "case": "ch-hi-01",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "ch-hi-01__Swara__r0",
+   "case": "ch-hi-01",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "ch-en-02__Neerja__r0",
+   "case": "ch-en-02",
+   "lang": "en",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "ch-en-02__Prabhat__r0",
+   "case": "ch-en-02",
+   "lang": "en",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "ch-en-02__NeerjaExpressive__r0",
+   "case": "ch-en-02",
+   "lang": "en",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "ch-hi-03__Madhur__r0",
+   "case": "ch-hi-03",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "ch-hi-03__Swara__r0",
+   "case": "ch-hi-03",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "ch-ta-04__Pallavi__r0",
+   "case": "ch-ta-04",
+   "lang": "ta",
+   "voice": "ta-IN-PallaviNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "ch-ta-04__Valluvar__r0",
+   "case": "ch-ta-04",
+   "lang": "ta",
+   "voice": "ta-IN-ValluvarNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "ch-te-05__Mohan__r0",
+   "case": "ch-te-05",
+   "lang": "te",
+   "voice": "te-IN-MohanNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "ch-te-05__Shruti__r0",
+   "case": "ch-te-05",
+   "lang": "te",
+   "voice": "te-IN-ShrutiNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "ch-bn-06__Bashkar__r0",
+   "case": "ch-bn-06",
+   "lang": "bn",
+   "voice": "bn-IN-BashkarNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "ch-bn-06__Tanishaa__r0",
+   "case": "ch-bn-06",
+   "lang": "bn",
+   "voice": "bn-IN-TanishaaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-hi-01__Madhur__r0",
+   "case": "hh-hi-01",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-hi-01__Swara__r0",
+   "case": "hh-hi-01",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-en-02__Neerja__r0",
+   "case": "hh-en-02",
+   "lang": "en",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-en-02__Prabhat__r0",
+   "case": "hh-en-02",
+   "lang": "en",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-en-02__NeerjaExpressive__r0",
+   "case": "hh-en-02",
+   "lang": "en",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-hi-03__Madhur__r0",
+   "case": "hh-hi-03",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-hi-03__Swara__r0",
+   "case": "hh-hi-03",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-ta-04__Pallavi__r0",
+   "case": "hh-ta-04",
+   "lang": "ta",
+   "voice": "ta-IN-PallaviNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-ta-04__Valluvar__r0",
+   "case": "hh-ta-04",
+   "lang": "ta",
+   "voice": "ta-IN-ValluvarNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-bn-05__Bashkar__r0",
+   "case": "hh-bn-05",
+   "lang": "bn",
+   "voice": "bn-IN-BashkarNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-bn-05__Tanishaa__r0",
+   "case": "hh-bn-05",
+   "lang": "bn",
+   "voice": "bn-IN-TanishaaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-kn-06__Gagan__r0",
+   "case": "hh-kn-06",
+   "lang": "kn",
+   "voice": "kn-IN-GaganNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-kn-06__Sapna__r0",
+   "case": "hh-kn-06",
+   "lang": "kn",
+   "voice": "kn-IN-SapnaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-hi-07__Madhur__r0",
+   "case": "hh-hi-07",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "hh-hi-07__Swara__r0",
+   "case": "hh-hi-07",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-hi-01__Madhur__r0",
+   "case": "kh-hi-01",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-hi-01__Swara__r0",
+   "case": "kh-hi-01",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-hi-02__Madhur__r0",
+   "case": "kh-hi-02",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-hi-02__Swara__r0",
+   "case": "kh-hi-02",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-en-03__Neerja__r0",
+   "case": "kh-en-03",
+   "lang": "en",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-en-03__Prabhat__r0",
+   "case": "kh-en-03",
+   "lang": "en",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-en-03__NeerjaExpressive__r0",
+   "case": "kh-en-03",
+   "lang": "en",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-hi-04__Madhur__r0",
+   "case": "kh-hi-04",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-hi-04__Swara__r0",
+   "case": "kh-hi-04",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-bn-05__Bashkar__r0",
+   "case": "kh-bn-05",
+   "lang": "bn",
+   "voice": "bn-IN-BashkarNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-bn-05__Tanishaa__r0",
+   "case": "kh-bn-05",
+   "lang": "bn",
+   "voice": "bn-IN-TanishaaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-ta-06__Pallavi__r0",
+   "case": "kh-ta-06",
+   "lang": "ta",
+   "voice": "ta-IN-PallaviNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-ta-06__Valluvar__r0",
+   "case": "kh-ta-06",
+   "lang": "ta",
+   "voice": "ta-IN-ValluvarNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-mr-07__Aarohi__r0",
+   "case": "kh-mr-07",
+   "lang": "mr",
+   "voice": "mr-IN-AarohiNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-mr-07__Manohar__r0",
+   "case": "kh-mr-07",
+   "lang": "mr",
+   "voice": "mr-IN-ManoharNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-hi-08__Madhur__r0",
+   "case": "kh-hi-08",
+   "lang": "hi",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kh-hi-08__Swara__r0",
+   "case": "kh-hi-08",
+   "lang": "hi",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0"
+  }
+ ],
+ "audios": [
+  {
+   "audio": "c-hi-01__Madhur__r0",
+   "clip": "c-hi-01__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-hi-01__Swara__r0",
+   "clip": "c-hi-01__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-hi-02__Madhur__r0",
+   "clip": "c-hi-02__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-hi-02__Swara__r0",
+   "clip": "c-hi-02__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-en-03__Neerja__r0",
+   "clip": "c-en-03__Neerja__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-en-03__Prabhat__r0",
+   "clip": "c-en-03__Prabhat__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-en-03__NeerjaExpressive__r0",
+   "clip": "c-en-03__NeerjaExpressive__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-en-04__Neerja__r0",
+   "clip": "c-en-04__Neerja__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-en-04__Prabhat__r0",
+   "clip": "c-en-04__Prabhat__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-en-04__NeerjaExpressive__r0",
+   "clip": "c-en-04__NeerjaExpressive__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-kn-05__Gagan__r0",
+   "clip": "c-kn-05__Gagan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-kn-05__Sapna__r0",
+   "clip": "c-kn-05__Sapna__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-ta-06__Pallavi__r0",
+   "clip": "c-ta-06__Pallavi__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-ta-06__Valluvar__r0",
+   "clip": "c-ta-06__Valluvar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-bn-07__Bashkar__r0",
+   "clip": "c-bn-07__Bashkar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-bn-07__Tanishaa__r0",
+   "clip": "c-bn-07__Tanishaa__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-te-08__Mohan__r0",
+   "clip": "c-te-08__Mohan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-te-08__Shruti__r0",
+   "clip": "c-te-08__Shruti__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-mr-09__Aarohi__r0",
+   "clip": "c-mr-09__Aarohi__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-mr-09__Manohar__r0",
+   "clip": "c-mr-09__Manohar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-hi-10__Madhur__r0",
+   "clip": "c-hi-10__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-hi-10__Swara__r0",
+   "clip": "c-hi-10__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-hi-11__Madhur__r0",
+   "clip": "c-hi-11__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-hi-11__Swara__r0",
+   "clip": "c-hi-11__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-hi-12__Madhur__r0",
+   "clip": "c-hi-12__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "c-hi-12__Swara__r0",
+   "clip": "c-hi-12__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-01__Madhur__r0",
+   "clip": "h-hi-01__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-01__Swara__r0",
+   "clip": "h-hi-01__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-02__Madhur__r0",
+   "clip": "h-hi-02__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-02__Swara__r0",
+   "clip": "h-hi-02__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-en-03__Neerja__r0",
+   "clip": "h-en-03__Neerja__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-en-03__Prabhat__r0",
+   "clip": "h-en-03__Prabhat__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-en-03__NeerjaExpressive__r0",
+   "clip": "h-en-03__NeerjaExpressive__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-en-04__Neerja__r0",
+   "clip": "h-en-04__Neerja__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-en-04__Prabhat__r0",
+   "clip": "h-en-04__Prabhat__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-en-04__NeerjaExpressive__r0",
+   "clip": "h-en-04__NeerjaExpressive__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-05__Madhur__r0",
+   "clip": "h-hi-05__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-05__Swara__r0",
+   "clip": "h-hi-05__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-ta-06__Pallavi__r0",
+   "clip": "h-ta-06__Pallavi__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-ta-06__Valluvar__r0",
+   "clip": "h-ta-06__Valluvar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-bn-07__Bashkar__r0",
+   "clip": "h-bn-07__Bashkar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-bn-07__Tanishaa__r0",
+   "clip": "h-bn-07__Tanishaa__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-te-08__Mohan__r0",
+   "clip": "h-te-08__Mohan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-te-08__Shruti__r0",
+   "clip": "h-te-08__Shruti__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-mr-09__Aarohi__r0",
+   "clip": "h-mr-09__Aarohi__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-mr-09__Manohar__r0",
+   "clip": "h-mr-09__Manohar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-kn-10__Gagan__r0",
+   "clip": "h-kn-10__Gagan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-kn-10__Sapna__r0",
+   "clip": "h-kn-10__Sapna__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-11__Madhur__r0",
+   "clip": "h-hi-11__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-11__Swara__r0",
+   "clip": "h-hi-11__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-12__Madhur__r0",
+   "clip": "h-hi-12__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-12__Swara__r0",
+   "clip": "h-hi-12__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-13__Madhur__r0",
+   "clip": "h-hi-13__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-13__Swara__r0",
+   "clip": "h-hi-13__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-14__Madhur__r0",
+   "clip": "h-hi-14__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "h-hi-14__Swara__r0",
+   "clip": "h-hi-14__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-01__Madhur__r0",
+   "clip": "k-hi-01__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-01__Swara__r0",
+   "clip": "k-hi-01__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-02__Madhur__r0",
+   "clip": "k-hi-02__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-02__Swara__r0",
+   "clip": "k-hi-02__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-en-03__Neerja__r0",
+   "clip": "k-en-03__Neerja__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-en-03__Prabhat__r0",
+   "clip": "k-en-03__Prabhat__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-en-03__NeerjaExpressive__r0",
+   "clip": "k-en-03__NeerjaExpressive__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-04__Madhur__r0",
+   "clip": "k-hi-04__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-04__Swara__r0",
+   "clip": "k-hi-04__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-05__Madhur__r0",
+   "clip": "k-hi-05__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-05__Swara__r0",
+   "clip": "k-hi-05__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-06__Madhur__r0",
+   "clip": "k-hi-06__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-06__Swara__r0",
+   "clip": "k-hi-06__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-bn-07__Bashkar__r0",
+   "clip": "k-bn-07__Bashkar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-bn-07__Tanishaa__r0",
+   "clip": "k-bn-07__Tanishaa__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-ta-08__Pallavi__r0",
+   "clip": "k-ta-08__Pallavi__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-ta-08__Valluvar__r0",
+   "clip": "k-ta-08__Valluvar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-mr-09__Aarohi__r0",
+   "clip": "k-mr-09__Aarohi__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-mr-09__Manohar__r0",
+   "clip": "k-mr-09__Manohar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-en-10__Neerja__r0",
+   "clip": "k-en-10__Neerja__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-en-10__Prabhat__r0",
+   "clip": "k-en-10__Prabhat__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-en-10__NeerjaExpressive__r0",
+   "clip": "k-en-10__NeerjaExpressive__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-11__Madhur__r0",
+   "clip": "k-hi-11__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-11__Swara__r0",
+   "clip": "k-hi-11__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-te-12__Mohan__r0",
+   "clip": "k-te-12__Mohan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-te-12__Shruti__r0",
+   "clip": "k-te-12__Shruti__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-kn-13__Gagan__r0",
+   "clip": "k-kn-13__Gagan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-kn-13__Sapna__r0",
+   "clip": "k-kn-13__Sapna__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-14__Madhur__r0",
+   "clip": "k-hi-14__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-14__Swara__r0",
+   "clip": "k-hi-14__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-15__Madhur__r0",
+   "clip": "k-hi-15__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-hi-15__Swara__r0",
+   "clip": "k-hi-15__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-en-16__Neerja__r0",
+   "clip": "k-en-16__Neerja__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-en-16__Prabhat__r0",
+   "clip": "k-en-16__Prabhat__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "k-en-16__NeerjaExpressive__r0",
+   "clip": "k-en-16__NeerjaExpressive__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "ch-hi-01__Madhur__r0",
+   "clip": "ch-hi-01__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "ch-hi-01__Swara__r0",
+   "clip": "ch-hi-01__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "ch-en-02__Neerja__r0",
+   "clip": "ch-en-02__Neerja__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "ch-en-02__Prabhat__r0",
+   "clip": "ch-en-02__Prabhat__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "ch-en-02__NeerjaExpressive__r0",
+   "clip": "ch-en-02__NeerjaExpressive__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "ch-hi-03__Madhur__r0",
+   "clip": "ch-hi-03__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "ch-hi-03__Swara__r0",
+   "clip": "ch-hi-03__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "ch-ta-04__Pallavi__r0",
+   "clip": "ch-ta-04__Pallavi__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "ch-ta-04__Valluvar__r0",
+   "clip": "ch-ta-04__Valluvar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "ch-te-05__Mohan__r0",
+   "clip": "ch-te-05__Mohan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "ch-te-05__Shruti__r0",
+   "clip": "ch-te-05__Shruti__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "ch-bn-06__Bashkar__r0",
+   "clip": "ch-bn-06__Bashkar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "ch-bn-06__Tanishaa__r0",
+   "clip": "ch-bn-06__Tanishaa__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-hi-01__Madhur__r0",
+   "clip": "hh-hi-01__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-hi-01__Swara__r0",
+   "clip": "hh-hi-01__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-en-02__Neerja__r0",
+   "clip": "hh-en-02__Neerja__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-en-02__Prabhat__r0",
+   "clip": "hh-en-02__Prabhat__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-en-02__NeerjaExpressive__r0",
+   "clip": "hh-en-02__NeerjaExpressive__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-hi-03__Madhur__r0",
+   "clip": "hh-hi-03__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-hi-03__Swara__r0",
+   "clip": "hh-hi-03__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-ta-04__Pallavi__r0",
+   "clip": "hh-ta-04__Pallavi__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-ta-04__Valluvar__r0",
+   "clip": "hh-ta-04__Valluvar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-bn-05__Bashkar__r0",
+   "clip": "hh-bn-05__Bashkar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-bn-05__Tanishaa__r0",
+   "clip": "hh-bn-05__Tanishaa__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-kn-06__Gagan__r0",
+   "clip": "hh-kn-06__Gagan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-kn-06__Sapna__r0",
+   "clip": "hh-kn-06__Sapna__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-hi-07__Madhur__r0",
+   "clip": "hh-hi-07__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "hh-hi-07__Swara__r0",
+   "clip": "hh-hi-07__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-hi-01__Madhur__r0",
+   "clip": "kh-hi-01__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-hi-01__Swara__r0",
+   "clip": "kh-hi-01__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-hi-02__Madhur__r0",
+   "clip": "kh-hi-02__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-hi-02__Swara__r0",
+   "clip": "kh-hi-02__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-en-03__Neerja__r0",
+   "clip": "kh-en-03__Neerja__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-en-03__Prabhat__r0",
+   "clip": "kh-en-03__Prabhat__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-en-03__NeerjaExpressive__r0",
+   "clip": "kh-en-03__NeerjaExpressive__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-hi-04__Madhur__r0",
+   "clip": "kh-hi-04__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-hi-04__Swara__r0",
+   "clip": "kh-hi-04__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-bn-05__Bashkar__r0",
+   "clip": "kh-bn-05__Bashkar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-bn-05__Tanishaa__r0",
+   "clip": "kh-bn-05__Tanishaa__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-ta-06__Pallavi__r0",
+   "clip": "kh-ta-06__Pallavi__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-ta-06__Valluvar__r0",
+   "clip": "kh-ta-06__Valluvar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-mr-07__Aarohi__r0",
+   "clip": "kh-mr-07__Aarohi__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-mr-07__Manohar__r0",
+   "clip": "kh-mr-07__Manohar__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-hi-08__Madhur__r0",
+   "clip": "kh-hi-08__Madhur__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kh-hi-08__Swara__r0",
+   "clip": "kh-hi-08__Swara__r0",
+   "noise": "clean",
+   "snr": null
+  }
+ ],
+ "jobs": [
+  {
+   "tid": "c-hi-01__Madhur__r0__hi",
+   "audio": "c-hi-01__Madhur__r0",
+   "case": "c-hi-01",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-hi-01__Swara__r0__hi",
+   "audio": "c-hi-01__Swara__r0",
+   "case": "c-hi-01",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-hi-02__Madhur__r0__hi",
+   "audio": "c-hi-02__Madhur__r0",
+   "case": "c-hi-02",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-hi-02__Swara__r0__hi",
+   "audio": "c-hi-02__Swara__r0",
+   "case": "c-hi-02",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-en-03__Neerja__r0__en",
+   "audio": "c-en-03__Neerja__r0",
+   "case": "c-en-03",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-en-03__Prabhat__r0__en",
+   "audio": "c-en-03__Prabhat__r0",
+   "case": "c-en-03",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-en-03__NeerjaExpressive__r0__en",
+   "audio": "c-en-03__NeerjaExpressive__r0",
+   "case": "c-en-03",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-en-04__Neerja__r0__en",
+   "audio": "c-en-04__Neerja__r0",
+   "case": "c-en-04",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-en-04__Prabhat__r0__en",
+   "audio": "c-en-04__Prabhat__r0",
+   "case": "c-en-04",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-en-04__NeerjaExpressive__r0__en",
+   "audio": "c-en-04__NeerjaExpressive__r0",
+   "case": "c-en-04",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-kn-05__Gagan__r0__kn",
+   "audio": "c-kn-05__Gagan__r0",
+   "case": "c-kn-05",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-kn-05__Sapna__r0__kn",
+   "audio": "c-kn-05__Sapna__r0",
+   "case": "c-kn-05",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-ta-06__Pallavi__r0__ta",
+   "audio": "c-ta-06__Pallavi__r0",
+   "case": "c-ta-06",
+   "lang": "ta",
+   "asr_lang": "<|ta|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-ta-06__Valluvar__r0__ta",
+   "audio": "c-ta-06__Valluvar__r0",
+   "case": "c-ta-06",
+   "lang": "ta",
+   "asr_lang": "<|ta|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-bn-07__Bashkar__r0__bn",
+   "audio": "c-bn-07__Bashkar__r0",
+   "case": "c-bn-07",
+   "lang": "bn",
+   "asr_lang": "<|bn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-bn-07__Tanishaa__r0__bn",
+   "audio": "c-bn-07__Tanishaa__r0",
+   "case": "c-bn-07",
+   "lang": "bn",
+   "asr_lang": "<|bn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-te-08__Mohan__r0__te",
+   "audio": "c-te-08__Mohan__r0",
+   "case": "c-te-08",
+   "lang": "te",
+   "asr_lang": "<|te|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-te-08__Shruti__r0__te",
+   "audio": "c-te-08__Shruti__r0",
+   "case": "c-te-08",
+   "lang": "te",
+   "asr_lang": "<|te|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-mr-09__Aarohi__r0__mr",
+   "audio": "c-mr-09__Aarohi__r0",
+   "case": "c-mr-09",
+   "lang": "mr",
+   "asr_lang": "<|mr|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-mr-09__Manohar__r0__mr",
+   "audio": "c-mr-09__Manohar__r0",
+   "case": "c-mr-09",
+   "lang": "mr",
+   "asr_lang": "<|mr|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-hi-10__Madhur__r0__hi",
+   "audio": "c-hi-10__Madhur__r0",
+   "case": "c-hi-10",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-hi-10__Swara__r0__hi",
+   "audio": "c-hi-10__Swara__r0",
+   "case": "c-hi-10",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-hi-11__Madhur__r0__hi",
+   "audio": "c-hi-11__Madhur__r0",
+   "case": "c-hi-11",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-hi-11__Swara__r0__hi",
+   "audio": "c-hi-11__Swara__r0",
+   "case": "c-hi-11",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-hi-12__Madhur__r0__hi",
+   "audio": "c-hi-12__Madhur__r0",
+   "case": "c-hi-12",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "c-hi-12__Swara__r0__hi",
+   "audio": "c-hi-12__Swara__r0",
+   "case": "c-hi-12",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-01__Madhur__r0__hi",
+   "audio": "h-hi-01__Madhur__r0",
+   "case": "h-hi-01",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-01__Swara__r0__hi",
+   "audio": "h-hi-01__Swara__r0",
+   "case": "h-hi-01",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-02__Madhur__r0__hi",
+   "audio": "h-hi-02__Madhur__r0",
+   "case": "h-hi-02",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-02__Swara__r0__hi",
+   "audio": "h-hi-02__Swara__r0",
+   "case": "h-hi-02",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-en-03__Neerja__r0__en",
+   "audio": "h-en-03__Neerja__r0",
+   "case": "h-en-03",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-en-03__Prabhat__r0__en",
+   "audio": "h-en-03__Prabhat__r0",
+   "case": "h-en-03",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-en-03__NeerjaExpressive__r0__en",
+   "audio": "h-en-03__NeerjaExpressive__r0",
+   "case": "h-en-03",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-en-04__Neerja__r0__en",
+   "audio": "h-en-04__Neerja__r0",
+   "case": "h-en-04",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-en-04__Prabhat__r0__en",
+   "audio": "h-en-04__Prabhat__r0",
+   "case": "h-en-04",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-en-04__NeerjaExpressive__r0__en",
+   "audio": "h-en-04__NeerjaExpressive__r0",
+   "case": "h-en-04",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-05__Madhur__r0__hi",
+   "audio": "h-hi-05__Madhur__r0",
+   "case": "h-hi-05",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-05__Swara__r0__hi",
+   "audio": "h-hi-05__Swara__r0",
+   "case": "h-hi-05",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-ta-06__Pallavi__r0__ta",
+   "audio": "h-ta-06__Pallavi__r0",
+   "case": "h-ta-06",
+   "lang": "ta",
+   "asr_lang": "<|ta|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-ta-06__Valluvar__r0__ta",
+   "audio": "h-ta-06__Valluvar__r0",
+   "case": "h-ta-06",
+   "lang": "ta",
+   "asr_lang": "<|ta|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-bn-07__Bashkar__r0__bn",
+   "audio": "h-bn-07__Bashkar__r0",
+   "case": "h-bn-07",
+   "lang": "bn",
+   "asr_lang": "<|bn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-bn-07__Tanishaa__r0__bn",
+   "audio": "h-bn-07__Tanishaa__r0",
+   "case": "h-bn-07",
+   "lang": "bn",
+   "asr_lang": "<|bn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-te-08__Mohan__r0__te",
+   "audio": "h-te-08__Mohan__r0",
+   "case": "h-te-08",
+   "lang": "te",
+   "asr_lang": "<|te|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-te-08__Shruti__r0__te",
+   "audio": "h-te-08__Shruti__r0",
+   "case": "h-te-08",
+   "lang": "te",
+   "asr_lang": "<|te|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-mr-09__Aarohi__r0__mr",
+   "audio": "h-mr-09__Aarohi__r0",
+   "case": "h-mr-09",
+   "lang": "mr",
+   "asr_lang": "<|mr|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-mr-09__Manohar__r0__mr",
+   "audio": "h-mr-09__Manohar__r0",
+   "case": "h-mr-09",
+   "lang": "mr",
+   "asr_lang": "<|mr|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-kn-10__Gagan__r0__kn",
+   "audio": "h-kn-10__Gagan__r0",
+   "case": "h-kn-10",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-kn-10__Sapna__r0__kn",
+   "audio": "h-kn-10__Sapna__r0",
+   "case": "h-kn-10",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-11__Madhur__r0__hi",
+   "audio": "h-hi-11__Madhur__r0",
+   "case": "h-hi-11",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-11__Swara__r0__hi",
+   "audio": "h-hi-11__Swara__r0",
+   "case": "h-hi-11",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-12__Madhur__r0__hi",
+   "audio": "h-hi-12__Madhur__r0",
+   "case": "h-hi-12",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-12__Swara__r0__hi",
+   "audio": "h-hi-12__Swara__r0",
+   "case": "h-hi-12",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-13__Madhur__r0__hi",
+   "audio": "h-hi-13__Madhur__r0",
+   "case": "h-hi-13",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-13__Swara__r0__hi",
+   "audio": "h-hi-13__Swara__r0",
+   "case": "h-hi-13",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-14__Madhur__r0__hi",
+   "audio": "h-hi-14__Madhur__r0",
+   "case": "h-hi-14",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "h-hi-14__Swara__r0__hi",
+   "audio": "h-hi-14__Swara__r0",
+   "case": "h-hi-14",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-01__Madhur__r0__hi",
+   "audio": "k-hi-01__Madhur__r0",
+   "case": "k-hi-01",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-01__Swara__r0__hi",
+   "audio": "k-hi-01__Swara__r0",
+   "case": "k-hi-01",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-02__Madhur__r0__hi",
+   "audio": "k-hi-02__Madhur__r0",
+   "case": "k-hi-02",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-02__Swara__r0__hi",
+   "audio": "k-hi-02__Swara__r0",
+   "case": "k-hi-02",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-en-03__Neerja__r0__en",
+   "audio": "k-en-03__Neerja__r0",
+   "case": "k-en-03",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-en-03__Prabhat__r0__en",
+   "audio": "k-en-03__Prabhat__r0",
+   "case": "k-en-03",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-en-03__NeerjaExpressive__r0__en",
+   "audio": "k-en-03__NeerjaExpressive__r0",
+   "case": "k-en-03",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-04__Madhur__r0__hi",
+   "audio": "k-hi-04__Madhur__r0",
+   "case": "k-hi-04",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-04__Swara__r0__hi",
+   "audio": "k-hi-04__Swara__r0",
+   "case": "k-hi-04",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-05__Madhur__r0__hi",
+   "audio": "k-hi-05__Madhur__r0",
+   "case": "k-hi-05",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-05__Swara__r0__hi",
+   "audio": "k-hi-05__Swara__r0",
+   "case": "k-hi-05",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-06__Madhur__r0__hi",
+   "audio": "k-hi-06__Madhur__r0",
+   "case": "k-hi-06",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-06__Swara__r0__hi",
+   "audio": "k-hi-06__Swara__r0",
+   "case": "k-hi-06",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-bn-07__Bashkar__r0__bn",
+   "audio": "k-bn-07__Bashkar__r0",
+   "case": "k-bn-07",
+   "lang": "bn",
+   "asr_lang": "<|bn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-bn-07__Tanishaa__r0__bn",
+   "audio": "k-bn-07__Tanishaa__r0",
+   "case": "k-bn-07",
+   "lang": "bn",
+   "asr_lang": "<|bn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-ta-08__Pallavi__r0__ta",
+   "audio": "k-ta-08__Pallavi__r0",
+   "case": "k-ta-08",
+   "lang": "ta",
+   "asr_lang": "<|ta|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-ta-08__Valluvar__r0__ta",
+   "audio": "k-ta-08__Valluvar__r0",
+   "case": "k-ta-08",
+   "lang": "ta",
+   "asr_lang": "<|ta|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-mr-09__Aarohi__r0__mr",
+   "audio": "k-mr-09__Aarohi__r0",
+   "case": "k-mr-09",
+   "lang": "mr",
+   "asr_lang": "<|mr|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-mr-09__Manohar__r0__mr",
+   "audio": "k-mr-09__Manohar__r0",
+   "case": "k-mr-09",
+   "lang": "mr",
+   "asr_lang": "<|mr|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-en-10__Neerja__r0__en",
+   "audio": "k-en-10__Neerja__r0",
+   "case": "k-en-10",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-en-10__Prabhat__r0__en",
+   "audio": "k-en-10__Prabhat__r0",
+   "case": "k-en-10",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-en-10__NeerjaExpressive__r0__en",
+   "audio": "k-en-10__NeerjaExpressive__r0",
+   "case": "k-en-10",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-11__Madhur__r0__hi",
+   "audio": "k-hi-11__Madhur__r0",
+   "case": "k-hi-11",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-11__Swara__r0__hi",
+   "audio": "k-hi-11__Swara__r0",
+   "case": "k-hi-11",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-te-12__Mohan__r0__te",
+   "audio": "k-te-12__Mohan__r0",
+   "case": "k-te-12",
+   "lang": "te",
+   "asr_lang": "<|te|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-te-12__Shruti__r0__te",
+   "audio": "k-te-12__Shruti__r0",
+   "case": "k-te-12",
+   "lang": "te",
+   "asr_lang": "<|te|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-kn-13__Gagan__r0__kn",
+   "audio": "k-kn-13__Gagan__r0",
+   "case": "k-kn-13",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-kn-13__Sapna__r0__kn",
+   "audio": "k-kn-13__Sapna__r0",
+   "case": "k-kn-13",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-14__Madhur__r0__hi",
+   "audio": "k-hi-14__Madhur__r0",
+   "case": "k-hi-14",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-14__Swara__r0__hi",
+   "audio": "k-hi-14__Swara__r0",
+   "case": "k-hi-14",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-15__Madhur__r0__hi",
+   "audio": "k-hi-15__Madhur__r0",
+   "case": "k-hi-15",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-hi-15__Swara__r0__hi",
+   "audio": "k-hi-15__Swara__r0",
+   "case": "k-hi-15",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-en-16__Neerja__r0__en",
+   "audio": "k-en-16__Neerja__r0",
+   "case": "k-en-16",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-en-16__Prabhat__r0__en",
+   "audio": "k-en-16__Prabhat__r0",
+   "case": "k-en-16",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "k-en-16__NeerjaExpressive__r0__en",
+   "audio": "k-en-16__NeerjaExpressive__r0",
+   "case": "k-en-16",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "ch-hi-01__Madhur__r0__hi",
+   "audio": "ch-hi-01__Madhur__r0",
+   "case": "ch-hi-01",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "ch-hi-01__Swara__r0__hi",
+   "audio": "ch-hi-01__Swara__r0",
+   "case": "ch-hi-01",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "ch-en-02__Neerja__r0__en",
+   "audio": "ch-en-02__Neerja__r0",
+   "case": "ch-en-02",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "ch-en-02__Prabhat__r0__en",
+   "audio": "ch-en-02__Prabhat__r0",
+   "case": "ch-en-02",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "ch-en-02__NeerjaExpressive__r0__en",
+   "audio": "ch-en-02__NeerjaExpressive__r0",
+   "case": "ch-en-02",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "ch-hi-03__Madhur__r0__hi",
+   "audio": "ch-hi-03__Madhur__r0",
+   "case": "ch-hi-03",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "ch-hi-03__Swara__r0__hi",
+   "audio": "ch-hi-03__Swara__r0",
+   "case": "ch-hi-03",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "ch-ta-04__Pallavi__r0__ta",
+   "audio": "ch-ta-04__Pallavi__r0",
+   "case": "ch-ta-04",
+   "lang": "ta",
+   "asr_lang": "<|ta|>",
+   "tier": "base"
+  },
+  {
+   "tid": "ch-ta-04__Valluvar__r0__ta",
+   "audio": "ch-ta-04__Valluvar__r0",
+   "case": "ch-ta-04",
+   "lang": "ta",
+   "asr_lang": "<|ta|>",
+   "tier": "base"
+  },
+  {
+   "tid": "ch-te-05__Mohan__r0__te",
+   "audio": "ch-te-05__Mohan__r0",
+   "case": "ch-te-05",
+   "lang": "te",
+   "asr_lang": "<|te|>",
+   "tier": "base"
+  },
+  {
+   "tid": "ch-te-05__Shruti__r0__te",
+   "audio": "ch-te-05__Shruti__r0",
+   "case": "ch-te-05",
+   "lang": "te",
+   "asr_lang": "<|te|>",
+   "tier": "base"
+  },
+  {
+   "tid": "ch-bn-06__Bashkar__r0__bn",
+   "audio": "ch-bn-06__Bashkar__r0",
+   "case": "ch-bn-06",
+   "lang": "bn",
+   "asr_lang": "<|bn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "ch-bn-06__Tanishaa__r0__bn",
+   "audio": "ch-bn-06__Tanishaa__r0",
+   "case": "ch-bn-06",
+   "lang": "bn",
+   "asr_lang": "<|bn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-hi-01__Madhur__r0__hi",
+   "audio": "hh-hi-01__Madhur__r0",
+   "case": "hh-hi-01",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-hi-01__Swara__r0__hi",
+   "audio": "hh-hi-01__Swara__r0",
+   "case": "hh-hi-01",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-en-02__Neerja__r0__en",
+   "audio": "hh-en-02__Neerja__r0",
+   "case": "hh-en-02",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-en-02__Prabhat__r0__en",
+   "audio": "hh-en-02__Prabhat__r0",
+   "case": "hh-en-02",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-en-02__NeerjaExpressive__r0__en",
+   "audio": "hh-en-02__NeerjaExpressive__r0",
+   "case": "hh-en-02",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-hi-03__Madhur__r0__hi",
+   "audio": "hh-hi-03__Madhur__r0",
+   "case": "hh-hi-03",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-hi-03__Swara__r0__hi",
+   "audio": "hh-hi-03__Swara__r0",
+   "case": "hh-hi-03",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-ta-04__Pallavi__r0__ta",
+   "audio": "hh-ta-04__Pallavi__r0",
+   "case": "hh-ta-04",
+   "lang": "ta",
+   "asr_lang": "<|ta|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-ta-04__Valluvar__r0__ta",
+   "audio": "hh-ta-04__Valluvar__r0",
+   "case": "hh-ta-04",
+   "lang": "ta",
+   "asr_lang": "<|ta|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-bn-05__Bashkar__r0__bn",
+   "audio": "hh-bn-05__Bashkar__r0",
+   "case": "hh-bn-05",
+   "lang": "bn",
+   "asr_lang": "<|bn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-bn-05__Tanishaa__r0__bn",
+   "audio": "hh-bn-05__Tanishaa__r0",
+   "case": "hh-bn-05",
+   "lang": "bn",
+   "asr_lang": "<|bn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-kn-06__Gagan__r0__kn",
+   "audio": "hh-kn-06__Gagan__r0",
+   "case": "hh-kn-06",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-kn-06__Sapna__r0__kn",
+   "audio": "hh-kn-06__Sapna__r0",
+   "case": "hh-kn-06",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-hi-07__Madhur__r0__hi",
+   "audio": "hh-hi-07__Madhur__r0",
+   "case": "hh-hi-07",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "hh-hi-07__Swara__r0__hi",
+   "audio": "hh-hi-07__Swara__r0",
+   "case": "hh-hi-07",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-hi-01__Madhur__r0__hi",
+   "audio": "kh-hi-01__Madhur__r0",
+   "case": "kh-hi-01",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-hi-01__Swara__r0__hi",
+   "audio": "kh-hi-01__Swara__r0",
+   "case": "kh-hi-01",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-hi-02__Madhur__r0__hi",
+   "audio": "kh-hi-02__Madhur__r0",
+   "case": "kh-hi-02",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-hi-02__Swara__r0__hi",
+   "audio": "kh-hi-02__Swara__r0",
+   "case": "kh-hi-02",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-en-03__Neerja__r0__en",
+   "audio": "kh-en-03__Neerja__r0",
+   "case": "kh-en-03",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-en-03__Prabhat__r0__en",
+   "audio": "kh-en-03__Prabhat__r0",
+   "case": "kh-en-03",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-en-03__NeerjaExpressive__r0__en",
+   "audio": "kh-en-03__NeerjaExpressive__r0",
+   "case": "kh-en-03",
+   "lang": "en",
+   "asr_lang": "<|en|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-hi-04__Madhur__r0__hi",
+   "audio": "kh-hi-04__Madhur__r0",
+   "case": "kh-hi-04",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-hi-04__Swara__r0__hi",
+   "audio": "kh-hi-04__Swara__r0",
+   "case": "kh-hi-04",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-bn-05__Bashkar__r0__bn",
+   "audio": "kh-bn-05__Bashkar__r0",
+   "case": "kh-bn-05",
+   "lang": "bn",
+   "asr_lang": "<|bn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-bn-05__Tanishaa__r0__bn",
+   "audio": "kh-bn-05__Tanishaa__r0",
+   "case": "kh-bn-05",
+   "lang": "bn",
+   "asr_lang": "<|bn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-ta-06__Pallavi__r0__ta",
+   "audio": "kh-ta-06__Pallavi__r0",
+   "case": "kh-ta-06",
+   "lang": "ta",
+   "asr_lang": "<|ta|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-ta-06__Valluvar__r0__ta",
+   "audio": "kh-ta-06__Valluvar__r0",
+   "case": "kh-ta-06",
+   "lang": "ta",
+   "asr_lang": "<|ta|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-mr-07__Aarohi__r0__mr",
+   "audio": "kh-mr-07__Aarohi__r0",
+   "case": "kh-mr-07",
+   "lang": "mr",
+   "asr_lang": "<|mr|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-mr-07__Manohar__r0__mr",
+   "audio": "kh-mr-07__Manohar__r0",
+   "case": "kh-mr-07",
+   "lang": "mr",
+   "asr_lang": "<|mr|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-hi-08__Madhur__r0__hi",
+   "audio": "kh-hi-08__Madhur__r0",
+   "case": "kh-hi-08",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kh-hi-08__Swara__r0__hi",
+   "audio": "kh-hi-08__Swara__r0",
+   "case": "kh-hi-08",
+   "lang": "hi",
+   "asr_lang": "<|hi|>",
+   "tier": "base"
+  }
+ ]
+}

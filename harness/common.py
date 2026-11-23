@@ -8,8 +8,11 @@ import json
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-CASES = os.path.join(HERE, "corpus", "cases.jsonl")
-PLAN = os.path.join(HERE, "plan.json")
+# Overridable so other corpora (e.g. the voice-kit apps) reuse the same audio pipeline and caches:
+#   HARNESS_CASES=corpus/kit/_all.jsonl HARNESS_PLAN=plan_kit.json HARNESS_TIERS=base python common.py
+CASES = os.path.join(HERE, os.environ.get("HARNESS_CASES") or os.path.join("corpus", "cases.jsonl"))
+PLAN = os.path.join(HERE, os.environ.get("HARNESS_PLAN") or "plan.json")
+TIERS = set((os.environ.get("HARNESS_TIERS") or "base,noise,rate,auto").split(","))
 AUDIO = os.path.join(HERE, "audio")
 CLEAN_DIR = os.path.join(AUDIO, "clean")
 NOISY_DIR = os.path.join(AUDIO, "noisy")
@@ -85,6 +88,10 @@ def build_plan(cases):
         if n % AUTO_EVERY == 0:
             job(audio(clip(case, vs[0], "r0")), case, "auto", auto=True)
     order = {"base": 0, "noise": 1, "rate": 2, "auto": 3}
+    jobs = [j for j in jobs if j["tier"] in TIERS]
+    used = {j["audio"] for j in jobs}
+    audios = {k: v for k, v in audios.items() if k in used}
+    clips = {k: v for k, v in clips.items() if k in {a["clip"] for a in audios.values()}}
     jobs.sort(key=lambda j: order[j["tier"]])
     return {"clips": list(clips.values()), "audios": list(audios.values()), "jobs": jobs}
 

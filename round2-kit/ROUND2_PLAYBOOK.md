@@ -26,8 +26,9 @@ We can't know the problem statement in advance, so this kit gets everything that
 | Configurable voice kit | `round2-kit/voice-kit/` | A new slot-filling app from ONE config file. Examples: fraud, khata (ledger), health (Tamil → English), civic grievance. |
 | Quiz engine | `round2-kit/archetypes/quiz/` | Spoken-answer judging in Hindi/Bhojpuri/English, cross-script (Patna brief). |
 | Elder-assistant engine | `round2-kit/archetypes/assistant/` | Bengali/Hindi intents: cab, bill, recharge, call, plus safe hand-off links (Kolkata brief). |
-| AI understanding API | `round2-kit/llm-api/` | `/api/understand` on NVIDIA NIM (bolt): 92% fully correct on our corpus, about 1 s, plus English summaries. The key stays on the server. |
-| Evaluation harness | `harness/`, `harness-llm/` | 280 cases in 7 languages, TTS voices, noise, ASR, per-field scoring. Re-run after every change. |
+| AI understanding API | `round2-kit/llm-api/` | `/api/understand` on NVIDIA NIM (bolt), about 1 s, plus English summaries; the key stays on the server. **Measured (23 Nov): use it only as an optional fallback.** On real transcripts the LLM alone is 16.5% fully correct, against 43.5% for the on-device rules, because it invents times and scam types and gets "yesterday" wrong. Use it for summaries or free text, not for numbers, dates or IDs. |
+| Evaluation harness | `harness/` (see `harness/JOURNAL.md`) | 280 fraud cases in 7 languages (TTS, noise, Whisper, per-field scoring) took Turant from 27% to 43.5% fully correct on clean speech. `kit_apps_eval.mjs` scores ANY kit app by slot type, from text or (`--asr`) speech. The audio pipeline runs on any corpus through the `HARNESS_CASES` / `HARNESS_PLAN` / `HARNESS_TIERS` env vars. |
+| Cross-language parsers | `round2-kit/indic-numbers/` | Amounts, times and banks in 7 languages, including the misspellings speech recognisers make. 106 tests; fuzzed with millions of phrases on laptop 2. Already inside the kit and Turant. |
 | Demo-video maker | `round2-kit/demo-video/` | `./make.sh scenarios/x.json` produces narrated, captioned vertical and landscape MP4s. |
 
 ## 3-day plan (27–29 Nov)
@@ -36,7 +37,12 @@ We can't know the problem statement in advance, so this kit gets everything that
 1. Read the problem statement twice, word by word. Underline every noun (users, tasks, constraints) and every evaluation criterion.
 2. Pick ONE user and ONE task. Write the "before" story in 5 lines (who, where, what breaks).
 3. Write the build prompt the way we did for Activity 2 (screens → voice steps → languages → noise → low connectivity → error states → acceptance test). Dictate it with Wispr Flow.
-4. Match the problem to an archetype (slot-filling → `voice-kit` config; quiz → `archetypes/quiz`; intents → `archetypes/assistant`). Scaffold with `voice-kit/scripts/new-app.mjs`, write the config and the copy in hi + en first, then add corpus cases to the harness for the new domain. Get the happy path working end to end by night.
+4. Match the problem to an archetype (slot-filling → `voice-kit` config; quiz → `archetypes/quiz`; intents → `archetypes/assistant`). Scaffold with `voice-kit/scripts/new-app.mjs`, write the config and the copy in hi + en first. Get the happy path working end to end by night.
+5. **Measure from the first hour.** This is how Turant went from 27% to 43.5%. The biggest gap on the kit's held-out cases was missing domain words in each language.
+   - Write the keyword lists for every enum option in all 7 languages, including the English loanwords people actually say (फोनपे, ஜிபே, "owes me").
+   - Write 30-50 cases in `harness/corpus/kit/<app>.jsonl`, plus 15 more in `corpus/kit-heldout/` that nobody tunes on.
+   - Loop: `tsx kit_apps_eval.mjs <app> --show`, fix, re-run (seconds).
+   - Overnight, run speech: build `_all.jsonl`, then `HARNESS_CASES=corpus/kit/_all.jsonl HARNESS_PLAN=plan_kit.json HARNESS_TIERS=base`, run `python common.py`, `tts.py` and `asr.py`, then `kit_apps_eval.mjs --asr plan_kit.json`.
 
 **Day 2 (28 Nov) — make it real**
 1. Error states: mic denied, no speech, low confidence, offline, unsupported language.
@@ -64,6 +70,15 @@ We can't know the problem statement in advance, so this kit gets everything that
 - **Buildability / it works**: a live URL that works on a phone, plus a sample button so judges without a mic still see it.
 - **Originality**: a sharp angle, not a generic chatbot.
 - **Impact + adoption**: who benefits, a before/after, what blocks adoption and how you'd fix it.
+
+## Numbers we can show judges (all reproducible from `harness/`)
+- **Speech to report, 7 languages:** fully correct reports went from 27% to 43.5% on clean speech, and from 29% to 46% on voices never used for tuning. Field F1 rose from 51 to 71.
+- **Reference text:** 100%.
+- **Robustness:** one ASR-style misspelling per number is still read correctly 99.6-100% of the time (24-65% without repair). No ordinary word in 1,510 real transcripts gets turned into a number.
+- **Honest about limits:**
+  - Bengali, Tamil, Telugu and Kannada are 16-25% fully correct on clean speech, because Whisper mishears 75-134% of the words.
+  - 84% of the remaining errors are speech recognition, not our parsing.
+  - Mitigations: read-backs, one-tap fixes (₹5 → "₹5,000?"), and asking rather than guessing.
 
 ## Submission checklist (29 Nov)
 - [ ] Live URL (Vercel) opens on a phone, sample flow works without a mic
