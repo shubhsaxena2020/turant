@@ -569,7 +569,7 @@ export function combine(parts: Part[]): number | undefined {
 }
 
 // ---------- amounts in sentences ----------
-const CURRENCY = ['দাকা', 'रुपये', 'रुपए', 'रुपया', 'रुपयांचे', 'रूपये', 'rupees', 'rupee', 'rupaye', 'rupaiya', 'rs', 'inr', 'টাকা', 'টাকার', 'ரூபாய்', 'ரூபா', 'రూపాయలు', 'రూపాయల', 'రూపాయి', 'ರೂಪಾಯಿ', 'ರೂ', 'taka', 'paise', 'पैसे'].map((w) => w.normalize('NFC'));
+const CURRENCY = ['দাকা', 'रुपये', 'रुपए', 'रुपया', 'रुपयांचे', 'रूपये', 'rupees', 'rupee', 'rupaye', 'rupaiya', 'rs', 'inr', 'টাকা', 'টাকার', 'ரூபாய்', 'ரூபா', 'ருபாய்', 'ருபீஸ்', 'ரூபீஸ்', 'రూపాయలు', 'రూపాయల', 'రూపాయి', 'ರೂಪಾಯಿ', 'ರೂಪಾಯ್', 'ರೂ', 'taka', 'paise', 'पैसे'].map((w) => w.normalize('NFC'));
 // Currency words as ASR spells them: ருபாய், ரூபாயி, তাকা, రోపాయలు. Compared after folding
 // sound-alike letters and vowel length (same table as above), by prefix.
 // Folding also merges aspirated / unaspirated letters (আধ ~ আদ, ঘণ্টা ~ গন্টা); those are left out of the
@@ -636,7 +636,7 @@ const ONE_THOUSAND = ['ஆயிரம்', 'ஆயிரத்து', 'వె�
 const CONTEXT_MULT: Record<string, number> = { [('सो').normalize('NFC')]: 100 };
 // Number only right before "thousand / lakh": ಆಯಿದು ಸಾವಿರ = 5,000, but "ಕಟ್ ಆಯಿದು" = "got cut" (ಆಯಿತು).
 const BEFORE_MULT: Record<string, number> = Object.fromEntries(
-  Object.entries({ 'ಆಯಿದು': 5, 'শোয': 6, 'ছযি': 6 }).map(([w, v]) => [w.normalize('NFC'), v]), // শোয(়) alone = "lie down"
+  Object.entries({ 'ಆಯಿದು': 5, 'ಆಯದು': 5, 'শোয': 6, 'ছযি': 6, 'देड': 1.5, 'डेड': 1.5 }).map(([w, v]) => [w.normalize('NFC'), v]), // শোয(়) alone = "lie down"
 );
 // Words that may stand right before a bare "thousand": "a thousand", "around thousand rupees".
 const BARE_OK = ['a', 'one', 'about', 'around', 'approx', 'only', 'just', 'karib', 'lagbhag', 'sirf', 'bas', 'करीब', 'लगभग', 'सिर्फ', 'बस', 'and', 'aur', 'और'];

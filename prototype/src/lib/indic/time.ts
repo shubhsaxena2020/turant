@@ -19,7 +19,7 @@ const fuzzyPrefix = (f: string, k: string) => f === k || ([...k].length >= 4 && 
 const has = (t: string, list: string[]) => list.some((w) => t === w || t.startsWith(w)) || folded(list).some((k) => fuzzyPrefix(fold(t), k));
 const is = (t: string, list: string[]) => list.includes(t) || folded(list).includes(fold(t));
 
-const NOW_WORDS = N(['अभी', 'abhi', 'এইমাত্র', 'এইমাত্রো', 'এখনই', 'இப்பதான்', 'இப்போதான்', 'ఇప్పుడే', 'ఇపుడే', 'ಈಗಷ್ಟೇ', 'आत्ताच', 'just']);
+const NOW_WORDS = N(['अभी', 'abhi', 'এইমাত্র', 'এইমাত্রো', 'এইমত্র', 'এখনই', 'இப்பதான்', 'இப்போதான்', 'ఇప్పుడే', 'ఇపుడే', 'ಈಗಷ್ಟೇ', 'आत्ताच', 'just']);
 const MIN = N(['मिनट', 'मिनिट', 'minute', 'min', 'মিনিট', 'நிமிட', 'நிமிஷ', 'నిమిష', 'ನಿಮಿಷ']);
 const HOUR = N(['घंटा', 'घंटे', 'घण्टा', 'तास', 'ghanta', 'ghante', 'hour', 'hr', 'ঘণ্টা', 'ঘন্টা', 'மணி நேர', 'நேரத்', 'గంట', 'ಗಂಟೆ']);
 const DAY = N(['दिन', 'दिवस', 'din', 'day', 'দিন', 'நாள', 'நாட்', 'రోజు', 'రోజుల', 'రోజిల', 'ದಿನ']);
@@ -157,6 +157,7 @@ function agoMinutes(toks: string[]): number | undefined {
 }
 
 export function findTime(text: string, now: Date = new Date()): TimeHit | undefined {
+  text = text.replace(/\b([ap])\.\s?m\b\.?/gi, '$1m'); // "7 p.m."
   const toks = tokenize(text).map((t) => t.toLowerCase());
   const low = text.toLowerCase();
   const ago = agoMinutes(toks);

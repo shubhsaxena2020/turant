@@ -194,8 +194,8 @@ const FRAC_PREFIX = map({ saade: 0.5, sade: 0.5, saadhe: 0.5, sadhe: 0.5, 'स�
 const STANDALONE = map({ dedh: 1.5, derh: 1.5, dhed: 1.5, 'डेढ़': 1.5, 'दीड': 1.5, dhai: 2.5, dhaai: 2.5, adhai: 2.5, 'ढाई': 2.5, 'अढ़ाई': 2.5, 'अडीच': 2.5 });
 const REPEAT = map({ double: 2, triple: 3, 'डबल': 2, 'ट्रिपल': 3 });
 
-const CURRENCY_EXACT = set(['rs', 'inr', '₹', 'rupaye', 'rupaiye', 'rupay', 'rupee', 'rupees', 'rupiya', 'rupiye', 'rupya', 'rupaiya', 'টাকা', 'টাকার']);
-const CURRENCY_PREFIX = ['rupa', 'rupe', 'rupi', 'rupy', 'रुपय', 'रुपए', 'रुपये', 'रूपय', 'रूपए', 'रुपै', 'রুপি', 'টাকা', 'ரூபா', 'రూపాయ', 'ರೂಪಾಯ'].map(nw);
+const CURRENCY_EXACT = set(['rs', 'inr', '₹', 'rupaye', 'rupaiye', 'rupay', 'rupee', 'rupees', 'rupiya', 'rupiye', 'rupya', 'rupaiya', 'रुपे', 'रूपे', 'টাকা', 'টাকার']);
+const CURRENCY_PREFIX = ['rupa', 'rupe', 'rupi', 'rupy', 'रुपय', 'रुपए', 'रुपये', 'रूपय', 'रूपए', 'रुपै', 'রুপি', 'টাকা', 'ரூபா', 'ருபா', 'ருபீ', 'ரூபீ', 'రూపాయ', 'ರೂಪಾಯ'].map(nw);
 
 const MINUTE_UNITS = ['minute', 'minutes', 'min', 'mins', 'minat', 'mint', 'mnt', 'मिनट', 'मिनिट', 'মিনিট', 'நிமிட', 'నిమిష', 'ನಿಮಿಷ'].map(nw);
 const HOUR_UNITS = ['hour', 'hours', 'hr', 'hrs', 'ghanta', 'ghante', 'ghanton', 'ghanta', 'घंटा', 'घंटे', 'घंटों', 'तास', 'ঘণ্টা', 'ঘন্টা', 'மணிநேர', 'గంట', 'ಗಂಟೆ'].map(nw);
@@ -585,7 +585,7 @@ const SCAM_RULES: [ScamType, string[]][] = [
   ['investment_task', ['investment', 'invest', 'trading', 'stock tip', 'crypto', 'bitcoin', 'task', 'tasks', 'part time job', 'part-time job', 'work from home', 'youtube like', 'like karne', 'rating task', 'telegram', 'paisa double', 'double ho', 'high return', 'निवेश', 'टास्क', 'ट्रेडिंग', 'टेलीग्राम', 'इन्वेस्ट', 'डबल हो', 'दुप्पट', 'गुंतवणु', 'বিনিয়োগ', 'ইনভেস্ট', 'ডাবল', 'টেলিগ্রাম', 'টাস্ক', 'முதலீடு', 'இன்வெஸ்ட்', 'டெலிகிராம்', 'டாஸ்க்', 'పెట్టుబడి', 'పిటుబడి', 'ఇన్వెస్ట్', 'టెలిగ్రామ్', 'టాస్క్', 'गुंतवणूक', 'ಹೂಡಿಕೆ', 'ಇನ್ವೆಸ್ಟ್', 'ಟೆಲಿಗ್ರಾಮ್', 'ಟಾಸ್ಕ್']],
   ['qr_scan', ['qr', 'qr code', 'scan', 'scanner', 'scanned', 'क्यूआर', 'स्कैन', 'স্ক্যান', 'কিউআর', 'ஸ்கேன்', 'స్కాన్', 'క్యువార', 'క్యూఆర్', 'स्कॅन', 'ಸ್ಕ್ಯಾನ್']],
   ['fake_customer_care', ['customer care', 'customer service', 'customer support', 'helpline number', 'care number', 'anydesk', 'any desk', 'teamviewer', 'screen share', 'quick support', 'कस्टमर केयर', 'कस्टमर केअर', 'कस्टमर केर', 'কাস্টমার কেয়ার', 'கஸ்டமர் கேர்', 'కస్టమర్ కేర్', 'ಕಸ್ಟಮರ್ ಕೇರ್']],
-  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'கேவாயசி', 'கேவைசி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'ಕೈಕ ಅಪ್', 'ಕೈಕ್ಕ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'केवाई सी', 'केवाय सी', 'के yc', 'yc अपडेट', 'yc update', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
+  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'கேவாயசி', 'கேவைசி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'ಕೈಕ ಅಪ್', 'ಕೈಕ್ಕ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'केवाई सी', 'केवाय सी', 'केवा ऐसी', 'केवाऐसी', 'के yc', 'yc अपडेट', 'yc update', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
   ['wrong_transfer', ['galti se', 'galati se', 'by mistake', 'mistakenly', 'wrong transfer', 'wrongly sent', 'refund', 'paise wapas', 'paisa wapas', 'wapas bhej', 'return the money', 'गलती से', 'वापस भेज', 'रिफंड', 'ভুল করে', 'রিফান্ড', 'தவறுதலாக', 'தவர்தலா', 'పొరపాటున', 'चुकून', 'ತಪ್ಪಾಗಿ']],
   ['otp_shared', ['otp', 'ओटीपी', 'ওটিপি', 'ஓடிபி', 'ஓட்டிப்', 'ஓட்டிபி', 'ఓటీపీ', 'ఓటి పీ', 'ಒಟಿಪಿ', 'code bataya', 'code bata diya', 'pin bataya', 'pin bata diya']],
 ];
@@ -656,7 +656,7 @@ function extractBank(text: string, opts: ExtractOptions): Extracted<string> | un
 const APPS: { name: string; keys: string[] }[] = [
   { name: 'PhonePe', keys: ['phonepe', 'phone pay', 'phonpe', 'phone-pe', 'fon pay', 'fon pe', 'fonpe', 'फोनपे', 'ফোনপে', 'போன்பே', 'ఫోన్‌పే', 'ఫోన్పే', 'ಫೋನ್‌ಪೇ', 'ফোন পে', 'ఫోన్ పే', 'போன் பே', 'ಫೋನ್ ಪೇ', 'फोन पे वरून', 'फोन पे द्वारे'] },
   { name: 'Google Pay', keys: ['google pay', 'gpay', 'g pay', 'googlepay', 'tez', 'गूगल पे', 'গুগল পে', 'கூகுள் பே', 'గూగుల్ పే', 'ಗೂಗಲ್ ಪೇ'] },
-  { name: 'Paytm', keys: ['paytm', 'pay tm', 'पेटीएम', 'পেটিএম', 'பேடிஎம்', 'పేటీఎం', 'పేటియం', 'ಪೇಟಿಎಂ', 'ಪೇಟಿಯೆ', 'पेटी एम', 'पे टी एम', 'पेटी इन', 'பேடியம்', 'পেটি এম'] },
+  { name: 'Paytm', keys: ['paytm', 'pay tm', 'पेटीएम', 'পেটিএম', 'பேடிஎம்', 'పేటీఎం', 'పేటియం', 'ಪೇಟಿಎಂ', 'ಪೇಟಿಯೆ', 'ಪೇಟಿಯಂ', 'पेटी एम', 'पे टी एम', 'पेटी इन', 'பேடியம்', 'পেটি এম'] },
   { name: 'BHIM', keys: ['bhim', 'भीम ऐप', 'भीम यूपीआई'] },
   { name: 'Amazon Pay', keys: ['amazon pay', 'अमेज़न पे'] },
   { name: 'CRED', keys: ['cred'] },
@@ -832,7 +832,16 @@ function indicBank(text: string): Extracted<string> | undefined {
   return name ? { value: name, confidence: Math.min(0.9, hit.confidence) } : undefined;
 }
 
+/** Whisper large-v3 writes some Telugu words in Kannada letters ("రೂಪಾಯలు"). The two Unicode blocks are
+ * parallel (+0x80), so once any Telugu letter is present, Kannada letters are read as Telugu.
+ * Kannada speech never gets Telugu letters, so Kannada text is untouched. */
+export function unifyScript(text: string): string {
+  if (!/[ఀ-౿]/.test(text)) return text;
+  return text.replace(/[ಀ-೿]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x80));
+}
+
 export function extractFields(text: string, opts: ExtractOptions = {}): Extraction {
+  text = unifyScript(text);
   const norm = normalize(text);
   const prepped = prepUpi(norm);
   const { ids, rest } = extractUpis(prepped);
@@ -872,6 +881,7 @@ const YES_WORDS = ['haan', 'han', 'haa', 'ha', 'ji', 'haan ji', 'yes', 'yeah', '
 const NO_WORDS = ['nahi', 'nahin', 'nhi', 'na', 'no', 'galat', 'wrong', 'नहीं', 'गलत', 'না', 'ভুল', 'இல்லை', 'தவறு', 'కాదు', 'లేదు', 'नाही', 'चूक', 'ಇಲ್ಲ', 'ತಪ್ಪು'];
 
 export function detectIntent(text: string): Intent | null {
+  text = unifyScript(text);
   const s = normalize(text);
   const words = wordCount(s);
   if (hasPhrase(s, SKIP_WORDS) >= 0) return 'skip';
@@ -935,6 +945,7 @@ export interface Correction {
  * "bank SBI nahi HDFC tha". Returns exactly one field (or null).
  */
 export function parseCorrection(text: string, opts: { now?: Date } = {}): Correction | null {
+  text = unifyScript(text);
   const s = normalize(text);
   let field: FieldKey | undefined;
   let at = Infinity;
