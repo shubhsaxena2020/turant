@@ -21,6 +21,7 @@ import { DocumentScreen } from './screens/DocumentScreen';
 import { HistoryScreen } from './screens/HistoryScreen';
 import { LanguageSheet } from './screens/LanguageSheet';
 import type { UI } from './ui';
+import { logConfirmed } from './lib/turnlog';
 
 type Stage = 'talk' | 'check' | 'done' | 'doc' | 'history';
 
@@ -242,6 +243,7 @@ export default function App() {
             entry={entry}
             onChange={persist}
             onConfirm={() => {
+              logConfirmed(cfg, entry as never);
               persist({ ...entry, status: 'ready', updatedAt: new Date().toISOString() });
               go('done');
             }}

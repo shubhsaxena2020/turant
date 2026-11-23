@@ -11,6 +11,7 @@ import { cue } from '../lib/cues';
 import { EditSheet, FixSheet } from './EditSheet';
 import { CheckIcon, MicIcon } from '../components/icons';
 import type { UI } from '../ui';
+import { markCorrected } from '../lib/turnlog';
 
 export function CheckScreen(props: { ui: UI; entry: Entry; onChange: (r: Entry) => void; onConfirm: () => void }) {
   const { ui, entry } = props;
@@ -33,6 +34,7 @@ export function CheckScreen(props: { ui: UI; entry: Entry; onChange: (r: Entry) 
 
   const save = (ext: Extraction, keys: string[], source: 'voice' | 'typed' | 'tap') => {
     const { entry: next } = commitAnswer(cfg, entry, ext, keys, source);
+    markCorrected(entry.id, keys);
     const q = questionKeyOf(cfg, keys[0]);
     props.onChange({ ...next, skipped: next.skipped.filter((s) => s !== q) });
     changedNote(keys, next);
@@ -142,6 +144,7 @@ export function CheckScreen(props: { ui: UI; entry: Entry; onChange: (r: Entry) 
           onClose={() => setFix(false)}
           onFix={(field, value) => {
             const next = setField(entry, field, { value, confidence: 1, source: 'voice' });
+            markCorrected(entry.id, [field]);
             props.onChange(next);
             changedNote([field], next);
             setFix(false);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Entry } from '../domain/types';
 import { deleteAllEntries, loadEntries } from '../lib/storage';
+import { exportCases, turnStats } from '../lib/turnlog';
 import { makeCtx } from '../lib/outputs';
 import { formatDateTime } from '../lib/format';
 import type { UI } from '../ui';
@@ -49,6 +50,28 @@ export function HistoryScreen(props: { ui: UI; onOpen: (r: Entry) => void; onDel
         >
           {t('deleteAll')}
         </button>
+      ) : null}
+      {typeof location !== 'undefined' && /[?&]debug=1/.test(location.search) ? (
+        <p className="mt-6 text-label text-muted">
+          {(() => {
+            const s = turnStats(cfg.id);
+            return `Test log: ${s.turns} turns, ${s.confirmed} confirmed, ${s.corrected} corrected. `;
+          })()}
+          <button
+            className="link-quiet"
+            data-testid="export-cases"
+            onClick={() => {
+              const blob = new Blob([exportCases(cfg.id)], { type: 'application/x-ndjson' });
+              const a = document.createElement('a');
+              a.href = URL.createObjectURL(blob);
+              a.download = `${cfg.id}-user-cases.jsonl`;
+              a.click();
+              URL.revokeObjectURL(a.href);
+            }}
+          >
+            Download test cases (JSONL)
+          </button>
+        </p>
       ) : null}
     </main>
   );

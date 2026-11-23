@@ -1,0 +1,25 @@
+import { chromium } from 'playwright-core';
+import { readdirSync, existsSync } from 'node:fs';
+import { join } from 'node:path';
+import { homedir } from 'node:os';
+const base = join(homedir(), 'AppData', 'Local', 'ms-playwright');
+const dir = readdirSync(base).filter((d) => /^chromium-\d+$/.test(d)).sort().reverse()[0];
+const exe = ['chrome-win64', 'chrome-win'].map((s) => join(base, dir, s, 'chrome.exe')).find(existsSync);
+const b = await chromium.launch({ executablePath: exe });
+const p = await (await b.newContext({ viewport: { width: 390, height: 844 } })).newPage();
+await p.addInitScript(() => { window.speechSynthesis && (window.speechSynthesis.speak = (u) => setTimeout(() => u.onend && u.onend(new Event('end')), 200)); });
+await p.goto('http://localhost:4325/?app=fraud&debug=1', { waitUntil: 'networkidle' });
+await p.click('[data-testid="sample"]');
+await p.waitForSelector('[data-testid="all-right"]', { timeout: 150000 });
+// correct the bank via the list
+await p.click('[data-testid="change-bank"]');
+await p.click('[data-testid="edit-choices"]');
+await p.click('[data-testid="choice-HDFC Bank"]');
+await p.waitForTimeout(500);
+await p.click('[data-testid="all-right"]');
+await p.waitForTimeout(800);
+await p.goto('http://localhost:4325/?app=fraud&debug=1', { waitUntil: 'networkidle' });
+const log = await p.evaluate(() => localStorage.getItem('voicekit.turnlog.v1'));
+const parsed = JSON.parse(log || '{}');
+console.log('turns', parsed.turns?.length, 'confirmed', parsed.confirmed?.length, 'corrected', JSON.stringify(parsed.confirmed?.[0]?.corrected), 'bank', parsed.confirmed?.[0]?.fields?.bank, 'cleaned', JSON.stringify(parsed.turns?.[0]?.cleaned?.slice(0, 60)));
+await b.close();

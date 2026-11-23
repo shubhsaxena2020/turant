@@ -22,6 +22,7 @@ import { Keypad } from '../components/Keypad';
 import { Row, Sheet } from '../components/Sheet';
 import { CheckIcon } from '../components/icons';
 import type { UI } from '../ui';
+import { logTurn } from '../lib/turnlog';
 
 type Via = 'voice' | 'typed' | 'sample' | 'tap';
 const viaToSource = (via: Via) => (via === 'typed' ? 'typed' : via === 'sample' ? 'sample' : via === 'tap' ? 'tap' : 'voice') as FieldValue['source'];
@@ -131,8 +132,15 @@ export function TalkScreen(props: {
     setThinking(true);
     setLine(null);
     const now = new Date();
+    const t0 = performance.now();
     // Rules always; the optional LLM only adds suggestions (truth-checked), never blocks.
     const [smart] = await Promise.all([extractSmart(cfg, text, { now, lang: ui.lang }), delay(450)]);
+    logTurn({
+      app: cfg.id, entryId: rep.current.id, lang: ui.lang, kind: 'story', via, transcript: text,
+      asrConfidence: via === 'typed' ? undefined : conf,
+      extracted: Object.fromEntries(Object.entries(smart.rules).map(([k, v]) => [k, (v as { value?: unknown } | undefined)?.value])),
+      ms: Math.round(performance.now() - t0),
+    });
     setThinking(false);
     const r = rep.current;
     const asr = via === 'typed' ? undefined : conf;
