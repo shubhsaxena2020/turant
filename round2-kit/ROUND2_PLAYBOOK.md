@@ -7,28 +7,28 @@ We can't know the problem statement in advance, so this kit gets everything that
 
 ---
 
-## Before 27 Nov (do these now)
+## Status and what's left before 27 Nov (updated 23 Nov)
 
-| # | To-do | Who | Why |
-|---|---|---|---|
-| 1 | **Open Wispr Flow and sign in with the same email you registered with on the hackathon site**. It's installed (`%LOCALAPPDATA%\WisprFlow`) but wasn't running. | Shubh | Sign-up before Activity 3 is required for **R1 prizes**. The dashboard matches it every 30 min. |
-| 2 | Submit Round 1 activities 1→2→3 (drafts in `../round1/`). Ideally re-dictate them through Wispr Flow, since the site asks for that. | Shubh | Due end of day 26/27 Nov. **Submitting locks the team.** |
-| 3 | RSVP for the masterclass (week of 23 Nov, "RSVP opens soon" on the dashboard). | Shubh + team | Strongly recommended, and it'll probably hint at what Round 2 judges value. |
-| 4 | Optional: get an Indic speech API key: **Sarvam AI** (dashboard.sarvam.ai, free credits; Saarika STT / Bulbul TTS for 10+ Indian languages) and/or **Bhashini** (bhashini.gov.in ULCA API key). | Shubh | Browser speech (Web Speech API) works with no key but needs Chrome + internet and is weaker on Tamil/Bengali/etc. A server-side key makes the demo much more robust. |
-| 5 | Check the team: names and emails of both members, and who does what (see roles below). | Team | Team changes lock at the first submission. |
-| 6 | Make sure Vercel + GitHub accounts are logged in on the build laptop (already true: `gh` logged in as shubhsaxena2020, Vercel CLI 58 installed). | — | One-command deploy on day 3. |
+| # | Item | Status |
+|---|---|---|
+| 1 | Round 1 activities 1–3 | ✅ Submitted and passed (23 Nov). Team locked: Shubh + Sugandhi. |
+| 2 | Wispr Flow: signed in with the registration email? | ⚠ Shubh to confirm. It decides R1 prize eligibility. |
+| 3 | Masterclass RSVP (Tue 24 Nov) | ⏳ The dashboard still says "coming soon". Check it on the morning of the 24th. |
+| 4 | Free speech-API key for Indian languages: **Sarvam AI** (dashboard.sarvam.ai), no card | ⚠ Shubh (needs his sign-up). Whisper fails on ta/kn/bn (see `research/findings-2026-11-23.md`). |
+| 5 | 10-minute real-phone test of Chrome speech in hi/ta/bn/kn | ⚠ Shubh. Script in `research/findings-2026-11-23.md`. |
+| 6 | Permission for public deploys (Vercel) for the Round 2 build | ⚠ Shubh to OK. The auto-mode classifier blocked it once; a live HTTPS link is needed for judges and for the mic. |
 
-## Reusable assets already built
+## Assets ready for Round 2 (all in this repo, all tested)
 
-- `../prototype/`: **Turant** (the Round 1 idea, built from the Activity 2 prompt). It contains the reusable *voice core*:
-  - `SpeechService` (speech-to-text + text-to-speech behind one interface, so Sarvam/Bhashini can be swapped in later)
-  - translation file pattern for 7 Indian languages + native-script language picker
-  - slot-filling engine: extract fields from free speech → ask only for what's missing → spoken read-back → voice correction ("amount galat hai, 5999 tha")
-  - Indian number parsing (paanch hazaar, saade teen hazaar, do lakh, Devanagari numerals and words), relative times ("10 minute pehle", "kal shaam")
-  - offline drafts + PWA service worker, typing fallback, mic-denied state, "Try a sample" demo button
-- This playbook + the submission checklist below.
-
-**On 27 Nov:** copy `prototype/` to `round2/`, then replace the domain-specific parts (fields, questions, output screen) with the new problem. Keep the voice core, the error states and the design system.
+| Asset | Where | What it gives us on day 1 |
+|---|---|---|
+| Research-backed voice UX (v2) | `prototype/`, `research/DESIGN_SPEC.md` | The look and flow judges will see: phone-call model, breathing presence, letter with gaps, no boxes. |
+| Configurable voice kit | `round2-kit/voice-kit/` | A new slot-filling app from ONE config file. Examples: fraud, khata (ledger), health (Tamil → English), civic grievance. |
+| Quiz engine | `round2-kit/archetypes/quiz/` | Spoken-answer judging in Hindi/Bhojpuri/English, cross-script (Patna brief). |
+| Elder-assistant engine | `round2-kit/archetypes/assistant/` | Bengali/Hindi intents: cab, bill, recharge, call, plus safe hand-off links (Kolkata brief). |
+| AI understanding API | `round2-kit/llm-api/` | `/api/understand` on NVIDIA NIM (bolt): 92% fully correct on our corpus, about 1 s, plus English summaries. The key stays on the server. |
+| Evaluation harness | `harness/`, `harness-llm/` | 280 cases in 7 languages, TTS voices, noise, ASR, per-field scoring. Re-run after every change. |
+| Demo-video maker | `round2-kit/demo-video/` | `./make.sh scenarios/x.json` produces narrated, captioned vertical and landscape MP4s. |
 
 ## 3-day plan (27–29 Nov)
 
@@ -36,7 +36,7 @@ We can't know the problem statement in advance, so this kit gets everything that
 1. Read the problem statement twice, word by word. Underline every noun (users, tasks, constraints) and every evaluation criterion.
 2. Pick ONE user and ONE task. Write the "before" story in 5 lines (who, where, what breaks).
 3. Write the build prompt the way we did for Activity 2 (screens → voice steps → languages → noise → low connectivity → error states → acceptance test). Dictate it with Wispr Flow.
-4. Fork the voice core, rename it, define the new fields and questions. Get the happy path working end-to-end by night, even if it's ugly.
+4. Match the problem to an archetype (slot-filling → `voice-kit` config; quiz → `archetypes/quiz`; intents → `archetypes/assistant`). Scaffold with `voice-kit/scripts/new-app.mjs`, write the config and the copy in hi + en first, then add corpus cases to the harness for the new domain. Get the happy path working end to end by night.
 
 **Day 2 (28 Nov) — make it real**
 1. Error states: mic denied, no speech, low confidence, offline, unsupported language.
