@@ -174,6 +174,24 @@ Speech, not text, is the bottleneck for every app, and the gap is largest in bn/
 
 So on day 1 of Round 2: write the keyword lists in all languages, write 30-50 cases, then loop this harness.
 
+## Experiment: biasing Whisper with domain words (`asr_hotwords.py`), not adopted
+
+The 600 clean clips were re-transcribed with per-language hotwords (currency, thousand / lakh, time words, bank and app names), then scored with the same round-16 extractor (`run_eval.mjs --transcripts transcripts_hw`).
+
+| | Without hotwords | With hotwords |
+|---|---|---|
+| Word error rate (clean) | 75% | 70% |
+| Fully correct, all clean | 47.0% | 46.5% |
+| Fully correct, dev voice | 47.1% | 45.4% |
+| Fully correct, held-out voice | 46.9% | 47.5% |
+
+- **By language (fully correct):**
+  - Gains: Telugu 26% → 33%, Tamil 16% → 20%.
+  - Losses: Hindi 90% → 83%, Marathi 60% → 53%.
+- **By field:** scam type and bank F1 rise (+3 to +5), amount F1 falls about 2 points.
+- **Lesson:** fewer word errors do not mean more correct reports. The words the extractor needs (numbers) did not improve.
+- **Decision:** not adopted. The app uses the phone's own recogniser, which has no hotword control; per-language hotwords (te/ta only) are worth revisiting if we move to a server-side ASR.
+
 ## What is left
 
 - **Remaining clean-ASR field errors** (round7):
