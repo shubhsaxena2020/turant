@@ -1038,5 +1038,7 @@ export function parseCorrection(text: string, opts: { now?: Date } = {}): Correc
     if (hit) return { field: k, value: hit.value, confidence: hit.confidence };
   }
   const amt = extractFields(text, { ...base, hint: 'amount' }).amount;
+  // "NOMOR BHUL 981112233": an ungrouped 7+ digit run is an ID with a digit lost (money is written 20,000 / 2,50,000)
+  if (amt && Number(amt.value) >= 1_000_000 && /(^|[^\d,])\d{7,}(?![\d,])/.test(text)) return null;
   return amt ? { field: 'amount', value: amt.value, confidence: amt.confidence * 0.8 } : null;
 }

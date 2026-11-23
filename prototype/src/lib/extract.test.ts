@@ -398,3 +398,17 @@ describe('round 30 (large-v3 dev transcripts)', () => {
     expect(x('कल शाम 7.30 बजे पैसे गए').time).toBeDefined();
   });
 });
+
+describe('round 31 (large-v3 dev transcripts)', () => {
+  const x = (t: string, o = {}) => extractFields(t, { now: NOW, ...o });
+  it('time words', () => {
+    expect(x('ಅರ್ಧಗಂಟೆ ಹಿಂದೆ').time?.value).toBe(x('ಅರ್ಧ ಗಂಟೆ ಹಿಂದೆ').time?.value); // glued half-hour
+    expect(x('ನಿನ್ನೆ ಸಂಜಿ ಏಳು ಗಂಟಗೆ').time?.value).toBe(x('ನಿನ್ನೆ ಸಂಜೆ ಏಳು ಗಂಟೆಗೆ').time?.value);
+    expect(x('আজ সকাল দস্টায়').time?.value).toBe(x('আজ সকাল দশটায়').time?.value); // virama left on the stem
+    expect(x('গতকাল সুন্ধা সাত্তায়').time?.value).toBe(x('গতকাল সন্ধ্যা সাতটায়').time?.value);
+  });
+  it('a lost-digit phone number in a correction is not an amount', () => {
+    expect(parseCorrection('NOMOR BHUL 981112233', { now: NOW })).toBeNull();
+    expect(parseCorrection('15,00,000', { now: NOW })?.value).toBe(1500000);
+  });
+});

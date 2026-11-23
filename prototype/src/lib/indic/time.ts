@@ -26,22 +26,22 @@ const DAY = N(['दिन', 'दिवस', 'din', 'day', 'দিন', 'நா�
 const AGO = N(['पहले', 'pehle', 'pahle', 'पूर्वी', 'कूर्वी', 'कूरवी', // कूर्वी: how Whisper writes Marathi पूर्वी
   'ago', 'back', 'before', 'আগে', 'முன்னாடி', 'முன்பு', 'முன்', 'க்கு', 'క్రితం', 'కృతం', 'క్రతం', 'ಹಿಂದೆ']);
 const HALF_UNIT_WORDS: [string, number][] = [
-  ['अरगंट', 30], ['అరగంట', 30], ['अर्ध्यातास', 30], ['अर्धातास', 30], ['आधा', 0.5], ['आध', 0.5], ['adha', 0.5], ['aadha', 0.5], ['half', 0.5], ['আধ', 0.5], ['আধা', 0.5], ['அரை', 0.5], ['అర', 0.5], ['ಅರ್ಧ', 0.5], ['अर्ध्या', 0.5], ['अर्धा', 0.5],
+  ['अरगंट', 30], ['అరగంట', 30], ['ಅರ್ಧಗಂಟೆ', 30], ['अर्ध्यातास', 30], ['अर्धातास', 30], ['आधा', 0.5], ['आध', 0.5], ['adha', 0.5], ['aadha', 0.5], ['half', 0.5], ['আধ', 0.5], ['আধা', 0.5], ['அரை', 0.5], ['అర', 0.5], ['ಅರ್ಧ', 0.5], ['अर्ध्या', 0.5], ['अर्धा', 0.5],
 ];
 
 const TODAY = N(['आज', 'aaj', 'today', 'আজ', 'இன்று', 'இன்னைக்கு', 'இன்னிக்கு', 'ఈరోజు', 'ఈ రోజు', 'ಇಂದು', 'ಇವತ್ತು']);
-const YESTERDAY = N(['कल', 'kal', 'काल', 'yesterday', 'গতকাল', 'কাল', 'நேற்று', 'நேத்து', 'నిన్న', 'ನಿನ್ನೆ']);
+const YESTERDAY = N(['कल', 'kal', 'काल', 'yesterday', 'গতকাল', 'গতোকাল', 'গতুকাল', 'কাল', 'நேற்று', 'நேத்து', 'నిన్న', 'ನಿನ್ನೆ']);
 const DAY_BEFORE = N(['परसों', 'parso', 'parson', 'परवा', 'পরশু', 'முந்தாநாள்', 'మొన్న', 'ಮೊನ್ನೆ']);
 
 const MORNING = N(['सुबह', 'सुभा', 'सुबा', 'subah', 'सकाळी', 'सकाळ', 'ಬಳಿಗ್ಗೆ', 'ಬಳಿಗೆ', 'morning', 'সকাল', 'সকালে', 'காலை', 'காலைல', 'ఉదయం', 'ಬೆಳಿಗ್ಗೆ', 'ಬೆಳಗ್ಗೆ', 'am']);
 const AFTERNOON = N(['दोपहर', 'dopahar', 'dopehar', 'दुपारी', 'afternoon', 'দুপুর', 'দুপুরে', 'மதியம்', 'మధ్యాహ్నం', 'ಮಧ್ಯಾಹ್ನ']);
 const EVENING = N(['शाम', 'shaam', 'sham', 'संध्याकाळी', 'संध्या', // संध्याकाली / संध्याकारी (ASR)
-  'evening', 'সন্ধ্যা', 'সন্ধ্যায়', 'বিকেল', 'বিকেলে', 'மாலை', 'சாயங்காலம்', 'సాయంత్రం', 'ಸಂಜೆ', 'pm']);
+  'evening', 'সন্ধ্যা', 'সন্ধ্যায়', 'সন্ধা', 'সুন্ধা', 'বিকেল', 'বিকেলে', 'மாலை', 'சாயங்காலம்', 'సాయంత్రం', 'ಸಂಜೆ', 'ಸಂಜಿ', 'pm']);
 const NIGHT = N(['रात', 'raat', 'rat', 'रात्री', 'night', 'রাত', 'রাতে', 'இரவு', 'ராத்திரி', 'రాత్రి', 'ರಾತ್ರಿ']);
 
-const OCLOCK = N(['बजे', 'baje', 'bajay', 'bajey', 'वाजता', 'वाजले', "o'clock", 'oclock', 'মণিক্কু', 'மணிக்கு', 'மணி', 'గంటలకు', 'గంటల', 'ಗಂಟೆಗೆ', 'ಕ್ಕೆ', 'కి', 'pm', 'am', 'baje']);
+const OCLOCK = N(['बजे', 'baje', 'bajay', 'bajey', 'वाजता', 'वाजले', "o'clock", 'oclock', 'মণিক্কু', 'மணிக்கு', 'மணி', 'గంటలకు', 'గంటల', 'ಗಂಟೆಗೆ', 'ಗಂಟಗೆ', 'ಗಂಟಿಗೆ', 'ಕ್ಕೆ', 'కి', 'pm', 'am', 'baje']);
 // "-টায়" = at … o'clock. Plain "-টা" is also the counting word (একটা = "a"), so it only counts before বাজে.
-const BN_AT = new RegExp('(?:' + N(['টায়', 'টায়', 'তায়']).join('|') + ')$');
+const BN_AT = new RegExp('(?:' + N(['টায়', 'টায়', 'তায়', 'টাই']).join('|') + ')$');
 const BN_TA = new RegExp(N(['টা'])[0] + '$');
 
 function dayOffset(toks: string[]): number | undefined {
@@ -85,7 +85,7 @@ function clockHours(text: string, toks: string[]): number | undefined {
     const bnAt = BN_AT.test(toks[i]);
     const bnTa = !bnAt && BN_TA.test(toks[i]) && (toks[i + 1] ?? '').startsWith('বাজ');
     if (bnAt || bnTa) {
-      const stem = toks[i].replace(bnAt ? BN_AT : BN_TA, '');
+      const stem = toks[i].replace(bnAt ? BN_AT : BN_TA, '').replace(/্$/, ''); // দস্টায়: ASR leaves a virama on the stem
       // "4টায়" is split into "4" + "টায়" by the tokenizer: the hour is the previous token
       const p = stem ? (wordParts(stem, 2) ?? (stem === 'ন' ? [{ v: 9 }] : undefined)) : i > 0 ? wordParts(toks[i - 1]) : undefined; // নটায় = 9 o'clock; a lone ন is not 9
       if (p) {
@@ -185,6 +185,8 @@ export function findTime(text: string, now: Date = new Date()): TimeHit | undefi
   if (part) {
     const h = { morning: 9, afternoon: 14, evening: 19, night: 21 }[part];
     d.setHours(h, 0, 0, 0);
+    // "evening" said at noon with no day: it was yesterday evening (the fraud already happened)
+    if (day === undefined && d.getTime() > now.getTime() + 30 * 60_000) d.setDate(d.getDate() - 1);
     return { date: d, kind: 'daypart', tolerance: 120 };
   }
   d.setHours(12, 0, 0, 0);
