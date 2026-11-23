@@ -67,7 +67,8 @@ add(1, 'এক');
 add(2, 'দুই', 'দু');
 add(3, 'তিন');
 add(4, 'চার');
-add(5, 'পাঁচ');
+add(5, 'পাঁচ', 'পাচ'); // পাচ: common spelling without chandrabindu
+add(0, 'শূন্য', 'শুন্য', 'শুন্ন', 'সুন্ন'); // Bengali zero (was missing)
 add(6, 'ছয়', 'ছয়', 'ছ');
 add(7, 'সাত');
 add(8, 'আট');
@@ -99,13 +100,14 @@ add(45, 'পঁয়তাল্লিশ', 'পঁয়তাল্লিশ'
 add(47, 'সাতচল্লিশ');
 add(50, 'পঞ্চাশ');
 add(60, 'ষাট');
-add(70, 'সত্তর');
+add(70, 'সত্তর', 'সত্তোর');
 add(75, 'পঁচাত্তর');
 add(80, 'আশি');
 add(90, 'নব্বই');
 add(99, 'নিরানব্বই');
 add(1.5, 'দেড়', 'দেড়');
-add(2.5, 'আড়াই', 'আড়াই');
+add(2.5, 'আড়াই', 'আড়াই', 'আরাই'); // আরাই: ASR
+add(900, 'নশো', 'ন’শো', 'নসো');
 
 // Telugu
 add(1, 'ఒకటి', 'ఒక');
@@ -211,7 +213,7 @@ add(0.5, 'அரை');
 const MULT: Record<string, number> = {};
 const mul = (v: number, ...ws: string[]) => ws.forEach((w) => (MULT[w.normalize('NFC')] = v));
 mul(100, 'सौ', 'शे', 'শো', 'শ', 'వంద', 'వందల', 'వందలు', 'నూట', 'నూరు', 'ನೂರು', 'நூறு', 'hundred', 'sau');
-mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजारो', 'হাজার', 'వేలు', 'వేల', 'వెయ్యి', 'ಸಾವಿರ', 'ಸಾವಿರದ', 'ஆயிரம்', 'ஆயிரத்து', 'thousand', 'hazaar', 'hazar', 'k');
+mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजारो', 'হাজার', 'হজার', 'হাজাত', 'వేలు', 'వేల', 'వెయ్యి', 'ಸಾವಿರ', 'ಸಾವಿರದ', 'ஆயிரம்', 'ஆயிரத்து', 'thousand', 'hazaar', 'hazar', 'k');
 mul(100000, 'लाख', 'লাখ', 'লক্ষ', 'లక్ష', 'లక్షల', 'లక్షలు', 'ಲಕ್ಷ', 'லட்சம்', 'லட்சத்து', 'lakh', 'lac', 'lakhs');
 mul(10000000, 'करोड़', 'करोड', 'कोटी', 'কোটি', 'కోటి', 'ಕೋಟಿ', 'கோடி', 'crore', 'crores');
 
@@ -340,6 +342,13 @@ function splitDevanagari(w: string): Part[] | undefined {
 
 function splitBengali(w: string): Part[] | undefined {
   if (WORDS[w] !== undefined) return [{ v: WORDS[w] }];
+  // "পাঁচহাজার": number glued onto thousand / lakh
+  for (const [suf, m] of [['হাজার', 1000], ['লাখ', 100000]] as [string, number][]) {
+    if (w.endsWith(suf) && w.length > suf.length) {
+      const pre = WORDS[w.slice(0, -suf.length)];
+      if (pre !== undefined) return [{ v: pre }, { mul: m }];
+    }
+  }
   for (const suf of ['শো', 'শ']) {
     if (w.endsWith(suf) && w.length > suf.length) {
       const pre = WORDS[w.slice(0, -suf.length)];
@@ -528,7 +537,7 @@ export function combine(parts: Part[]): number | undefined {
 }
 
 // ---------- amounts in sentences ----------
-const CURRENCY = ['रुपये', 'रुपए', 'रुपया', 'रुपयांचे', 'रूपये', 'rupees', 'rupee', 'rupaye', 'rupaiya', 'rs', 'inr', 'টাকা', 'টাকার', 'ரூபாய்', 'ரூபா', 'రూపాయలు', 'రూపాయల', 'రూపాయి', 'ರೂಪಾಯಿ', 'ರೂ', 'taka', 'paise', 'पैसे'].map((w) => w.normalize('NFC'));
+const CURRENCY = ['দাকা', 'रुपये', 'रुपए', 'रुपया', 'रुपयांचे', 'रूपये', 'rupees', 'rupee', 'rupaye', 'rupaiya', 'rs', 'inr', 'টাকা', 'টাকার', 'ரூபாய்', 'ரூபா', 'రూపాయలు', 'రూపాయల', 'రూపాయి', 'ರೂಪಾಯಿ', 'ರೂ', 'taka', 'paise', 'पैसे'].map((w) => w.normalize('NFC'));
 // Currency words as ASR spells them: ருபாய், ரூபாயி, তাকা, రోపాయలు. Compared after folding
 // sound-alike letters and vowel length (same table as above), by prefix.
 // Folding also merges aspirated / unaspirated letters (আধ ~ আদ, ঘণ্টা ~ গন্টা); those are left out of the
@@ -590,7 +599,9 @@ function spokenRun(toks: string[], start: number, i: number): boolean {
 // Words that mean "one thousand" on their own (Tamil ஆயிரம், Telugu singular వెయ్యి; misheard "X thousand" uses వేల).
 const ONE_THOUSAND = ['ஆயிரம்', 'ஆயிரத்து', 'వెయ్యి'].map((w) => fold(w));
 // Number only right before "thousand / lakh": ಆಯಿದು ಸಾವಿರ = 5,000, but "ಕಟ್ ಆಯಿದು" = "got cut" (ಆಯಿತು).
-const BEFORE_MULT: Record<string, number> = { [('ಆಯಿದು').normalize('NFC')]: 5 };
+const BEFORE_MULT: Record<string, number> = Object.fromEntries(
+  Object.entries({ 'ಆಯಿದು': 5, 'শোয': 6, 'ছযি': 6 }).map(([w, v]) => [w.normalize('NFC'), v]), // শোয(়) alone = "lie down"
+);
 // Words that may stand right before a bare "thousand": "a thousand", "around thousand rupees".
 const BARE_OK = ['a', 'one', 'about', 'around', 'approx', 'only', 'just', 'karib', 'lagbhag', 'sirf', 'bas', 'करीब', 'लगभग', 'सिर्फ', 'बस', 'and', 'aur', 'और'];
 

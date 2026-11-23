@@ -343,7 +343,8 @@ describe('harness regressions', () => {
     expect(x('என் SBI கணக்கிலிருந்து ஐயாயிரம் ரூபாயி போச்சு').amount?.value).toBe(5000);
     expect(x('ಎರಡು ಲಕ್ಷರೂಪಾಯಿ ತೆಗೆದರು').amount?.value).toBe(200000);
     expect(x('আমি গুগল পে দিয়ে বারো হাজার পাঠিয়ে দিলাম').amount?.value).toBe(12000); // not just "thousand"
-    expect(x('না না শোয হাজার তাকা কেটেছে').amount).toBeUndefined(); // misheard number: ask, don't say 1000
+    expect(x('না না কোয হাজার তাকা কেটেছে').amount).toBeUndefined(); // unreadable word before thousand: ask, don't say 1000
+    expect(x('না না শোয হাজার তাকা কেটেছে').amount?.value).toBe(6000); // শোয right before হাজার = ছয়
     expect(minutesAgo(x('পাঁচ মিনিট আগে কেটে গেছে').time?.value)).toBeCloseTo(5, 5);
     expect(x('আমার স্টেট ব্যাংক থেকে টাকা গেছে').bank?.value).toBe('State Bank of India (SBI)');
   });
