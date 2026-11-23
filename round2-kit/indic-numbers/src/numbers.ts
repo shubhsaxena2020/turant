@@ -6,7 +6,7 @@ type Part = { v: number } | { mul: number } | { half: true };
 
 // ---------- lexicons (value words) ----------
 const WORDS: Record<string, number> = {};
-const add = (v: number, ...ws: string[]) => ws.forEach((w) => (WORDS[w] = v));
+const add = (v: number, ...ws: string[]) => ws.forEach((w) => (WORDS[w.normalize('NFC')] = v));
 
 // Hindi / Marathi (Devanagari + common Latin)
 add(0, 'शून्य', 'shunya', 'zero');
@@ -210,13 +210,13 @@ add(2.5, 'இரண்டரை');
 add(0.5, 'அரை');
 
 const MULT: Record<string, number> = {};
-const mul = (v: number, ...ws: string[]) => ws.forEach((w) => (MULT[w] = v));
+const mul = (v: number, ...ws: string[]) => ws.forEach((w) => (MULT[w.normalize('NFC')] = v));
 mul(100, 'सौ', 'शे', 'শো', 'শ', 'వంద', 'వందల', 'వందలు', 'hundred', 'sau');
 mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजारो', 'হাজার', 'వేలు', 'వేల', 'వెయ్యి', 'ಸಾವಿರ', 'ಸಾವಿರದ', 'ஆயிரம்', 'ஆயிரத்து', 'thousand', 'hazaar', 'hazar', 'k');
 mul(100000, 'लाख', 'লাখ', 'লক্ষ', 'లక్ష', 'లక్షల', 'లక్షలు', 'ಲಕ್ಷ', 'லட்சம்', 'லட்சத்து', 'lakh', 'lac', 'lakhs');
 mul(10000000, 'करोड़', 'करोड', 'कोटी', 'কোটি', 'కోటి', 'ಕೋಟಿ', 'கோடி', 'crore', 'crores');
 
-const HALF_PREFIX = ['साढ़े', 'साढे', 'साडे', 'সাড়ে', 'সাড়ে', 'saadhe', 'sadhe', 'saade', 'sade', 'saare', 'sare', 'saadey'];
+const HALF_PREFIX = ['साढ़े', 'साढे', 'साडे', 'সাড়ে', 'saadhe', 'sadhe', 'saade', 'sade', 'saare', 'sare', 'saadey'].map((w) => w.normalize('NFC'));
 
 // ---------- Tamil / Kannada / Telugu / Marathi / Bengali compounds ----------
 const TA_STEM: [string, number][] = [
@@ -420,9 +420,9 @@ export function combine(parts: Part[]): number | undefined {
 }
 
 // ---------- amounts in sentences ----------
-const CURRENCY = ['रुपये', 'रुपए', 'रुपया', 'रुपयांचे', 'रूपये', 'rupees', 'rupee', 'rupaye', 'rupaiya', 'rs', 'inr', 'টাকা', 'টাকার', 'ரூபாய்', 'ரூபா', 'రూపాయలు', 'రూపాయల', 'రూపాయి', 'ರೂಪಾಯಿ', 'ರೂ', 'taka', 'paise', 'पैसे'];
-const TIME_AFTER = ['मिनट', 'मिनिट', 'मिनिटांपूर्वी', 'घंटे', 'घंटा', 'तास', 'तासांपूर्वी', 'दिन', 'दिवस', 'दिवसांपूर्वी', 'बजे', 'वाजता', 'मिनिटे', 'মিনিট', 'ঘণ্টা', 'দিন', 'টায়', 'টায়', 'நிமிடங்களுக்கு', 'நிமிஷம்', 'நிமிஷத்துக்கு', 'மணிக்கு', 'மணி', 'நாட்களுக்கு', 'నిమిషాల', 'గంటల', 'గంటలకు', 'రోజుల', 'ನಿಮಿಷ', 'ನಿಮಿಷದ', 'ಗಂಟೆ', 'ಗಂಟೆಗೆ', 'ದಿನ', 'ದಿನಗಳ', 'minute', 'minutes', 'min', 'hour', 'hours', 'baje', 'din', 'days', 'pm', 'am', 'ghante'];
-const NEGATE = ['नहीं', 'नही', 'नाही', 'nahi', 'nahin', 'no', 'না', 'இல்ல', 'இல்லை', 'కాదు', 'ಅಲ್ಲ', 'ಇಲ್ಲ'];
+const CURRENCY = ['रुपये', 'रुपए', 'रुपया', 'रुपयांचे', 'रूपये', 'rupees', 'rupee', 'rupaye', 'rupaiya', 'rs', 'inr', 'টাকা', 'টাকার', 'ரூபாய்', 'ரூபா', 'రూపాయలు', 'రూపాయల', 'రూపాయి', 'ರೂಪಾಯಿ', 'ರೂ', 'taka', 'paise', 'पैसे'].map((w) => w.normalize('NFC'));
+const TIME_AFTER = ['मिनट', 'मिनिट', 'मिनिटांपूर्वी', 'घंटे', 'घंटा', 'तास', 'तासांपूर्वी', 'दिन', 'दिवस', 'दिवसांपूर्वी', 'बजे', 'वाजता', 'मिनिटे', 'মিনিট', 'ঘণ্টা', 'দিন', 'টায়', 'টায়', 'நிமிடங்களுக்கு', 'நிமிஷம்', 'நிமிஷத்துக்கு', 'மணிக்கு', 'மணி', 'நாட்களுக்கு', 'నిమిషాల', 'గంటల', 'గంటలకు', 'రోజుల', 'ನಿಮಿಷ', 'ನಿಮಿಷದ', 'ಗಂಟೆ', 'ಗಂಟೆಗೆ', 'ದಿನ', 'ದಿನಗಳ', 'minute', 'minutes', 'min', 'hour', 'hours', 'baje', 'din', 'days', 'pm', 'am', 'ghante'].map((w) => w.normalize('NFC'));
+const NEGATE = ['नहीं', 'नही', 'नाही', 'nahi', 'nahin', 'no', 'না', 'இல்ல', 'இல்லை', 'కాదు', 'ಅಲ್ಲ', 'ಇಲ್ಲ'].map((w) => w.normalize('NFC'));
 
 interface Group {
   value: number;
@@ -433,7 +433,7 @@ interface Group {
   digitsOnly: boolean;
 }
 
-function tokenize(text: string): string[] {
+export function tokenize(text: string): string[] {
   return foldDigits(text.normalize('NFC'))
     .replace(/(\d),(\d{2,3})(?!\d)/g, '$1$2')
     .replace(/(\d),(\d{2,3})(?!\d)/g, '$1$2')
