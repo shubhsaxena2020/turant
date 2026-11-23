@@ -20,11 +20,11 @@ const has = (t: string, list: string[]) => list.some((w) => t === w || t.startsW
 const is = (t: string, list: string[]) => list.includes(t) || folded(list).includes(fold(t));
 
 const NOW_WORDS = N(['अभी', 'abhi', 'এইমাত্র', 'এইমাত্রো', 'এইমত্র', 'এখনই', 'இப்பதான்', 'இப்போதான்', 'ఇప్పుడే', 'ఇపుడే', 'ಈಗಷ್ಟೇ', 'आत्ताच', 'just']);
-const MIN = N(['मिनट', 'मिनिट', 'minute', 'min', 'মিনিট', 'நிமிட', 'நிமிஷ', 'నిమిష', 'ನಿಮಿಷ']);
+const MIN = N(['मिनट', 'मिनिट', 'minute', 'min', 'মিনিট', 'நிமிட', 'நிமிஷ', 'நிமிண', 'నిమిష', 'ನಿಮಿಷ']);
 const HOUR = N(['घंटा', 'घंटे', 'घण्टा', 'तास', 'ghanta', 'ghante', 'hour', 'hr', 'ঘণ্টা', 'ঘন্টা', 'மணி நேர', 'நேரத்', 'గంట', 'ಗಂಟೆ']);
 const DAY = N(['दिन', 'दिवस', 'din', 'day', 'দিন', 'நாள', 'நாட்', 'రోజు', 'రోజుల', 'రోజిల', 'ದಿನ']);
 const AGO = N(['पहले', 'pehle', 'pahle', 'पूर्वी', 'कूर्वी', 'कूरवी', // कूर्वी: how Whisper writes Marathi पूर्वी
-  'ago', 'back', 'before', 'আগে', 'முன்னாடி', 'முன்பு', 'முன்', 'க்கு', 'క్రితం', 'కృతం', 'ಹಿಂದೆ']);
+  'ago', 'back', 'before', 'আগে', 'முன்னாடி', 'முன்பு', 'முன்', 'க்கு', 'క్రితం', 'కృతం', 'క్రతం', 'ಹಿಂದೆ']);
 const HALF_UNIT_WORDS: [string, number][] = [
   ['अरगंट', 30], ['అరగంట', 30], ['अर्ध्यातास', 30], ['अर्धातास', 30], ['आधा', 0.5], ['आध', 0.5], ['adha', 0.5], ['aadha', 0.5], ['half', 0.5], ['আধ', 0.5], ['আধা', 0.5], ['அரை', 0.5], ['అర', 0.5], ['ಅರ್ಧ', 0.5], ['अर्ध्या', 0.5], ['अर्धा', 0.5],
 ];
@@ -73,7 +73,8 @@ function to24(h: number, part?: string): number {
 
 /** Clock time in the sentence as decimal hours (9.5 = 9:30), or undefined. */
 function clockHours(text: string, toks: string[]): number | undefined {
-  const hm = text.match(/\b(\d{1,2})[:.](\d{2})\s*(am|pm)?/i);
+  // not inside a dotted digit chain ("5.00.1.00.2.3" is a number read out, not 5:00)
+  const hm = text.match(/(?<![\d.:])\b(\d{1,2})[:.](\d{2})(?![.:]?\d)\s*(am|pm)?/i);
   if (hm) {
     let h = Number(hm[1]) + Number(hm[2]) / 60;
     if (hm[3]?.toLowerCase() === 'pm' && h < 12) h += 12;

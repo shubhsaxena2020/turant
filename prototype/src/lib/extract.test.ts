@@ -376,3 +376,25 @@ describe('harness regressions', () => {
     expect(x('பேங்க் தப்பு SBI إல்லா HDFC', { preferLast: true }).bank?.value).toBe('HDFC Bank'); // garbled negator: last name wins
   });
 });
+
+describe('round 30 (large-v3 dev transcripts)', () => {
+  const x = (t: string, o = {}) => extractFields(t, { now: NOW, ...o });
+  it('spellings and split words', () => {
+    expect(x('एक आदमी ने बोला के वाईसी अपडेट करो').scamType?.value).toBe('fake_kyc');
+    expect(x('आई-सी-ाई-सी-ाई बैंक के कस्टमर केयर').bank?.value).toBe('ICICI Bank'); // hyphen-spelled, orphan vowel sign
+    expect(x('दो-तीन हज़ार रुपये गए').amount?.value).not.toBe(23000); // a two-part range is not an acronym
+    expect(x('நான் கூபுள் பே மூலமா 12,500 ரூபாய் அனுப்பிட்டேன்').paymentApp?.value).toBe('Google Pay');
+    expect(x('10 நிமிணங்களுக்கு முன்பு').time).toBeDefined();
+    expect(x('माझा अकाउंट मदून 20,000 रूपीज देविट जाले').amount?.value).toBe(20000);
+    expect(x('ನಿಮ್ಮ ಖಾತೆಯಿಂದ 5000 ಡೆಬಿಟ್ ಆಗಿದೆ').amount?.value).toBe(5000);
+  });
+  it('IDs', () => {
+    expect(x('UPI ID Rahul.kyc at ybl.ki').suspectUpi?.value).toBe('rahul.kyc@ybl'); // Telugu "ki" glued on
+    expect(x('mail me at rahul@gmail.com').suspectUpi).toBeUndefined();
+    expect(x('रेफ नो सहा 12345789012').utr?.value).toBe('612345789012');
+    expect(x('रेफ नो सहा 1234578901 दो').utr?.value).toBe('612345789012');
+    expect(x('नंबर सहा 1234578901').suspectPhone).toBeUndefined(); // no reference word: not joined
+    expect(x('అకాంట్ నంబర్ 5.00.1.00.2.3.4.5.6.7.8.1.2.').time).toBeUndefined(); // dotted read-out, not 5:00
+    expect(x('कल शाम 7.30 बजे पैसे गए').time).toBeDefined();
+  });
+});

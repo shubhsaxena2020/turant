@@ -80,9 +80,10 @@ function visible(field, v, text) {
 }
 const COMPARE = arg('--compare', NAME !== 'baseline' && fs.existsSync(path.join(HERE, 'reports', 'baseline.json')) ? 'baseline' : null);
 
-const cases = fs.readFileSync(path.join(HERE, 'corpus', 'cases.jsonl'), 'utf8').trim().split(/\r?\n/).map((l) => JSON.parse(l));
+// --cases / --plan: score another corpus (e.g. the blind set: --cases corpus/blind.jsonl --plan plan_blind.json).
+const cases = fs.readFileSync(path.join(HERE, arg('--cases', path.join('corpus', 'cases.jsonl'))), 'utf8').trim().split(/\r?\n/).map((l) => JSON.parse(l));
 const caseById = Object.fromEntries(cases.map((c) => [c.id, c]));
-const plan = JSON.parse(fs.readFileSync(path.join(HERE, 'plan.json'), 'utf8'));
+const plan = JSON.parse(fs.readFileSync(path.join(HERE, arg('--plan', 'plan.json')), 'utf8'));
 const audioById = Object.fromEntries(plan.audios.map((a) => [a.audio, a]));
 const clipById = Object.fromEntries(plan.clips.map((c) => [c.clip, c]));
 const ALL_FIELDS = [...FIELDS, 'intent'];

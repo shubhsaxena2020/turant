@@ -11,11 +11,15 @@ const FIELDS = ['amount', 'time', 'scamType', 'bank', 'paymentApp', 'utr', 'susp
 const SCAMS = ['fake_kyc', 'otp_shared', 'fake_customer_care', 'wrong_transfer', 'qr_scan', 'investment_task', 'sextortion', 'other'];
 const QUESTIONS = ['amount', 'time', 'scamType', 'bank', 'utr', 'suspect'];
 
+// node corpus/build.mjs --src blind --out blind.jsonl  builds the blind set (never tuned on) the same way.
+const argv = process.argv.slice(2);
+const SRC = argv.includes('--src') ? argv[argv.indexOf('--src') + 1] : 'parts';
+const OUT = argv.includes('--out') ? argv[argv.indexOf('--out') + 1] : 'cases.jsonl';
 const errors = [];
 const cases = [];
 const ids = new Set();
 for (const lang of LANGS) {
-  const file = path.join(here, 'parts', `${lang}.jsonl`);
+  const file = path.join(here, SRC, `${lang}.jsonl`);
   fs.readFileSync(file, 'utf8').split(/\r?\n/).forEach((line, i) => {
     if (!line.trim()) return;
     let c;
@@ -59,5 +63,5 @@ if (errors.length) {
   console.error(errors.join('\n'));
   process.exit(1);
 }
-fs.writeFileSync(path.join(here, 'cases.jsonl'), cases.map((c) => JSON.stringify(c)).join('\n') + '\n');
-console.log(`cases.jsonl: ${cases.length} cases`, byLang);
+fs.writeFileSync(path.join(here, OUT), cases.map((c) => JSON.stringify(c)).join('\n') + '\n');
+console.log(`${OUT}: ${cases.length} cases`, byLang);

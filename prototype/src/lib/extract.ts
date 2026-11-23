@@ -196,12 +196,12 @@ const STANDALONE = map({ dedh: 1.5, derh: 1.5, dhed: 1.5, 'डेढ़': 1.5, '
 const REPEAT = map({ double: 2, triple: 3, 'डबल': 2, 'ट्रिपल': 3 });
 
 const CURRENCY_EXACT = set(['rs', 'inr', '₹', 'rupaye', 'rupaiye', 'rupay', 'rupee', 'rupees', 'rupiya', 'rupiye', 'rupya', 'rupaiya', 'रुपे', 'रूपे', 'টাকা', 'টাকার']);
-const CURRENCY_PREFIX = ['rupa', 'rupe', 'rupi', 'rupy', 'रुपय', 'रुपए', 'रुपये', 'रूपय', 'रूपए', 'रुपै', 'রুপি', 'টাকা', 'ரூபா', 'ருபா', 'ருபீ', 'ரூபீ', 'రూపాయ', 'ರೂಪಾಯ'].map(nw);
+const CURRENCY_PREFIX = ['rupa', 'rupe', 'rupi', 'rupy', 'रुपय', 'रुपए', 'रुपये', 'रूपय', 'रूपए', 'रुपै', 'রুপি', 'টাকা', 'ரூபா', 'ருபா', 'ருபீ', 'ரூபீ', 'रूपीज', 'रुपीज', 'రూపాయ', 'ರೂಪಾಯ'].map(nw);
 
-const MINUTE_UNITS = ['minute', 'minutes', 'min', 'mins', 'minat', 'mint', 'mnt', 'मिनट', 'मिनिट', 'মিনিট', 'நிமிட', 'నిమిష', 'ನಿಮಿಷ'].map(nw);
+const MINUTE_UNITS = ['minute', 'minutes', 'min', 'mins', 'minat', 'mint', 'mnt', 'मिनट', 'मिनिट', 'মিনিট', 'நிமிட', 'நிமிண', 'నిమిష', 'ನಿಮಿಷ'].map(nw);
 const HOUR_UNITS = ['hour', 'hours', 'hr', 'hrs', 'ghanta', 'ghante', 'ghanton', 'ghanta', 'घंटा', 'घंटे', 'घंटों', 'तास', 'ঘণ্টা', 'ঘন্টা', 'மணிநேர', 'గంట', 'ಗಂಟೆ'].map(nw);
 const DAY_UNITS = ['day', 'days', 'din', 'dino', 'dinon', 'दिन', 'दिवस', 'দিন', 'நாள', 'நாட்க', 'రోజు', 'రోజుల', 'ದಿನ'].map(nw);
-const AGO = ['pehle', 'pahle', 'phele', 'pehele', 'pahile', 'ago', 'back', 'before', 'पहले', 'पहिले', 'पूर्वी', 'आधी', 'আগে', 'முன்', 'முன்பு', 'முன்னாடி', 'క్రితం', 'ಹಿಂದೆ'].map(nw);
+const AGO = ['pehle', 'pahle', 'phele', 'pehele', 'pahile', 'ago', 'back', 'before', 'पहले', 'पहिले', 'पूर्वी', 'आधी', 'আগে', 'முன்', 'முன்பு', 'முன்னாடி', 'క్రితం', 'క్రతం', 'ಹಿಂದೆ'].map(nw);
 const ELAPSED = set(['hua', 'hue', 'huye', 'hogaye', 'ho', 'हुआ', 'हुए', 'हो']);
 
 const CLOCK_MARKERS = set(['baje', 'bje', 'baj', 'bajhe', 'oclock', 'बजे', 'बज', 'वाजता', 'वाजे', 'মণিক্কு', 'மணிக்கு', 'మణి', 'గంటలకు', 'ಗಂಟೆಗೆ']);
@@ -225,9 +225,9 @@ const DAY_WORDS: [number, string[]][] = [
 const NOW_WORDS = ['abhi', 'abhi abhi', 'just now', 'right now', 'abhi turant', 'अभी', 'अभी अभी', 'आत्ता', 'आताच', 'এইমাত্র', 'এখনই', 'இப்போது', 'இப்பொழுது', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ'];
 
 const DEBIT_EXACT = set(['kat', 'kaat', 'kate', 'kati', 'kata', 'cut', 'debit', 'debited', 'deducted', 'gaye', 'gaya', 'gye', 'gya', 'lost', 'loss', 'nikal', 'nikle', 'nikla', 'transfer', 'transferred', 'bheja', 'bheje', 'bhej', 'sent', 'paid', 'liya', 'liye', 'chale', 'chala', 'withdrawn', 'fraud']);
-const DEBIT_PREFIX = ['कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ'].map(nw);
+const DEBIT_PREFIX = ['कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'डेविट', 'देविट', 'देबिट', 'ডেবিট', 'டெபிட்', 'డెబిట్', 'ಡೆಬಿಟ್', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ'].map(nw);
 
-const UTR_CTX = set(['utr', 'ref', 'reference', 'refno', 'rrn', 'transaction', 'txn', 'trans', 'id', 'यूटीआर', 'ट्रांजैक्शन', 'ट्रांजेक्शन', 'रेफरेंस', 'आईडी']);
+const UTR_CTX = set(['utr', 'ref', 'reference', 'refno', 'rrn', 'transaction', 'txn', 'trans', 'id', 'यूटीआर', 'ट्रांजैक्शन', 'ट्रांजेक्शन', 'रेफरेंस', 'आईडी', 'रेफ', 'রেফ', 'ரெஃப்', 'రెఫ్', 'ರೆಫ್']);
 const PHONE_CTX = set(['phone', 'mobile', 'mob', 'call', 'calling', 'whatsapp', 'फोन', 'मोबाइल', 'कॉल', 'ফোন', 'போன்', 'ఫోన్', 'ಫೋನ್', 'मोबाईल']);
 const ACCOUNT_CTX = set(['account', 'acct', 'ac', 'a/c', 'khata', 'khaata', 'akaunt', 'खाता', 'खाते', 'अकाउंट', 'অ্যাকাউন্ট', 'கணக்கு', 'ఖాతా', 'ಖಾತೆ']);
 
@@ -422,7 +422,8 @@ function extractAmount(tokens: string[], runs: NumRun[], opts: ExtractOptions): 
     for (let k = Math.max(0, r.start - 5); k < Math.min(tokens.length, r.end + 5); k++) {
       if (isDebitWord(tokens[k])) debit = true;
     }
-    if (!cur && !r.hasMult && r.value < 10 && !hinted) continue;
+    // a debit word alone is weak evidence for a tiny number ("20 ருபிஸ் டெபிட்" = 20 thousand, misheard)
+    if (!cur && !r.hasMult && r.value < 100 && !hinted) continue;
     if (!cur && !r.hasMult && !debit && !hinted) continue;
     const score = (cur ? 3 : 0) + (r.hasMult ? 1.5 : 0) + (debit ? 1 : 0) + (hinted ? 1 : 0);
     const conf = cur ? 0.95 : r.hasMult ? 0.85 : hinted ? 0.85 : 0.6;
@@ -586,7 +587,7 @@ const SCAM_RULES: [ScamType, string[]][] = [
   ['investment_task', ['investment', 'invest', 'trading', 'stock tip', 'crypto', 'bitcoin', 'task', 'tasks', 'part time job', 'part-time job', 'work from home', 'youtube like', 'like karne', 'rating task', 'telegram', 'paisa double', 'double ho', 'high return', 'निवेश', 'टास्क', 'ट्रेडिंग', 'टेलीग्राम', 'इन्वेस्ट', 'डबल हो', 'दुप्पट', 'दुपट', 'गुंतवणु', 'বিনিয়োগ', 'ইনভেস্ট', 'ডাবল', 'টেলিগ্রাম', 'টাস্ক', 'முதலீடு', 'இன்வெஸ்ட்', 'டெலிகிராம்', 'டாஸ்க்', 'పెట్టుబడి', 'పిటుబడి', 'ఇన్వెస్ట్', 'టెలిగ్రామ్', 'టాస్క్', 'गुंतवणूक', 'ಹೂಡಿಕೆ', 'ಇನ್ವೆಸ್ಟ್', 'ಟೆಲಿಗ್ರಾಮ್', 'ಟಾಸ್ಕ್']],
   ['qr_scan', ['qr', 'qr code', 'scan', 'scanner', 'scanned', 'क्यूआर', 'स्कैन', 'স্ক্যান', 'কিউআর', 'ஸ்கேன்', 'స్కాన్', 'క్యువార', 'క్యూఆర్', 'स्कॅन', 'ಸ್ಕ್ಯಾನ್']],
   ['fake_customer_care', ['customer care', 'customer service', 'customer support', 'helpline number', 'care number', 'anydesk', 'any desk', 'teamviewer', 'screen share', 'quick support', 'कस्टमर केयर', 'कस्टमर केअर', 'कस्टमर केर', 'কাস্টমার কেয়ার', 'கஸ்டமர் கேர்', 'కస్టమర్ కేర్', 'ಕಸ್ಟಮರ್ ಕೇರ್']],
-  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'கேவாயசி', 'கேவைசி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'ಕೈಕ ಅಪ್', 'ಕೈಕ್ಕ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'केवाई सी', 'केवाय सी', 'केवा ऐसी', 'केवाऐसी', 'के yc', 'yc अपडेट', 'yc update', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
+  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'கேவாயசி', 'கேவைசி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'ಕೈಕ ಅಪ್', 'ಕೈಕ್ಕ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'केवाई सी', 'केवाय सी', 'केवा ऐसी', 'केवाऐसी', 'के वाईसी', 'के वाइसी', 'के yc', 'yc अपडेट', 'yc update', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
   ['wrong_transfer', ['galti se', 'galati se', 'by mistake', 'mistakenly', 'wrong transfer', 'wrongly sent', 'refund', 'paise wapas', 'paisa wapas', 'wapas bhej', 'return the money', 'गलती से', 'वापस भेज', 'रिफंड', 'ভুল করে', 'রিফান্ড', 'தவறுதலாக', 'தவர்தலா', 'పొరపాటున', 'चुकून', 'ತಪ್ಪಾಗಿ']],
   ['otp_shared', ['otp', 'ओटीपी', 'ওটিপি', 'ஓடிபி', 'ஓட்டிப்', 'ஓட்டிபி', 'ఓటీపీ', 'ఓటి పీ', 'ಒಟಿಪಿ', 'code bataya', 'code bata diya', 'pin bataya', 'pin bata diya']],
 ];
@@ -618,7 +619,7 @@ export const BANKS: { name: string; keys: string[] }[] = [
   { name: 'State Bank of India (SBI)', keys: ['sbi', 'state bank', 'state bank of india', 'yono', 'एसबीआई', 'स्टेट बैंक', 'স্টেট ব্যাংক', 'এসবিআই', 'எஸ்பிஐ', 'ஸ்டேட் பேங்க்', 'ఎస్బీఐ', 'ఎస్‌బీఐ', 'ఎస్బిఐ', 'స్టేట్ బ్యాంక్', 'ಎಸ್‌ಬಿಐ', 'ಎಸ್ಬಿಐ', 'ಸ್ಟೇಟ್ ಬ್ಯಾಂಕ್'] },
   { name: 'HDFC Bank', keys: ['hdfc', 'एचडीएफसी', 'এইচডিএফসি', 'ஹெச்டிஎஃப்சி', 'హెచ్‌డీఎఫ్‌సీ', 'ಎಚ್‌ಡಿಎಫ್‌ಸಿ'] },
   { name: 'ICICI Bank', keys: ['icici', 'आईसीआईसीआई', 'আইসিআইসিআই', 'ஐசிஐசிஐ', 'ఐసీఐసీఐ', 'ಐಸಿಐಸಿಐ'] },
-  { name: 'Axis Bank', keys: ['axis', 'एक्सिस', 'অ্যাক্সিস', 'ஆக்சிஸ்', 'యాక్సిస్', 'ಆಕ್ಸಿಸ್'] },
+  { name: 'Axis Bank', keys: ['axis', 'एक्सिस', 'অ্যাক্সিস', 'ஆக்சிஸ்', 'ஆக்சுஸ்', 'యాక్సిస్', 'ಆಕ್ಸಿಸ್'] },
   { name: 'Punjab National Bank (PNB)', keys: ['pnb', 'punjab national', 'पीएनबी', 'पंजाब नेशनल'] },
   { name: 'Bank of Baroda', keys: ['bank of baroda', 'baroda', 'बैंक ऑफ बड़ौदा', 'बड़ौदा', 'बडौदा'] },
   { name: 'Canara Bank', keys: ['canara', 'kenara', 'केनरा', 'कैनरा', 'ಕೆನರಾ', 'கனரா'] },
@@ -660,8 +661,8 @@ function extractBank(text: string, opts: ExtractOptions): Extracted<string> | un
 }
 
 const APPS: { name: string; keys: string[] }[] = [
-  { name: 'PhonePe', keys: ['phonepe', 'phone pay', 'phonpe', 'phone-pe', 'fon pay', 'fon pe', 'fonpe', 'फोनपे', 'ফোনপে', 'போன்பே', 'ఫోన్‌పే', 'ఫోన్పే', 'ಫೋನ್‌ಪೇ', 'ফোন পে', 'ఫోన్ పే', 'போன் பே', 'ಫೋನ್ ಪೇ', 'फोन पे वरून', 'फोन पे द्वारे'] },
-  { name: 'Google Pay', keys: ['google pay', 'gpay', 'g pay', 'googlepay', 'tez', 'गूगल पे', 'গুগল পে', 'கூகுள் பே', 'గూగుల్ పే', 'ಗೂಗಲ್ ಪೇ'] },
+  { name: 'PhonePe', keys: ['phonepe', 'phone pay', 'phonpe', 'phone-pe', 'fon pay', 'fon pe', 'fonpe', 'फोनपे', 'ফোনপে', 'போன்பே', 'ఫోన్‌పే', 'ఫోన్పే', 'ಫೋನ್‌ಪೇ', 'ফোন পে', 'ఫోన్ పే', 'போன் பே', 'ಫೋನ್ ಪೇ', 'ஹோன்பே', 'ஹோன் பே', 'फोन पे वरून', 'फोन पे द्वारे'] },
+  { name: 'Google Pay', keys: ['google pay', 'gpay', 'g pay', 'googlepay', 'tez', 'गूगल पे', 'গুগল পে', 'கூகுள் பே', 'గూగుల్ పే', 'ಗೂಗಲ್ ಪೇ', 'கூபுள் பே', 'గూబుల్ పే', 'गूबल पे'] },
   { name: 'Paytm', keys: ['paytm', 'pay tm', 'पेटीएम', 'পেটিএম', 'பேடிஎம்', 'పేటీఎం', 'పేటియం', 'ಪೇಟಿಎಂ', 'ಪೇಟಿಯೆ', 'ಪೇಟಿಯಂ', 'पेटी एम', 'पे टी एम', 'पेटी इन', 'பேடியம்', 'পেটি এম'] },
   { name: 'BHIM', keys: ['bhim', 'भीम ऐप', 'भीम यूपीआई'] },
   { name: 'Amazon Pay', keys: ['amazon pay', 'अमेज़न पे'] },
@@ -703,13 +704,16 @@ function prepUpi(s: string): string {
   return t;
 }
 
+const UPI_ONLY = new Set(['ybl', 'ibl', 'axl', 'okaxis', 'okhdfcbank', 'okicici', 'oksbi', 'ptyes', 'ptaxis', 'pthdfc', 'ptsbi', 'apl', 'yapl', 'ikwik', 'waicici', 'wahdfcbank', 'waaxis', 'wasbi', 'abfspay', 'pingpay', 'superyes', 'okbizaxis', 'yesg', 'naviaxis', 'tapicici', 'axisb']);
+
 const UPI_RE = /([a-z0-9][a-z0-9._-]{1,63})@([a-z][a-z0-9]{1,30})(\.[a-z]{2,})?/g;
 
 function extractUpis(prepped: string): { ids: string[]; rest: string } {
   const ids: string[] = [];
   const rest = prepped.replace(UPI_RE, (m, _id: string, _h: string, tld: string | undefined) => {
-    if (tld) return ' '; // looks like an e-mail address
-    const id = m.replace(/\.$/, '');
+    // looks like an e-mail address, unless the handle is a UPI-only one (ybl, okaxis…): "rahul.kyc at ybl.ki" is speech
+    if (tld && !UPI_ONLY.has(_h)) return ' ';
+    const id = (tld ? m.slice(0, m.length - tld.length) : m).replace(/\.$/, '');
     ids.push(id);
     return ' ';
   });
@@ -768,9 +772,40 @@ function utrPrefix(tokens: string[], r: NumRun): string | undefined {
   return undefined;
 }
 
+/**
+ * "रेफ नो सहा 12345789012": after a UTR / reference word, a number word and digit groups that make exactly 12 digits.
+ * Only exactly 12 and only after the context word: other mixes are mostly misheard (see spokenDigitRuns).
+ */
+function mixedUtrRuns(tokens: string[]): { start: number; digits: string }[] {
+  const out: { start: number; digits: string }[] = [];
+  for (let i = 0; i < tokens.length; i++) {
+    const ctx = tokens.slice(Math.max(0, i - 4), i);
+    if (!ctx.some((t) => UTR_CTX.has(t) || nativeStem(t, UTR_STEMS))) continue;
+    let d = '';
+    let words = 0;
+    let groups = 0;
+    let j = i;
+    for (; j < tokens.length && d.length <= 12; j++) {
+      const t = tokens[j];
+      if (/^\d+$/.test(t)) (d += t), t.length > 1 && groups++; // one group only: "161, 23, 45, 57, 90" is a garble
+      else {
+        const v = readoutDigit(t, true);
+        if (v === undefined) break;
+        d += String(v);
+        words++;
+      }
+    }
+    if (d.length === 12 && words && groups === 1) {
+      out.push({ start: i, digits: d });
+      i = j;
+    }
+  }
+  return out;
+}
+
 function extractIds(tokens: string[], runs: NumRun[], opts: ExtractOptions) {
   const out: Pick<Extraction, 'utr' | 'suspectPhone' | 'suspectAccount'> = {};
-  const seqs = [...runs.filter((r) => r.isSeq).map((r) => ({ start: r.start, digits: utrPrefix(tokens, r) ?? r.digits })), ...spokenDigitRuns(tokens)].sort((a, b) => a.start - b.start);
+  const seqs = [...runs.filter((r) => r.isSeq).map((r) => ({ start: r.start, digits: utrPrefix(tokens, r) ?? r.digits })), ...spokenDigitRuns(tokens), ...mixedUtrRuns(tokens)].sort((a, b) => a.start - b.start);
   for (const r of seqs) {
     const d = r.digits;
     const ctx = tokens.slice(Math.max(0, r.start - 6), r.start);
@@ -846,12 +881,19 @@ function indicBank(text: string): Extracted<string> | undefined {
 /** A 12-digit UTR glued to the amount by the recogniser: "UTR है 4032187654325000 रुपए" = 403218765432 + 5000.
  * No amount has 15+ digits; split only when the tail is one digit and zeros (5000, not 25000: a misheard extra digit
  * shifts the split) right before a currency word. */
+/** Whisper spells acronyms with hyphens and can orphan a vowel sign: "आई-सी-ाई-सी-ाई" = आईसीआईसीआई (ICICI). */
+export function joinSpelled(text: string): string {
+  return text.replace(/(?<![ऀ-෿])(?:[ऀ-෿]{1,3}-){2,}[ऀ-෿]{1,3}(?![ऀ-෿])/gu, (m) =>
+    m.replace(/(^|-)ा/g, '$1आ').replace(/-/g, ''),
+  );
+}
+
 export function splitGluedUtr(text: string): string {
   return text.replace(/(^|\D)(\d{12})([1-9]0{2,4})(?=\s?(?:rs|rupe|rupa|रुप|रूप|টাকা|ரூ|ரு|రూ|ರೂ))/gi, '$1$2 $3');
 }
 
 export function extractFields(text: string, opts: ExtractOptions = {}): Extraction {
-  text = splitGluedUtr(unifyScript(text));
+  text = splitGluedUtr(joinSpelled(unifyScript(text)));
   const norm = normalize(text);
   const prepped = prepUpi(norm);
   const { ids, rest } = extractUpis(prepped);
@@ -885,7 +927,7 @@ export function extractFields(text: string, opts: ExtractOptions = {}): Extracti
 
 export type Intent = 'skip' | 'wait' | 'yes' | 'no';
 
-const SKIP_WORDS = ['skip', 'skip karo', 'pata nahi', 'pata nhi', 'nahi pata', 'nahin pata', 'maloom nahi', 'malum nahi', 'nahi maloom', "don't know", 'dont know', 'do not know', 'no idea', 'not sure', 'aage badho', 'छोड़ो', 'छोडो', 'पता नहीं', 'मालूम नहीं', 'स्किप', 'জানি না', 'தெரியாது', 'తెలియదు', 'माहित नाही', 'ಗೊತ್ತಿಲ್ಲ'];
+const SKIP_WORDS = ['skip', 'skip karo', 'pata nahi', 'pata nhi', 'nahi pata', 'nahin pata', 'maloom nahi', 'malum nahi', 'nahi maloom', "don't know", 'dont know', 'do not know', 'no idea', 'not sure', 'aage badho', 'छोड़ो', 'छोडो', 'पता नहीं', 'मालूम नहीं', 'स्किप', 'জানি না', 'தெரியாது', 'తెలియదు', 'माहित नाही', 'माहिद नाही', 'ಗೊತ್ತಿಲ್ಲ'];
 const WAIT_WORDS = ['ek minute ruko', 'ek minute', 'ek min', 'ruko', 'ruk jao', 'rukiye', 'wait', 'hold on', 'one minute', 'रुको', 'रुकिए', 'एक मिनट', 'এক মিনিট', 'দাঁড়ান', 'ஒரு நிமிடம்', 'ஒரு நிமிஷம்', 'ఒక్క నిమిషం', 'थांबा', 'एक मिनिट', 'ಒಂದು ನಿಮಿಷ'];
 const YES_WORDS = ['haan', 'han', 'haa', 'ha', 'ji', 'haan ji', 'yes', 'yeah', 'yep', 'sahi', 'sahi hai', 'theek hai', 'thik hai', 'correct', 'right', 'ok', 'okay', 'हाँ', 'हां', 'जी', 'सही', 'ठीक', 'হ্যাঁ', 'ঠিক', 'ஆம்', 'சரி', 'అవును', 'సరే', 'होय', 'बरोबर', 'ಹೌದು', 'ಸರಿ'];
 const NO_WORDS = ['nahi', 'nahin', 'nhi', 'na', 'no', 'galat', 'wrong', 'नहीं', 'गलत', 'না', 'ভুল', 'இல்லை', 'தவறு', 'కాదు', 'లేదు', 'नाही', 'चूक', 'ಇಲ್ಲ', 'ತಪ್ಪು'];
