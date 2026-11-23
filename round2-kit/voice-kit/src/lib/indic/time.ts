@@ -86,7 +86,7 @@ function clockHours(text: string, toks: string[]): number | undefined {
     if (bnAt || bnTa) {
       const stem = toks[i].replace(bnAt ? BN_AT : BN_TA, '');
       // "4টায়" is split into "4" + "টায়" by the tokenizer: the hour is the previous token
-      const p = stem ? wordParts(stem, 2) : i > 0 ? wordParts(toks[i - 1]) : undefined;
+      const p = stem ? (wordParts(stem, 2) ?? (stem === 'ন' ? [{ v: 9 }] : undefined)) : i > 0 ? wordParts(toks[i - 1]) : undefined; // নটায় = 9 o'clock; a lone ন is not 9
       if (p) {
         const prev = i > 0 ? wordParts(toks[i - 1]) : undefined;
         const half = prev?.some((x) => 'half' in x) ? 0.5 : 0;
