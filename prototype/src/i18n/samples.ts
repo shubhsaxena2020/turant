@@ -18,9 +18,9 @@ export const SAMPLE_STORIES: Record<LangCode, string> = {
 
 /** Sample answers to follow-up questions. The UTR one is a bank SMS read aloud. */
 export const SAMPLE_ANSWERS: Partial<Record<QuestionKey, string>> = {
-  amount: 'paanch hazaar rupaye',
-  time: 'das minute pehle',
-  scamType: 'KYC update ke naam pe call aaya tha',
+  amount: 'five thousand rupees',
+  time: 'about ten minutes ago',
+  scamType: 'someone called about a KYC update',
   bank: 'State Bank of India',
   // Amount-free on purpose: the same SMS is used by every language's sample story.
   utr: 'Your A/c XX4321 has been debited via UPI. UPI Ref No 4 5 6 7 8 9 0 1 2 3 4 5. Not you? Call your bank.',

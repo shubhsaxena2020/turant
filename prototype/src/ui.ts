@@ -3,7 +3,11 @@ import type { StrKey } from './i18n/strings';
 
 /** Shared app context handed to every screen. */
 export interface UI {
+  /** Display language: always English. */
   lang: LangCode;
+  /** The language the person speaks; only the recogniser uses it. */
+  speakLang: LangCode;
+  onSpeakLang: () => void;
   t: (key: StrKey, vars?: Record<string, string | number>) => string;
   /** Speak a sentence built for the voice language actually available on the device. Resolves when done. */
   say: (build: (voiceLang: LangCode) => string) => Promise<void>;

@@ -19,8 +19,6 @@ import { Row, Sheet } from '../components/Sheet';
 import { CheckIcon } from '../components/icons';
 import type { UI } from '../ui';
 
-const YES_SAMPLE: Record<string, string> = { 'en-IN': 'yes', 'hi-IN': 'haan' };
-
 interface Pending {
   q: QuestionKey;
   ext: Extraction;
@@ -62,6 +60,7 @@ export function TalkScreen(props: {
   const [fresh, setFresh] = useState<FieldKey[]>([]);
   const [typed, setTyped] = useState('');
   const [denied, setDenied] = useState(false);
+  const [problem, setProblem] = useState<string | null>(null);
   const ack = useRef('');
   const rep = useRef(report);
   rep.current = report;
@@ -83,31 +82,34 @@ export function TalkScreen(props: {
 
   // ---------- listening ----------
   const listenStory = () =>
-    mic.start({ lang: ui.lang, simulate: sampleRun && storyMode ? props.sample : null, silenceMs: 2000, onOutcome: onStory });
+    mic.start({ lang: ui.speakLang, simulate: sampleRun && storyMode ? props.sample : null, silenceMs: 2000, onOutcome: onStory });
   const listenAnswer = (question: QuestionKey) =>
     mic.start({
-      lang: ui.lang,
+      lang: ui.speakLang,
       simulate: sampleRun ? SAMPLE_ANSWERS[question] ?? null : null,
       silenceMs: 2000,
       onOutcome: (o) => onAnswerOutcome(question, o),
     });
   const listenYesNo = (p: Pending) =>
     mic.start({
-      lang: ui.lang,
-      simulate: sampleRun ? YES_SAMPLE[ui.lang] ?? 'yes' : null,
+      lang: ui.speakLang,
+      simulate: sampleRun ? 'yes' : null,
       silenceMs: 1200,
       onOutcome: (o) => onConfirmOutcome(p, o),
     });
 
+  /** Every failure says what happened and what to do; typing is always offered, so it is never a dead end. */
   const handleError = (o: Outcome) => {
     if (o.kind !== 'error') return;
     if (o.code === 'not-allowed' || o.code === 'audio-capture') {
       setDenied(true);
       setTyping(true);
-      setLine(`${t('micDeniedTitle')}. ${t('micDeniedBody')}`);
+      setProblem(`${t('micDeniedTitle')}. ${t('micDeniedBody')}`);
+    } else if (o.code === 'silent') {
+      setProblem(t('err_silent')); // mic stays available: they can fix the mic and try again
     } else {
       setTyping(true);
-      setLine(o.code === 'network' ? t('networkError') : t('noSpeech'));
+      setProblem(o.code === 'network' ? t('networkError') : o.code === 'no-words' ? t('err_noWords') : t('noSpeech'));
     }
   };
 
@@ -256,6 +258,7 @@ export function TalkScreen(props: {
   // ---------- taps ----------
   const onPresence = () => {
     if (mic.listening) return mic.stop();
+    setProblem(null);
     if (ui.speaking) speech.cancelSpeech(); // barge-in
     if (!canMic && !sampleRun) {
       // The typing box is already on screen; in "Type instead" mode the circle switches back to the mic.
@@ -286,44 +289,63 @@ export function TalkScreen(props: {
   const label = mic.listening ? t('state_listening') : thinking ? t('state_thinking') : ui.speaking ? t('state_speaking') : micReady ? t('state_idle') : t('state_off');
   const question = q ? (misses[q] ? t(`rq_${q}` as StrKey) : t(`q_${q}` as StrKey)) : null;
   const kpField = q ? keypadField(q) : null;
+  const speakName: Record<string, string> = { 'en-IN': 'English', 'hi-IN': 'Hindi', 'bn-IN': 'Bengali', 'ta-IN': 'Tamil', 'te-IN': 'Telugu', 'mr-IN': 'Marathi', 'kn-IN': 'Kannada' };
 
   return (
     <div className="flex flex-1 flex-col">
       <main className="flex-1 px-5 pb-2">
         {storyMode && !mic.listening && !thinking ? (
-          <section className="pt-6 fade-in" data-testid="greeting">
-            <p className="font-accent italic text-[1.7rem] leading-snug text-mint">{t('greetHello')}</p>
-            <h1 className="mt-2 text-display font-display text-night-text">{t('openQ')}</h1>
-            <p className="mt-3 text-lg text-night-muted">{t('openEx')}</p>
-            {micReady ? <p className="mt-6 text-base text-night-muted">{t('likeWhatsapp')}</p> : null}
+          <section className="pt-9 fade-in" data-testid="greeting">
+            <p className="eyebrow">{t('greetHello')}</p>
+            <h1 className="headline mt-3">
+              {t('heroA')}
+              <br />
+              <em>{t('heroB')}</em>
+            </h1>
+            <p className="mt-5 text-[1.1875rem] font-medium leading-snug">{t('likeWhatsapp')}</p>
+            <p className="mt-3 text-base text-ink/70">{t('openEx')}</p>
+            {ui.voice ? (
+              <button
+                onClick={ui.onSpeakLang}
+                className="mt-6 inline-flex items-center gap-2 rounded-full border border-hair bg-[#FFFFF5] px-4 min-h-[2.75rem] text-[0.975rem] font-medium"
+                data-testid="speak-lang"
+              >
+                <svg viewBox="0 0 24 24" className="w-[18px] h-[18px]" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z" />
+                </svg>
+                {t('speakingIn', { lang: speakName[ui.speakLang] ?? 'English' })}
+                <span className="text-ink/60 underline underline-offset-4">{t('change')}</span>
+              </button>
+            ) : null}
           </section>
         ) : null}
 
         {!storyMode && question && !confirm ? (
-          <section className="pt-6 fade-in" key={`${q}-${askRound}`} data-testid={`ask-${q}`}>
-            {line ? <p className="text-lg text-mint">{line}</p> : null}
-            <h1 className="mt-1 text-display font-display text-night-text">{question}</h1>
+          <section className="pt-8 fade-in" key={`${q}-${askRound}`} data-testid={`ask-${q}`}>
+            {line ? <p className="text-base font-semibold text-fathom">{line}</p> : null}
+            <h1 className="headline-sm mt-2">{question}</h1>
             {!misses[q!] ? (
-              <p className="mt-2 text-lg text-night-muted">
+              <p className="mt-3 text-lg text-ink/70">
                 {t('example')}: {t(`ex_${q}` as StrKey)}
               </p>
             ) : null}
-            {q === 'utr' ? <p className="mt-2 text-base text-night-muted">{t('help_utr')}</p> : null}
+            {q === 'utr' ? <p className="mt-2 text-base text-ink/70">{t('help_utr')}</p> : null}
           </section>
         ) : null}
 
         {tellMore && !confirm && !mic.listening && !thinking ? (
-          <section className="pt-6 fade-in" data-testid="tell-more">
-            {line ? <p className="text-lg text-mint">{line}</p> : null}
-            <h1 className="mt-1 text-display font-display text-night-text">{t('sayMore')}</h1>
+          <section className="pt-8 fade-in" data-testid="tell-more">
+            {line ? <p className="text-base font-semibold text-fathom">{line}</p> : null}
+            <h1 className="headline-sm mt-2">{t('sayMore')}</h1>
           </section>
         ) : null}
 
         {confirm ? (
-          <section className="pt-6 fade-in" data-testid="confirm">
-            <p className="text-lg text-night-muted">{t('iHeard')}</p>
-            <p className="mt-1 text-hero font-display text-night-text tabular-nums break-words">{shownValues(confirm.ext, confirm.keys, ui.lang)}</p>
-            <p className="mt-2 text-title text-night-text">{t('isThisRight')}</p>
+          <section className="pt-8 fade-in" data-testid="confirm">
+            <p className="eyebrow">{t('iHeard')}</p>
+            <p className="mt-2 font-serif text-[3rem] leading-none tracking-[-0.02em] tabular-nums break-words">{shownValues(confirm.ext, confirm.keys, ui.lang)}</p>
+            <p className="mt-4 text-title">{t('isThisRight')}</p>
             {bigger(confirm.ext).length ? (
               <div className="rows mt-4" data-testid="confirm-alts">
                 {bigger(confirm.ext).map((alt, i) => (
@@ -336,23 +358,28 @@ export function TalkScreen(props: {
           </section>
         ) : null}
 
-        {storyMode && line && !mic.listening ? <p className="mt-6 text-lg text-mint">{line}</p> : null}
+        {storyMode && line && !mic.listening ? <p className="mt-6 text-lg font-medium text-fathom">{line}</p> : null}
 
         {mic.listening || thinking ? (
-          <p className="pt-6 text-[1.6rem] leading-[1.55] font-medium text-night-text min-h-[6rem] break-words" data-testid="live" aria-live="polite">
-            {mic.live || <span className="text-night-muted">{t('listenHint')}</span>}
-          </p>
+          <section className="pt-9">
+            <p className="eyebrow">{mic.listening ? t('state_listening') : t('state_thinking')}</p>
+            <p className="mt-3 text-[1.55rem] leading-[1.45] font-medium min-h-[6rem] break-words" data-testid="live" aria-live="polite">
+              {mic.live || <span className="text-ink/45">{t('listenHint')}</span>}
+            </p>
+          </section>
         ) : null}
 
         {!storyMode ? (
           <section className="mt-8">
-            <p className="text-label text-night-muted">{t('letterTitle')}</p>
-            <LetterView sentences={letter} fresh={fresh} asking={q} className="mt-2 text-lg text-night-text" />
+            <p className="eyebrow">{t('letterTitle')}</p>
+            <div className="panel mt-3 px-4 py-4">
+              <LetterView sentences={letter} fresh={fresh} asking={q} className="text-lg text-ink" />
+            </div>
           </section>
         ) : null}
       </main>
 
-      <div className="action-zone on-night flex flex-col items-center gap-1" data-testid="talk-actions">
+      <div className="action-zone flex flex-col items-center gap-2" data-testid="talk-actions">
         {confirm ? (
           <div className="w-full flex flex-col items-center gap-1">
             <button className="btn-main" onClick={() => commit(confirm.ext, confirm.keys, confirm.via, confirm.conf)} data-testid="confirm-yes">
@@ -364,12 +391,16 @@ export function TalkScreen(props: {
           </div>
         ) : (
           <>
+            {problem && !mic.listening ? (
+              <div className="notice w-full mb-2 fade-in" role="alert" data-testid="mic-problem">
+                {problem}
+              </div>
+            ) : null}
             {state === 'off' ? (
-              <p className="text-lg font-semibold text-night-text">{label}</p>
+              <p className="text-base font-medium text-ink/70">{label}</p>
             ) : (
-              <Presence state={state} level={mic.level} label={label} onPress={onPresence} small={!storyMode} />
+              <Presence state={state} bars={mic.bars} label={label} hint={t('tapToStop')} onPress={onPresence} small={!storyMode} />
             )}
-            {mic.listening ? <p className="text-base text-night-muted">{t('tapToStop')}</p> : null}
             {!canMic && !sampleRun ? (
               <div className="w-full mt-2">
                 <label className="sr-only" htmlFor="typed">
@@ -383,7 +414,7 @@ export function TalkScreen(props: {
                   onChange={(e) => setTyped(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && submitTyped()}
                 />
-                <button className="btn-main mt-4" onClick={submitTyped} disabled={!typed.trim()} data-testid="typed-send">
+                <button className="btn-main mt-3" onClick={submitTyped} disabled={!typed.trim()} data-testid="typed-send">
                   {t('send')}
                 </button>
               </div>

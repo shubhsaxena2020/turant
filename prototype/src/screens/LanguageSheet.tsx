@@ -4,19 +4,19 @@ import { Row, Sheet } from '../components/Sheet';
 import { CheckIcon } from '../components/icons';
 import type { UI } from '../ui';
 
-/** Language is never a gate: this sheet is the fallback behind the name in the top bar. */
+/** Which language the person will speak. Names are in English; only the recogniser uses the choice. */
 export function LanguageSheet(props: { ui: UI; onPick: (l: LangCode) => void; onClose: () => void }) {
   const { ui } = props;
+  const names: Record<string, string> = { 'en-IN': 'English (India)', 'hi-IN': 'Hindi', 'bn-IN': 'Bengali', 'ta-IN': 'Tamil', 'te-IN': 'Telugu', 'mr-IN': 'Marathi', 'kn-IN': 'Kannada' };
+  const order: LangCode[] = ['en-IN', ...LANGS.map((l) => l.code).filter((c) => c !== 'en-IN')];
   return (
     <Sheet title={ui.t('chooseLang')} closeLabel={ui.t('closeSheet')} onClose={props.onClose} testId="sheet-lang">
+      <p className="text-base text-ink/70 -mt-1 mb-2">{ui.t('langSub')}</p>
       <div className="rows">
-        {LANGS.map((l) => (
-          <Row key={l.code} onClick={() => props.onPick(l.code)} selected={l.code === ui.lang} testId={`lang-${l.code}`}>
-            <span className="flex-1 text-title font-display" lang={l.code.slice(0, 2)}>
-              {l.native}
-            </span>
-            <span className="text-label text-muted">{l.english}</span>
-            {l.code === ui.lang ? <CheckIcon className="w-6 h-6 text-teal" /> : null}
+        {order.map((code) => (
+          <Row key={code} onClick={() => props.onPick(code)} selected={code === ui.speakLang} testId={`lang-${code}`}>
+            <span className="flex-1 text-title">{names[code]}</span>
+            {code === ui.speakLang ? <CheckIcon className="w-6 h-6 text-ink" /> : null}
           </Row>
         ))}
       </div>

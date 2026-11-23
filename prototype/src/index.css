@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Visual language: Wispr Flow (wisprflow.ai + the app's @wispr/tokens, research/wispr-flow-teardown.md).
+   Cream paper #FFFFEB, ink #1A1A1A, EB Garamond headlines with an italic turn, Figtree for everything else,
+   lilac buttons with a thin ink border, deep-teal bands, and a black pill with a waveform while recording. */
+
 /* "Aa" control: everything is in rem, so one root size scales the app. */
 :root {
   --scale: 1;
@@ -15,7 +19,7 @@ html {
 body {
   @apply bg-paper text-ink font-sans antialiased;
   font-size: 1.125rem;
-  line-height: 1.75;
+  line-height: 1.6;
 }
 button,
 a {
@@ -24,34 +28,81 @@ a {
 :focus-visible {
   outline: 3px solid #1a1a1a;
   outline-offset: 3px;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 .on-night :focus-visible {
   outline-color: #f0d7ff;
 }
 
 @layer components {
-  /* The one filled button per screen: 60px, full width, thumb zone. */
+  /* Serif headline, the wisprflow.ai hero: EB Garamond 400, tight tracking, an italic second line. */
+  .headline {
+    @apply font-serif text-ink;
+    font-weight: 400;
+    font-size: 2.6rem;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+  }
+  .headline em {
+    font-style: italic;
+  }
+  .headline-sm {
+    @apply font-serif text-ink;
+    font-weight: 400;
+    font-size: 2.05rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  /* Small tracked label above a headline ("WISPR FLOW DICTATION"). */
+  .eyebrow {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(26, 26, 26, 0.7);
+  }
+  /* The one main button per screen: Wispr's lilac button with a thin ink border. */
   .btn-main {
-    @apply flex w-full items-center justify-center gap-3 rounded-full bg-teal px-6 text-[1.25rem] font-semibold text-white transition-colors active:bg-teal-deep disabled:opacity-50;
-    min-height: 3.75rem;
+    @apply flex w-full items-center justify-center gap-3 px-6 text-[1.125rem] font-semibold text-ink transition-colors disabled:opacity-50;
+    min-height: 3.5rem;
+    border-radius: 12px;
+    background: #f0d7ff;
+    border: 1.6px solid #1a1a1a;
+  }
+  .btn-main:active {
+    background: #e6c3fb;
   }
   .btn-main.is-done {
-    @apply bg-ok;
+    background: #034f46;
+    border-color: #034f46;
+    color: #ffffeb;
   }
   .on-night .btn-main {
-    @apply bg-mint text-night;
+    background: #f0d7ff;
+    border-color: #f0d7ff;
+  }
+  /* Outlined secondary button (same shape, no fill). */
+  .btn-line {
+    @apply flex w-full items-center justify-center gap-3 px-6 text-[1.0625rem] font-semibold text-ink transition-colors;
+    min-height: 3.25rem;
+    border-radius: 12px;
+    border: 1.6px solid #1a1a1a;
+    background: transparent;
+  }
+  .btn-line:active {
+    background: #f4f2da;
   }
   /* Text links: secondary actions, 48px hit area. */
   .link {
-    @apply inline-flex items-center gap-2 font-semibold text-teal underline decoration-2 underline-offset-[6px] decoration-dawn-700;
+    @apply inline-flex items-center gap-2 font-semibold text-ink underline decoration-[1.5px] underline-offset-[6px];
     min-height: 3rem;
   }
   .on-night .link {
-    @apply text-mint decoration-dawn-500;
+    @apply text-night-text;
   }
   .link-quiet {
-    @apply inline-flex items-center gap-2 font-medium text-muted underline decoration-1 underline-offset-[6px];
+    @apply inline-flex items-center gap-2 font-medium underline decoration-1 underline-offset-[6px];
+    color: rgba(26, 26, 26, 0.7);
     min-height: 3rem;
   }
   .on-night .link-quiet {
@@ -59,55 +110,64 @@ a {
   }
   /* Hairline lists: a rule between rows only. */
   .rows > * + * {
-    border-top: 1px solid #deddd7;
+    border-top: 1px solid #e4e3cc;
   }
   .on-night .rows > * + * {
     border-top-color: rgba(179, 178, 173, 0.22);
+  }
+  /* Rounded cream panel (the cookie-card surface on wisprflow.ai). */
+  .panel {
+    border-radius: 12px;
+    background: #f4f2da;
+    border: 1px solid #e4e3cc;
+  }
+  /* Notice for anything that went wrong: a panel with an ink rule on the left. */
+  .notice {
+    @apply text-base text-ink;
+    border-radius: 12px;
+    background: #fff1e3;
+    border: 1px solid #f3d9bd;
+    padding: 0.875rem 1rem;
   }
   /* Sticky action zone that fades into the canvas (no border, no shadow). */
   .action-zone {
     @apply sticky bottom-0 z-20 px-5 pb-5 pt-8;
     padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
-    background: linear-gradient(to bottom, rgba(252, 252, 251, 0), #fcfcfb 1.5rem);
+    background: linear-gradient(to bottom, rgba(255, 255, 235, 0), #ffffeb 1.5rem);
   }
   .action-zone.on-sand {
-    background: linear-gradient(to bottom, rgba(238, 235, 227, 0), #eeebe3 1.5rem);
+    background: linear-gradient(to bottom, rgba(244, 242, 218, 0), #f4f2da 1.5rem);
   }
   .action-zone.on-night {
     background: linear-gradient(to bottom, rgba(26, 26, 26, 0), #1a1a1a 1.5rem);
   }
   .action-zone.on-ok {
-    background: linear-gradient(to bottom, rgba(226, 245, 242, 0), #e2f5f2 1.5rem);
+    background: linear-gradient(to bottom, rgba(255, 255, 235, 0), #ffffeb 1.5rem);
   }
-  /* Underline-only input (the rare typed fallback): no box. */
+  /* Typed fallback: a rounded field with an ink border, like Wispr's inputs. */
   .line-input {
-    @apply w-full bg-transparent py-3 text-[1.25rem] outline-none;
-    border-bottom: 2px solid #71716e;
+    @apply w-full bg-white/70 px-4 py-3 text-[1.125rem] outline-none text-ink;
+    border-radius: 12px;
+    border: 1.6px solid rgba(26, 26, 26, 0.35);
   }
   .line-input:focus {
-    border-bottom-color: #1a1a1a;
+    border-color: #1a1a1a;
+    background: #ffffff;
   }
   .on-night .line-input {
-    @apply text-night-text;
-    border-bottom-color: #b3b2ad;
-  }
-  .on-night .line-input:focus {
-    border-bottom-color: #f0d7ff;
+    @apply text-ink;
   }
 }
 
 /* Facts inside the letter: weight + a lilac highlighter wash (Wispr dawn), never a box. */
 .fact {
   font-weight: 700;
-  background-image: linear-gradient(transparent 58%, rgba(240, 215, 255, 0.34) 58%);
+  background-image: linear-gradient(transparent 58%, rgba(240, 215, 255, 0.95) 58%);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   padding: 0 0.1em;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-}
-.on-paper .fact {
-  background-image: linear-gradient(transparent 58%, rgba(240, 215, 255, 0.95) 58%);
 }
 .fact.is-new {
   animation: sweep 700ms ease-out both;
@@ -125,13 +185,13 @@ a {
   display: inline-block;
   min-width: 4.5em;
   border-bottom: 2px dotted currentColor;
-  opacity: 0.65;
+  opacity: 0.55;
   transform: translateY(-0.2em);
   height: 1em;
 }
 .gap.is-asking {
   opacity: 1;
-  color: #f0d7ff;
+  color: #7232a6;
   animation: blink 1.6s ease-in-out infinite;
 }
 @keyframes blink {
@@ -140,89 +200,104 @@ a {
   }
 }
 
-/* ---------- The presence ---------- */
-.presence {
-  position: relative;
-  width: 9.5rem;
-  height: 9.5rem;
+/* ---------- The Flow pill: the mic control ----------
+   idle: lilac pill with an ink border ("Tap to speak").
+   listening: the black Flow Bar, with a live waveform from the microphone and a stop button.
+   thinking / speaking: the same black bar, calmer. */
+.flow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
   border-radius: 9999px;
+  min-height: 4rem;
+  padding: 0 1.75rem;
+  transition: background-color 200ms ease, color 200ms ease, padding 200ms ease, min-width 260ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  font-weight: 600;
+  font-size: 1.125rem;
+  user-select: none;
+}
+.flow[data-state='idle'] {
+  background: #f0d7ff;
+  border: 1.6px solid #1a1a1a;
+  color: #1a1a1a;
+  min-width: 15rem;
+  box-shadow: 0 6px 20px rgba(26, 26, 26, 0.08);
+}
+.flow[data-state='idle']:active {
+  background: #e6c3fb;
+}
+.flow[data-state='listening'],
+.flow[data-state='thinking'],
+.flow[data-state='speaking'] {
+  background: #1a1a1a;
+  border: 1.6px solid #1a1a1a;
+  color: #ffffeb;
+  min-width: 18rem;
+  padding: 0 0.75rem 0 1.5rem;
+  box-shadow: 0 10px 30px rgba(26, 26, 26, 0.18);
+}
+.flow .stop {
   display: grid;
   place-items: center;
-}
-.presence .glow {
-  position: absolute;
-  inset: -2.25rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 9999px;
-  /* Flow Bar pastels: lilac -> blush -> peach */
-  background: radial-gradient(circle, rgba(240, 215, 255, 0.5) 0%, rgba(255, 188, 242, 0.22) 42%, rgba(255, 169, 70, 0) 70%);
-  transform: scale(var(--level, 1));
-  transition: transform 160ms ease-out;
+  background: #f0d7ff;
+  color: #1a1a1a;
+  flex-shrink: 0;
 }
-.presence .core {
-  position: absolute;
-  inset: 0;
+/* Live waveform: rounded bars, height from the microphone level. */
+.wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 2.25rem;
+  flex: 1;
+  justify-content: center;
+}
+.wave i {
+  width: 4px;
   border-radius: 9999px;
-  background: radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 38%),
-    linear-gradient(140deg, #f0d7ff 0%, #ffbcf2 48%, #ffa946 100%);
-  box-shadow: inset 0 -12px 28px rgba(114, 50, 166, 0.28), 0 10px 30px rgba(0, 0, 0, 0.35);
+  background: #ffffeb;
+  height: calc(4px + 28px * var(--h, 0.1));
+  transition: height 90ms linear;
 }
-.presence[data-state='idle'] .glow,
-.presence[data-state='idle'] .core {
-  animation: breathe 5s ease-in-out infinite;
+.wave i:nth-child(3n + 1) {
+  background: #f0d7ff;
 }
-.presence[data-state='listening'] .core {
-  background: radial-gradient(circle at 30% 24%, #ffffff 0%, rgba(255, 255, 255, 0) 34%),
-    linear-gradient(140deg, #f7ebff 0%, #ffbcf2 40%, #ff6c4c 78%, #ffa946 100%);
+.wave i:nth-child(5n + 2) {
+  background: #ffbcf2;
 }
-.presence[data-state='thinking'] .core {
-  animation: shimmer 2.4s linear infinite;
-  background: conic-gradient(from 0deg, #f0d7ff, #ffbcf2, #ffa946, #965ace, #f0d7ff);
+.wave.calm i {
+  animation: calm 1.4s ease-in-out infinite;
 }
-.presence[data-state='speaking'] .ring {
-  animation: ripple 1.6s ease-out infinite;
-}
-.presence .ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 9999px;
-  border: 2px solid rgba(240, 215, 255, 0.75);
-  opacity: 0;
-}
-.presence[data-state='speaking'] .ring.r2 {
-  animation-delay: 0.8s;
-}
-.presence[data-state='off'] .core {
-  background: transparent;
-  box-shadow: none;
-  border: 2px solid #b3b2ad;
-}
-.presence[data-state='off'] .glow {
-  opacity: 0;
-}
-@keyframes breathe {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.85;
-  }
+@keyframes calm {
   50% {
-    transform: scale(1.08);
-    opacity: 1;
+    height: 12px;
   }
 }
-@keyframes shimmer {
-  to {
-    transform: rotate(360deg);
-  }
+.dots {
+  display: inline-flex;
+  gap: 6px;
 }
-@keyframes ripple {
-  0% {
-    transform: scale(1);
-    opacity: 0.8;
-  }
-  100% {
-    transform: scale(1.55);
-    opacity: 0;
+.dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #f0d7ff;
+  animation: dot 1.2s ease-in-out infinite;
+}
+.dots i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.dots i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes dot {
+  50% {
+    transform: translateY(-5px);
+    opacity: 0.5;
   }
 }
 
@@ -300,7 +375,7 @@ a {
   }
 }
 
-/* Flow-style segmented level meter (chord purple) under the presence while listening. */
+/* Small segmented level meter (chord purple), used in the edit sheet's voice strip. */
 .meter {
   display: flex;
   align-items: center;

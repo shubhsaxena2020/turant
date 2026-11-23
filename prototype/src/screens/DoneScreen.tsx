@@ -20,23 +20,24 @@ export function DoneScreen(props: { ui: UI; report: Report; onWritten: () => voi
   }, []);
 
   return (
-    <div className="flex flex-1 flex-col bg-ok-field">
+    <div className="flex flex-1 flex-col">
       <main className="flex-1 page-in">
-        <section className="px-5 pt-6">
-          <svg viewBox="0 0 96 96" className="w-24 h-24" aria-hidden>
-            <circle className="tick-circle" cx="48" cy="48" r="46" fill="#034F46" style={{ transformOrigin: 'center' }} />
-            <path className="tick-path" d="M30 49 L43 62 L67 36" fill="none" stroke="#fff" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
+        {/* Wispr's deep-teal band ("4x faster than typing") with cream serif text. */}
+        <section className="mx-3 mt-3 rounded-[28px] bg-fathom px-6 pb-8 pt-7 text-paper">
+          <svg viewBox="0 0 96 96" className="w-16 h-16" aria-hidden>
+            <circle className="tick-circle" cx="48" cy="48" r="46" fill="#F0D7FF" style={{ transformOrigin: 'center' }} />
+            <path className="tick-path" d="M30 49 L43 62 L67 36" fill="none" stroke="#1A1A1A" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <h1 className="mt-5 text-display font-display text-ink" data-testid="ready-title">
+          <h1 className="mt-5 font-serif text-[2.6rem] leading-[1.02] tracking-[-0.03em]" data-testid="ready-title">
             {t('readyTitle')}
           </h1>
-          <p className="mt-1 text-lg text-body">{t('rightStep')}</p>
+          <p className="mt-3 text-lg font-medium text-paper/90">{t('rightStep')}</p>
         </section>
 
-        <p className="mt-6 bg-amber-field px-5 py-3 text-lg font-semibold text-amber">{t('urgentLine')}</p>
+        <p className="mx-5 mt-5 notice font-semibold">{t('urgentLine')}</p>
 
         <section className="px-5 pt-6">
-          <a href="tel:1930" className="block font-display text-[4.5rem] leading-none font-bold text-ink tabular-nums" aria-label={t('callNowBig')}>
+          <a href="tel:1930" className="block font-display text-[5rem] leading-none text-ink tabular-nums tracking-[-0.03em]" aria-label={t('callNowBig')}>
             1930
           </a>
           <div className="mt-8 flex flex-wrap items-baseline justify-between gap-x-3">
@@ -60,7 +61,7 @@ export function DoneScreen(props: { ui: UI; report: Report; onWritten: () => voi
           <ol className="relative mt-3 ml-3 border-l-2 border-ok/40 pl-6" data-testid="timeline">
             {(['next1', 'next2', 'next3', 'next4'] as StrKey[]).map((k, i) => (
               <li key={k} className="relative pb-5">
-                <span className={`absolute -left-[2.05rem] top-1.5 h-4 w-4 rounded-full border-2 border-ok ${i === 0 ? 'bg-ok' : 'bg-ok-field'}`} aria-hidden />
+                <span className={`absolute -left-[2.05rem] top-1.5 h-4 w-4 rounded-full border-2 border-ok ${i === 0 ? 'bg-ok' : 'bg-paper'}`} aria-hidden />
                 <span className="text-lg text-ink">{t(k)}</span>
               </li>
             ))}

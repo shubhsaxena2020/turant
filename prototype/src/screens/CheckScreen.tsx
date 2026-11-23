@@ -66,7 +66,7 @@ export function CheckScreen(props: { ui: UI; report: Report; onChange: (r: Repor
     <div className="flex flex-1 flex-col on-paper">
       <main className="flex-1 px-5 pt-4 page-in">
         <h1 className="text-display font-display">{t('checkTitle')}</h1>
-        <p className="mt-1 text-lg text-body">{t('checkSub')}</p>
+        <p className="mt-2 text-lg text-ink/70">{t('checkSub')}</p>
 
         <section className="mt-8" data-testid="row-amount">
           <p className="text-label text-muted">{t('f_amount')}</p>
@@ -88,7 +88,7 @@ export function CheckScreen(props: { ui: UI; report: Report; onChange: (r: Repor
         <section className="rows">{extra.map((k) => row(k))}</section>
 
         {needsPoliceVisit(report.fields) ? (
-          <p className="-mx-5 mt-8 bg-amber-field px-5 py-4 text-lg text-amber font-medium">{t('policeAdvice')}</p>
+          <p className="mt-8 notice">{t('policeAdvice')}</p>
         ) : null}
       </main>
 

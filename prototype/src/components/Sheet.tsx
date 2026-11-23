@@ -31,8 +31,8 @@ export function Sheet(props: { title: string; closeLabel: string; onClose: () =>
   }, []);
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-end justify-center" role="dialog" aria-modal="true" aria-label={props.title} data-testid={props.testId}>
-      <button className="absolute inset-0 bg-night-deep/55 fade-in" tabIndex={-1} aria-label={props.closeLabel} onClick={props.onClose} />
-      <div ref={panel} tabIndex={-1} className="sheet-in relative w-full max-w-[560px] max-h-[88vh] overflow-y-auto rounded-t-[1.75rem] bg-paper text-ink px-5 pt-3 pb-6" style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))', outline: 'none' }}>
+      <button className="absolute inset-0 bg-ink/40 fade-in" tabIndex={-1} aria-label={props.closeLabel} onClick={props.onClose} />
+      <div ref={panel} tabIndex={-1} className="sheet-in relative w-full max-w-[560px] max-h-[88vh] overflow-y-auto rounded-t-[24px] border-t border-hair bg-paper text-ink px-5 pt-3 pb-6" style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))', outline: 'none' }}>
         <div className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-hair" aria-hidden />
         <div className="flex items-start gap-3">
           <h2 className="flex-1 text-title font-display">{props.title}</h2>
@@ -53,7 +53,7 @@ export function Row(props: { onClick: () => void; children: ReactNode; selected?
     <button
       onClick={props.onClick}
       data-testid={props.testId}
-      className={`flex w-full items-center gap-3 py-4 text-left text-lg font-medium min-h-[3.75rem] active:text-teal ${props.selected ? 'text-teal font-semibold' : ''}`}
+      className={`flex w-full items-center gap-3 py-4 text-left text-lg font-medium min-h-[3.75rem] ${props.selected ? '-mx-3 rounded-[10px] bg-dawn-300 px-3 font-semibold' : ''}`}
     >
       {props.children}
     </button>

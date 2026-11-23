@@ -60,7 +60,7 @@ export function DocumentScreen(props: { ui: UI; report: Report; onChange: (r: Re
           <div className="flex items-baseline justify-between gap-3">
             <h1 className="text-display font-display">{t('docTitle')}</h1>
           </div>
-          <p className="mt-1 text-lg text-body">{t('docSub')}</p>
+          <p className="mt-2 text-lg text-ink/70">{t('docSub')}</p>
           <button className="link" onClick={() => void ui.say((l) => buildSpokenSummary(report, l))}>
             <SpeakerIcon className="w-5 h-5" /> {t('hearSummary')}
           </button>

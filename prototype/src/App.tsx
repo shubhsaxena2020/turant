@@ -20,27 +20,16 @@ import type { UI } from './ui';
 type Stage = 'talk' | 'check' | 'done' | 'doc' | 'history';
 
 const SCALES = [1, 1.125, 1.25];
-const BG: Record<Stage, { cls: string; hex: string; tone: 'night' | 'paper' | 'ok' }> = {
-  talk: { cls: 'bg-night text-night-text on-night', hex: '#13233A', tone: 'night' },
-  check: { cls: 'bg-paper text-ink', hex: '#FAF7F2', tone: 'paper' },
-  done: { cls: 'bg-ok-field text-ink', hex: '#E3EFE6', tone: 'ok' },
-  doc: { cls: 'bg-paper text-ink', hex: '#FAF7F2', tone: 'paper' },
-  history: { cls: 'bg-paper text-ink', hex: '#FAF7F2', tone: 'paper' },
-};
+// Wispr Flow cream on every screen.
+const PAPER = { cls: 'bg-paper text-ink', hex: '#FFFFEB', tone: 'paper' as const };
 
-/** First run: guess from the phone's language list, default Hindi. Never a gate. */
-function guessLang(): LangCode {
+/** Everything on screen and everything Turant says is in English. */
+const UI_LANG: LangCode = 'en-IN';
+
+/** The language the person will *speak* (only the recogniser uses it). Default English (India), which also hears Hinglish. */
+function guessSpeakLang(): LangCode {
   const saved = loadLang();
-  if (saved) return saved;
-  try {
-    for (const l of navigator.languages ?? [navigator.language]) {
-      const hit = LANGS.find((x) => x.code.slice(0, 2) === l.slice(0, 2).toLowerCase());
-      if (hit) return hit.code;
-    }
-  } catch {
-    /* ignore */
-  }
-  return 'hi-IN';
+  return saved && LANGS.some((l) => l.code === saved) ? saved : 'en-IN';
 }
 
 function loadScale(): number {
@@ -68,9 +57,10 @@ function useOnline() {
 }
 
 export default function App() {
-  const [lang, setLang] = useState<LangCode>(guessLang);
+  const lang = UI_LANG;
+  const [speakLang, setSpeakLang] = useState<LangCode>(guessSpeakLang);
   const [stage, setStage] = useState<Stage>('talk');
-  const [report, setReport] = useState<Report>(() => newReport(guessLang()));
+  const [report, setReport] = useState<Report>(() => newReport(guessSpeakLang()));
   const [sample, setSample] = useState<string | null>(null);
   const [draft, setDraft] = useState<Report | null>(null);
   const [quiet, setQuietState] = useState(false);
@@ -90,10 +80,10 @@ export default function App() {
   }, [scale]);
 
   useEffect(() => {
-    document.documentElement.lang = lang.slice(0, 2);
-    document.body.style.background = BG[stage].hex;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', BG[stage].hex);
-  }, [lang, stage]);
+    document.documentElement.lang = 'en';
+    document.body.style.background = PAPER.hex;
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', PAPER.hex);
+  }, [stage]);
 
   const refreshDraft = useCallback(() => {
     void loadReports().then((list) => setDraft(list.find((r) => r.status === 'draft' && r.turns.length > 0) ?? null));
@@ -131,6 +121,8 @@ export default function App() {
 
   const ui: UI = {
     lang,
+    speakLang,
+    onSpeakLang: () => setLangSheet(true),
     t: (key: StrKey, vars?: Record<string, string | number>) => tr(lang, key, vars),
     say,
     quiet,
@@ -154,9 +146,9 @@ export default function App() {
   };
 
   const fresh = (opts: { sample?: boolean } = {}) => {
-    const r = newReport(lang, opts);
+    const r = newReport(speakLang, opts);
     setReport(r);
-    setSample(opts.sample ? SAMPLE_STORIES[lang] : null);
+    setSample(opts.sample ? SAMPLE_STORIES[UI_LANG] : null);
     refreshDraft();
     go('talk');
   };
@@ -169,11 +161,10 @@ export default function App() {
   };
 
   const pickLang = (l: LangCode) => {
-    setLang(l);
+    setSpeakLang(l);
     saveLang(l);
     setLangSheet(false);
     if (report.turns.length === 0) setReport({ ...report, lang: l });
-    if (sample) setSample(SAMPLE_STORIES[l]);
   };
 
   const back: Partial<Record<Stage, () => void>> = {
@@ -184,19 +175,18 @@ export default function App() {
     history: () => go('talk'),
   };
 
-  const bg = BG[stage];
+  const bg = PAPER;
 
   return (
     <div className={`min-h-[100dvh] overflow-x-clip ${bg.cls}`}>
-      <div className="mx-auto flex min-h-[100dvh] w-full max-w-[560px] flex-col" lang={lang.slice(0, 2)}>
+      <div className="mx-auto flex min-h-[100dvh] w-full max-w-[560px] flex-col" lang="en">
         <TopBar
           ui={ui}
           tone={bg.tone}
           onBack={back[stage]}
-          onLanguage={() => setLangSheet(true)}
           onScale={() => setScale((s) => SCALES[(SCALES.indexOf(s) + 1) % SCALES.length])}
         />
-        {!online ? <p className="px-5 text-label font-semibold text-amber bg-amber-field py-2">{ui.t('offlineNote')}</p> : null}
+        {!online ? <p className="mx-5 mt-2 notice">{ui.t('offlineNote')}</p> : null}
 
         {stage === 'talk' ? (
           <TalkScreen

@@ -124,9 +124,9 @@ export function EditSheet(props: { ui: UI; report: Report; field: FieldKey; onSa
       ) : null}
 
       {mode === 'listen' ? (
-        <div className="-mx-5 mt-3 bg-night px-5 py-6 text-night-text on-night flex flex-col items-center gap-3">
+        <div className="mt-3 rounded-[16px] bg-sand px-5 py-6 text-ink flex flex-col items-center gap-3">
           <p className="min-h-[3rem] self-stretch text-title break-words">{mic.live || (miss ? t('reprompt') : '')}</p>
-          <Presence state={mic.listening ? 'listening' : 'idle'} level={mic.level} label={mic.listening ? t('state_listening') : t('state_idle')} onPress={() => (mic.listening ? mic.stop() : listen())} small />
+          <Presence state={mic.listening ? 'listening' : 'idle'} bars={mic.bars} label={mic.listening ? t('state_listening') : t('state_idle')} onPress={() => (mic.listening ? mic.stop() : listen())} small />
         </div>
       ) : null}
 
@@ -203,9 +203,9 @@ export function FixSheet(props: { ui: UI; onFix: (field: FieldKey, value: string
     });
   return (
     <Sheet title={t('fixByVoiceLink')} closeLabel={t('closeSheet')} onClose={() => (mic.abort(), props.onClose())} testId="sheet-fix">
-      <div className="-mx-5 mt-2 bg-night px-5 py-6 text-night-text on-night flex flex-col items-center gap-4">
+      <div className="mt-2 rounded-[16px] bg-sand px-5 py-6 text-ink flex flex-col items-center gap-4">
         <p className="self-stretch text-title break-words min-h-[3rem]">{mic.live || msg}</p>
-        <Presence state={mic.listening ? 'listening' : 'idle'} level={mic.level} label={mic.listening ? t('state_listening') : t('state_idle')} onPress={() => (mic.listening ? mic.stop() : listen())} small />
+        <Presence state={mic.listening ? 'listening' : 'idle'} bars={mic.bars} label={mic.listening ? t('state_listening') : t('state_idle')} onPress={() => (mic.listening ? mic.stop() : listen())} small />
       </div>
     </Sheet>
   );
