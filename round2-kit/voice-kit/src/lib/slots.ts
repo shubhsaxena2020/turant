@@ -1,6 +1,6 @@
 // Generic, config-driven slot extraction. One typed extractor per slot type, all
 // built on Turant's rules in nlp.ts. Pure functions: no DOM, no network (offline-first).
-import { findAmountHit, fold, numberGroups, wordParts } from './indic/numbers';
+import { findAmountHit, fold, numberGroups, tokenize as indicTokens, wordParts } from './indic/numbers';
 import { findTime } from './indic/time';
 import type {
   AmountSlot,
@@ -175,6 +175,17 @@ function extractAmount(c: Ctx, s: AmountSlot): Extracted | undefined {
   return { value: best.value, confidence: best.conf };
 }
 
+/** Fallback: the cross-language parser ("baavan saal", "ಐವತ್ತೈದು ವರ್ಷ"): next to a unit word, or the answer to its question. */
+function indicNumber(c: Ctx, units: string[], inRange: (v: number) => boolean, hint: boolean): Extracted | undefined {
+  const toks = indicTokens(c.raw).map((t) => t.toLowerCase());
+  const unitAt = (k: number) => !!toks[k] && units.some((u) => toks[k] === u || fold(toks[k]).startsWith(fold(u)));
+  const groups = numberGroups(c.raw).filter((g) => !g.unsure && inRange(g.value));
+  const near = groups.find((g) => unitAt(g.end) || unitAt(g.start - 1));
+  if (near) return { value: near.value, confidence: 0.8 };
+  if (hint && groups.length) return { value: (c.opts.preferLast ? groups[groups.length - 1] : groups[0]).value, confidence: 0.8 };
+  return undefined;
+}
+
 function extractNumber(c: Ctx, s: NumberSlot, allowHint: boolean): Extracted | undefined {
   const hint = allowHint && hinted(s, c.opts);
   const units = (s.units ?? []).map(N.nw);
@@ -189,13 +200,15 @@ function extractNumber(c: Ctx, s: NumberSlot, allowHint: boolean): Extracted | u
     pick = c.opts.preferLast ? cands[cands.length - 1] : cands[0];
     conf = 0.85;
   }
-  if (!pick) return undefined;
+  if (!pick) return indicNumber(c, units, inRange, hint);
   c.claimed.add(pick.i);
   return { value: pick.r.value, confidence: conf };
 }
 
 const SINCE_YESTERDAY = ['kal se', 'since yesterday', 'from yesterday', 'कल से', 'காலையிலிருந்து', 'நேற்றிலிருந்து', 'நேற்று முதல்', 'ನಿನ್ನೆಯಿಂದ', 'গতকাল থেকে', 'কাল থেকে', 'నిన్నటి నుండి', 'कालपासून'];
 const SINCE_TODAY = ['aaj se', 'subah se', 'since morning', 'since today', 'आज से', 'सुबह से', 'இன்று காலை முதல்', 'ಬೆಳಿಗ್ಗೆಯಿಂದ', 'সকাল থেকে', 'ఉదయం నుండి', 'सकाळपासून'];
+
+const SINCE_AFTER = ['se', 'से', 'पासून', 'ধরে', 'থেকে', 'ಇಂದ', 'ದಿಂದ', 'గా', 'నుంచి', 'லிருந்து', 'ஆக'].map(N.nw);
 
 function extractDuration(c: Ctx, s: DurationSlot): Extracted | undefined {
   const hint = hinted(s, c.opts);
@@ -208,6 +221,14 @@ function extractDuration(c: Ctx, s: DurationSlot): Extracted | undefined {
     if (c.tokens.slice(r.end, r.end + 3).some((t) => N.AGO.includes(t))) continue;
     c.claimed.add(i);
     return { value: Math.round(((r.value * ms) / 86_400_000) * 100) / 100, confidence: hint ? 0.92 : 0.85 };
+  }
+  // "hafte se", "आठवड्यापासून": a unit with no number but a "since" marker = one of it
+  for (let k = 0; k < c.tokens.length; k++) {
+    const t = c.tokens[k];
+    const ms = N.unitMs(t);
+    if (ms < 86_400_000 || N.findNumberRuns([c.tokens[k - 1] ?? '']).length) continue;
+    const since = SINCE_AFTER.some((m) => c.tokens[k + 1] === m || (t.length > m.length + 2 && t.endsWith(m)));
+    if (since) return { value: Math.round((ms / 86_400_000) * 100) / 100, confidence: 0.75 };
   }
   if (N.phraseIndex(c.text, SINCE_YESTERDAY) >= 0) return { value: 1, confidence: 0.8 };
   if (N.phraseIndex(c.text, SINCE_TODAY) >= 0) return { value: 0.5, confidence: 0.75 };
@@ -341,7 +362,9 @@ const NOT_NAMES = N.wordSet([
   'bank', 'phone', 'mobile', 'paise', 'paisa', 'rupaye', 'ghar', 'sab', 'kal', 'aaj', 'abhi', 'woh', 'wo', 'yeh', 'ye', 'is', 'us', 'time', 'din', 'raat', 'patient',
   'मैंने', 'मैं', 'उसने', 'उन्होंने', 'हमने', 'किसी', 'कोई', 'आदमी', 'मेरा', 'मेरे', 'मेरी', 'उसका', 'ग्राहक', 'आज', 'कल', 'वो', 'यह', 'मरीज',
 ]);
-const PARTICLES: string[][] = [['ne', 'ने'], ['ko', 'को'], ['ji', 'जी'], ['ka', 'ki', 'ke', 'का', 'की', 'के']];
+const PARTICLES: string[][] = [['ne', 'ने'], ['ko', 'को'], ['ji', 'जी'], ['aaya', 'aayi', 'aaye', 'aya', 'आया', 'आई', 'आए'], ['ka', 'ki', 'ke', 'का', 'की', 'के']];
+// Titles said around a name ("Suresh bhaiya ne", "गीता दीदी"): never the name itself.
+const HONORIFICS = N.wordSet(['ji', 'जी', 'bhaiya', 'bhai', 'भैया', 'भाई', 'didi', 'दीदी', 'aunty', 'uncle', 'अंकल', 'आंटी', 'sir', 'madam', 'mr', 'mrs', 'ms', 'shri', 'श्री', 'sahab', 'saheb', 'साहब', 'garu', 'గారు', 'அண்ணா', 'ಅಣ್ಣ', 'দা', 'দি']);
 const EN_VERBS = N.wordSet(['took', 'bought', 'borrowed', 'owes', 'paid', 'purchased', 'has', 'gave', 'took']);
 
 function rawWords(raw: string): { w: string; n: string }[] {
@@ -356,7 +379,7 @@ function extractName(c: Ctx, s: NameSlot): Extracted | undefined {
   const words = rawWords(c.raw);
   const plausible = (i: number) => {
     const x = words[i];
-    if (!x || x.n.length < 2 || /\d/.test(x.n) || NAME_STOP.has(x.n) || NOT_NAMES.has(x.n) || c.reserved.has(x.n)) return false;
+    if (!x || x.n.length < 2 || /\d/.test(x.n) || NAME_STOP.has(x.n) || NOT_NAMES.has(x.n) || HONORIFICS.has(x.n) || c.reserved.has(x.n)) return false;
     return !/@/.test(x.w);
   };
   const takeFrom = (i: number, max = 3) => {
@@ -380,16 +403,27 @@ function extractName(c: Ctx, s: NameSlot): Extracted | undefined {
   for (const parts of PARTICLES) {
     const set = N.wordSet(parts);
     for (let i = 1; i < words.length; i++) {
-      if (!set.has(words[i].n) || !plausible(i - 1)) continue;
-      const two = i >= 2 && plausible(i - 2) && /^[A-Z]/.test(words[i - 2].w) && /^[A-Z]/.test(words[i - 1].w);
-      const name = (two ? [words[i - 2].w, words[i - 1].w] : [words[i - 1].w]).map(titleIfLatin).join(' ');
-      return { value: name, confidence: parts[0] === 'ka' ? 0.7 : 0.8 };
+      if (!set.has(words[i].n)) continue;
+      let j = i - 1;
+      while (j > 0 && HONORIFICS.has(words[j].n)) j--; // "Suresh bhaiya ne"
+      if (!plausible(j)) continue;
+      const two = j >= 1 && plausible(j - 1) && /^[A-Z]/.test(words[j - 1].w) && /^[A-Z]/.test(words[j].w);
+      const name = (two ? [words[j - 1].w, words[j].w] : [words[j].w]).map(titleIfLatin).join(' ');
+      return { value: name, confidence: parts[0] === 'ka' || parts[0] === 'aaya' ? 0.7 : 0.8 };
     }
+  }
+  // 2b. Marathi glues the particle on: "सुनीलने दोन किलो…"
+  if (words[0] && /..ने$/.test(words[0].n)) {
+    const stem = words[0].w.replace(/ने$/, '');
+    if (!NAME_STOP.has(N.nw(stem)) && !NOT_NAMES.has(N.nw(stem)) && !c.reserved.has(N.nw(stem))) return { value: stem, confidence: 0.7 };
   }
   // 3. English: "Ramesh took 3 kg rice"
   for (let i = 0; i < words.length - 1; i++) {
     if (EN_VERBS.has(words[i + 1].n) && /^[A-Z][a-z]/.test(words[i].w) && plausible(i)) return { value: words[i].w, confidence: 0.75 };
   }
+  // 3b. A story that opens with a name then a quantity: "রহিম দুই কেজি চাল…", "ಮಂಜು ಐದು ಕೆಜಿ…"
+  if (!c.opts.hint && plausible(0) && words[1] && (/^\d/.test(words[1].n) || wordParts(words[1].w)) && !wordParts(words[0].w))
+    return { value: titleIfLatin(words[0].w), confidence: 0.65 };
   // 4. Answering "What is the name?": the answer minus filler words.
   if (hinted(s, c.opts) && !N.detectIntent(c.raw)) {
     const name = words
@@ -423,7 +457,8 @@ function extractText(c: Ctx, s: TextSlot): Extracted | undefined {
       const lw = words.map((w) => N.normalizeWord(w).replace(/[.,:]+$/, ''));
       for (const m of marks) {
         for (let i = 0; i + m.length <= lw.length; i++) {
-          const ok = m.every((p, k) => lw[i + k] === p || (!N.isLatin(p) && lw[i + k].startsWith(p)));
+          // a native one-word marker may be glued on as a suffix too: शाळेजवळ = शाळे + जवळ ("near the school")
+          const ok = m.every((p, k) => lw[i + k] === p || (!N.isLatin(p) && (lw[i + k].startsWith(p) || (m.length === 1 && lw[i + k].length > p.length + 1 && lw[i + k].endsWith(p)))));
           if (!ok) continue;
           let value: string[];
           if (mk.take === 'clause') value = words;
@@ -437,7 +472,8 @@ function extractText(c: Ctx, s: TextSlot): Extracted | undefined {
             value = mk.keep ? [...got, ...words.slice(i, i + m.length)] : got;
           }
           const text = value.join(' ').replace(/[.,;:]+$/, '').trim();
-          if (text && (mk.take === 'clause' || value.length > (mk.keep ? m.length : 0))) return { value: text, confidence: 0.8 };
+          const glued = m.length === 1 && lw[i] !== m[0] && !lw[i].startsWith(m[0]); // "शाळेजवळ" carries its landmark
+          if (text && (mk.take === 'clause' || glued || value.length > (mk.keep ? m.length : 0))) return { value: text, confidence: 0.8 };
         }
       }
     }

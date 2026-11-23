@@ -1,0 +1,12 @@
+{"id": "c-hi-01", "lang": "hi", "kind": "story", "text": "Sadak pe bada gaddha hai, station road pe petrol pump ke paas, ward 12, do hafte se, mera number 9812345670", "expected": {"issue": "pothole", "location": ["station road"], "ward": ["12"], "since": 14, "phone": "9812345670"}}
+{"id": "c-hi-02", "lang": "hi", "kind": "story", "text": "हमारी गली की स्ट्रीट लाइट तीन दिन से बंद है, शिव मंदिर वाली गली, वार्ड 7", "expected": {"issue": "streetlight", "location": ["शिव मंदिर"], "ward": ["7"], "since": 3}}
+{"id": "c-en-03", "lang": "en", "kind": "story", "text": "There is no water supply for 4 days in Gandhi Nagar, ward 22, my number is 9988001122", "expected": {"issue": "water", "location": ["gandhi nagar"], "ward": ["22"], "since": 4, "phone": "9988001122"}}
+{"id": "c-en-04", "lang": "en", "kind": "story", "text": "The drain is overflowing near the bus stand, ward 5", "expected": {"issue": "drainage", "location": ["bus stand"], "ward": ["5"]}}
+{"id": "c-kn-05", "lang": "kn", "kind": "story", "text": "ನಮ್ಮ ರಸ್ತೆಯಲ್ಲಿ ಕಸ ಬಿದ್ದಿದೆ, ಬಸ್ ನಿಲ್ದಾಣದ ಹತ್ತಿರ, ವಾರ್ಡ್ 18, ಒಂದು ವಾರದಿಂದ", "expected": {"issue": "garbage", "location": ["ಬಸ್ ನಿಲ್ದಾಣ"], "ward": ["18"], "since": 7}}
+{"id": "c-ta-06", "lang": "ta", "kind": "story", "text": "எங்க தெருவில் குப்பை குவிஞ்சிருக்கு, பள்ளிக்கூடம் பக்கத்துல, வார்டு 9", "expected": {"issue": "garbage", "location": ["பள்ளிக்கூட"], "ward": ["9"]}}
+{"id": "c-bn-07", "lang": "bn", "kind": "story", "text": "রাস্তায় বড় গর্ত হয়েছে, বাজারের কাছে, ওয়ার্ড ৩, দশ দিন ধরে", "expected": {"issue": "pothole", "location": ["বাজার"], "ward": ["3"], "since": 10}}
+{"id": "c-te-08", "lang": "te", "kind": "story", "text": "మా వీధిలో వీధి దీపం పని చేయడం లేదు, గుడి దగ్గర, వార్డు 11", "expected": {"issue": "streetlight", "location": ["గుడి"], "ward": ["11"]}}
+{"id": "c-mr-09", "lang": "mr", "kind": "story", "text": "आमच्या गल्लीत पाणी येत नाही, शाळेजवळ, वॉर्ड 4, आठवड्यापासून", "expected": {"issue": "water", "location": ["शाळे"], "ward": ["4"], "since": 7}}
+{"id": "c-hi-10", "lang": "hi", "kind": "answer", "hint": "ward", "text": "ward number 15", "expected": {"ward": ["15"]}}
+{"id": "c-hi-11", "lang": "hi", "kind": "answer", "hint": "phone", "text": "nau aath saat chhe paanch chaar teen do ek shunya", "expected": {"phone": "9876543210"}}
+{"id": "c-hi-12", "lang": "hi", "kind": "story", "text": "Naali band hai, Nehru chowk ke paas, ward 30, kal se", "expected": {"issue": "drainage", "location": ["nehru chowk"], "ward": ["30"], "since": 1}}

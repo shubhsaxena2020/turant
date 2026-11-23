@@ -4,19 +4,19 @@ import { defineDomain, type Entry, type ItemDef, type OutputCtx } from '../../do
 import { amountInWords, formatINR, portalDate, portalTime } from '../../lib/format';
 
 const ITEMS: ItemDef[] = [
-  { name: { 'en-IN': 'Rice', 'hi-IN': 'चावल' }, keywords: ['rice', 'chawal', 'chaawal', 'chaval', 'चावल', 'அரிசி', 'ಅಕ್ಕಿ', 'চাল'] },
+  { name: { 'en-IN': 'Rice', 'hi-IN': 'चावल' }, keywords: ['బియ్యం', 'तांदूळ', 'rice', 'chawal', 'chaawal', 'chaval', 'चावल', 'அரிசி', 'ಅಕ್ಕಿ', 'চাল'] },
   { name: { 'en-IN': 'Wheat flour', 'hi-IN': 'आटा' }, keywords: ['atta', 'aata', 'flour', 'आटा', 'கோதுமை மாவு', 'ಹಿಟ್ಟು', 'আটা'] },
-  { name: { 'en-IN': 'Sugar', 'hi-IN': 'चीनी' }, keywords: ['sugar', 'cheeni', 'chini', 'shakkar', 'चीनी', 'शक्कर', 'சர்க்கரை', 'ಸಕ್ಕರೆ', 'চিনি'] },
-  { name: { 'en-IN': 'Oil', 'hi-IN': 'तेल' }, keywords: ['oil', 'tel', 'तेल', 'எண்ணெய்', 'ಎಣ್ಣೆ', 'তেল'] },
+  { name: { 'en-IN': 'Sugar', 'hi-IN': 'चीनी' }, keywords: ['साखर', 'చక్కెర', 'sugar', 'cheeni', 'chini', 'shakkar', 'चीनी', 'शक्कर', 'சர்க்கரை', 'ಸಕ್ಕರೆ', 'চিনি'] },
+  { name: { 'en-IN': 'Oil', 'hi-IN': 'तेल' }, keywords: ['నూనె', 'oil', 'tel', 'तेल', 'எண்ணெய்', 'ಎಣ್ಣೆ', 'তেল'] },
   { name: { 'en-IN': 'Dal', 'hi-IN': 'दाल' }, keywords: ['dal', 'daal', 'lentils', 'दाल', 'பருப்பு', 'ಬೇಳೆ', 'ডাল'] },
-  { name: { 'en-IN': 'Milk', 'hi-IN': 'दूध' }, keywords: ['milk', 'doodh', 'dudh', 'दूध', 'பால்', 'ಹಾಲು', 'দুধ'] },
+  { name: { 'en-IN': 'Milk', 'hi-IN': 'दूध' }, keywords: ['పాలు', 'milk', 'doodh', 'dudh', 'दूध', 'பால்', 'ಹಾಲು', 'দুধ'] },
   { name: { 'en-IN': 'Salt', 'hi-IN': 'नमक' }, keywords: ['salt', 'namak', 'नमक', 'உப்பு', 'ಉಪ್ಪು', 'লবণ', 'নুন'] },
   { name: { 'en-IN': 'Tea', 'hi-IN': 'चाय पत्ती' }, keywords: ['tea', 'chai patti', 'chai', 'चाय', 'चायपत्ती', 'டீ', 'ಟೀ', 'চা'] },
   { name: { 'en-IN': 'Soap', 'hi-IN': 'साबुन' }, keywords: ['soap', 'sabun', 'साबुन', 'சோப்பு', 'ಸೋಪು', 'সাবান'] },
   { name: { 'en-IN': 'Biscuits', 'hi-IN': 'बिस्कुट' }, keywords: ['biscuit', 'biscuits', 'बिस्कुट', 'பிஸ்கட்', 'ಬಿಸ್ಕತ್', 'বিস্কুট'] },
   { name: { 'en-IN': 'Eggs', 'hi-IN': 'अंडे' }, keywords: ['egg', 'eggs', 'anda', 'ande', 'अंडा', 'अंडे', 'முட்டை', 'ಮೊಟ್ಟೆ', 'ডিম'] },
   { name: { 'en-IN': 'Onion', 'hi-IN': 'प्याज़' }, keywords: ['onion', 'onions', 'pyaz', 'pyaaz', 'प्याज', 'வெங்காயம்', 'ಈರುಳ್ಳಿ', 'পেঁয়াজ'] },
-  { name: { 'en-IN': 'Potato', 'hi-IN': 'आलू' }, keywords: ['potato', 'potatoes', 'aloo', 'alu', 'आलू', 'உருளைக்கிழங்கு', 'ಆಲೂಗಡ್ಡೆ', 'আলু'] },
+  { name: { 'en-IN': 'Potato', 'hi-IN': 'आलू' }, keywords: ['aalu', 'aaloo', 'बटाटा', 'బంగాళాదుంప', 'ಆಲೂಗಡ್ಡೆ', 'potato', 'potatoes', 'aloo', 'alu', 'आलू', 'உருளைக்கிழங்கு', 'ಆಲೂಗಡ್ಡೆ', 'আলু'] },
   { name: { 'en-IN': 'Bread', 'hi-IN': 'ब्रेड' }, keywords: ['bread', 'pav', 'ब्रेड', 'பிரெட்', 'ಬ್ರೆಡ್', 'পাউরুটি'] },
   { name: { 'en-IN': 'Noodles', 'hi-IN': 'मैगी' }, keywords: ['maggi', 'noodles', 'मैगी', 'நூடுல்ஸ்', 'ನೂಡಲ್ಸ್'] },
 ];
@@ -74,8 +74,9 @@ export default defineDomain({
     {
       key: 'payment', type: 'enum', required: true,
       options: [
-        { value: 'credit', label: { 'en-IN': 'On credit (udhaar)', 'hi-IN': 'उधार' }, keywords: ['udhaar', 'udhar', 'udhari', 'credit', 'baaki', 'baki', 'baad mein', 'baad me', 'likh do', 'likh lo', 'khate mein', 'later', 'उधार', 'बाकी', 'बाद में', 'लिख दो', 'खाते में'] },
-        { value: 'repay', label: { 'en-IN': 'Paid back old dues', 'hi-IN': 'पुराना हिसाब चुकाया' }, keywords: ['jama', 'jama kiye', 'wapas', 'lautaye', 'chukaya', 'chuka diye', 'purana hisaab', 'paid back', 'cleared', 'जमा', 'लौटाए', 'चुकाए', 'चुकाया'] },
+        // "wapas de gaya purane udhaar ke" = paid back old dues: repay is checked before credit
+        { value: 'repay', label: { 'en-IN': 'Paid back old dues', 'hi-IN': 'पुराना हिसाब चुकाया' }, keywords: ['purane udhaar', 'purana udhaar', 'wapas de', 'वापस दे', 'पुराना उधार', 'jama', 'jama kiye', 'wapas', 'lautaye', 'chukaya', 'chuka diye', 'purana hisaab', 'paid back', 'cleared', 'जमा', 'लौटाए', 'चुकाए', 'चुकाया'] },
+        { value: 'credit', label: { 'en-IN': 'On credit (udhaar)', 'hi-IN': 'उधार' }, keywords: ['বাকি', 'கடன்', 'అప్పు', 'ಸಾಲ', 'udhaar', 'udhar', 'udhari', 'credit', 'baaki', 'baki', 'baad mein', 'baad me', 'likh do', 'likh lo', 'khate mein', 'later', 'उधार', 'बाकी', 'बाद में', 'लिख दो', 'खाते में'] },
         { value: 'upi', label: { 'en-IN': 'Paid by UPI', 'hi-IN': 'UPI से दिए' }, keywords: ['upi', 'gpay', 'google pay', 'phonepe', 'paytm', 'online', 'qr', 'यूपीआई', 'ऑनलाइन'] },
         { value: 'paid', label: { 'en-IN': 'Paid in cash', 'hi-IN': 'नकद दिए' }, keywords: ['nakad', 'naqad', 'cash', 'paid', 'de diye', 'de diya', 'paise diye', 'नकद', 'कैश', 'दे दिए'] },
       ],

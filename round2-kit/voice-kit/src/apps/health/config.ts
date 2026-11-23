@@ -19,14 +19,14 @@ const SYMPTOMS: [string, string, string, string, string[]][] = [
   ['vomiting', 'Vomiting', 'வாந்தி', 'उल्टी', ['vomiting', 'vomit', 'ulti', 'ultee', 'उल्टी', 'उलटी', 'வாந்தி', 'ವಾಂತಿ', 'বমি', 'వాంతులు']],
   ['diarrhoea', 'Diarrhoea', 'வயிற்றுப்போக்கு', 'दस्त', ['diarrhoea', 'diarrhea', 'loose motion', 'loose motions', 'dast', 'दस्त', 'வயிற்றுப்போக்கு', 'பேதி', 'ಭೇದಿ', 'ডায়রিয়া', 'విరేచనాలు', 'जुलाब']],
   ['stomach_pain', 'Stomach pain', 'வயிற்று வலி', 'पेट दर्द', ['stomach pain', 'stomach ache', 'pet dard', 'pet mein dard', 'pet me dard', 'पेट दर्द', 'पेट में दर्द', 'வயிற்று வலி', 'வயிறு வலி', 'ಹೊಟ್ಟೆ ನೋವು', 'পেটে ব্যথা', 'కడుపు నొప్పి']],
-  ['body_pain', 'Body ache', 'உடல் வலி', 'बदन दर्द', ['body pain', 'body ache', 'badan dard', 'badan mein dard', 'बदन दर्द', 'शरीर में दर्द', 'உடல் வலி', 'ಮೈ ನೋವು', 'গায়ে ব্যথা', 'ఒళ్ళు నొప్పులు']],
+  ['body_pain', 'Body ache', 'உடல் வலி', 'बदन दर्द', ['अंगदुखी', 'अंग दुखी', 'angdukhi', 'body pain', 'body ache', 'badan dard', 'badan mein dard', 'बदन दर्द', 'शरीर में दर्द', 'உடல் வலி', 'ಮೈ ನೋವು', 'গায়ে ব্যথা', 'ఒళ్ళు నొప్పులు']],
   ['rash', 'Rash', 'தடிப்பு', 'दाने / चकत्ते', ['rash', 'rashes', 'daane', 'chakatte', 'दाने', 'चकत्ते', 'தடிப்பு', 'ದದ್ದು', 'ফুসকুড়ি', 'దద్దుర్లు']],
   ['bleeding', 'Bleeding', 'ரத்தப்போக்கு', 'खून आना', ['bleeding', 'khoon aa', 'khoon nikal', 'खून आ', 'खून निकल', 'रक्तस्राव', 'ரத்தப்போக்கு', 'இரத்தப்போக்கு', 'ರಕ್ತಸ್ರಾವ', 'রক্তপাত', 'రక్తస్రావం']],
   ['dizziness', 'Dizziness', 'தலைசுற்றல்', 'चक्कर', ['dizzy', 'dizziness', 'chakkar', 'चक्कर', 'தலைசுற்றல்', 'தலை சுற்றல்', 'ತಲೆ ಸುತ್ತು', 'মাথা ঘোরা', 'కళ్ళు తిరగడం']],
 ];
 
 const AGE_UNITS = ['years', 'year', 'yrs', 'yr', 'saal', 'sal', 'baras', 'varsh', 'age', 'umar', 'umr', 'aged', 'old', 'साल', 'वर्ष', 'बरस', 'उम्र', 'उमर', 'வயது', 'வயசு', 'ವಯಸ್ಸು', 'ವರ್ಷ', 'বছর', 'বয়স', 'సంవత్సరాలు', 'వయసు', 'वय'];
-const TEMP_UNITS = ['degree', 'degrees', 'digri', 'degri', 'fahrenheit', 'f', 'temperature', 'temp', 'tapman', 'डिग्री', 'तापमान', 'டிகிரி', 'வெப்பநிலை', 'ಡಿಗ್ರಿ', 'ডিগ্রি', 'డిగ్రీ'];
+const TEMP_UNITS = ['bukhar', 'बुखार', 'fever', 'taap', 'ताप', 'জ্বর', 'காய்ச்சல்', 'జ్వరం', 'ಜ್ವರ', 'degree', 'degrees', 'digri', 'degri', 'fahrenheit', 'f', 'temperature', 'temp', 'tapman', 'डिग्री', 'तापमान', 'டிகிரி', 'வெப்பநிலை', 'ಡಿಗ್ರಿ', 'ডিগ্রি', 'డిగ్రీ'];
 
 const age = (f: Fields) => (f.age ? Number(f.age.value) : undefined);
 const symptoms = (f: Fields) => (Array.isArray(f.symptoms?.value) ? (f.symptoms!.value as string[]) : []);

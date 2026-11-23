@@ -1,0 +1,14 @@
+{"id": "h-hi-01", "lang": "hi", "kind": "story", "text": "Mareez ka naam Ramu hai, umar 45 saal, do din se bukhar aur khansi hai, bukhar 102 tha", "expected": {"patient": "Ramu", "age": 45, "symptoms": ["fever", "cough"], "days": 2, "temp": 102}}
+{"id": "h-hi-02", "lang": "hi", "kind": "story", "text": "मरीज़ का नाम सीता है, उम्र 30 साल, पाँच दिन से दस्त और पेट में दर्द है, गर्भवती है", "expected": {"patient": "सीता", "age": 30, "symptoms": ["diarrhoea", "stomach_pain"], "days": 5, "pregnant": true}}
+{"id": "h-en-03", "lang": "en", "kind": "story", "text": "Patient is Mohan, 70 years old, breathless since yesterday, some chest pain too", "expected": {"patient": "Mohan", "age": 70, "symptoms": ["breathless", "chest_pain"], "days": 1}}
+{"id": "h-en-04", "lang": "en", "kind": "story", "text": "Name Priya, age 8, rash and fever for three days, temperature 100", "expected": {"patient": "Priya", "age": 8, "symptoms": ["rash", "fever"], "days": 3, "temp": 100}}
+{"id": "h-hi-05", "lang": "hi", "kind": "story", "text": "Naam Kamla Devi, 60 saal, ek hafte se chakkar aa rahe hain", "expected": {"patient": "Kamla Devi", "age": 60, "symptoms": ["dizziness"], "days": 7}}
+{"id": "h-ta-06", "lang": "ta", "kind": "story", "text": "நோயாளி பெயர் செல்வி, வயது 35, இரண்டு நாளாக வாந்தி மற்றும் தலைவலி", "expected": {"patient": "செல்வி", "age": 35, "symptoms": ["vomiting", "headache"], "days": 2}}
+{"id": "h-bn-07", "lang": "bn", "kind": "story", "text": "রোগীর নাম মিনা, বয়স ২৮, তিন দিন ধরে জ্বর আর সর্দি", "expected": {"patient": "মিনা", "age": 28, "symptoms": ["fever", "cold"], "days": 3}}
+{"id": "h-te-08", "lang": "te", "kind": "story", "text": "పేషెంట్ పేరు లక్ష్మి, వయసు 50, నాలుగు రోజులుగా దగ్గు మరియు జ్వరం", "expected": {"patient": "లక్ష్మి", "age": 50, "symptoms": ["cough", "fever"], "days": 4}}
+{"id": "h-mr-09", "lang": "mr", "kind": "story", "text": "रुग्णाचे नाव गणेश, वय 40, दोन दिवसांपासून ताप आणि अंगदुखी", "expected": {"patient": "गणेश", "age": 40, "symptoms": ["fever", "body_pain"], "days": 2}}
+{"id": "h-kn-10", "lang": "kn", "kind": "story", "text": "ರೋಗಿಯ ಹೆಸರು ರವಿ, ವಯಸ್ಸು 55, ಮೂರು ದಿನದಿಂದ ಜ್ವರ ಮತ್ತು ಕೆಮ್ಮು", "expected": {"patient": "ರವಿ", "age": 55, "symptoms": ["fever", "cough"], "days": 3}}
+{"id": "h-hi-11", "lang": "hi", "kind": "answer", "hint": "age", "text": "baavan saal", "expected": {"age": 52}}
+{"id": "h-hi-12", "lang": "hi", "kind": "answer", "hint": "days", "text": "teen din se", "expected": {"days": 3}}
+{"id": "h-hi-13", "lang": "hi", "kind": "answer", "hint": "pregnant", "text": "nahi", "expected": {"pregnant": false}}
+{"id": "h-hi-14", "lang": "hi", "kind": "story", "text": "Bachche ka naam Arjun, 5 saal ka, kal se ulti aur dast ho rahe hain", "expected": {"patient": "Arjun", "age": 5, "symptoms": ["vomiting", "diarrhoea"], "days": 1}}

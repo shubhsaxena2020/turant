@@ -51,6 +51,7 @@ export function normalize(input: string): string {
   s = s.replace(/(\d)(kg|kilo|gm|g|ml|l|ltr|litre|liter)\b/g, '$1 $2'); // 3kg, 500g
   s = s.replace(/(\d+(?:\.\d+)?)\s?k\b/g, '$1 thousand');
   s = s.replace(/(\d+)\s*\/-/g, '$1 ');
+  s = s.replace(/\bhalf an? (?=[a-z])/g, 'half '); // "half a kilo\"
   // "s b i" spelled out by the recogniser -> "sbi"
   s = s.replace(/\b(?:[a-z] ){1,4}[a-z]\b/g, (m) => {
     const joined = m.replace(/ /g, '');
@@ -160,7 +161,7 @@ const CURRENCY_PREFIX = ['rupa', 'rupe', 'rupi', 'rupy', 'रुपय', 'रु
 const MINUTE_UNITS = ['minute', 'minutes', 'min', 'mins', 'minat', 'mint', 'mnt', 'मिनट', 'मिनिट', 'মিনিট', 'நிமிட', 'నిమిష', 'ನಿಮಿಷ'].map(nw);
 const HOUR_UNITS = ['hour', 'hours', 'hr', 'hrs', 'ghanta', 'ghante', 'ghanton', 'घंटा', 'घंटे', 'घंटों', 'तास', 'ঘণ্টা', 'ঘন্টা', 'மணிநேர', 'மணி நேர', 'గంట', 'ಗಂಟೆ'].map(nw);
 const DAY_UNITS = ['day', 'days', 'din', 'dino', 'dinon', 'दिन', 'दिवस', 'দিন', 'நாள', 'நாட்க', 'రోజు', 'రోజుల', 'ದಿನ'].map(nw);
-const WEEK_UNITS = ['week', 'weeks', 'hafta', 'hafte', 'hafton', 'haftey', 'saptah', 'हफ्ता', 'हफ्ते', 'हफ्तों', 'सप्ताह', 'आठवडा', 'आठवडे', 'সপ্তাহ', 'வார', 'వారం', 'వారాల', 'ವಾರ'].map(nw);
+const WEEK_UNITS = ['week', 'weeks', 'hafta', 'hafte', 'hafton', 'haftey', 'saptah', 'हफ्ता', 'हफ्ते', 'हफ्तों', 'सप्ताह', 'आठवडा', 'आठवडे', 'आठवड्या', 'সপ্তাহ', 'வார', 'వారం', 'వారాల', 'ವಾರ'].map(nw);
 const MONTH_UNITS = ['month', 'months', 'mahina', 'mahine', 'mahino', 'mahinon', 'महीना', 'महीने', 'महिना', 'महिने', 'মাস', 'மாத', 'నెల', 'ತಿಂಗಳ'].map(nw);
 export const AGO = ['pehle', 'pahle', 'phele', 'pehele', 'pahile', 'ago', 'back', 'before', 'पहले', 'पहिले', 'पूर्वी', 'आधी', 'আগে', 'முன்', 'முன்பு', 'முன்னாடி', 'క్రితం', 'ಹಿಂದೆ'].map(nw);
 const ELAPSED = wordSet(['hua', 'hue', 'huye', 'hogaye', 'ho', 'हुआ', 'हुए', 'हो']);
