@@ -166,7 +166,7 @@ const EXTRA_WORDS: Record<string, number> = {
 };
 
 /** Collapse long-vowel spellings so 'paanch', 'panch' and पाँच meet. */
-const vkey = (s: string) => s.replace(/aa/g, 'a').replace(/ee/g, 'i').replace(/oo/g, 'u').replace(/(.)+/g, '$1');
+const vkey = (s: string) => s.replace(/aa/g, 'a').replace(/ee/g, 'i').replace(/oo/g, 'u').replace(/(.)\1+/g, '$1');
 const HI_KEYS = HI_NUM.map(vkey);
 
 function wordToNumber(w: string): number | undefined {

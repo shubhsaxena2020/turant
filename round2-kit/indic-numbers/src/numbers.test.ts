@@ -75,6 +75,13 @@ describe('parts', () => {
   });
 });
 
+describe('Hinglish spellings', () => {
+  it('doubled letters collapse (chhabbees ~ chabbis ~ chhabis = 26)', () => {
+    expect(findAmount('chabbis hazaar rupaye')).toBe(26000);
+    expect(findAmount('chhabis hazaar rupaye')).toBe(26000);
+  });
+});
+
 describe('connectors', () => {
   it('"and" / "aur" inside a number joins it', () => {
     expect(findAmount('four thousand nine hundred and ninety nine rupees')).toBe(4999);
