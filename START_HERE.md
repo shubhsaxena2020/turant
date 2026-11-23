@@ -21,7 +21,7 @@ Still open: the masterclass RSVP (Tue 24 Nov) showed "coming soon". The 18+ age 
   - `DESIGN_SPEC.md`: the rules taken from both.
 - **Run:** `cd prototype && npm install && npm run test` (127 passing), then `npm run dev`. Tap "No mic? See a sample" to see the whole flow without speaking.
 - **QA:** every path was checked in a browser and 13 bugs were fixed. All 7 languages pass at 360px with the largest text size. Screenshots are in `prototype/screenshots/` (Hindi, Tamil, English).
-- **Not deployed.** The auto-mode permission check blocked a public deploy earlier. One command: `cd prototype && vercel deploy --prod --project turant-voice`.
+- **Live: https://turant-voice.vercel.app** (Vercel project `turant-voice`, deployed 24 Nov with Shubh's OK). Redeploy: `cd prototype && vercel deploy --prod --yes --project turant-voice`.
 
 ### Native-speaker review needed (bn / ta / te / mr / kn)
 1. The name for the round mic button ("गोला"): `likeWhatsapp`, `state_idle`, `tapToStop`.
