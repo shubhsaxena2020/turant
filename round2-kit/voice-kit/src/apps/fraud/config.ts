@@ -68,7 +68,7 @@ const resolveBank = (raw: string) => {
 const TOP_BANKS = BANKS.slice(0, 8).map(([n]) => n).concat(['Kotak Mahindra Bank', 'India Post Payments Bank']);
 
 const APPS: [string, string[]][] = [
-  ['PhonePe', ['phonepe', 'phone pay', 'phonpe', 'phone-pe', 'फोनपे', 'ফোনপে', 'போன்பே', 'ఫోన్‌పే', 'ఫోన్పే', 'ಫೋನ್‌ಪೇ', 'ফোন পে', 'ఫోన్ పే', 'போன் பே', 'ಫೋನ್ ಪೇ', 'फोन पे वरून', 'फोन पे द्वारे']],
+  ['PhonePe', ['phonepe', 'phone pay', 'phonpe', 'phone-pe', 'fon pay', 'fon pe', 'fonpe', 'फोनपे', 'ফোনপে', 'போன்பே', 'ఫోన్‌పే', 'ఫోన్పే', 'ಫೋನ್‌ಪೇ', 'ফোন পে', 'ఫోన్ పే', 'போன் பே', 'ಫೋನ್ ಪೇ', 'फोन पे वरून', 'फोन पे द्वारे']],
   ['Google Pay', ['google pay', 'gpay', 'g pay', 'googlepay', 'tez', 'গুগল পে', 'கூகுள் பே', 'గూగుల్ పే', 'ಗೂಗಲ್ ಪೇ']],
   ['Paytm', ['paytm', 'pay tm', 'पेटीएम', 'পেটিএম', 'பேடிஎம்', 'పేటీఎం', 'ಪೇಟಿಎಂ', 'पेटी एम', 'पे टी एम', 'पेटी इन', 'பேடியம்', 'পেটি এম']],
   ['BHIM', ['bhim', 'भीम ऐप', 'भीम यूपीआई']],

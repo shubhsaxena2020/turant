@@ -74,6 +74,16 @@ export function soundKey(latin: string): string {
     .replace(/(.)\1+/g, '$1');
 }
 
+function editDistance(a: string, b: string): number {
+  let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i];
+    for (let j = 1; j <= b.length; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return prev[b.length];
+}
+
 function similarity(a: string, b: string): number {
   if (a === b) return 1;
   const m = a.length;
@@ -176,6 +186,11 @@ export function findBank(text: string): BankHit | undefined {
     if (exactHit) {
       consider({ key: exactHit.b.key, name: exactHit.b.name, confidence: 1 });
       continue;
+    }
+    // a Latin acronym one letter off a 4+ letter one ("HTFC" = HDFC); 3-letter ones (SBI, PNB) collide too easily
+    if (/^[a-z]{4,5}$/.test(low)) {
+      const near = KEYS.filter((k) => (k.b.acronyms ?? []).some((a) => a.length >= 4 && editDistance(low, a) === 1));
+      if (near.length === 1) consider({ key: near[0].b.key, name: near[0].b.name, confidence: 0.8 });
     }
     if (wordParts(raw)) continue; // पचास / পঞ্চাশ are numbers, not Punjab
     const latin = /^[a-z]+$/.test(low) ? low : romanize(raw);
