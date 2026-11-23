@@ -37,7 +37,7 @@ We can't know the problem statement in advance, so this kit gets everything that
 1. Read the problem statement twice, word by word. Underline every noun (users, tasks, constraints) and every evaluation criterion.
 2. Pick ONE user and ONE task. Write the "before" story in 5 lines (who, where, what breaks).
 3. Write the build prompt the way we did for Activity 2 (screens → voice steps → languages → noise → low connectivity → error states → acceptance test). Dictate it with Wispr Flow.
-4. Match the problem to an archetype (slot-filling → `voice-kit` config; quiz → `archetypes/quiz`; intents → `archetypes/assistant`). Scaffold with `voice-kit/scripts/new-app.mjs`, write the config and the copy in hi + en first. Get the happy path working end to end by night.
+4. Match the problem to an archetype (slot-filling → `voice-kit` config; quiz → `archetypes/quiz`; intents → `archetypes/assistant`). Scaffold with `node scripts/new-app.mjs <name> --here --from <closest app>`. This also creates the harness corpus stubs (dev + held-out) and prints the measure loop. Then write the config and the copy in hi + en first. Get the happy path working end to end by night.
 5. **Measure from the first hour.** This is how Turant went from 27% to 43.5%. The biggest gap on the kit's held-out cases was missing domain words in each language.
    - Write the keyword lists for every enum option in all 7 languages, including the English loanwords people actually say (फोनपे, ஜிபே, "owes me").
    - Write 30-50 cases in `harness/corpus/kit/<app>.jsonl`, plus 15 more in `corpus/kit-heldout/` that nobody tunes on.
