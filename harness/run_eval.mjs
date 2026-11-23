@@ -10,16 +10,72 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import {
-  NOW, FIELDS, canonicalExpected, fieldMatches, describeTime, wer, cer, foldDigits, valueInTranscript, numbersInText,
+  NOW, FIELDS, BANK_IDS, APP_IDS, canonicalExpected, fieldMatches, describeTime, wer, cer, foldDigits, valueInTranscript, numbersInText,
 } from './lib.mjs';
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const EXTRACT = path.resolve(HERE, '..', 'prototype', 'src', 'lib', 'extract.ts');
 const X = await import(pathToFileURL(EXTRACT).href);
+// --extractor kit: score the Round 2 voice kit's fraud app instead (run under tsx: the kit uses extensionless imports).
+const KIT = process.argv.includes('--extractor') && process.argv[process.argv.indexOf('--extractor') + 1] === 'kit';
+const KD = path.resolve(HERE, '..', 'round2-kit', 'voice-kit', 'src');
+const K = KIT
+  ? {
+      cfg: (await import(pathToFileURL(path.join(KD, 'apps', 'fraud', 'config.ts')).href)).default,
+      ...(await import(pathToFileURL(path.join(KD, 'lib', 'slots.ts')).href)),
+      ...(await import(pathToFileURL(path.join(KD, 'lib', 'nlp.ts')).href)),
+    }
+  : null;
+const IN = await import(pathToFileURL(path.resolve(HERE, '..', 'prototype', 'src', 'lib', 'indic', 'numbers.ts')).href);
 
 const args = process.argv.slice(2);
 const arg = (k, d) => (args.includes(k) ? args[args.indexOf(k) + 1] : d);
 const NAME = arg('--name', 'latest');
+// --llm <slug>: also use cached LLM answers (llm_fill.mjs); only texts in the cache are scored.
+// --policy rules | llm | fill (LLM fills any missing field) | fillcat (only scamType/bank/paymentApp)
+//          | fillcheck (fillcat + numbers/IDs whose value is visible in the text)
+const LLM = arg('--llm', null);
+const POLICY = arg('--policy', LLM ? 'fill' : 'rules');
+const llmCache = new Map();
+if (LLM)
+  for (const l of fs.readFileSync(path.join(HERE, 'llm-cache', `${LLM}.jsonl`), 'utf8').trim().split(/\r?\n/)) {
+    const o = JSON.parse(l);
+    llmCache.set(`${o.hint ?? ''}\u0001${o.text}`, llmFields(o.raw));
+  }
+
+/** LLM JSON -> harness field values (bank/app keys -> display names, local datetime -> ISO). */
+function llmFields(raw) {
+  const m = String(raw).replace(/```(json)?/g, '').match(/\{[\s\S]*\}/);
+  let j = {};
+  try {
+    j = m ? JSON.parse(m[0]) : {};
+  } catch {
+    return {};
+  }
+  const out = {};
+  const digits = (v) => String(v ?? '').replace(/\D/g, '');
+  if (Number(j.amount) > 0) out.amount = Math.round(Number(j.amount));
+  const t = /^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})/.exec(String(j.when ?? ''));
+  if (t) out.time = new Date(+t[1], +t[2] - 1, +t[3], +t[4], +t[5]).toISOString();
+  if (['fake_kyc', 'otp_shared', 'fake_customer_care', 'wrong_transfer', 'qr_scan', 'investment_task', 'sextortion', 'other'].includes(j.scamType)) out.scamType = j.scamType;
+  if (BANK_IDS[String(j.bank ?? '').toLowerCase()]) out.bank = BANK_IDS[String(j.bank).toLowerCase()];
+  if (APP_IDS[String(j.paymentApp ?? '').toLowerCase()]) out.paymentApp = APP_IDS[String(j.paymentApp).toLowerCase()];
+  if (digits(j.utr).length >= 10) out.utr = digits(j.utr);
+  if (digits(j.suspectPhone).length >= 10) out.suspectPhone = digits(j.suspectPhone).slice(-10);
+  if (digits(j.suspectAccount).length >= 8) out.suspectAccount = digits(j.suspectAccount);
+  if (/@/.test(String(j.suspectUpi ?? ''))) out.suspectUpi = String(j.suspectUpi).toLowerCase().replace(/\s/g, '');
+  if (j.intent === 'skip') out.intent = 'skip';
+  return out;
+}
+
+/** Is an LLM value visible in the text? Digits (any script) or a spoken number our parser reads. */
+function visible(field, v, text) {
+  const d = foldDigits(text).replace(/[\s,.-]/g, '');
+  if (field === 'amount') return d.includes(String(v)) || IN.numberGroups(text).some((g) => g.value === v);
+  if (['utr', 'suspectPhone', 'suspectAccount'].includes(field)) return d.includes(String(v));
+  if (field === 'suspectUpi') return true;
+  return false;
+}
 const COMPARE = arg('--compare', NAME !== 'baseline' && fs.existsSync(path.join(HERE, 'reports', 'baseline.json')) ? 'baseline' : null);
 
 const cases = fs.readFileSync(path.join(HERE, 'corpus', 'cases.jsonl'), 'utf8').trim().split(/\r?\n/).map((l) => JSON.parse(l));
@@ -35,6 +91,26 @@ const ALL_FIELDS = [...FIELDS, 'intent'];
 
 /** story -> extractFields; answer -> interpret() from answer.ts; correction -> parseCorrection. */
 function runPipeline(c, text) {
+  const rules = rulePipeline(c, text);
+  if (!LLM || POLICY === 'rules' || c.kind === 'correction') return rules;
+  const L = llmCache.get(`${c.hint ?? ''}\u0001${text}`) ?? {};
+  if (POLICY === 'llm') return c.kind.startsWith('answer:') && L.intent === 'skip' ? { intent: 'skip' } : Object.fromEntries(Object.entries(L).filter(([k]) => k !== 'intent'));
+  if (rules.intent) return rules;
+  const got = { ...rules };
+  const CAT = ['scamType', 'bank', 'paymentApp'];
+  // A field list ("bank,amount:check") fills only those fields; ":check" = only if visible in the text.
+  const named = ['fill', 'fillcat', 'fillcheck'].includes(POLICY) ? null : Object.fromEntries(POLICY.split(',').map((p) => p.split(':')).map(([k, m]) => [k, m ?? 'fill']));
+  for (const [k, v] of Object.entries(L)) {
+    if (k === 'intent' || got[k] !== undefined) continue;
+    if (named) {
+      if (named[k] === 'fill' || (named[k] === 'check' && visible(k, v, text))) got[k] = v;
+    } else if (POLICY === 'fill' || CAT.includes(k) || (POLICY === 'fillcheck' && visible(k, v, text))) got[k] = v;
+  }
+  return got;
+}
+
+function rulePipeline(c, text) {
+  if (KIT) return kitPipeline(c, text);
   const got = {};
   if (c.kind === 'correction') {
     const r = X.parseCorrection(text, { now: NOW });
@@ -43,6 +119,19 @@ function runPipeline(c, text) {
   }
   if (c.kind.startsWith('answer:') && X.detectIntent(text) === 'skip') return { intent: 'skip' };
   const e = X.extractFields(text, { now: NOW, hint: c.hint });
+  for (const k of FIELDS) if (e[k]) got[k] = e[k].value;
+  return got;
+}
+
+function kitPipeline(c, text) {
+  const got = {};
+  if (c.kind === 'correction') {
+    const r = K.parseCorrection(K.cfg, text, { now: NOW });
+    if (r) got[r.field] = r.value;
+    return got;
+  }
+  if (c.kind.startsWith('answer:') && K.detectIntent(text) === 'skip') return { intent: 'skip' };
+  const e = K.extractAll(K.cfg, text, { now: NOW, hint: c.hint });
   for (const k of FIELDS) if (e[k]) got[k] = e[k].value;
   return got;
 }
@@ -184,6 +273,7 @@ for (const j of plan.jobs) {
     continue;
   }
   const c = caseById[j.case];
+  if (LLM && c.kind !== 'correction' && !llmCache.has(`${c.hint ?? ''}\u0001${transcript}`)) continue;
   const a = audioById[j.audio];
   const clip = clipById[a.clip];
   const got = runPipeline(c, transcript);
@@ -252,7 +342,7 @@ const kindOf = (r) => (r.kind.startsWith('answer:') ? (caseById[r.case].expected
 const summary = {
   name: NAME,
   generatedAt: new Date().toISOString(),
-  extractor: path.relative(HERE, EXTRACT),
+  extractor: KIT ? 'round2-kit/voice-kit (fraud app)' : path.relative(HERE, EXTRACT),
   cases: cases.length,
   runs: runs.length,
   missingTranscripts: missing,

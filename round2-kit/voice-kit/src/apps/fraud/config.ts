@@ -12,11 +12,11 @@ const LANGS: LangCode[] = ['hi-IN', 'en-IN', 'bn-IN', 'ta-IN', 'te-IN', 'mr-IN',
 
 // Scam rules in matching priority order (sextortion beats "video call", KYC beats "bank").
 const SCAM_RULES: [string, string[], number?][] = [
-  ['sextortion', ['sextortion', 'nude', 'naked', 'video call record', 'blackmail', 'viral kar', 'obscene', 'अश्लील', 'ब्लैकमेल', 'न्यूड', 'ব্ল্যাকমেইল', 'மிரட்டல்', 'బ్లాక్‌మెయిల్', 'ब्लॅकमेल', 'ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್']],
-  ['investment_task', ['investment', 'invest', 'trading', 'stock tip', 'crypto', 'bitcoin', 'task', 'tasks', 'part time job', 'part-time job', 'work from home', 'youtube like', 'like karne', 'rating task', 'telegram', 'paisa double', 'double ho', 'high return', 'निवेश', 'टास्क', 'ट्रेडिंग', 'टेलीग्राम', 'বিনিয়োগ', 'முதலீடு', 'పెట్టుబడి', 'गुंतवणूक', 'ಹೂಡಿಕೆ']],
+  ['sextortion', ['sextortion', 'nude', 'naked', 'video call record', 'blackmail', 'blackmailing', 'blackmailed', 'viral kar', 'obscene', 'अश्लील', 'ब्लैकमेल', 'न्यूड', 'ব্ল্যাকমেইল', 'மிரட்டல்', 'బ్లాక్‌మెయిల్', 'ब्लॅकमेल', 'ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್']],
+  ['investment_task', ['investment', 'invest', 'trading', 'stock tip', 'crypto', 'bitcoin', 'task', 'tasks', 'part time job', 'part-time job', 'work from home', 'youtube like', 'like karne', 'rating task', 'telegram', 'paisa double', 'double ho', 'high return', 'निवेश', 'टास्क', 'ट्रेडिंग', 'टेलीग्राम', 'इन्वेस्ट', 'डबल हो', 'दुप्पट', 'गुंतवणु', 'বিনিয়োগ', 'ইনভেস্ট', 'ডাবল', 'টেলিগ্রাম', 'টাস্ক', 'முதலீடு', 'இன்வெஸ்ட்', 'டெலிகிராம்', 'டாஸ்க்', 'పెట్టుబడి', 'ఇన్వెస్ట్', 'టెలిగ్రామ్', 'టాస్క్', 'गुंतवणूक', 'ಹೂಡಿಕೆ', 'ಇನ್ವೆಸ್ಟ್', 'ಟೆಲಿಗ್ರಾಮ್', 'ಟಾಸ್ಕ್']],
   ['qr_scan', ['qr', 'qr code', 'scan', 'scanner', 'scanned', 'क्यूआर', 'स्कैन', 'স্ক্যান', 'কিউআর', 'ஸ்கேன்', 'స్కాన్', 'स्कॅन', 'ಸ್ಕ್ಯಾನ್']],
   ['fake_customer_care', ['customer care', 'customer service', 'customer support', 'helpline number', 'care number', 'anydesk', 'any desk', 'teamviewer', 'screen share', 'quick support', 'कस्टमर केयर', 'कस्टमर केअर', 'কাস্টমার কেয়ার', 'கஸ்டமர் கேர்', 'కస్టమర్ కేర్', 'ಕಸ್ಟಮರ್ ಕೇರ್']],
-  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद']],
+  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
   ['wrong_transfer', ['galti se', 'galati se', 'by mistake', 'mistakenly', 'wrong transfer', 'wrongly sent', 'refund', 'paise wapas', 'paisa wapas', 'wapas bhej', 'return the money', 'गलती से', 'वापस भेज', 'रिफंड', 'ভুল করে', 'রিফান্ড', 'தவறுதலாக', 'పొరపాటున', 'चुकून', 'ತಪ್ಪಾಗಿ']],
   // OTP alone is a mechanism, not the story: lower confidence.
   ['otp_shared', ['otp', 'ओटीपी', 'ওটিপি', 'ஓடிபி', 'ఓటీపీ', 'ಒಟಿಪಿ', 'code bataya', 'code bata diya', 'pin bataya', 'pin bata diya'], 0.75],
@@ -69,7 +69,7 @@ const TOP_BANKS = BANKS.slice(0, 8).map(([n]) => n).concat(['Kotak Mahindra Bank
 
 const APPS: [string, string[]][] = [
   ['PhonePe', ['phonepe', 'phone pay', 'phonpe', 'phone-pe', 'फोनपे', 'ফোনপে', 'போன்பே', 'ఫోన్‌పే', 'ఫోన్పే', 'ಫೋನ್‌ಪೇ']],
-  ['Google Pay', ['google pay', 'gpay', 'g pay', 'googlepay', 'tez', 'गूगल पे', 'গুগল পে', 'கூகுள் பே', 'గూగుల్ పే', 'ಗೂಗಲ್ ಪೇ']],
+  ['Google Pay', ['google pay', 'gpay', 'g pay', 'googlepay', 'tez', 'গুগল পে', 'கூகுள் பே', 'గూగుల్ పే', 'ಗೂಗಲ್ ಪೇ']],
   ['Paytm', ['paytm', 'pay tm', 'पेटीएम', 'পেটিএম', 'பேடிஎம்', 'పేటీఎం', 'ಪೇಟಿಎಂ']],
   ['BHIM', ['bhim', 'भीम ऐप', 'भीम यूपीआई']],
   ['Amazon Pay', ['amazon pay', 'अमेज़न पे']],
@@ -79,7 +79,7 @@ const APPS: [string, string[]][] = [
 
 const UTR_CTX = ['utr', 'ref', 'reference', 'refno', 'rrn', 'transaction', 'txn', 'trans', 'id', 'यूटीआर', 'ट्रांजैक्शन', 'ट्रांजेक्शन', 'रेफरेंस', 'आईडी'];
 const PHONE_CTX = ['phone', 'mobile', 'mob', 'call', 'calling', 'whatsapp', 'फोन', 'मोबाइल', 'कॉल', 'ফোন', 'போன்', 'ఫోన్', 'ಫೋನ್', 'मोबाईल'];
-const ACCOUNT_CTX = ['account', 'acct', 'ac', 'a/c', 'khata', 'khaata', 'akaunt', 'खाता', 'खाते', 'अकाउंट', 'অ্যাকাউন্ট', 'கணக்கு', 'ఖాతా', 'ಖಾತೆ'];
+const ACCOUNT_CTX = ['account', 'acct', 'ac', 'a/c', 'khata', 'khaata', 'akaunt', 'खाता', 'खाते', 'खात', 'अकाउंट', 'অ্যাকাউন্ট', 'একাউন্ট', 'খাত', 'கணக்கு', 'அக்கவுண்ட்', 'ఖాతా', 'అకౌంట్', 'ಖಾತೆ', 'ಅಕೌಂಟ್'];
 
 // Turant-specific overrides of kit UI strings ("Skip, 1930 will ask", "Past complaints").
 const OVERRIDE: UIKey[] = ['summaryIntro', 'skipLater', 'giveUp', 'later', 'draftAgain', 'pastReports', 'newReport', 'noReports', 'deleteConfirm', 'fixPrompt', 'couldNotFix', 'state_speaking', 'moreInfo'];
@@ -123,7 +123,12 @@ export default defineDomain({
         keywords,
         label: { 'en-IN': name },
         // "phone pe" in Hindi also means "on the phone"; accept it only as an app mention.
-        patterns: name === 'PhonePe' ? [/(^|[^a-z])(phone pe|फोन पे)\s+(se|app|ऐप|से|upi|यूपीआई)/] : undefined,
+        patterns:
+          name === 'PhonePe'
+            ? [/(^|[^a-z])(phone pe|फोन पे)\s+(se|app|ऐप|से|upi|यूपीआई)/]
+            : name === 'Google Pay'
+              ? [/गूगल पे(?!\s+(सर्च|ढूंढ|देख))/] // "गूगल पे सर्च किया" = searched on Google
+              : undefined,
       })),
       label: T('f_paymentApp'),
       aliases: ['app', 'ऐप', 'एप'],

@@ -41,3 +41,21 @@ describe('named "Bank of India" banks', () => {
     expect(findBank('mera bank of india mein khata hai')?.key).toBe('boi');
   });
 });
+
+// Bank names as Whisper writes them (harness/transcripts, dev voices).
+describe('ASR spellings', () => {
+  const cases: [string, string][] = [
+    ['मेरे बैंक आफ बड़ादा का अकाउंट है', 'bob'], // ऑफ -> आफ
+    ['S.B.I.', 'sbi'],
+    ['आई सी आई सी आई बैंड के कस्टमर केयर का नंबर', 'icici'], // letters spoken one by one
+    ['తర్వాత ఏచ్డి ఎఫ్సీ అకాంట్నుండి', 'hdfc'],
+    ['আমি সাতচল্লিশ হাজার টাকা দিয়েছি কুটাক বেনক থেকে', 'kotak'],
+    ['আমার পনেরো হাজার টাকা চলে গেছে, একসিস বাংক তিন দিন আগে', 'axis'],
+    ['ఓటి పీ చెప్పాను కినరా బైంక', 'canara'],
+  ];
+  for (const [text, key] of cases) it(text, () => expect(findBank(text)?.key).toBe(key));
+  it('loose name matching needs the word "bank" right after', () => {
+    expect(findBank('कुटाक ने बोला')).toBeUndefined();
+    expect(findBank('আমি একসিস দেখেছি')).toBeUndefined();
+  });
+});

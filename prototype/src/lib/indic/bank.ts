@@ -133,7 +133,7 @@ export const BANKS: BankDef[] = [
 // "bank" in any script, with case endings: बैंक बँकेतून ব্যাংকের பேங்க்ல వంకి ಬ್ಯಾಂಕ್‌ನಿಂದ வங்கி
 const isBankWord = (tok: string) => {
   const k = soundKey(/^[a-z]+$/i.test(tok) ? tok : romanize(tok));
-  return /^p[aeiyou]*n?k/.test(k) && /n/.test(k.slice(0, 5)) ? true : /^van?ki/.test(k);
+  return /^p[aeiyou]*n[aeiou]?k/.test(k) || /^van?ki/.test(k); // বেনক / బైంక: ASR puts a vowel in
 };
 const DEBUG = !!(globalThis as { process?: { env?: Record<string, string> } }).process?.env?.BANK_DEBUG;
 const NEGATE = ['नहीं', 'नही', 'नाही', 'nahi', 'not', 'no', 'না', 'இல்ல', 'இல்லை', 'కాదు', 'ಅಲ್ಲ', 'ಇಲ್ಲ'].map((w) => w.normalize('NFC'));
@@ -145,6 +145,8 @@ const KEYS = BANKS.map((b) => ({
   b,
   exact: [...(b.acronyms ?? []), ...(b.names ?? [])].map((x) => x.toLowerCase()),
   sounds: [...(b.acronyms ?? []).map(spell), ...(b.names ?? [])].map(soundKey),
+  nameSounds: (b.names ?? []).map(soundKey),
+  spelled: (b.acronyms ?? []).map((a) => soundKey(spell(a))),
   acronymSkels: (b.acronyms ?? []).map((a) => skel(soundKey(spell(a)))).filter((k) => k.length >= 4),
   generic: (b.needsBankWord ?? []).map(soundKey),
 }));
@@ -156,7 +158,9 @@ export interface BankHit {
 }
 
 export function findBank(text: string): BankHit | undefined {
-  const toks = tokenize(text).filter((t) => t !== '|');
+  // "S.B.I." -> sbi
+  const toks = tokenize(text).filter((t) => t !== '|').map((t) => (/^([a-z]\.)+[a-z]$/i.test(t) ? t.replace(/\./g, '') : t));
+  const short = (t: string | undefined) => !!t && !wordParts(t) && (/^[a-z]+$/i.test(t) ? t : romanize(t)).length <= 5;
   const hits: (BankHit & { at: number })[] = [];
   let at = 0;
   const consider = (hit: BankHit) => {
@@ -178,7 +182,8 @@ export function findBank(text: string): BankHit | undefined {
     const key = soundKey(latin);
     const nextIsBank = !!toks[i + 1] && isBankWord(toks[i + 1]);
     // "Bank of Baroda" / "Bank of India" / "State Bank of India"
-    if (isBankWord(raw) && ['of', 'ऑफ', 'অফ', 'ஆஃப்', 'ఆఫ్', 'ಆಫ್', 'ऑफ़'].includes(toks[i + 1] ?? '')) {
+    const ofNext = ['of', 'ऑफ', 'অফ', 'ஆஃப்', 'ఆఫ్', 'ಆಫ್', 'ऑफ़'].includes(toks[i + 1] ?? '') || ['op', 'ap'].includes(soundKey(romanize(toks[i + 1] ?? ''))); // आफ
+    if (isBankWord(raw) && ofNext) {
       const after = soundKey(romanize(toks[i + 2] ?? ''));
       const prev = soundKey(romanize(toks[i - 1] ?? ''));
       const named = KEYS.find((k) => k.generic.some((g) => similarity(prev, g) >= 0.75));
@@ -187,13 +192,21 @@ export function findBank(text: string): BankHit | undefined {
       else if (similarity(after, soundKey('baroda')) >= 0.6) consider({ key: 'bob', name: 'Bank of Baroda', confidence: 0.95 });
       else if (similarity(after.slice(0, 5), soundKey('india')) >= 0.6) consider({ key: 'boi', name: 'Bank of India', confidence: 0.9 });
     }
-    for (const { b, exact, sounds, acronymSkels, generic } of KEYS) {
+    // an acronym spoken letter by letter over several words: आई सी आई सी आई, ఏచ్డి ఎఫ్సీ
+    if (short(raw))
+      for (let n = 2; n <= 5 && short(toks[i + n - 1]); n++) {
+        const joined = soundKey(toks.slice(i, i + n).map((t) => (/^[a-z]+$/i.test(t) ? t.toLowerCase() : romanize(t))).join(''));
+        const hit = KEYS.find((k) => k.spelled.some((sp) => sp.length >= 5 && similarity(joined, sp) >= 0.85));
+        if (hit) consider({ key: hit.b.key, name: hit.b.name, confidence: 0.85 });
+      }
+    for (const { b, exact, sounds, nameSounds, acronymSkels, generic } of KEYS) {
       if (exact.includes(low)) consider({ key: b.key, name: b.name, confidence: 1 });
       for (const s of sounds) {
         if (s.length < 3) continue;
         // allow case suffixes glued on (बँकेतून, ব্যাংকের): compare the token's prefix too
         let sim = Math.max(similarity(key, s), key.length > s.length ? similarity(key.slice(0, s.length + 1), s) : 0);
-        if (sim >= 0.85) {
+        // a name one sound off (কুটাক, একসিস, కినరా) counts only right before the word "bank"
+        if (sim >= 0.85 || (sim >= 0.75 && nextIsBank && nameSounds.includes(s) && s.length >= 5)) {
           if (DEBUG) console.log('  name/acronym', raw, key, '~', s, sim.toFixed(2), b.key);
           consider({ key: b.key, name: b.name, confidence: 0.6 + 0.4 * sim });
         }

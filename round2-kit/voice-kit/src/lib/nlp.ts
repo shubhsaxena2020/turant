@@ -9,6 +9,7 @@
 // match whole words.
 
 import type { LangCode } from './lang';
+import { fold } from './indic/numbers';
 
 // ---------------------------------------------------------------------------
 // Normalisation
@@ -182,7 +183,7 @@ export const DAY_WORDS: [number, string[]][] = [
   [-1, ['kal', 'kaal', 'yesterday', 'कल', 'काल', 'গতকাল', 'কাল', 'நேற்று', 'నిన్న', 'ನಿನ್ನೆ']],
   [-2, ['parso', 'parson', 'parsoon', 'परसों', 'परसो', 'परवा', 'পরশু', 'முந்தாநாள்', 'మొన్న', 'ಮೊನ್ನೆ']],
 ];
-const NOW_WORDS = ['abhi', 'abhi abhi', 'just now', 'right now', 'abhi turant', 'अभी', 'अभी अभी', 'आत्ता', 'आताच', 'এইমাত্র', 'এখনই', 'இப்போது', 'இப்பொழுது', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ', 'ಈಗ'];
+const NOW_WORDS = ['abhi', 'abhi abhi', 'just now', 'right now', 'abhi turant', 'अभी', 'अभी अभी', 'आत्ता', 'आताच', 'এইমাত্র', 'এখনই', 'இப்போது', 'இப்பொழுது', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ'];
 
 const DEBIT_EXACT = wordSet(['kat', 'kaat', 'kate', 'kati', 'kata', 'cut', 'debit', 'debited', 'deducted', 'gaye', 'gaya', 'gye', 'gya', 'lost', 'loss', 'nikal', 'nikle', 'nikla', 'transfer', 'transferred', 'bheja', 'bheje', 'bhej', 'sent', 'paid', 'liya', 'liye', 'chale', 'chala', 'withdrawn', 'fraud']);
 const DEBIT_PREFIX = ['कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ'].map(nw);
@@ -217,6 +218,11 @@ export function phraseMatch(text: string, phrases: string[], last = false): { id
       }
     } else {
       idx = last ? text.lastIndexOf(k) : text.indexOf(k);
+      // ASR spells native words a letter off (இன்விஸ்ட் for இன்வெஸ்ட்): compare sound-alike keys too.
+      if (idx < 0) {
+        const fk = fold(k);
+        if ([...fk].length >= 4) idx = last ? fold(text).lastIndexOf(fk) : fold(text).indexOf(fk);
+      }
     }
     if (idx < 0) continue;
     const better = !found || (last ? idx > found.idx || (idx === found.idx && k.length > found.len) : idx < found.idx || (idx === found.idx && k.length > found.len));

@@ -1,0 +1,600 @@
+# Turant pipeline eval: llm-best
+
+Generated 2026-11-23T09:48:20.311Z. Extractor: `..\prototype\src\lib\extract.ts`. 280 cases, 884 ASR transcripts scored.
+Speech: edge-tts Indian neural voices (2 per language, 3 for en) -> 16 kHz mono -> optional synthetic noise -> local Whisper large-v3-turbo (int8, OpenVINO) with the language token forced -> `extractFields` / `interpret` / `parseCorrection`. Fixed clock: Sat Nov 21 2026 12:00:00 GMT+0530 (India Standard Time).
+Deltas in brackets are against `reports/baseline.json`.
+
+## Headline
+
+| Input | Runs | Case fully correct % | Unambiguous-only % | Field P | Field R | Field F1 | WER % | CER % |
+|---|---|---|---|---|---|---|---|---|
+| Reference text (perfect ASR) | 280 | 99.6 (+43.9) | 99.6 | 99.8 | 100.0 | 99.9 (+22.3) | - | - |
+| ASR clean, normal rate | 600 | 41.2 (+14.0) | 41.2 | 78.8 | 59.5 | 67.8 (+16.8) | 65.5 | 40.6 |
+| ASR noise 15 dB | 85 | 67.1 (+42.4) | 67.1 | 86.9 | 75.4 | 80.8 (+31.7) | 44.7 | 32.7 |
+| ASR noise 5 dB | 67 | 62.7 (+43.4) | 62.7 | 85.7 | 70.6 | 77.4 (+37.0) | 48.4 | 46.4 |
+| ASR rate -15% / +15% | 94 | 69.1 (+43.4) | 69.1 | 88.0 | 76.9 | 82.1 (+33.8) | 43.0 | 40.0 |
+| ASR all (forced language) | 846 | 48.6 (+23.7) | 48.6 | 80.8 | 62.9 | 70.7 (+22.5) | 60.7 | 40.3 |
+
+**Ceiling for extract.ts work alone** (every `extractor` and `extractor_form` error below fixed, ASR unchanged): 46.7% of clean runs and 53.7% of all runs fully correct. Per language (clean): hi 86%, en 78%, bn 29%, ta 19%, te 26%, mr 55%, kn 19%. The rest needs ASR changes.
+
+"Case fully correct": every expected field right and nothing spurious. Field P/R/F1 are micro-averaged over all fields (a wrong value counts as both a false positive and a false negative). WER/CER are against the native-script reference after light normalisation; Whisper's choice of digits vs number words and Latin vs native script inflates them, so read WER as relative, not absolute.
+
+## Per field
+
+| Field | Support | Ref P | Ref R | Ref F1 | ASR-clean P | ASR-clean R | ASR-clean F1 | ASR-all F1 |
+|---|---|---|---|---|---|---|---|---|
+| amount | 166 | 100.0 | 100.0 | 100.0 | 63.8 | 55.6 | 59.4 (+16.6) | 63.4 |
+| time | 113 | 100.0 | 100.0 | 100.0 | 74.4 | 63.4 | 68.4 (+23.3) | 68.7 |
+| scamType | 81 | 100.0 | 100.0 | 100.0 | 99.0 | 59.4 | 74.3 (+10.7) | 77.6 |
+| bank | 97 | 99.0 | 100.0 | 99.5 | 97.2 | 84.5 | 90.4 (+27.9) | 90.3 |
+| paymentApp | 29 | 100.0 | 100.0 | 100.0 | 100.0 | 50.8 | 67.4 (+6.5) | 71.8 |
+| utr | 21 | 100.0 | 100.0 | 100.0 | 47.6 | 22.2 | 30.3 (+1.2) | 41.0 |
+| suspectUpi | 16 | 100.0 | 100.0 | 100.0 | 100.0 | 63.9 | 78.0 (+0.0) | 81.9 |
+| suspectPhone | 29 | 100.0 | 100.0 | 100.0 | 79.2 | 30.2 | 43.7 (+0.8) | 51.7 |
+| suspectAccount | 7 | 100.0 | 100.0 | 100.0 | 36.4 | 26.7 | 30.8 (-4.0) | 29.6 |
+| intent | 7 | 100.0 | 100.0 | 100.0 | 100.0 | 40.0 | 57.1 (+0.0) | 70.3 |
+| **micro** | 566 | 99.8 | 100.0 | 99.9 | 78.8 | 59.5 | 67.8 (+16.8) | 70.7 |
+
+## Per language
+
+| Lang | Ref fully correct % | ASR-clean fully correct % | ASR 5 dB fully correct % | Ref F1 | ASR-clean F1 | WER % | CER % | ID digits kept in transcript % |
+|---|---|---|---|---|---|---|---|---|
+| hi | 100.0 (+20.0) | 73.8 (+16.3) | 88.9 | 100.0 | 89.0 | 36.0 | 21.1 | 75.0 (n=16) |
+| en | 97.5 (+10.0) | 73.3 (+10.0) | 94.7 | 99.4 | 86.9 | 36.6 | 34.7 | 70.4 (n=27) |
+| bn | 100.0 (+67.5) | 26.3 (+17.5) | 50.0 | 100.0 | 56.5 | 76.1 | 50.1 | 12.5 (n=16) |
+| ta | 100.0 (+55.0) | 17.5 (+7.5) | 33.3 | 100.0 | 50.6 | 134.4 | 47.8 | 0.0 (n=16) |
+| te | 100.0 (+55.0) | 22.5 (+12.5) | 22.2 | 100.0 | 52.7 | 74.9 | 52.0 | 12.5 (n=16) |
+| mr | 100.0 (+47.5) | 42.5 (+23.8) | 77.8 | 100.0 | 72.4 | 68.9 | 31.8 | 12.5 (n=16) |
+| kn | 100.0 (+52.5) | 16.3 (+12.5) | 14.3 | 100.0 | 45.2 | 79.7 | 50.2 | 25.0 (n=16) |
+
+Per-language, per-field F1 (reference text / ASR clean):
+
+| Lang | amount | time | scamType | bank | paymentApp | utr | suspectUpi | suspectPhone | suspectAccount |
+|---|---|---|---|---|---|---|---|---|---|
+| hi | 100.0 / 89.6 | 100.0 / 82.5 | 100.0 / 87.0 | 100.0 / 100.0 | 100.0 / 85.7 | 100.0 / 54.5 | 100.0 / 100.0 | 100.0 / 93.3 | 100.0 / 100.0 |
+| en | 100.0 / 78.5 | 100.0 / 86.6 | 100.0 / 97.4 | 96.0 / 94.4 | 100.0 / 88.9 | 100.0 / 66.7 | 100.0 / 100.0 | 100.0 / 76.9 | 100.0 / 80.0 |
+| bn | 100.0 / 45.7 | 100.0 / 68.9 | 100.0 / 53.3 | 100.0 / 86.8 | 100.0 / 22.2 | 100.0 / 28.6 | 100.0 / - | 100.0 / 22.2 | 100.0 / - |
+| ta | 100.0 / 21.3 | 100.0 / 58.1 | 100.0 / 68.6 | 100.0 / 84.6 | 100.0 / 66.7 | 100.0 / 0.0 | 100.0 / 85.7 | 100.0 / 0.0 | 100.0 / - |
+| te | 100.0 / 35.6 | 100.0 / 61.5 | 100.0 / 42.9 | 100.0 / 92.3 | 100.0 / 40.0 | 100.0 / - | 100.0 / 100.0 | 100.0 / - | 100.0 / - |
+| mr | 100.0 / 87.5 | 100.0 / 59.0 | 100.0 / 74.3 | 100.0 / 100.0 | 100.0 / 40.0 | 100.0 / 0.0 | 100.0 / - | 100.0 / 22.2 | 100.0 / 0.0 |
+| kn | 100.0 / 38.1 | 100.0 / 48.1 | 100.0 / 53.3 | 100.0 / 68.2 | 100.0 / 76.9 | 100.0 / 0.0 | 100.0 / - | 100.0 / 0.0 | 100.0 / 0.0 |
+
+## Noise, voice, speaking rate
+
+| Condition | Runs | Fully correct % | Field F1 | WER % | CER % |
+|---|---|---|---|---|---|
+| babble 15 dB | 22 | 63.6 | 74.5 | 36.5 | 30.3 |
+| babble 5 dB | 15 | 53.3 | 73.3 | 48.7 | 44.1 |
+| clean | 694 | 45.0 | 69.4 | 63.0 | 40.5 |
+| pink 15 dB | 22 | 77.3 | 87.3 | 46.6 | 34.3 |
+| pink 5 dB | 16 | 68.8 | 78.8 | 58.6 | 82.6 |
+| traffic 15 dB | 41 | 63.4 | 80.4 | 47.1 | 33.1 |
+| traffic 5 dB | 36 | 63.9 | 78.3 | 44.2 | 34.6 |
+
+| SNR (clean = all base clips) | Runs | Fully correct % | Field F1 | WER % |
+|---|---|---|---|---|
+| clean | 600 | 41.2 | 67.8 | 65.5 |
+| 15 dB | 85 | 67.1 | 80.8 | 44.7 |
+| 5 dB | 67 | 62.7 | 77.4 | 48.4 |
+
+| Voice (clean, normal rate) | Runs | Fully correct % | Field F1 | WER % | CER % |
+|---|---|---|---|---|---|
+| bn-IN-BashkarNeural | 40 | 22.5 | 52.6 | 79.4 | 51.6 |
+| bn-IN-TanishaaNeural | 40 | 30.0 | 60.3 | 72.9 | 48.6 |
+| en-IN-NeerjaExpressiveNeural | 40 | 72.5 | 88.2 | 37.9 | 26.5 |
+| en-IN-NeerjaNeural | 40 | 75.0 | 87.5 | 35.6 | 25.9 |
+| en-IN-PrabhatNeural | 40 | 72.5 | 85.0 | 36.4 | 51.6 |
+| hi-IN-MadhurNeural | 40 | 70.0 | 88.1 | 36.6 | 20.3 |
+| hi-IN-SwaraNeural | 40 | 77.5 | 89.9 | 35.4 | 21.8 |
+| kn-IN-GaganNeural | 40 | 12.5 | 45.7 | 77.9 | 49.8 |
+| kn-IN-SapnaNeural | 40 | 20.0 | 44.8 | 81.6 | 50.7 |
+| mr-IN-AarohiNeural | 40 | 45.0 | 74.1 | 70.0 | 33.0 |
+| mr-IN-ManoharNeural | 40 | 40.0 | 70.7 | 67.9 | 30.6 |
+| ta-IN-PallaviNeural | 40 | 17.5 | 51.9 | 154.9 | 50.7 |
+| ta-IN-ValluvarNeural | 40 | 17.5 | 49.2 | 113.8 | 44.9 |
+| te-IN-MohanNeural | 40 | 22.5 | 55.6 | 74.5 | 50.6 |
+| te-IN-ShrutiNeural | 40 | 22.5 | 49.6 | 75.2 | 53.5 |
+
+| Rate (clean) | Runs | Fully correct % | Field F1 | WER % |
+|---|---|---|---|---|
+| +0% | 600 | 41.2 | 67.8 | 65.5 |
+| -15% | 50 | 70.0 | 82.4 | 43.5 |
+| +15% | 44 | 68.2 | 81.8 | 42.5 |
+
+## By utterance kind (ASR clean vs reference)
+
+| Kind | Runs | Ref fully correct % | ASR fully correct % | ASR field F1 |
+|---|---|---|---|---|
+| story | 330 | 99.4 | 32.7 | 69.8 |
+| correction | 60 | 100.0 | 56.7 | 62.4 |
+| answer | 195 | 100.0 | 50.8 | 61.3 |
+| answer (skip intent) | 15 | 100.0 | 40.0 | 57.1 |
+
+## Language auto-detect vs forced language token
+
+38 clean clips transcribed twice. Forced: 65.8% fully correct (WER 83.5%). Auto-detect: 63.2% (WER 85.6%). Transcript in the wrong script under auto-detect: 23.7%.
+
+| Lang | n | Forced fully correct % | Auto fully correct % | Auto wrong script % |
+|---|---|---|---|---|
+| hi | 9 | 66.7 | 66.7 | 0.0 |
+| en | 7 | 100.0 | 100.0 | 14.3 |
+| bn | 2 | 50.0 | 100.0 | 100.0 |
+| ta | 10 | 10.0 | 10.0 | 10.0 |
+| te | 2 | 100.0 | 50.0 | 100.0 |
+| mr | 6 | 100.0 | 100.0 | 16.7 |
+| kn | 2 | 100.0 | 50.0 | 100.0 |
+
+## Where the errors come from
+
+Every field that is wrong, missing or spurious on an ASR transcript is put in one bucket:
+- **extractor**: the extractor also fails on the clean reference text (fix in extract.ts, no ASR involved).
+- **extractor_form**: the reference passes and the transcript still carries the value (digits present, UPI letters present, or every reference word the extractor relies on survives) but in a form extract.ts does not parse: script switch, digits instead of words, spacing, punctuation. Fixable in extract.ts.
+- **asr**: the recogniser lost or changed the words carrying the value. Fixable only with ASR changes (prompting/hotwords, model) or confirmation UX.
+
+| Scope | Field errors | asr | extractor_form | extractor | ...of which ASR also lost the value |
+|---|---|---|---|---|---|
+| all forced-language runs | 611 | 515 (84%) | 95 (16%) | 1 (0%) | 0 |
+| clean | 518 | 435 (84%) | 82 (16%) | 1 (0%) | 0 |
+| 5 dB | 29 | 28 (97%) | 1 (3%) | 0 (0%) | 0 |
+| 15 dB | 29 | 25 (86%) | 4 (14%) | 0 (0%) | 0 |
+
+| Field | Errors | asr | extractor_form | extractor |
+|---|---|---|---|---|
+| amount | 191 | 174 | 17 | 0 |
+| time | 120 | 97 | 23 | 0 |
+| scamType | 77 | 63 | 14 | 0 |
+| suspectPhone | 63 | 61 | 2 | 0 |
+| bank | 48 | 42 | 5 | 1 |
+| utr | 37 | 32 | 5 | 0 |
+| paymentApp | 33 | 10 | 23 | 0 |
+| suspectAccount | 16 | 13 | 3 | 0 |
+| suspectUpi | 15 | 15 | 0 | 0 |
+| intent | 11 | 8 | 3 | 0 |
+
+| Lang | Errors | asr | extractor_form | extractor |
+|---|---|---|---|---|
+| hi | 35 | 17 | 18 | 0 |
+| en | 47 | 39 | 7 | 1 |
+| bn | 103 | 93 | 10 | 0 |
+| ta | 117 | 106 | 11 | 0 |
+| te | 117 | 106 | 11 | 0 |
+| mr | 69 | 45 | 24 | 0 |
+| kn | 123 | 109 | 14 | 0 |
+
+## Biggest failure clusters (field x language x cause)
+
+| # | Field | Lang | Cause | Outcome | Runs broken | Cases |
+|---|---|---|---|---|---|---|
+| 1 | amount | ta | asr | fn | 26 | ta-02 ta-03 ta-04 ta-07 ta-08 ta-10 ta-11 ta-12 +9 |
+| 2 | amount | te | asr | wrong | 26 | te-01 te-04 te-06 te-07 te-08 te-10 te-13 te-14 +7 |
+| 3 | amount | bn | asr | wrong | 23 | bn-02 bn-03 bn-04 bn-05 bn-06 bn-07 bn-12 bn-14 +6 |
+| 4 | amount | kn | asr | wrong | 18 | kn-03 kn-07 kn-08 kn-10 kn-11 kn-12 kn-14 kn-17 +4 |
+| 5 | amount | ta | asr | wrong | 17 | ta-01 ta-06 ta-08 ta-11 ta-12 ta-15 ta-17 ta-18 +3 |
+| 6 | bank | kn | asr | fn | 16 | kn-01 kn-03 kn-05 kn-16 kn-17 kn-18 kn-30 kn-38 |
+| 7 | scamType | te | asr | fn | 15 | te-01 te-05 te-07 te-08 te-09 te-16 te-18 te-35 |
+| 8 | scamType | bn | asr | fn | 14 | bn-01 bn-03 bn-07 bn-08 bn-09 bn-16 bn-35 |
+| 9 | suspectPhone | te | asr | fn | 14 | te-09 te-22 te-33 te-39 |
+| 10 | time | kn | asr | fn | 14 | kn-02 kn-10 kn-12 kn-13 kn-16 kn-20 kn-27 kn-40 |
+| 11 | amount | kn | asr | fn | 13 | kn-04 kn-13 kn-16 kn-18 kn-23 kn-24 kn-25 kn-31 |
+| 12 | time | ta | asr | wrong | 12 | ta-04 ta-11 ta-12 ta-13 ta-20 ta-26 ta-40 |
+| 13 | time | te | asr | fn | 12 | te-02 te-10 te-12 te-13 te-16 te-20 te-27 |
+| 14 | scamType | kn | asr | fn | 12 | kn-01 kn-05 kn-07 kn-09 kn-16 kn-35 |
+| 15 | suspectPhone | bn | asr | fn | 11 | bn-09 bn-22 bn-33 bn-39 |
+| 16 | scamType | ta | asr | fn | 11 | ta-01 ta-04 ta-05 ta-09 ta-16 ta-18 ta-35 |
+| 17 | amount | en | asr | wrong | 10 | en-12 en-16 en-17 en-25 |
+| 18 | bank | bn | asr | fn | 10 | bn-03 bn-16 bn-18 bn-38 |
+| 19 | amount | te | asr | fn | 10 | te-11 te-12 te-18 te-21 te-23 te-37 |
+| 20 | suspectPhone | ta | asr | fn | 9 | ta-09 ta-33 ta-39 |
+| 21 | bank | te | asr | fn | 9 | te-03 te-16 te-21 te-38 te-29 te-30 |
+| 22 | time | mr | extractor_form | wrong | 8 | mr-03 mr-26 mr-40 |
+| 23 | suspectPhone | mr | asr | fn | 8 | mr-09 mr-22 mr-33 mr-39 |
+| 24 | time | kn | asr | wrong | 8 | kn-03 kn-20 kn-26 kn-40 |
+| 25 | scamType | hi | extractor_form | fn | 7 | hi-01 hi-03 hi-08 hi-37 |
+| 26 | time | bn | asr | wrong | 7 | bn-07 bn-20 bn-28 bn-40 |
+| 27 | amount | mr | asr | wrong | 7 | mr-02 mr-14 mr-20 mr-23 mr-37 |
+| 28 | paymentApp | mr | extractor_form | fn | 7 | mr-02 mr-08 mr-20 |
+| 29 | suspectPhone | kn | asr | fn | 7 | kn-09 kn-22 kn-33 kn-39 |
+| 30 | time | hi | asr | wrong | 6 | hi-07 hi-11 hi-28 |
+
+## Worst 40 failures
+
+Ranked by the share of a case's ASR runs (all voices, noise, rates) that are not fully correct, at most 6 per language. Transcript shown is one failing run (clean run first where possible).
+
+### 1. te-39 (correction) - fails 100% of 5 runs
+
+- Reference: నంబర్ తప్పు, 9 8 1 1 1 2 2 2 3 3
+- Transcript (`te-39__Mohan__r0__te`): నంబర్ తప్పు. తుమ్మిది ఎనిమిది ఒంటి గంటా ఒంటి గంటా ఒంటి ఒంటి ఒంటి ఒంటి �
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | fp | - | 17 | - | **asr**: spurious value from a mis-recognised transcript |
+| suspectPhone | fn | 9811122233 | - | 9811122233 | **asr**: value not in the transcript |
+
+### 2. ta-39 (correction) - fails 100% of 5 runs
+
+- Reference: நம்பர் தப்பு, 9 8 1 1 1 2 2 2 3 3
+- Transcript (`ta-39__Pallavi__r0__ta`): நம்பர் தப்பு, 1712122233
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| suspectPhone | fn | 9811122233 | - | 9811122233 | **asr**: value not in the transcript |
+
+### 3. en-04 (story) - fails 100% of 3 runs
+
+- Reference: Bhaiya paanch... nahi nahi chhe hazaar rupaye gaye hai, PhonePe se, abhi abhi
+- Transcript (`en-04__Neerja__r0__en`): । । । ।
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | fn | 6000 | - | 6000 | **asr**: value not in the transcript |
+| time | fn | today 12:00 (0 min ago) | - | today 12:00 (0 min ago) | **asr**: ASR lost/changed: abhi |
+| paymentApp | fn | PhonePe | - | PhonePe | **asr**: ASR lost/changed: PhonePe |
+
+### 4. bn-03 (story) - fails 100% of 2 runs
+
+- Reference: গতকাল সন্ধ্যা সাতটায় কাস্টমার কেয়ার থেকে ফোন এসেছিল, AnyDesk ইনস্টল করতে বলল, তারপর এইচডিএফসি অ্যাকাউন্ট থেকে দুই লাখ টাকা কেটে নিল
+- Transcript (`bn-03__Bashkar__r0__bn`): বতকাল শুন্ধা সাপতায় কাস্টমার কেয় থেকে ফোন এশে ছিলো, এনিয় দেশক ইন্সল কুরতে বলো, তার পার এজ ডিএফ্সি একাউন্ট থেকে দুই লাক তাকা কেটে নিলো.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | wrong | 200000 | 2 | 200000 | **asr**: value not in the transcript |
+| time | fn | -1d 19:00 (1020 min ago) | - | -1d 19:00 (1020 min ago) | **asr**: ASR lost/changed: সন্ধ্যা |
+| scamType | fn | fake_customer_care | - | fake_customer_care | **asr**: ASR lost/changed: AnyDesk |
+| bank | fn | HDFC Bank | - | HDFC Bank | **asr**: ASR lost/changed: এইচডিএফসি |
+
+### 5. kn-16 (story) - fails 100% of 2 runs
+
+- Reference: ನನ್ನ account ಇಂದ 20,000 rupees debit ಆಯ್ತು, ICICI bank, ಒಂದು ಗಂಟೆ ಹಿಂದೆ customer care ಗೆ ಕಾಲ್ ಮಾಡಿದ್ದೆ
+- Transcript (`kn-16__Gagan__r0__kn`): ನನ ಆಕಾಂಟಿಂದ ಇಪಟ್ಟು ಸಾವರಿದ ರುಪಿಸ್ಟೆ ರುಪಿಸ್ಟೆ ಆಯತು ಎಸೇಶಿ ಬಾಗ್ಗು ಒಂದು ಗಂಟೆ ಹಿಂದೆ ಕಾಸ್ಟಮರ್ಗೆ ಕಾರಗೆ ಕಾಲ್ಮಾಡಿದೆ.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | fn | 20000 | - | 20000 | **asr**: value not in the transcript |
+| scamType | fn | fake_customer_care | - | fake_customer_care | **asr**: ASR lost/changed: customer care |
+| bank | fn | ICICI Bank | - | ICICI Bank | **asr**: ASR lost/changed: ICICI |
+
+### 6. en-13 (story) - fails 100% of 3 runs
+
+- Reference: Kal raat saade nau baje kisi ne call kiya bola bijli ka bill pending hai, link pe click kiya aur nau hazaar nau sau ninyanve rupaye kat gaye
+- Transcript (`en-13__Neerja__r0__en`): ।
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | fn | 9999 | - | 9999 | **asr**: value not in the transcript |
+| time | fn | -1d 21:30 (870 min ago) | - | -1d 21:30 (870 min ago) | **asr**: ASR lost/changed: raat saade nau baje |
+
+### 7. en-16 (story) - fails 100% of 3 runs
+
+- Reference: Aaj subah 10 baje ek message aaya, QR scan karne ko bola, scan kiya aur dhai hazaar rupaye chale gaye
+- Transcript (`en-16__Neerja__r0__en`): Today, a message in the morning, QR scan to get a scan and 50000 rupees went on.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | wrong | 2500 | 50000 | 2500 | **asr**: value not in the transcript |
+| time | wrong | today 10:00 (120 min ago) | today 09:00 (180 min ago) | today 10:00 (120 min ago) | **asr**: ASR lost/changed: 10 baje |
+
+### 8. bn-08 (story) - fails 100% of 2 runs
+
+- Reference: একটা ভিডিও কল এসেছিল, রেকর্ড করে এখন ব্ল্যাকমেইল করছে, পেটিএম দিয়ে পনেরো হাজার টাকা দিয়ে দিয়েছি
+- Transcript (`bn-08__Bashkar__r0__bn`): একটা ঵্য়া কাল এশে ছিলো রেকার্ড করে একন ব্লাক মেল কুরছে পেটিয়ে পনেরো হাজার তাকা দিয়ে দিয়েছি
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| time | fp | - | -1d 12:00 (1440 min ago) | - | **asr**: spurious value from a mis-recognised transcript |
+| scamType | fn | sextortion | - | sextortion | **asr**: ASR lost/changed: ব্ল্যাকমেইল |
+| paymentApp | fn | Paytm | - | Paytm | **asr**: ASR lost/changed: পেটিএম |
+
+### 9. bn-20 (story) - fails 100% of 2 runs
+
+- Reference: উম্ম... মানে, গতকাল দুপুর আড়াইটায় ফোনপে থেকে দু হাজার ছশো টাকা গেছে
+- Transcript (`bn-20__Bashkar__r0__bn`): উম্মো মানে গতকাল দুপুর আরাইতাই ফোন পেথেকে দু হাজার ছাসো টাকা গেছে।
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | wrong | 2600 | 2000 | 2600 | **asr**: value not in the transcript |
+| time | wrong | -1d 14:30 (1290 min ago) | -1d 14:00 (1320 min ago) | -1d 14:30 (1290 min ago) | **asr**: ASR lost/changed: আড়াইটায় |
+| paymentApp | fn | PhonePe | - | PhonePe | **extractor_form**: key words survive (ফোনপে) but the extractor fails |
+
+### 10. ta-04 (story) - fails 100% of 2 runs
+
+- Reference: ஒருத்தர் தவறுதலாக பணம் அனுப்பிட்டேன்னு சொல்லி திருப்பி அனுப்ப சொன்னார், நான் கூகுள் பே மூலமா பன்னிரண்டாயிரத்து ஐநூறு ரூபாய் அனுப்பிட்டேன், இரண்டு மணி நேரத்துக்கு முன்னாடி
+- Transcript (`ta-04__Pallavi__r0__ta`): ஒருத்தர் தவர்தலாக்கே பணம் அனுப்பிட்டேன்னுற் சொல்லி திருப்டி அனுப்ப சொன்னார் நான் கூகுள் பே மூலமா 12.5.5 அனுப்பிட்டேன் 2 மணி நெரத்துக்கு முன்னாடி.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | fn | 12500 | - | 12500 | **asr**: value not in the transcript |
+| scamType | fn | wrong_transfer | - | wrong_transfer | **asr**: ASR lost/changed: தவறுதலாக |
+
+### 11. ta-08 (story) - fails 100% of 2 runs
+
+- Reference: ஒரு வீடியோ கால் வந்தது, ரெக்கார்ட் பண்ணி இப்போ மிரட்டல் பண்றாங்க, பேடிஎம் மூலமா பதினைந்தாயிரம் ரூபாய் கொடுத்துட்டேன்
+- Transcript (`ta-08__Pallavi__r0__ta`): ஒரு வீடியோ கால் வந்தது ரெக்காட் பண்ணி இப்போ மிறட்டல் பண்டாங்க பேடியம் மூலமா 14 ருபாய் குடுத்து தேன்
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | wrong | 15000 | 14 | 15000 | **asr**: value not in the transcript |
+| bank | fp | - | Bandhan Bank | - | **asr**: spurious value from a mis-recognised transcript |
+| paymentApp | fn | Paytm | - | Paytm | **extractor_form**: near-spelling variant of: பேடிஎம் |
+
+### 12. ta-16 (story) - fails 100% of 3 runs
+
+- Reference: என் account-ல இருந்து 20,000 rupees debit ஆயிடுச்சு, ICICI bank, ஒரு மணி நேரத்துக்கு முன்னாடி customer care-க்கு கால் பண்ணேன்
+- Transcript (`ta-16__Pallavi__r0__ta`): என்லை இருந்து 20தாயரம் ருப்பீஸ் டெபிட் ஆயிடுச்சு ICICI Bank ஒரு மணி நெருத்துக்கு முன்னாடி காஸ்டுமாக்கு கால் பண்ணேன்.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | fn | 20000 | - | 20000 | **asr**: value not in the transcript |
+| scamType | fn | fake_customer_care | - | fake_customer_care | **asr**: ASR lost/changed: customer care-க்கு |
+
+### 13. te-16 (story) - fails 100% of 2 runs
+
+- Reference: నా account నుండి 20,000 rupees debit అయిపోయాయి, ICICI bank, ఒక గంట క్రితం customer care కి కాల్ చేశాను
+- Transcript (`te-16__Mohan__r0__te`): నా అకాంట్ నుండి ఇరావాయ వేలు రుపీస్ డెబిటాయి పోయఈ ఆయిసియాయి బాంక ఒక గంటకృతం కస్టమర్ కియర్ కాల్ చేసాను.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | wrong | 20000 | 1000 | 20000 | **asr**: value not in the transcript |
+| scamType | fn | fake_customer_care | - | fake_customer_care | **asr**: ASR lost/changed: customer care |
+
+### 14. mr-08 (story) - fails 100% of 3 runs
+
+- Reference: एक व्हिडिओ कॉल आला, रेकॉर्ड करून आता ब्लॅकमेल करत आहेत, पेटीएमवरून पंधरा हजार रुपये दिले
+- Transcript (`mr-08__Aarohi__r0__mr`): एक विडियो कॉल आला, रेकॉर्ड करून आता ब्लाकमेल करता है, पेटी एम वरून पंधरा हजार रुपे दिले.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| scamType | fn | sextortion | - | sextortion | **extractor_form**: near-spelling variant of: ब्लॅकमेल |
+| paymentApp | fn | Paytm | - | Paytm | **extractor_form**: key words survive (पेटीएमवरून) but the extractor fails |
+
+### 15. mr-14 (story) - fails 100% of 3 runs
+
+- Reference: यूपीआय रेफरन्स नंबर 4 0 3 2 1 8 7 6 5 4 3 2, पाच हजार रुपये गेले
+- Transcript (`mr-14__Aarohi__r0__mr`): UPI reference number 4032187-54325,000 रुपे गिले
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | wrong | 5000 | 54325000 | 5000 | **asr**: value not in the transcript |
+| utr | wrong | 403218765432 | 403218754325 | 403218765432 | **asr**: value not in the transcript |
+
+### 16. kn-08 (story) - fails 100% of 2 runs
+
+- Reference: ಒಂದು ವೀಡಿಯೊ ಕಾಲ್ ಬಂತು, ರೆಕಾರ್ಡ್ ಮಾಡಿ ಈಗ ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್ ಮಾಡುತ್ತಿದ್ದಾರೆ, ಪೇಟಿಎಂ ಮೂಲಕ ಹದಿನೈದು ಸಾವಿರ ರೂಪಾಯಿ ಕೊಟ್ಟಿದ್ದೇನೆ
+- Transcript (`kn-08__Gagan__r0__kn`): ಒಂದು ವಿಡಿಯೋ ಕಾಲ್ಬಂತು ರೆಕಾಡ್ ಮಾಡಿ ಇಗ ಬ್ಲಾಕ್ ಮೇಲ್ ಮಾಡತ್ತಿದ್ದಾರೆ. ಪೇಟಿಯೆ ಮೂಲಕ ಹದಿನೆಯಿದು ಸಾವಿರರೂಪಾಯಿ ಕೊಟ್ಟಿದ್ದೆಯನೆ.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | wrong | 15000 | 1000 | 15000 | **asr**: value not in the transcript |
+| scamType | fn | sextortion | - | sextortion | **extractor_form**: near-spelling variant of: ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್ |
+| paymentApp | fn | Paytm | - | Paytm | **asr**: ASR lost/changed: ಪೇಟಿಎಂ |
+
+### 17. hi-08 (story) - fails 100% of 3 runs
+
+- Reference: एक लड़की का वीडियो कॉल आया, रिकॉर्ड करके ब्लैकमेल कर रहे हैं, अब तक पंद्रह हज़ार रुपये दे चुका हूँ पेटीएम से
+- Transcript (`hi-08__Madhur__r0__hi`): एक लड़की का विडियो कॉल आया, रिकॉर्ड करके ब्लैकमेल कर रहे हैं, अब तक 15,000 रुपए दे चुका हूँ पेटी इन से.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| paymentApp | fn | Paytm | - | Paytm | **asr**: ASR lost/changed: पेटीएम |
+
+### 18. bn-07 (story) - fails 100% of 2 runs
+
+- Reference: একটা কিউআর কোড পাঠিয়ে বলল স্ক্যান করুন টাকা পাবেন, স্ক্যান করতেই ৪৯৯৯ টাকা কেটে গেল, আজ সকাল সাড়ে দশটায়
+- Transcript (`bn-07__Bashkar__r0__bn`): এত্য়ার কোড পাঠে বলো সকান কোরুন তাকা পারেন। সকান কোর্তে চার হজার নাল্সো নিরান ভিতাকা কেটে গেলো আজ শকাল সারে দস্তায়।
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | fn | 4999 | - | 4999 | **asr**: value not in the transcript |
+| time | wrong | today 10:30 (90 min ago) | today 12:00 (0 min ago) | today 10:30 (90 min ago) | **asr**: ASR lost/changed: সাড়ে দশটায় |
+| scamType | fn | qr_scan | - | qr_scan | **asr**: ASR lost/changed: স্ক্যান |
+
+### 19. bn-38 (correction) - fails 100% of 5 runs
+
+- Reference: ব্যাংক ভুল, এসবিআই না, এইচডিএফসি
+- Transcript (`bn-38__Bashkar__r0__bn`): ব্বূ বোর বোর বোর বোর
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| bank | fn | HDFC Bank | - | HDFC Bank | **asr**: ASR lost/changed: এইচডিএফসি |
+
+### 20. bn-40 (correction) - fails 100% of 5 runs
+
+- Reference: সময় ভুল, গতকাল সন্ধ্যা সাতটায় হয়েছিল
+- Transcript (`bn-40__Bashkar__r0__bn`): সোমায় ভুল গতকাল সুন্ধা শাকতায় হোয়ছিলো।
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| time | wrong | -1d 19:00 (1020 min ago) | -1d 12:00 (1440 min ago) | -1d 19:00 (1020 min ago) | **asr**: ASR lost/changed: সন্ধ্যা |
+
+### 21. ta-10 (story) - fails 100% of 2 runs
+
+- Reference: UPI ID rahul dot kyc at ybl க்கு எட்டாயிரம் ரூபாய் அனுப்பினேன், இருபது நிமிஷத்துக்கு முன்னாடி
+- Transcript (`ta-10__Pallavi__r0__ta`): UPI ID Rahul.KYC at YPLQ8RM-RUBAI ANIPPINEN, 20 NIMISHAT THIKKU MUNNADI.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | fn | 8000 | - | 8000 | **asr**: value not in the transcript |
+| time | fn | today 11:40 (20 min ago) | - | today 11:40 (20 min ago) | **asr**: ASR lost/changed: நிமிஷத்துக்கு |
+| scamType | fp | - | fake_kyc | - | **asr**: spurious value from a mis-recognised transcript |
+| suspectUpi | fn | rahul.kyc@ybl | - | rahul.kyc@ybl | **asr**: value not in the transcript |
+
+### 22. ta-14 (story) - fails 100% of 2 runs
+
+- Reference: UPI ரெஃபரன்ஸ் நம்பர் 4 0 3 2 1 8 7 6 5 4 3 2, ஐயாயிரம் ரூபாய் போச்சு
+- Transcript (`ta-14__Pallavi__r0__ta`): UPI reference number 433217765432. அயாயிரம் ருபாய் போச்சு.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | fn | 5000 | - | 5000 | **asr**: value not in the transcript |
+| utr | wrong | 403218765432 | 433217765432 | 403218765432 | **asr**: value not in the transcript |
+
+### 23. te-08 (story) - fails 100% of 2 runs
+
+- Reference: ఒక వీడియో కాల్ వచ్చింది, రికార్డ్ చేసి ఇప్పుడు బ్లాక్‌మెయిల్ చేస్తున్నారు, పేటీఎం ద్వారా పదిహేను వేల రూపాయలు ఇచ్చేశాను
+- Transcript (`te-08__Mohan__r0__te`): ఉక వీడియో కాల్ వచ్చింది రికాడ్ చేసి ఇపుడు బ్లాక్ మేల్ చేస్తునారు పేటియం ద్వారా పదిహేను వేల రూపాయలు ఇచ్చేసాను.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| scamType | fn | sextortion | - | sextortion | **asr**: ASR lost/changed: బ్లాక్‌మెయిల్ |
+| paymentApp | fn | Paytm | - | Paytm | **asr**: ASR lost/changed: పేటీఎం |
+
+### 24. te-20 (story) - fails 100% of 2 runs
+
+- Reference: అంటే... నిన్న మధ్యాహ్నం 2:30 కి ఫోన్‌పే ద్వారా రెండు వేల ఆరు వందల రూపాయలు పోయాయి
+- Transcript (`te-20__Mohan__r0__te`): అంటే నిన్న మధ్యానం రెండు గంటల ముప్పే నిమిశాలు కి ఫోన్ పేద్వారా రెండు వేల ఆరు వందల రూపాయలు పోయాయి.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| time | wrong | -1d 14:30 (1290 min ago) | -1d 14:00 (1320 min ago) | -1d 14:30 (1290 min ago) | **asr**: ASR lost/changed: 2:30 |
+| paymentApp | fn | PhonePe | - | PhonePe | **extractor_form**: key words survive (ఫోన్‌పే) but the extractor fails |
+
+### 25. te-22 (story) - fails 100% of 5 runs
+
+- Reference: వాడి నంబర్ తొమ్మిది తొమ్మిది ఎనిమిది ఎనిమిది ఏడు ఏడు ఆరు ఆరు ఐదు ఐదు
+- Transcript (`te-22__Mohan__r0__te`): వాడి నంబర తుమ్మిది ఎనిమిది ఎనిమిది ఎడు ఎడు ఎడు ఆరు ఆరు ఆయిదు ఆయిదు
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| suspectPhone | fn | 9988776655 | - | 9988776655 | **asr**: value not in the transcript |
+
+### 26. mr-40 (correction) - fails 100% of 5 runs
+
+- Reference: वेळ चुकीची, काल संध्याकाळी सात वाजता
+- Transcript (`mr-40__Aarohi__r0__mr`): वे चुकीची, काल संध्याकारी सात वाजता.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| time | wrong | -1d 19:00 (1020 min ago) | -1d 07:00 (1740 min ago) | -1d 19:00 (1020 min ago) | **extractor_form**: near-spelling variant of: संध्याकाळी |
+
+### 27. kn-01 (story) - fails 100% of 2 runs
+
+- Reference: ನನ್ನ SBI ಖಾತೆಯಿಂದ 5000 ರೂಪಾಯಿ ಕಡಿತವಾಗಿದೆ, 10 ನಿಮಿಷಗಳ ಹಿಂದೆ ಒಬ್ಬರು KYC ಅಪ್‌ಡೇಟ್ ಮಾಡಲು ಹೇಳಿದರು
+- Transcript (`kn-01__Gagan__r0__kn`): ನನ ಸಬೈ ಕಾತೆಯಿಂದ ಐದು ಸಾವಿರ ರೂಪಾಯಿ ಕಡಿತವಾಗಿದೆ. ಹತ್ತು ನಿಮಿಷಿಗಳ ಹಿಂದೆ ಒಬ್ಬರು ಕೈಕ ಅಪ್ಪೇಟ್ ಮಾಡಲು ಹೇಳಿದರು.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| scamType | fn | fake_kyc | - | fake_kyc | **asr**: ASR lost/changed: KYC |
+| bank | fn | State Bank of India (SBI) | - | State Bank of India (SBI) | **asr**: ASR lost/changed: SBI |
+
+### 28. kn-07 (story) - fails 100% of 2 runs
+
+- Reference: ಒಂದು QR ಕೋಡ್ ಕಳುಹಿಸಿ ಸ್ಕ್ಯಾನ್ ಮಾಡಿದರೆ ಹಣ ಬರುತ್ತದೆ ಎಂದರು, ಸ್ಕ್ಯಾನ್ ಮಾಡಿದ ತಕ್ಷಣ ₹4,999 ಹೋಯಿತು, ಇಂದು ಬೆಳಿಗ್ಗೆ 10 ಗಂಟೆಗೆ
+- Transcript (`kn-07__Gagan__r0__kn`): ಒಂದು ರಕೋಡ್ಕಳುಹಿಸಿ ಸ್ಕಾನ್ ಮಾಡಿದರೆ ಹಣ ಬರುತ್ತದೆ ಎಂದರು. ಸ್ಕಾನ್ ಮಾಡಿದ ತಕ್ಷಣ ನಾಲ್ಕುಸಾವಿರ ಒಂಬೈನುರ ತೊಂಬತ್ರೂಬತ್ತು ರೂಪಾಯಿ ಹೋಯಿತು. ಇಂದು ಬಳಿಗೆ ಹತ್ತು ಗಂಟಿಗೆ.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | wrong | 4999 | 4900 | 4999 | **asr**: value not in the transcript |
+| time | wrong | today 10:00 (120 min ago) | today 12:00 (0 min ago) | today 10:00 (120 min ago) | **extractor_form**: near-spelling variant of: ಗಂಟೆಗೆ |
+| scamType | fn | qr_scan | - | qr_scan | **asr**: ASR lost/changed: ಸ್ಕ್ಯಾನ್ |
+
+### 29. kn-10 (story) - fails 100% of 2 runs
+
+- Reference: UPI ID rahul dot kyc at ybl ಗೆ ಎಂಟು ಸಾವಿರ ರೂಪಾಯಿ ಕಳುಹಿಸಿದೆ, ಇಪ್ಪತ್ತು ನಿಮಿಷಗಳ ಹಿಂದೆ
+- Transcript (`kn-10__Gagan__r0__kn`): ವುಪೆಯ ಎದ ರಾಹುಲ್ ಡಾಟ್ ಕೈಕೆಟ ಇಬಲ್ಗೆ ಎಂಟು ಸಾವಿರ ರೂಪಾಯಿ ಕಳುವಿಸಿದೆ ಇಪ್ಪತ್ತುನಿ ಮಿಷಿಗಳ ಹಿಂದೆ.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| time | fn | today 11:40 (20 min ago) | - | today 11:40 (20 min ago) | **asr**: ASR lost/changed: ನಿಮಿಷಗಳ |
+| suspectUpi | fn | rahul.kyc@ybl | - | rahul.kyc@ybl | **asr**: value not in the transcript |
+
+### 30. kn-38 (correction) - fails 100% of 5 runs
+
+- Reference: ಬ್ಯಾಂಕ್ ತಪ್ಪು, SBI ಅಲ್ಲ, HDFC
+- Transcript (`kn-38__Gagan__r0__kn`): بانك تب بو سبي الله هدفس
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| bank | fn | HDFC Bank | - | HDFC Bank | **asr**: ASR lost/changed: HDFC |
+
+### 31. hi-24 (story) - fails 100% of 4 runs
+
+- Reference: कल दोपहर करीब ढाई बजे फोन पे से छब्बीस सौ रुपये गए
+- Transcript (`hi-24__Madhur__r0__hi`): कल दोपहर करीब धाई बजे फोन पे से 2600 रुपए गए
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| time | wrong | -1d 14:30 (1290 min ago) | -1d 14:00 (1320 min ago) | -1d 14:30 (1290 min ago) | **extractor_form**: key words survive (ढाई बजे) but the extractor fails |
+
+### 32. en-31 (answer:utr) - fails 100% of 3 runs
+
+- Reference: Your A/c XX4321 has been debited via UPI. UPI Ref No 4 5 6 7 8 9 0 1 2 3 4 5. Not you? Call your bank.
+- Transcript (`en-31__Neerja__r0__en`): Your ACXX 4321 has been debited via UPI. UPI REF No. 456789012345 Not you? Call your bank.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | fp | - | 4321 | - | **extractor_form**: spurious value from a near-correct transcript |
+
+### 33. te-01 (story) - fails 100% of 2 runs
+
+- Reference: నా SBI ఖాతా నుండి 5000 రూపాయలు పోయాయి, 10 నిమిషాల క్రితం ఒకరు KYC అప్‌డేట్ చేయమని చెప్పారు
+- Transcript (`te-01__Mohan__r0__te`): నా ఏస్బియాయి ఖాతానుండి అయదు వేలు రూపాయలు పోయాయి పది నిమిశాల కృతం ఉకరుక్య వాయసి అప్డేట్ చేయమని చిప్పరు.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | wrong | 5000 | 1000 | 5000 | **asr**: value not in the transcript |
+| scamType | fn | fake_kyc | - | fake_kyc | **asr**: ASR lost/changed: KYC |
+
+### 34. mr-03 (story) - fails 100% of 2 runs
+
+- Reference: काल संध्याकाळी सात वाजता कस्टमर केअरमधून फोन आला, AnyDesk इन्स्टॉल करायला सांगितलं, मग एचडीएफसी खात्यातून दोन लाख रुपये काढले
+- Transcript (`mr-03__Aarohi__r0__mr`): काल संध्याकाली साथ वाजता कस्टमर केर मधून फोन आला, एने डेस्क इंस्टॉल करायला संगितल, मग HDFC खात्यातून दोन लाख रुपे काडले.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| time | wrong | -1d 19:00 (1020 min ago) | -1d 12:00 (1440 min ago) | -1d 19:00 (1020 min ago) | **extractor_form**: near-spelling variant of: संध्याकाळी |
+| scamType | fn | fake_customer_care | - | fake_customer_care | **asr**: ASR lost/changed: AnyDesk |
+
+### 35. mr-20 (story) - fails 100% of 2 runs
+
+- Reference: म्हणजे... काल दुपारी अडीच वाजता फोनपे वरून दोन हजार सहाशे रुपये गेले
+- Transcript (`mr-20__Aarohi__r0__mr`): मनजे, काल दुपारी अडीच वाजता फोन पे वरून 2,100 रुपे गिले.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | wrong | 2600 | 2100 | 2600 | **asr**: value not in the transcript |
+| paymentApp | fn | PhonePe | - | PhonePe | **extractor_form**: key words survive (फोनपे) but the extractor fails |
+
+### 36. mr-33 (answer:suspect) - fails 100% of 2 runs
+
+- Reference: त्याचा नंबर 7 0 1 1 2 2 3 3 4 4
+- Transcript (`mr-33__Aarohi__r0__mr`): त्याचा नंबर साथ 011 123344
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| suspectPhone | fn | 7011223344 | - | 7011223344 | **asr**: value not in the transcript |
+| suspectAccount | fp | - | 011123344 | - | **asr**: spurious value from a mis-recognised transcript |
+
+### 37. hi-01 (story) - fails 100% of 3 runs
+
+- Reference: मेरे अकाउंट से पाँच हज़ार रुपये कट गए, दस मिनट पहले एक आदमी ने बोला केवाईसी अपडेट करो, एसबीआई का अकाउंट है
+- Transcript (`hi-01__Madhur__r0__hi`): मेरे अकाउंट से 5000 रुपए कट गए, 10 मिनट पहले एक आदमी ने बोला के YC अपडेट करो, SBI का अकाउंट है.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| scamType | fn | fake_kyc | - | fake_kyc | **asr**: ASR lost/changed: केवाईसी |
+
+### 38. hi-11 (story) - fails 100% of 2 runs
+
+- Reference: डेढ़ लाख रुपये गए हैं मेरे, बैंक ऑफ बड़ौदा का अकाउंट है, कल रात दस बजे
+- Transcript (`hi-11__Madhur__r0__hi`): देड़ लाख रुपए गए हैं मेरे बैंक आफ बड़ादा का अकाउंट है कल रात दस बजे
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | wrong | 150000 | 100000 | 150000 | **extractor_form**: value is in the transcript but not parsed |
+
+### 39. hi-37 (answer:scamType) - fails 100% of 3 runs
+
+- Reference: केवाईसी अपडेट के नाम पे कॉल आया था
+- Transcript (`hi-37__Madhur__r0__hi`): केवाई सी अपडेट के नाम पे कॉल आया था
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| scamType | fn | fake_kyc | - | fake_kyc | **extractor_form**: key words survive (केवाईसी) but the extractor fails |
+
+### 40. en-17 (story) - fails 100% of 3 runs
+
+- Reference: Do lakh pachas hazaar rupaye invest karwaye trading app mein, bola paisa double hoga, Yes Bank se gaye
+- Transcript (`en-17__Neerja__r0__en`): Do luck purchase, 1000,000 rupees invest kervayet trading app me bola paisa double ho ga? Yes bank se gaye.
+
+| Field | Outcome | Expected | Got (ASR) | Got (reference) | Diagnosis |
+|---|---|---|---|---|---|
+| amount | wrong | 250000 | 1000000 | 250000 | **asr**: value not in the transcript |

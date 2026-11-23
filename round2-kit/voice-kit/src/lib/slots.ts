@@ -1,6 +1,6 @@
 // Generic, config-driven slot extraction. One typed extractor per slot type, all
 // built on Turant's rules in nlp.ts. Pure functions: no DOM, no network (offline-first).
-import { findAmountHit } from './indic/numbers';
+import { findAmountHit, fold, wordParts } from './indic/numbers';
 import { findTime } from './indic/time';
 import type {
   AmountSlot,
@@ -64,16 +64,61 @@ const freeRuns = (c: Ctx) => c.runs.map((r, i) => ({ r, i })).filter(({ r, i }) 
 
 const DEFAULT_PHONE_CTX = ['phone', 'mobile', 'mob', 'number', 'call', 'calling', 'whatsapp', 'फोन', 'मोबाइल', 'नंबर', 'कॉल', 'ফোন', 'নম্বর', 'போன்', 'நம்பர்', 'ఫోన్', 'నంబర్', 'ಫೋನ್', 'ನಂಬರ್', 'मोबाईल'];
 
+interface IdSeq {
+  start: number;
+  end: number;
+  digits: string;
+  runs: number[];
+}
+
+/**
+ * Digit sequences that may be IDs: digit runs, a number read out with a pause ("9 8 7 6 5... 4 3 2 1 0",
+ * joined only when the halves make a mobile or a 12-digit UTR), and native-script digits read one word
+ * at a time (নয় নয় আট আট…, ஒன்பது ஒன்பது எட்டு…).
+ */
+function idSequences(c: Ctx): IdSeq[] {
+  const seqs: IdSeq[] = [];
+  c.runs.forEach((r, ri) => {
+    if (r.isSeq) seqs.push({ start: r.start, end: r.end, digits: r.digits, runs: [ri] });
+  });
+  for (let i = 0; i + 1 < seqs.length; i++) {
+    const [a, b] = [seqs[i], seqs[i + 1]];
+    const d = a.digits + b.digits;
+    if (b.start === a.end + 1 && c.tokens[a.end] === N.BOUNDARY && a.digits.length >= 3 && b.digits.length >= 3 && ((d.length === 10 && /^[6-9]/.test(d)) || d.length === 12))
+      seqs.splice(i, 2, { start: a.start, end: b.end, digits: d, runs: [...a.runs, ...b.runs] });
+  }
+  const digit = (t: string | undefined) => {
+    if (!t || !/[^\x00-\x7f]/.test(t)) return undefined;
+    const p = wordParts(t, 2); // inside a read-out, short words may be repaired (normalize drops the nukta: নয় -> নয)
+    return p?.length === 1 && 'v' in p[0] && Number.isInteger(p[0].v) && p[0].v <= 9 ? String(p[0].v) : undefined;
+  };
+  for (let i = 0; i < c.tokens.length; ) {
+    let j = i;
+    let d = '';
+    for (let x = digit(c.tokens[j]); x !== undefined; x = digit(c.tokens[++j])) d += x;
+    if (d.length >= 7 && !seqs.some((s) => s.start <= i && i < s.end)) seqs.push({ start: i, end: j, digits: d, runs: [] });
+    i = Math.max(j, i + 1);
+  }
+  return seqs.sort((a, b) => a.start - b.start);
+}
+
+/** Context word in the window: exact, or a native-script stem on the sound-alike key (অ্যাকাউন্টে, खात्यात). */
+function ctxMatch(t: string, set: Set<string>, stems: string[]): boolean {
+  return set.has(t) || (/[^\x00-\x7f]/.test(t) && stems.some((st) => fold(t).startsWith(st)));
+}
+
 function extractIds(c: Ctx, slots: (DigitsSlot | PhoneSlot)[], out: Extraction) {
   if (!slots.length) return;
-  const ctxSets = new Map(slots.map((s) => [s.key, N.wordSet(s.context ?? (s.type === 'phone' ? DEFAULT_PHONE_CTX : []))]));
-  c.runs.forEach((r, ri) => {
-    if (!r.isSeq) return;
+  const words = (s: DigitsSlot | PhoneSlot) => s.context ?? (s.type === 'phone' ? DEFAULT_PHONE_CTX : []);
+  const ctxSets = new Map(slots.map((s) => [s.key, N.wordSet(words(s))]));
+  const ctxStems = new Map(slots.map((s) => [s.key, words(s).filter((w) => /[^\x00-\x7f]/.test(w)).map(fold).filter((k) => [...k].length >= 3)]));
+  idSequences(c).forEach((r) => {
     const d = r.digits;
-    const before = c.tokens.slice(Math.max(0, r.start - 4), r.start);
+    const before = c.tokens.slice(Math.max(0, r.start - 6), r.start);
+    const plus = c.tokens[r.start - 1] === 'plus';
     let best: { key: string; value: string; conf: number; score: number } | undefined;
     for (const s of slots) {
-      const ctxHit = before.some((t) => ctxSets.get(s.key)!.has(t));
+      const ctxHit = before.some((t) => ctxMatch(t, ctxSets.get(s.key)!, ctxStems.get(s.key)!));
       const hint = hinted(s, c.opts);
       let value: string | undefined;
       let base = 0;
@@ -81,7 +126,7 @@ function extractIds(c: Ctx, slots: (DigitsSlot | PhoneSlot)[], out: Extraction) 
       if (s.type === 'phone') {
         if (d.length === 10 && /^[6-9]/.test(d)) [value, base, conf] = [d, 2, ctxHit || hint ? 0.95 : 0.85];
         else if (d.length === 11 && /^0[6-9]/.test(d)) [value, base, conf] = [d.slice(1), 1.5, 0.9];
-        else if (d.length === 12 && /^91[6-9]/.test(d)) [value, base, conf] = [d.slice(2), 1.5, 0.9];
+        else if (d.length === 12 && /^91[6-9]/.test(d)) [value, base, conf] = [d.slice(2), plus ? 9 : 1.5, 0.9]; // "plus 91 …\"
       } else if (s.length !== undefined) {
         if (d.length === s.length) [value, base, conf] = [d, 3, ctxHit || hint ? 0.95 : 0.85];
       } else {
@@ -95,7 +140,7 @@ function extractIds(c: Ctx, slots: (DigitsSlot | PhoneSlot)[], out: Extraction) 
       if (!best || score > best.score) best = { key: s.key, value, conf, score };
     }
     if (!best) return;
-    c.claimed.add(ri);
+    for (const ri of r.runs) c.claimed.add(ri);
     if (!out[best.key] || c.opts.preferLast) out[best.key] = { value: best.value, confidence: best.conf };
   });
 }
