@@ -190,7 +190,7 @@ const MULTS = map({
   'হাজার': 1000, 'লাখ': 100000, 'ஆயிரம்': 1000, 'லட்சம்': 100000, 'వేలు': 1000, 'వెయ్యి': 1000, 'లక్ష': 100000,
   'ಸಾವಿರ': 1000, 'ಲಕ್ಷ': 100000,
 });
-const FRAC_PREFIX = map({ saade: 0.5, sade: 0.5, saadhe: 0.5, sadhe: 0.5, 'साढ़े': 0.5, 'साडे': 0.5, sava: 0.25, sawa: 0.25, 'सवा': 0.25, paune: -0.25, pone: -0.25, 'पौने': -0.25 });
+const FRAC_PREFIX = map({ saade: 0.5, sade: 0.5, saadhe: 0.5, sadhe: 0.5, 'साढ़े': 0.5, 'साडे': 0.5, 'साधे': 0.5, sava: 0.25, sawa: 0.25, 'सवा': 0.25, paune: -0.25, pone: -0.25, 'पौने': -0.25 });
 const STANDALONE = map({ dedh: 1.5, derh: 1.5, dhed: 1.5, 'डेढ़': 1.5, 'दीड': 1.5, dhai: 2.5, dhaai: 2.5, adhai: 2.5, 'ढाई': 2.5, 'अढ़ाई': 2.5, 'अडीच': 2.5 });
 const REPEAT = map({ double: 2, triple: 3, 'डबल': 2, 'ट्रिपल': 3 });
 
@@ -582,7 +582,7 @@ const SCAM_RULES: [ScamType, string[]][] = [
   ['investment_task', ['investment', 'invest', 'trading', 'stock tip', 'crypto', 'bitcoin', 'task', 'tasks', 'part time job', 'part-time job', 'work from home', 'youtube like', 'like karne', 'rating task', 'telegram', 'paisa double', 'double ho', 'high return', 'निवेश', 'टास्क', 'ट्रेडिंग', 'टेलीग्राम', 'इन्वेस्ट', 'डबल हो', 'दुप्पट', 'गुंतवणु', 'বিনিয়োগ', 'ইনভেস্ট', 'ডাবল', 'টেলিগ্রাম', 'টাস্ক', 'முதலீடு', 'இன்வெஸ்ட்', 'டெலிகிராம்', 'டாஸ்க்', 'పెట్టుబడి', 'ఇన్వెస్ట్', 'టెలిగ్రామ్', 'టాస్క్', 'गुंतवणूक', 'ಹೂಡಿಕೆ', 'ಇನ್ವೆಸ್ಟ್', 'ಟೆಲಿಗ್ರಾಮ್', 'ಟಾಸ್ಕ್']],
   ['qr_scan', ['qr', 'qr code', 'scan', 'scanner', 'scanned', 'क्यूआर', 'स्कैन', 'স্ক্যান', 'কিউআর', 'ஸ்கேன்', 'స్కాన్', 'स्कॅन', 'ಸ್ಕ್ಯಾನ್']],
   ['fake_customer_care', ['customer care', 'customer service', 'customer support', 'helpline number', 'care number', 'anydesk', 'any desk', 'teamviewer', 'screen share', 'quick support', 'कस्टमर केयर', 'कस्टमर केअर', 'কাস্টমার কেয়ার', 'கஸ்டமர் கேர்', 'కస్టమర్ కేర్', 'ಕಸ್ಟಮರ್ ಕೇರ್']],
-  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'केवाई सी', 'केवाय सी', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
+  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'केवाई सी', 'केवाय सी', 'के yc', 'yc अपडेट', 'yc update', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
   ['wrong_transfer', ['galti se', 'galati se', 'by mistake', 'mistakenly', 'wrong transfer', 'wrongly sent', 'refund', 'paise wapas', 'paisa wapas', 'wapas bhej', 'return the money', 'गलती से', 'वापस भेज', 'रिफंड', 'ভুল করে', 'রিফান্ড', 'தவறுதலாக', 'పొరపాటున', 'चुकून', 'ತಪ್ಪಾಗಿ']],
   ['otp_shared', ['otp', 'ओटीपी', 'ওটিপি', 'ஓடிபி', 'ఓటీపీ', 'ಒಟಿಪಿ', 'code bataya', 'code bata diya', 'pin bataya', 'pin bata diya']],
 ];
@@ -653,7 +653,7 @@ function extractBank(text: string, opts: ExtractOptions): Extracted<string> | un
 const APPS: { name: string; keys: string[] }[] = [
   { name: 'PhonePe', keys: ['phonepe', 'phone pay', 'phonpe', 'phone-pe', 'फोनपे', 'ফোনপে', 'போன்பே', 'ఫోన్‌పే', 'ఫోన్పే', 'ಫೋನ್‌ಪೇ', 'ফোন পে', 'ఫోన్ పే', 'போன் பே', 'ಫೋನ್ ಪೇ', 'फोन पे वरून', 'फोन पे द्वारे'] },
   { name: 'Google Pay', keys: ['google pay', 'gpay', 'g pay', 'googlepay', 'tez', 'गूगल पे', 'গুগল পে', 'கூகுள் பே', 'గూగుల్ పే', 'ಗೂಗಲ್ ಪೇ'] },
-  { name: 'Paytm', keys: ['paytm', 'pay tm', 'पेटीएम', 'পেটিএম', 'பேடிஎம்', 'పేటీఎం', 'ಪೇಟಿಎಂ', 'पेटी एम', 'पे टी एम', 'பேடியம்', 'পেটি এম'] },
+  { name: 'Paytm', keys: ['paytm', 'pay tm', 'पेटीएम', 'পেটিএম', 'பேடிஎம்', 'పేటీఎం', 'ಪೇಟಿಎಂ', 'पेटी एम', 'पे टी एम', 'पेटी इन', 'பேடியம்', 'পেটি এম'] },
   { name: 'BHIM', keys: ['bhim', 'भीम ऐप', 'भीम यूपीआई'] },
   { name: 'Amazon Pay', keys: ['amazon pay', 'अमेज़न पे'] },
   { name: 'CRED', keys: ['cred'] },
@@ -732,9 +732,28 @@ function spokenDigitRuns(tokens: string[]): { start: number; digits: string }[] 
   return out;
 }
 
+/**
+ * "UTR नंबर है 403218 765 432 5000 रुपए": digit groups of a UTR run straight into the amount. After UTR / reference
+ * words, if the leading groups make exactly 12 digits and more groups follow, those 12 digits are the UTR.
+ */
+function utrPrefix(tokens: string[], r: NumRun): string | undefined {
+  if (r.digits.length <= 12) return undefined;
+  const ctx = tokens.slice(Math.max(0, r.start - 6), r.start);
+  if (!ctx.some((t) => UTR_CTX.has(t) || nativeStem(t, UTR_STEMS))) return undefined;
+  let d = '';
+  for (let k = r.start; k < r.end - 1; k++) {
+    if (!/^\d+$/.test(tokens[k])) return undefined;
+    d += tokens[k];
+    // the rest must be exactly the amount: one group, then a currency word ("… 432 | 5000 रुपए")
+    if (d.length === 12) return k === r.end - 2 && isCurrency(tokens[r.end]) ? d : undefined;
+    if (d.length > 12) return undefined;
+  }
+  return undefined;
+}
+
 function extractIds(tokens: string[], runs: NumRun[], opts: ExtractOptions) {
   const out: Pick<Extraction, 'utr' | 'suspectPhone' | 'suspectAccount'> = {};
-  const seqs = [...runs.filter((r) => r.isSeq).map((r) => ({ start: r.start, digits: r.digits })), ...spokenDigitRuns(tokens)].sort((a, b) => a.start - b.start);
+  const seqs = [...runs.filter((r) => r.isSeq).map((r) => ({ start: r.start, digits: utrPrefix(tokens, r) ?? r.digits })), ...spokenDigitRuns(tokens)].sort((a, b) => a.start - b.start);
   for (const r of seqs) {
     const d = r.digits;
     const ctx = tokens.slice(Math.max(0, r.start - 6), r.start);

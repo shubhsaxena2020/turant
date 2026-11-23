@@ -20,7 +20,7 @@ add(7, 'सात', 'saat', 'seven');
 add(8, 'आठ', 'aath', 'eight');
 add(9, 'नौ', 'नऊ', 'नव', 'nau', 'nine'); // नव: Marathi spoken form
 add(10, 'दस', 'दहा', 'das', 'dus', 'ten');
-add(11, 'ग्यारह', 'अकरा', 'gyarah', 'eleven');
+add(11, 'ग्यारह', 'ग्यारा', 'ज्यारा', 'अकरा', 'gyarah', 'eleven'); // ग्यारा / ज्यारा: ASR spellings
 add(12, 'बारह', 'बारा', 'barah', 'baarah', 'twelve');
 add(13, 'तेरह', 'तेरा', 'terah', 'thirteen');
 add(14, 'चौदह', 'चौदा', 'chaudah', 'fourteen');
@@ -215,7 +215,7 @@ mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजा
 mul(100000, 'लाख', 'লাখ', 'লক্ষ', 'లక్ష', 'లక్షల', 'లక్షలు', 'ಲಕ್ಷ', 'லட்சம்', 'லட்சத்து', 'lakh', 'lac', 'lakhs');
 mul(10000000, 'करोड़', 'करोड', 'कोटी', 'কোটি', 'కోటి', 'ಕೋಟಿ', 'கோடி', 'crore', 'crores');
 
-const HALF_PREFIX = ['साढ़े', 'साढे', 'साडे', 'সাড়ে', 'সারে', 'saadhe', 'sadhe', 'saade', 'sade', 'saare', 'sare', 'saadey'].map((w) => w.normalize('NFC'));
+const HALF_PREFIX = ['साढ़े', 'साढे', 'साडे', 'साधे', 'সাড়ে', 'সারে', 'saadhe', 'sadhe', 'saade', 'sade', 'saare', 'sare', 'saadey'].map((w) => w.normalize('NFC'));
 
 // ---------- Tamil / Kannada / Telugu / Marathi / Bengali compounds ----------
 const TA_STEM: [string, number][] = [
