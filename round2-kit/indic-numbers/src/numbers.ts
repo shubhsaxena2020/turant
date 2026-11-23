@@ -50,11 +50,12 @@ const vkey = (s: string) => s.replace(/aa/g, 'a').replace(/ee/g, 'i').replace(/o
 const LATIN_KEY: Record<string, number> = {};
 HI_21_99_LATIN.forEach((w, i) => (LATIN_KEY[vkey(w)] = 21 + i));
 'ek do teen char paanch chhah saat aath nau das gyaarah baarah terah chaudah pandrah solah satrah athaarah unnees bees'.split(' ').forEach((w, i) => (LATIN_KEY[vkey(w)] ??= i + 1));
-const skel = (s: string) => s.replace(/[aeiouy]/g, '').replace(/h/g, '').replace(/(.)\1+/g, '$1');
+const skel = (s: string) => s.replace(/[aeiou]/g, '').replace(/h/g, '').replace(/(.)\1+/g, '$1');
 const LATIN_SKEL: Record<string, number | undefined> = {};
 for (const [k, v] of Object.entries(LATIN_KEY)) {
   if (k.length < 5) continue;
   const sk = skel(k);
+  if (sk.length < 3) continue;
   LATIN_SKEL[sk] = sk in LATIN_SKEL && LATIN_SKEL[sk] !== v ? undefined : v; // ambiguous skeletons are dropped
 }
 add(99, 'नव्याण्णव', 'नव्व्याण्णव');
@@ -388,7 +389,7 @@ export function wordParts(raw: string): Part[] | undefined {
       if (WORDS[w] !== undefined) return [{ v: WORDS[w] }];
       if (LATIN_KEY[vkey(w)] !== undefined) return [{ v: LATIN_KEY[vkey(w)] }];
       // ASR spells Hindi numbers inconsistently ("ninyanve" / "ninyaanave"): match on consonants
-      return w.length >= 5 && LATIN_SKEL[skel(w)] !== undefined ? [{ v: LATIN_SKEL[skel(w)]! }] : undefined;
+      return w.length >= 5 && skel(w).length >= 3 && LATIN_SKEL[skel(w)] !== undefined ? [{ v: LATIN_SKEL[skel(w)]! }] : undefined;
   }
 }
 
