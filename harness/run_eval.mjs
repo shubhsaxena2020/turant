@@ -31,6 +31,8 @@ const IN = await import(pathToFileURL(path.resolve(HERE, '..', 'prototype', 'src
 const args = process.argv.slice(2);
 const arg = (k, d) => (args.includes(k) ? args[args.indexOf(k) + 1] : d);
 const NAME = arg('--name', 'latest');
+// --transcripts <dir>: score another set of transcripts (e.g. transcripts_hw from asr_hotwords.py); jobs without one are skipped as missing.
+const TRANSCRIPTS_DIR = arg('--transcripts', 'transcripts');
 // --llm <slug>: also use cached LLM answers (llm_fill.mjs); only texts in the cache are scored.
 // --policy rules | llm | fill (LLM fills any missing field) | fillcat (only scamType/bank/paymentApp)
 //          | fillcheck (fillcat + numbers/IDs whose value is visible in the text)
@@ -246,7 +248,7 @@ for (const c of cases) {
 }
 
 function readTranscript(tid) {
-  const p = path.join(HERE, 'transcripts', `${tid}.json`);
+  const p = path.join(HERE, TRANSCRIPTS_DIR, `${tid}.json`);
   if (!fs.existsSync(p)) return null;
   const d = JSON.parse(fs.readFileSync(p, 'utf8'));
   return (d.text ?? (d.segments ?? []).map((s) => s.text).join(' ')).trim();

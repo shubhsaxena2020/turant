@@ -36,15 +36,17 @@ The harness takes 280 spoken reports in 7 languages through TTS, noise and Whisp
 
 | Measure | Before (23 Nov) | Now |
 |---|---|---|
-| Clean speech, report fully correct | 27.2% | **43.5%** |
-| Held-out voices | 29.4% | **45.6%** |
-| Field F1 | 51 | 70 |
+| Clean speech, report fully correct | 27.2% | **44.0%** |
+| Held-out voices | 29.4% | **45.9%** |
+| Field F1 | 51 | 72 |
 
 - **What changed:** the extractor now reads numbers, times, banks and IDs in all 7 languages, including the misspellings speech recognisers make.
 - **Fuzz checks:** all clean. One mutation is recovered in 99.6-100% of cases, and no ordinary word in 1,510 real transcripts gets turned into a number.
 - **Rules vs LLM:** measured head to head. On-device rules match the best LLM hybrid (41.2%); the LLM alone scores 16.5% because it invents fields. The decision is to stay offline-first.
+- **Other voice-kit apps:** `kit_apps_eval.mjs` scores khata, health and civic on text or speech. On held-out text the first run scored 38%, 71% and 50%; the remaining gaps are domain words in each language, which is the Round 2 day-1 lesson.
+- **Asking instead of guessing:** an amount under ₹100 is offered back as one-tap "₹5,000?" or "₹5,00,000?"; a bare "thousand" after a misheard word is asked about rather than read as ₹1,000.
 - **Remaining errors:** 84% are speech recognition, mostly in bn/ta/te/kn. A better Indic ASR (Sarvam key needed) is the next big lever.
-- **Re-run:** `cd harness; .un.ps1 -Name x` (about 5 s, cached), then `node split.mjs x`.
+- **Re-run:** `cd harness; .\run.ps1 -Name x` (about 5 s, cached), then `node split.mjs x`.
 
 ## Round 2 (27–29 Nov): `round2-kit/ROUND2_PLAYBOOK.md`
 The problem statement is only released on 27 Nov. The playbook has the pre-work, a 3-day plan, and how to reuse Turant's voice core:
