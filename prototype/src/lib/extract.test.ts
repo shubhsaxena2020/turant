@@ -366,6 +366,8 @@ describe('harness regressions', () => {
     expect(x('Your ACXX 4321 has been debited via UPI. Not you? Call your bank.').amount).toBeUndefined(); // masked account
     expect(x('ರೆಕಾರ್ಡ್ ಮಾಡಿ ಈಗ ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್ ಮಾಡುತ್ತಿದ್ದಾರೆ').time).toBeUndefined();
     expect(x('कस्टमर केयर का नंबर गूगल पे सर्च किया था').paymentApp).toBeUndefined();
+    expect(x('दीड लाख रुपय गेले बंक आफ बडोदा खात').paymentApp).toBeUndefined(); // "bank of" is not "bank app"
+    expect(x('पैसे पेटीएम से गए').paymentApp?.value).toBe('Paytm');
     expect(x('no, the bank was HDFC not SBI', { preferLast: true }).bank?.value).toBe('HDFC Bank');
     expect(x('பேங்க் தப்பு SBI إல்லா HDFC', { preferLast: true }).bank?.value).toBe('HDFC Bank'); // garbled negator: last name wins
   });

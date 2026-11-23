@@ -219,7 +219,8 @@ function crossScript(text: string, phrases: string[], last: boolean, minKey: num
   for (const p of phrases) {
     if (!isLatin(p)) continue;
     const pk = p.split(/\s+/).map((w) => soundKey(w));
-    if (pk.join('').length < minKey || pk.some((k) => !k)) continue;
+    // every word needs 3+ sound letters: \"bank app\" would otherwise match \"बंक आफ\" (bank of)
+    if (pk.join('').length < minKey || pk.some((k) => k.length < 3)) continue;
     for (let i = 0; i + pk.length <= words.length; i++) {
       if (!pk.every((k, j) => words[i + j].k === k)) continue;
       const idx = words[i].at;

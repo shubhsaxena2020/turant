@@ -5,7 +5,7 @@
 
 import { findAmountHit, fold, numberGroups, wordParts } from './indic/numbers.ts';
 import { findTime, type TimeHit } from './indic/time.ts';
-import { findBank } from './indic/bank.ts';
+import { findBank, romanize, soundKey } from './indic/bank.ts';
 
 export type FieldKey =
   | 'amount'
@@ -433,6 +433,26 @@ function escapeRe(s: string): string {
   return s.replace(/[.*+?^$|()[\]{}\\]/g, '\\$&');
 }
 
+/** Latin phrases against native-script speech by sound: Whisper / Chrome write Hinglish in Devanagari. */
+function crossScriptIndex(text: string, phrases: string[]): number {
+  if (!/[^\x00-\x7f]/.test(text)) return -1;
+  const words = [...text.matchAll(/\S+/g)].map((m) => ({ k: soundKey(/^[\x00-\x7f]+$/.test(m[0]) ? m[0] : romanize(m[0])), at: m.index ?? 0 }));
+  let found = -1;
+  for (const p of phrases) {
+    if (!/^[a-z0-9 .@'&-]+$/.test(p)) continue;
+    const pk = p.split(/\s+/).map((w) => soundKey(w));
+    // every word needs 3+ sound letters: \"bank app\" would otherwise match \"बंक आफ\" (bank of)
+    if (pk.join('').length < 4 || pk.some((k) => k.length < 3)) continue;
+    for (let i = 0; i + pk.length <= words.length; i++) {
+      if (pk.every((k, j) => words[i + j].k === k)) {
+        if (found < 0 || words[i].at < found) found = words[i].at;
+        break;
+      }
+    }
+  }
+  return found;
+}
+
 function hasPhrase(text: string, phrases: string[]): number {
   // returns index of the first phrase found, -1 if none (latin phrases need word boundaries)
   let found = -1;
@@ -452,7 +472,7 @@ function hasPhrase(text: string, phrases: string[]): number {
     }
     if (idx >= 0 && (found < 0 || idx < found)) found = idx;
   }
-  return found;
+  return found >= 0 ? found : crossScriptIndex(text, phrases);
 }
 
 function extractTime(text: string, tokens: string[], runs: NumRun[], opts: ExtractOptions): Extracted<string> | undefined {
