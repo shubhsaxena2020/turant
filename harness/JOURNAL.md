@@ -94,6 +94,24 @@ The one thing it did better, garbled bank names, we then taught the offline matc
 
 **Decision:** on-device rules first. An LLM is at most an optional online fallback for a missing bank.
 
+## Confidence: can the app confirm only what is likely wrong? (`node calib.mjs round9`)
+
+| Confidence of a returned value | Right |
+|---|---|
+| 0.80 or more | 89% |
+| 0.60-0.79 | 71% |
+| below 0.60 | 12% |
+
+- **Time:** well calibrated (91% → 12% across the bands).
+- **Amount:** was not (75% / 78% / 72%), so we looked for what predicts a wrong amount:
+  - **Language:** Hindi 97% right, Tamil 26%.
+  - **A missing currency word:** 57% right.
+  - **A value under ₹100:** **0 of 23 right.** 12 had lost a "thousand", 6 a "lakh".
+- **What the app does now:**
+  - A spoken amount under ₹100 gets low confidence and is not written into the letter from the story.
+  - When the user says it as an answer, the read-back offers the likely fix: "₹5. Is that right? Or ₹5,000?", with one-tap rows for ₹5,000 and ₹5,00,000.
+  - End-to-end test with a scripted recogniser: `round2-kit/demo-video/e2e_magnitude.mjs`, PASS. Screenshots are in `prototype/screenshots/magnitude/`.
+
 ## What is left
 
 - **Remaining clean-ASR field errors** (round7):

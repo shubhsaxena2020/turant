@@ -795,7 +795,9 @@ export function extractFields(text: string, opts: ExtractOptions = {}): Extracti
   const out: Extraction = {};
 
   const amount = mergeAmount(extractAmount(tokens, runs, opts), findAmountHit(text), opts, text);
-  if (amount) out.amount = amount;
+  // Under ₹100 in a fraud report: every one in the harness was a dropped "thousand" / "lakh" (5 for 5,000).
+  // Keep it, but unsure: the app asks and offers ₹5,000 / ₹5,00,000.
+  if (amount) out.amount = amount.value < 100 ? { ...amount, confidence: Math.min(amount.confidence, 0.45) } : amount;
   const time = mergeTime(extractTime(cleaned, tokens, runs, opts), findTime(text, opts.now ?? new Date()));
   if (time) out.time = time;
   const scam = extractScamType(cleaned, opts);

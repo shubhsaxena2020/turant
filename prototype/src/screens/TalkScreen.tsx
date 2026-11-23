@@ -31,6 +31,13 @@ interface Pending {
 
 type SheetKind = null | 'keypad' | 'choices' | 'type';
 
+/** A spoken amount under ₹100 usually lost its "thousand" / "lakh" to the recogniser: offer those. */
+function bigger(ext: Extraction): Extraction[] {
+  const v = Number(ext.amount?.value);
+  if (!ext.amount || !(v > 0 && v < 100)) return [];
+  return [1000, 100000].map((m) => ({ amount: { value: v * m, confidence: 1 } }) as Extraction);
+}
+
 export function TalkScreen(props: {
   ui: UI;
   report: Report;
@@ -128,7 +135,8 @@ export function TalkScreen(props: {
       setThinking(false);
       const now = new Date();
       const r = rep.current;
-      const ext = extractFields(text, { now });
+      // Unsure values (e.g. ₹5, probably ₹5,000 with "thousand" lost) are asked about, not written in.
+      const ext = Object.fromEntries(Object.entries(extractFields(text, { now })).filter(([, v]) => v && v.confidence >= 0.5)) as Extraction;
       const m = mergeExtraction(r.fields, ext, { source: viaToSource(via), asrConfidence: via === 'typed' ? undefined : conf, mode: 'story' });
       if (m.changed.length) cue('captured');
       setFresh(m.changed);
@@ -191,7 +199,10 @@ export function TalkScreen(props: {
     if (EXPLICIT.includes(question) && via !== 'typed') {
       const p: Pending = { q: question, ext: r.ext, keys: r.keys, via, conf };
       setConfirm(p);
-      void ui.say((l) => tr(l, 'confirmQ', { v: spokenValues(r.ext, r.keys, l) })).then(() => {
+      const alts = bigger(r.ext);
+      void ui
+        .say((l) => [tr(l, 'confirmQ', { v: spokenValues(r.ext, r.keys, l) }), alts[0] ? tr(l, 'orMaybe', { v: spokenValues(alts[0], ['amount'], l) }) : ''].filter(Boolean).join(' '))
+        .then(() => {
         if (canMic || sampleRun) listenYesNo(p);
       });
       return;
@@ -313,6 +324,15 @@ export function TalkScreen(props: {
             <p className="text-lg text-night-muted">{t('iHeard')}</p>
             <p className="mt-1 text-hero font-display text-night-text tabular-nums break-words">{shownValues(confirm.ext, confirm.keys, ui.lang)}</p>
             <p className="mt-2 text-title text-night-text">{t('isThisRight')}</p>
+            {bigger(confirm.ext).length ? (
+              <div className="rows mt-4" data-testid="confirm-alts">
+                {bigger(confirm.ext).map((alt, i) => (
+                  <Row key={i} testId={`confirm-alt-${i}`} onClick={() => commit(alt, ['amount'], 'tap', 1)}>
+                    {t('orMaybe', { v: shownValues(alt, ['amount'], ui.lang) })}
+                  </Row>
+                ))}
+              </div>
+            ) : null}
           </section>
         ) : null}
 
