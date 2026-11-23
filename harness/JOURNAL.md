@@ -112,6 +112,48 @@ The one thing it did better, garbled bank names, we then taught the offline matc
   - When the user says it as an answer, the read-back offers the likely fix: "₹5. Is that right? Or ₹5,000?", with one-tap rows for ₹5,000 and ₹5,00,000.
   - End-to-end test with a scripted recogniser: `round2-kit/demo-video/e2e_magnitude.mjs`, PASS. Screenshots are in `prototype/screenshots/magnitude/`.
 
+## Beyond fraud: any voice-kit app (`kit_apps_eval.mjs`, Round 2 readiness)
+
+For the Round 2 problem, whatever it turns out to be, this harness scores any voice-kit app on a text corpus, matching every field by its slot type:
+
+```
+..ound2-kit\indic-numbers
+ode_modules\.bin	sx kit_apps_eval.mjs [app] [--corpus kit|kit-heldout] [--show]
+```
+
+Results, by corpus:
+
+| Corpus | khata | health | civic | Note |
+|---|---|---|---|---|
+| `corpus/kit`, 42 fresh cases, first run | 38% | 79% | 42% | before any kit changes |
+| `corpus/kit` after fixes | 100% | 100% | 100% | these cases were then used for tuning |
+| `corpus/kit-heldout`, 21 cases written later in other styles, **first run** | **38%** | **71%** | **50%** | the honest generality number |
+| `corpus/kit-heldout` after 5 generic fixes | 50% | 86% | 50% | now partly dev too |
+
+The generic fixes that came out of this:
+
+- **Names:**
+  - Titles (bhaiya, दीदी, Mrs) are skipped.
+  - "X aaya", a glued ने (सुनीलने), a name followed by a quantity, and "This is Rahul" all give the name.
+- **Number slots** fall back to the cross-language parser ("baavan saal" = 52).
+- **Durations:**
+  - "hafte se" and "for a week" mean one week.
+  - "कल रात से" ("since last night") means one day.
+- **Location markers** glued onto the landmark (शाळेजवळ) still give the place.
+- **Quantities:** "half a kilo".
+- **English keywords** match their inflections ("coughing" for "cough").
+
+**Lesson for Round 2:** what's left on the held-out set is almost entirely domain vocabulary in each language:
+
+- फोनपे written in Devanagari
+- "owes me"
+- পরে দেবে ("will pay later")
+- ஜிபே (GPay)
+- कूड़े (garbage)
+- డ్రైనేజ్ (drainage)
+
+So on day 1 of Round 2: write the keyword lists in all languages, write 30-50 cases, then loop this harness.
+
 ## What is left
 
 - **Remaining clean-ASR field errors** (round7):

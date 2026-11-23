@@ -1,0 +1,7 @@
+{"id": "hh-hi-01", "lang": "hi", "kind": "story", "text": "Ji, inka naam Geeta hai, umar pachaas saal, char din se pet dard aur ulti ho rahi hai", "expected": {"patient": "Geeta", "age": 50, "symptoms": ["stomach_pain", "vomiting"], "days": 4}}
+{"id": "hh-en-02", "lang": "en", "kind": "story", "text": "This is Rahul, he is 12, coughing for a week, no fever", "expected": {"patient": "Rahul", "age": 12, "symptoms": ["cough"], "days": 7}}
+{"id": "hh-hi-03", "lang": "hi", "kind": "story", "text": "मरीज़ रमेश, 65 साल, साँस लेने में तकलीफ़ है और सीने में दर्द, कल रात से", "expected": {"patient": "रमेश", "age": 65, "symptoms": ["breathless", "chest_pain"], "days": 1}}
+{"id": "hh-ta-04", "lang": "ta", "kind": "story", "text": "பெயர் முத்து, வயது 40, மூன்று நாளாக காய்ச்சல், 101 டிகிரி", "expected": {"patient": "முத்து", "age": 40, "symptoms": ["fever"], "days": 3, "temp": 101}}
+{"id": "hh-bn-05", "lang": "bn", "kind": "story", "text": "রোগীর নাম রুমা, বয়স ছাব্বিশ, দুই দিন ধরে মাথা ব্যথা আর মাথা ঘোরা, গর্ভবতী", "expected": {"patient": "রুমা", "age": 26, "symptoms": ["headache", "dizziness"], "days": 2, "pregnant": true}}
+{"id": "hh-kn-06", "lang": "kn", "kind": "story", "text": "ಹೆಸರು ಶಾಂತಾ, ವಯಸ್ಸು 70, ಒಂದು ವಾರದಿಂದ ಕೆಮ್ಮು ಮತ್ತು ಉಸಿರಾಟದ ತೊಂದರೆ", "expected": {"patient": "ಶಾಂತಾ", "age": 70, "symptoms": ["cough", "breathless"], "days": 7}}
+{"id": "hh-hi-07", "lang": "hi", "kind": "answer", "hint": "temp", "text": "ek sau do degree", "expected": {"temp": 102}}

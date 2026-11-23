@@ -1,0 +1,6 @@
+{"id": "ch-hi-01", "lang": "hi", "kind": "story", "text": "bhaiya hamare mohalle mein paani nahi aa raha teen din se, Ram nagar, ward number 14", "expected": {"issue": "water", "location": ["ram nagar"], "ward": ["14"], "since": 3}}
+{"id": "ch-en-02", "lang": "en", "kind": "story", "text": "Streetlight is broken opposite the post office, ward 9, for two weeks now, call me on 9123456780", "expected": {"issue": "streetlight", "location": ["post office"], "ward": ["9"], "since": 14, "phone": "9123456780"}}
+{"id": "ch-hi-03", "lang": "hi", "kind": "story", "text": "कूड़े का ढेर लगा है सब्ज़ी मंडी के पास, वार्ड 21, एक हफ्ते से कोई नहीं आया", "expected": {"issue": "garbage", "location": ["सब्ज़ी मंडी"], "ward": ["21"], "since": 7}}
+{"id": "ch-ta-04", "lang": "ta", "kind": "story", "text": "பஸ் ஸ்டாண்ட் அருகில் சாலையில் பெரிய குழி இருக்கு, வார்டு 6", "expected": {"issue": "pothole", "location": ["பஸ் ஸ்டாண்ட்"], "ward": ["6"]}}
+{"id": "ch-te-05", "lang": "te", "kind": "story", "text": "మా కాలనీలో డ్రైనేజ్ బ్లాక్ అయింది, పాఠశాల దగ్గర, వార్డు 2, వారం నుంచి", "expected": {"issue": "drainage", "location": ["పాఠశాల"], "ward": ["2"], "since": 7}}
+{"id": "ch-bn-06", "lang": "bn", "kind": "story", "text": "আমাদের পাড়ায় রাস্তার আলো জ্বলছে না, মসজিদের সামনে, ওয়ার্ড ১২", "expected": {"issue": "streetlight", "location": ["মসজিদ"], "ward": ["12"]}}

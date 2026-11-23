@@ -35,6 +35,16 @@ describe('numbers and durations', () => {
   });
 });
 
+describe('more generic forms (held-out round 1)', () => {
+  it('English inflections, introductions, "for a week", "since last night", "dus"', () => {
+    expect(v(health, 'This is Rahul, he is 12, coughing for a week, no fever', 'patient')).toBe('Rahul');
+    expect(v(health, 'This is Rahul, he is 12, coughing for a week, no fever', 'symptoms')).toEqual(['cough']);
+    expect(v(health, 'This is Rahul, he is 12, coughing for a week, no fever', 'days')).toBe(7);
+    expect(v(health, 'मरीज़ रमेश, 65 साल, सीने में दर्द, कल रात से', 'days')).toBe(1);
+    expect(v(khata, 'Mohan ne teen kilo aalu liya, ek sau dus rupaye, baad mein dega', 'amount')).toBe(110);
+  });
+});
+
 describe('text markers', () => {
   it('a marker glued onto the landmark (शाळेजवळ) still gives the place', () => {
     expect(String(v(civic, 'आमच्या गल्लीत पाणी येत नाही, शाळेजवळ, वॉर्ड 4', 'location'))).toContain('शाळे');

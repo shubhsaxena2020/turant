@@ -209,7 +209,9 @@ export function phraseMatch(text: string, phrases: string[], last = false): { id
     if (!k) continue;
     let idx: number;
     if (/^[a-z0-9 .@'&°-]+$/.test(k)) {
-      const re = new RegExp(`(^|[^a-z0-9])${escapeRe(k)}(?=[^a-z0-9]|$)`, 'g');
+      // plain English inflections of one-word keywords: cough -> coughs / coughing, block -> blocked
+      const infl = !k.includes(' ') && k.length >= 4 ? '(?:s|es|ing|ed)?' : '';
+      const re = new RegExp(`(^|[^a-z0-9])${escapeRe(k)}${infl}(?=[^a-z0-9]|$)`, 'g');
       idx = -1;
       let m: RegExpExecArray | null;
       while ((m = re.exec(text))) {

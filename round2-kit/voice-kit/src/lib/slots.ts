@@ -205,7 +205,7 @@ function extractNumber(c: Ctx, s: NumberSlot, allowHint: boolean): Extracted | u
   return { value: pick.r.value, confidence: conf };
 }
 
-const SINCE_YESTERDAY = ['kal se', 'since yesterday', 'from yesterday', 'कल से', 'காலையிலிருந்து', 'நேற்றிலிருந்து', 'நேற்று முதல்', 'ನಿನ್ನೆಯಿಂದ', 'গতকাল থেকে', 'কাল থেকে', 'నిన్నటి నుండి', 'कालपासून'];
+const SINCE_YESTERDAY = ['kal se', 'kal raat se', 'kal shaam se', 'kal subah se', 'since yesterday', 'since last night', 'from yesterday', 'कल से', 'कल रात से', 'कल शाम से', 'कल सुबह से', 'காலையிலிருந்து', 'நேற்றிலிருந்து', 'நேற்று முதல்', 'ನಿನ್ನೆಯಿಂದ', 'গতকাল থেকে', 'কাল থেকে', 'నిన్నటి నుండి', 'कालपासून'];
 const SINCE_TODAY = ['aaj se', 'subah se', 'since morning', 'since today', 'आज से', 'सुबह से', 'இன்று காலை முதல்', 'ಬೆಳಿಗ್ಗೆಯಿಂದ', 'সকাল থেকে', 'ఉదయం నుండి', 'सकाळपासून'];
 
 const SINCE_AFTER = ['se', 'से', 'पासून', 'ধরে', 'থেকে', 'ಇಂದ', 'ದಿಂದ', 'గా', 'నుంచి', 'லிருந்து', 'ஆக'].map(N.nw);
@@ -226,8 +226,10 @@ function extractDuration(c: Ctx, s: DurationSlot): Extracted | undefined {
   for (let k = 0; k < c.tokens.length; k++) {
     const t = c.tokens[k];
     const ms = N.unitMs(t);
-    if (ms < 86_400_000 || N.findNumberRuns([c.tokens[k - 1] ?? '']).length) continue;
-    const since = SINCE_AFTER.some((m) => c.tokens[k + 1] === m || (t.length > m.length + 2 && t.endsWith(m)));
+    if (ms < 86_400_000 || (N.findNumberRuns([c.tokens[k - 1] ?? '']).length && !['a', 'an'].includes(c.tokens[k - 1] ?? ''))) continue;
+    const since =
+      SINCE_AFTER.some((m) => c.tokens[k + 1] === m || (t.length > m.length + 2 && t.endsWith(m))) ||
+      (['a', 'an'].includes(c.tokens[k - 1] ?? '') && ['for', 'since', 'past', 'last'].includes(c.tokens[k - 2] ?? '')); // "for a week\"
     if (since) return { value: Math.round((ms / 86_400_000) * 100) / 100, confidence: 0.75 };
   }
   if (N.phraseIndex(c.text, SINCE_YESTERDAY) >= 0) return { value: 1, confidence: 0.8 };
@@ -424,6 +426,9 @@ function extractName(c: Ctx, s: NameSlot): Extracted | undefined {
   // 3b. A story that opens with a name then a quantity: "রহিম দুই কেজি চাল…", "ಮಂಜು ಐದು ಕೆಜಿ…"
   if (!c.opts.hint && plausible(0) && words[1] && (/^\d/.test(words[1].n) || wordParts(words[1].w)) && !wordParts(words[0].w))
     return { value: titleIfLatin(words[0].w), confidence: 0.65 };
+  // 3c. English introductions: "This is Rahul, he is 12"
+  const intro = /(?:^|[.,]\s*)(?:[Tt]his is|[Ii]t is|[Ii]t's|[Mm]eet)\s+([A-Z][a-z]+)/.exec(c.raw);
+  if (intro && !NOT_NAMES.has(N.nw(intro[1])) && !c.reserved.has(N.nw(intro[1]))) return { value: intro[1], confidence: 0.75 };
   // 4. Answering "What is the name?": the answer minus filler words.
   if (hinted(s, c.opts) && !N.detectIntent(c.raw)) {
     const name = words

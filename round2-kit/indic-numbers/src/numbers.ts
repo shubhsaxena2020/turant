@@ -19,7 +19,7 @@ add(6, 'छह', 'छः', 'छे', 'सहा', 'chhe', 'chhah', 'six');
 add(7, 'सात', 'saat', 'seven');
 add(8, 'आठ', 'aath', 'eight');
 add(9, 'नौ', 'नऊ', 'नव', 'nau', 'nine'); // नव: Marathi spoken form
-add(10, 'दस', 'दहा', 'das', 'ten');
+add(10, 'दस', 'दहा', 'das', 'dus', 'ten');
 add(11, 'ग्यारह', 'अकरा', 'gyarah', 'eleven');
 add(12, 'बारह', 'बारा', 'barah', 'baarah', 'twelve');
 add(13, 'तेरह', 'तेरा', 'terah', 'thirteen');

@@ -21,8 +21,9 @@ const { romanize, soundKey } = await imp('lib/indic/bank.ts');
 const args = process.argv.slice(2);
 const NAME = args.includes('--name') ? args[args.indexOf('--name') + 1] : 'latest';
 const SHOW = args.includes('--show');
-const apps = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--name');
-const list = apps.length ? apps : fs.readdirSync(path.join(HERE, 'corpus', 'kit')).filter((f) => f.endsWith('.jsonl')).map((f) => f.replace('.jsonl', ''));
+const CORPUS = args.includes('--corpus') ? args[args.indexOf('--corpus') + 1] : 'kit'; // corpus/<dir>/<app>.jsonl
+const apps = args.filter((a, i) => !a.startsWith('--') && args[i - 1] !== '--name' && args[i - 1] !== '--corpus');
+const list = apps.length ? apps : fs.readdirSync(path.join(HERE, 'corpus', CORPUS)).filter((f) => f.endsWith('.jsonl')).map((f) => f.replace('.jsonl', ''));
 const NOW = new Date(2026, 10, 21, 12, 0, 0);
 
 const lev = (a, b) => {
@@ -84,7 +85,7 @@ for (const app of list) {
     continue;
   }
   const slots = Object.fromEntries(cfg.slots.map((s) => [s.key, s]));
-  const cases = fs.readFileSync(path.join(HERE, 'corpus', 'kit', `${app}.jsonl`), 'utf8').trim().split(/\r?\n/).map((l) => JSON.parse(l));
+  const cases = fs.readFileSync(path.join(HERE, 'corpus', CORPUS, `${app}.jsonl`), 'utf8').trim().split(/\r?\n/).map((l) => JSON.parse(l));
   const st = {};
   const runs = [];
   for (const c of cases) {
