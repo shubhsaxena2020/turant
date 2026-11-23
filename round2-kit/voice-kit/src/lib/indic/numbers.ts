@@ -10,6 +10,9 @@ const add = (v: number, ...ws: string[]) => ws.forEach((w) => (WORDS[w.normalize
 
 // Hindi / Marathi (Devanagari + common Latin)
 add(0, 'शून्य', 'shunya', 'zero', 'ज़ीरो', 'जीरो', 'झीरो');
+// English number words written in Devanagari by the recogniser ("फाइव साल", "ट्वेंटी थाउज़ेंड")
+add(2, 'टू'); // not वन ("forest") or सेवन ("intake"): ordinary Hindi words add(3, 'थ्री'); add(4, 'फोर'); add(5, 'फाइव', 'फ़ाइव'); add(6, 'सिक्स'); add(8, 'एट', 'ऐट'); add(9, 'नाइन'); add(10, 'टेन');
+add(20, 'ट्वेंटी', 'ट्वेन्टी'); add(30, 'थर्टी'); add(40, 'फोर्टी'); add(50, 'फिफ्टी'); add(60, 'सिक्सटी'); add(70, 'सेवेंटी'); add(80, 'एटी', 'ऐटी'); add(90, 'नाइंटी');
 // zero in ta / te / kn (was missing), and "zero" said in English in every script (phone and UTR read-outs)
 add(0, 'பூஜ்ஜியம்', 'பூஜ்யம்', 'சைபர்', 'ஜீரோ', 'సున్నా', 'సున్న', 'జీరో', 'ಸೊನ್ನೆ', 'ಶೂನ್ಯ', 'ಜೀರೋ', 'জিরো');
 add(1, 'एक', 'ek', 'one');
@@ -215,8 +218,8 @@ add(0.5, 'அரை');
 
 const MULT: Record<string, number> = {};
 const mul = (v: number, ...ws: string[]) => ws.forEach((w) => (MULT[w.normalize('NFC')] = v));
-mul(100, 'सौ', 'शे', 'শো', 'শ', 'వంద', 'వందల', 'వందలు', 'వందలా', 'నూట', 'నూరు', 'ನೂರು', 'நூறு', 'hundred', 'sau');
-mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजारो', 'হাজার', 'হজার', 'হাজাত', 'వేలు', 'వేల', 'వేలా', 'వెయ్యి', 'ಸಾವರದ', 'ಸಾವರ', 'ಸಾವರಿದ', 'ಸಾವಿರ', 'ಸಾವಿರದ', 'தாயிரம்', 'தாயரம்', 'ஆயிரம்', 'ஆயிரத்து', 'thousand', 'hazaar', 'hazar', 'k');
+mul(100, 'सौ', 'शे', 'শো', 'শ', 'వంద', 'వందల', 'వందలు', 'వందలా', 'నూట', 'నూరు', 'ನೂರು', 'நூறு', 'हंड्रेड', 'hundred', 'sau');
+mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजारो', 'হাজার', 'হজার', 'হাজাত', 'వేలు', 'వేల', 'వేలా', 'వెయ్యి', 'ಸಾವರದ', 'ಸಾವರ', 'ಸಾವರಿದ', 'ಸಾವಿರ', 'ಸಾವಿರದ', 'தாயிரம்', 'தாயரம்', 'ஆயிரம்', 'ஆயிரத்து', 'थाउज़ेंड', 'थाउजेंड', 'thousand', 'hazaar', 'hazar', 'k');
 mul(100000, 'लाख', 'লাখ', 'লক্ষ', 'లక్ష', 'లక్షల', 'లక్షలు', 'ಲಕ್ಷ', 'லட்சம்', 'லட்சத்து', 'lakh', 'lac', 'lakhs');
 mul(10000000, 'करोड़', 'करोड', 'कोटी', 'কোটি', 'కోటి', 'ಕೋಟಿ', 'கோடி', 'crore', 'crores');
 
@@ -299,10 +302,10 @@ function splitTamil(w: string): Part[] | undefined {
 }
 
 const KN_TENS: [string, number][] = [
-  ['ಇಪ್ಪತ್ತ', 20], ['ಮೂವತ್ತ', 30], ['ನಲವತ್ತ', 40], ['ಐವತ್ತ', 50], ['ಅರವತ್ತ', 60], ['ಎಪ್ಪತ್ತ', 70], ['ಎಂಬತ್ತ', 80], ['ತೊಂಬತ್ತ', 90],
+  ['ಇಪ್ಪತ್ತ', 20], ['ಮೂವತ್ತ', 30], ['ನಲವತ್ತ', 40], ['ಐವತ್ತ', 50], ['ಆಯವತ್ತ', 50], ['ಅರವತ್ತ', 60], ['ಎಪ್ಪತ್ತ', 70], ['ಎಂಬತ್ತ', 80], ['ತೊಂಬತ್ತ', 90],
 ];
 const KN_UNIT_SIGN: [string, number][] = [
-  ['ೊಂದು', 1], ['ೆರಡು', 2], ['ಮೂರು', 3], ['ನಾಲ್ಕು', 4], ['ೈದು', 5], ['ಾರು', 6], ['ೇಳು', 7], ['ೆಂಟು', 8], ['ೊಂಬತ್ತು', 9],
+  ['ೊಂದು', 1], ['ೆರಡು', 2], ['ಮೂರು', 3], ['ನಾಲ್ಕು', 4], ['ೈದು', 5], ['ಯಿದು', 5], ['ೆಯದು', 5], ['ಾರು', 6], ['ೇಳು', 7], ['ೆಂಟು', 8], ['ೊಂಬತ್ತು', 9],
 ];
 
 function splitKannada(w: string): Part[] | undefined {
@@ -666,9 +669,13 @@ export function numberGroups(text: string): Group[] {
       const q = wordParts(toks[i]) ?? (last && 'v' in last ? (shortMultiplier(toks[i]) ?? (CONTEXT_MULT[toks[i]] ? [{ mul: CONTEXT_MULT[toks[i]] }] : undefined)) : undefined) ?? (nextIsMul && BEFORE_MULT[toks[i]] !== undefined ? [{ v: BEFORE_MULT[toks[i]] }] : undefined);
       if (!q) break;
       // a read-out ID (single spaced digits) never runs into number words
-      const prevDigit = /^\d$/.test(toks[i - 1]);
+      // digits written by the recogniser are a complete number: \"वय 40 दोन दिवस\" is 40 then 2, never 42
+      const prevDigit = /^\d+$/.test(toks[i - 1]);
       const isWord = !/^\d+$/.test(toks[i]);
-      if (prevDigit && isWord && !q.every((x) => 'mul' in x)) break;
+      // ...except a round thousands figure followed by smaller words: "2,000 सहाशे" = 2,600
+      const prevN = Number(toks[i - 1]);
+      const smallerTail = prevN >= 1000 && prevN % 100 === 0 && (combine(q) ?? Infinity) < Math.min(prevN, 1000);
+      if (prevDigit && isWord && !q.every((x) => 'mul' in x) && !smallerTail) break;
       // single spaced digits are an ID being read out (UTR / phone), not an amount
       if (/^\d$/.test(toks[i]) && /^\d$/.test(toks[i - 1])) {
         parts.push(...q);

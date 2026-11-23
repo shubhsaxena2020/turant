@@ -162,7 +162,7 @@ const CURRENCY_PREFIX = ['rupa', 'rupe', 'rupi', 'rupy', 'रुपय', 'रु
 const MINUTE_UNITS = ['minute', 'minutes', 'min', 'mins', 'minat', 'mint', 'mnt', 'मिनट', 'मिनिट', 'মিনিট', 'நிமிட', 'నిమిష', 'ನಿಮಿಷ'].map(nw);
 const HOUR_UNITS = ['hour', 'hours', 'hr', 'hrs', 'ghanta', 'ghante', 'ghanton', 'घंटा', 'घंटे', 'घंटों', 'तास', 'ঘণ্টা', 'ঘন্টা', 'மணிநேர', 'மணி நேர', 'గంట', 'ಗಂಟೆ'].map(nw);
 const DAY_UNITS = ['day', 'days', 'din', 'dino', 'dinon', 'दिन', 'दिवस', 'দিন', 'நாள', 'நாட்க', 'రోజు', 'రోజుల', 'ದಿನ'].map(nw);
-const WEEK_UNITS = ['week', 'weeks', 'hafta', 'hafte', 'hafton', 'haftey', 'saptah', 'हफ्ता', 'हफ्ते', 'हफ्तों', 'सप्ताह', 'आठवडा', 'आठवडे', 'आठवड्या', 'সপ্তাহ', 'வார', 'వారం', 'వారాల', 'ವಾರ'].map(nw);
+const WEEK_UNITS = ['week', 'weeks', 'hafta', 'hafte', 'hafton', 'haftey', 'saptah', 'हफ्ता', 'हफ्ते', 'हफ्तों', 'हाफते', 'हाफ्ते', 'सप्ताह', 'आठवडा', 'आठवडे', 'आठवड्या', 'সপ্তাহ', 'வார', 'వారం', 'వారాల', 'ವಾರ'].map(nw);
 const MONTH_UNITS = ['month', 'months', 'mahina', 'mahine', 'mahino', 'mahinon', 'महीना', 'महीने', 'महिना', 'महिने', 'মাস', 'மாத', 'నెల', 'ತಿಂಗಳ'].map(nw);
 export const AGO = ['pehle', 'pahle', 'phele', 'pehele', 'pahile', 'ago', 'back', 'before', 'पहले', 'पहिले', 'पूर्वी', 'आधी', 'আগে', 'முன்', 'முன்பு', 'முன்னாடி', 'క్రితం', 'ಹಿಂದೆ'].map(nw);
 const ELAPSED = wordSet(['hua', 'hue', 'huye', 'hogaye', 'ho', 'हुआ', 'हुए', 'हो']);
@@ -363,6 +363,9 @@ export function findNumberRuns(tokens: string[]): NumRun[] {
       if (!k) break;
       // A long digit block never belongs to a spoken quantity ("ref no 4567...").
       if (isLongDigits(k) && kinds.some((x) => x.kind !== 'digits')) break;
+      // digits written by the recogniser are a complete number: "वय 40 दोन दिवस" is 40 then 2, never 42
+      const prev = kinds[kinds.length - 1];
+      if (k.kind === 'unit' && prev.kind === 'digits' && Number(prev.raw) < 100) break;
       if (kinds.some(isLongDigits) && k.kind !== 'digits') break;
       if (k.kind === 'and') {
         const after = j + 1 < tokens.length ? numKind(tokens[j + 1]) : null;

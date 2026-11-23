@@ -298,6 +298,9 @@ export function findNumberRuns(tokens: string[]): NumRun[] {
       if (kinds.length >= 2 && k.kind !== 'digits' && kinds.every((x) => x.kind === 'digits' && x.raw.length === 1)) break;
       // A long digit block never belongs to a spoken quantity ("ref no 4567...").
       if (isLongDigits(k) && kinds.some((x) => x.kind !== 'digits')) break;
+      // digits written by the recogniser are a complete number: "वय 40 दोन दिवस" is 40 then 2, never 42
+      const prev = kinds[kinds.length - 1];
+      if (k.kind === 'unit' && prev.kind === 'digits' && Number(prev.raw) < 100) break;
       if (kinds.some(isLongDigits) && k.kind !== 'digits') break;
       if (k.kind === 'and') {
         const after = j + 1 < tokens.length ? numKind(tokens[j + 1]) : null;

@@ -158,6 +158,7 @@ The generic fixes that came out of this:
 | dev, first run (fair scoring) | 40% | 37% | 15% |
 | dev, after speech fixes | 46% | 40% | 38% |
 | dev, after round22 (honorifics as Whisper writes them, "चार सो पचास", "टोटल 950") | 60% | 40% | 38% |
+| dev, after round23 (digits then a number word are two numbers: "वय 40 दोन" ≠ 42; English number words in Devanagari, फाइव साल) | 60% | 50% | 38% |
 | held-out, first run | 12% | 27% | 23% |
 
 "Fair scoring" means text fields are compared by sound across scripts, so Whisper writing "स्टेशन रोड" for "station road" isn't marked wrong.
