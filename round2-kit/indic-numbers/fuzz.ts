@@ -1,6 +1,33 @@
 // Property fuzz: random amounts rendered as words/digits in sentences with distractors,
-// parsed back with findAmount. Usage: node fuzz.mjs <iterationsPerLang> [seed]
-import { findAmount } from './src/numbers';
+// parsed back with findAmount. Usage: tsx fuzz.ts <iterationsPerLang> [seed] [mutate]
+// mutate: one random sound-alike slip (ASR-style) in one native number/currency word; every phrase is
+// parsed with repair on and off and counted as recovered / missed (no amount) / misread (wrong amount).
+import { findAmount, setRepair, variants } from './src/numbers';
+
+const MUTATE = process.argv[4] === 'mutate';
+const mstat: Record<string, { on: number[]; off: number[] }> = {};
+/** [correct, missing, wrong] for repair on and off; returns the repair-on value. */
+function judge(lang: string, text: string, v: number) {
+  const m = (mstat[lang] ??= { on: [0, 0, 0], off: [0, 0, 0] });
+  const cls = (g: number | undefined) => (g === v ? 0 : g === undefined ? 1 : 2);
+  setRepair(false);
+  m.off[cls(findAmount(text))]++;
+  setRepair(true);
+  const got = findAmount(text);
+  m.on[cls(got)]++;
+  return got;
+}
+/** One sound-alike edit in one native word of the amount; undefined if no word can be edited. */
+function mutate(amount: string): string | undefined {
+  const ws = amount.split(' ');
+  const idx = ws.map((w, i) => ([...w].length >= 4 && /[^\x00-\x7f]/.test(w) ? i : -1)).filter((i) => i >= 0);
+  if (!idx.length) return undefined;
+  const i = pick(idx);
+  const vs = [...variants(ws[i])];
+  if (!vs.length) return undefined;
+  ws[i] = pick(vs);
+  return ws.join(' ');
+}
 
 let seed = Number(process.argv[3] ?? 7);
 const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
@@ -67,14 +94,20 @@ for (const lang of Object.keys(L)) {
   for (let k = 0; k < n; k++) {
     let [v, words] = render(lang);
     // a third of the time: digits with Indian commas and ₹
-    if (rnd() < 0.33) { words = (rnd() < 0.5 ? '₹' : '') + v.toLocaleString('en-IN'); }
+    if (!MUTATE && rnd() < 0.33) { words = (rnd() < 0.5 ? '₹' : '') + v.toLocaleString('en-IN'); }
     else if ((lang === 'en' || lang === 'hi') && rnd() < 0.3 && / (sau|सौ) /.test(words + ' ') && v % 100 === 0) {
       // "... do sau aur pachaas"
       const tail = [20, 30, 40, 50][Math.floor(rnd() * 4)];
       v += tail; words += (lang === 'en' ? ' aur ' : ' और ') + l.tens[tail];
     }
-    const text = pick(l.tpl).replace('{A}', `${words} ${l.cur}`).replace('{T}', pick(l.time)).replace('{I}', pick(l.ids));
-    const got = findAmount(text);
+    let amt = `${words} ${l.cur}`;
+    if (MUTATE) {
+      const m = mutate(amt);
+      if (!m) continue;
+      amt = m;
+    }
+    const text = pick(l.tpl).replace('{A}', amt).replace('{T}', pick(l.time)).replace('{I}', pick(l.ids));
+    const got = MUTATE ? judge(lang, text, v) : findAmount(text);
     total++;
     if (got === v) { ok++; lok++; } else if (fails.length < 40) fails.push(`${lang} want ${v} got ${got} | ${text}`);
   }
@@ -84,13 +117,26 @@ for (const lang of Object.keys(L)) {
   let lok = 0;
   for (let k = 0; k < n; k++) {
     let [v, words] = renderTa();
-    if (rnd() < 0.25) words = '₹' + v.toLocaleString('en-IN');
-    const text = pick(TA_TPL).replace('{A}', `${words} ரூபாய்`).replace('{T}', pick(TA_TIME)).replace('{I}', 'நம்பர் 9876543210');
-    const got = findAmount(text);
+    if (!MUTATE && rnd() < 0.25) words = '₹' + v.toLocaleString('en-IN');
+    let amt = `${words} ரூபாய்`;
+    if (MUTATE) {
+      const m = mutate(amt);
+      if (!m) continue;
+      amt = m;
+    }
+    const text = pick(TA_TPL).replace('{A}', amt).replace('{T}', pick(TA_TIME)).replace('{I}', 'நம்பர் 9876543210');
+    const got = MUTATE ? judge('ta', text, v) : findAmount(text);
     total++;
     if (got === v) { ok++; lok++; } else if (fails.length < 60) fails.push(`ta want ${v} got ${got} | ${text}`);
   }
   console.log('ta', `${lok}/${n}`);
 }
-console.log('ALL', `${ok}/${total}`, ((100 * ok) / total).toFixed(2) + '%');
-console.log(fails.join('\n'));
+if (MUTATE) {
+  const pc = (a: number[], i: number) => ((100 * a[i]) / (a[0] + a[1] + a[2])).toFixed(1).padStart(5);
+  console.log(fails.filter((f) => /^(kn|ta) /.test(f)).slice(0, 14).join('\n'));
+  console.log('lang  n      | repair on: recovered missed misread | repair off: recovered missed misread');
+  for (const [l, m] of Object.entries(mstat)) console.log(l.padEnd(5), String(m.on[0] + m.on[1] + m.on[2]).padEnd(6), '|           ', pc(m.on, 0), pc(m.on, 1), pc(m.on, 2), '  |            ', pc(m.off, 0), pc(m.off, 1), pc(m.off, 2));
+} else {
+  console.log('ALL', `${ok}/${total}`, ((100 * ok) / total).toFixed(2) + '%');
+  console.log(fails.join('\n'));
+}

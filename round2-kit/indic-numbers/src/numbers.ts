@@ -382,14 +382,15 @@ const VIRAMA_NUKTA = /[़়्্்్್]/;
 const NUKTA_BASE = /[डढডঢয]/; // ड ढ ড ঢ য take a nukta
 const block = (c: string) => c.codePointAt(0)! & ~0x7f;
 
-function variants(w: string): Set<string> {
+/** Every single sound-alike edit of a word (exported for the mutation fuzzer). */
+export function variants(w: string): Set<string> {
   const ch = [...w];
   const out = new Set<string>();
   const at = (i: number, ins: string[], skip = 1) => out.add([...ch.slice(0, i), ...ins, ...ch.slice(i + skip)].join(''));
   for (let i = 0; i < ch.length; i++) {
     for (const alt of CONF_OF[ch[i]] ?? []) at(i, [alt]);
     if (VIRAMA_NUKTA.test(ch[i])) at(i, []);
-    if (CONSONANT.test(ch[i]) && ch[i + 1] && CONSONANT.test(ch[i + 1])) at(i, [ch[i], String.fromCodePoint(block(ch[i]) + 0x4d)]);
+    if (CONSONANT.test(ch[i]) && (!ch[i + 1] || CONSONANT.test(ch[i + 1]))) at(i, [ch[i], String.fromCodePoint(block(ch[i]) + 0x4d)]); // incl. a dropped final virama: ஆயிரம -> ஆயிரம்
     if (NUKTA_BASE.test(ch[i]) && ch[i + 1] !== '़' && ch[i + 1] !== '়') at(i, [ch[i], String.fromCodePoint(block(ch[i]) + 0x3c)]);
   }
   out.delete(w);
@@ -397,8 +398,13 @@ function variants(w: string): Set<string> {
 }
 
 const repairCache = new Map<string, Part[] | null>();
+let repairOn = true;
+/** Turn sound-alike repair off / on (for measuring it; on by default). */
+export function setRepair(on: boolean) {
+  repairOn = on;
+}
 function soundAlike(w: string, minLen: number): Part[] | undefined {
-  if (SCRIPT(w) === 'lat' || [...w].length < minLen) return undefined;
+  if (!repairOn || SCRIPT(w) === 'lat' || [...w].length < minLen) return undefined;
   const hit = repairCache.get(w);
   if (hit !== undefined) return hit ?? undefined;
   let found: Part[] | null = null;
@@ -417,6 +423,18 @@ function soundAlike(w: string, minLen: number): Part[] | undefined {
   if (repairCache.size > 20000) repairCache.clear();
   repairCache.set(w, found);
   return found ?? undefined;
+}
+
+/**
+ * A short word (ಲಕಷ = ಲಕ್ಷ without its virama) read as a multiplier. Only used right after a number,
+ * where "five ___" can only be a magnitude: short words are otherwise too easy to confuse (వెల "price" ~ వేల).
+ */
+function shortMultiplier(raw: string): Part[] | undefined {
+  if (!repairOn) return undefined;
+  const w = raw.normalize('NFC').toLowerCase();
+  if (SCRIPT(w) === 'lat') return undefined;
+  const muls = new Set([...variants(w)].map((v) => MULT[v]).filter((m) => m !== undefined && m >= 1000));
+  return muls.size === 1 ? [{ mul: [...muls][0] }] : undefined;
 }
 
 /**
@@ -554,7 +572,8 @@ export function numberGroups(text: string): Group[] {
         i++;
         continue;
       }
-      const q = wordParts(toks[i]);
+      const last = parts[parts.length - 1];
+      const q = wordParts(toks[i]) ?? (last && 'v' in last ? shortMultiplier(toks[i]) : undefined);
       if (!q) break;
       // a read-out ID (single spaced digits) never runs into number words
       const prevDigit = /^\d$/.test(toks[i - 1]);
