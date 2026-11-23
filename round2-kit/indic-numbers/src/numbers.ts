@@ -112,18 +112,18 @@ add(2.5, 'আড়াই', 'আড়াই', 'আরাই'); // আরাই:
 add(900, 'নশো', 'ন’শো', 'নসো');
 
 // Telugu
-add(1, 'ఒకటి', 'ఒక');
+add(1, 'ఒకటి', 'ఒక', 'ఒంటి'); // ఒంటి: 'one' as in ఒంటి గంట
 add(2, 'రెండు', 'రిండు');
 add(3, 'మూడు');
 add(4, 'నాలుగు');
-add(5, 'ఐదు', 'అయిదు');
+add(5, 'ఐదు', 'అయిదు', 'అయదు', 'అయ్దు', 'ఆయదు', 'ఆయిదు'); // spellings Whisper uses
 add(6, 'ఆరు');
 add(7, 'ఏడు');
 add(8, 'ఎనిమిది');
-add(9, 'తొమ్మిది');
+add(9, 'తొమ్మిది', 'తుమేది');
 add(10, 'పది');
 add(11, 'పదకొండు');
-add(12, 'పన్నెండు');
+add(12, 'పన్నెండు', 'పన్న్యండు');
 add(13, 'పదమూడు');
 add(14, 'పద్నాలుగు');
 add(15, 'పదిహేను');
@@ -131,9 +131,9 @@ add(16, 'పదహారు');
 add(17, 'పదిహేడు');
 add(18, 'పద్దెనిమిది');
 add(19, 'పందొమ్మిది');
-add(20, 'ఇరవై');
-add(30, 'ముప్పై');
-add(40, 'నలభై');
+add(20, 'ఇరవై', 'ఇరావాయ', 'ఇరావాయు');
+add(30, 'ముప్పై', 'ముప్పే');
+add(40, 'నలభై', 'నలభాయ్');
 add(50, 'యాభై');
 add(60, 'అరవై');
 add(70, 'డెబ్బై');
@@ -214,8 +214,8 @@ add(0.5, 'அரை');
 
 const MULT: Record<string, number> = {};
 const mul = (v: number, ...ws: string[]) => ws.forEach((w) => (MULT[w.normalize('NFC')] = v));
-mul(100, 'सौ', 'शे', 'শো', 'শ', 'వంద', 'వందల', 'వందలు', 'నూట', 'నూరు', 'ನೂರು', 'நூறு', 'hundred', 'sau');
-mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजारो', 'হাজার', 'হজার', 'হাজাত', 'వేలు', 'వేల', 'వెయ్యి', 'ಸಾವಿರ', 'ಸಾವಿರದ', 'ஆயிரம்', 'ஆயிரத்து', 'thousand', 'hazaar', 'hazar', 'k');
+mul(100, 'सौ', 'शे', 'শো', 'শ', 'వంద', 'వందల', 'వందలు', 'వందలా', 'నూట', 'నూరు', 'ನೂರು', 'நூறு', 'hundred', 'sau');
+mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजारो', 'হাজার', 'হজার', 'হাজাত', 'వేలు', 'వేల', 'వేలా', 'వెయ్యి', 'ಸಾವಿರ', 'ಸಾವಿರದ', 'ஆயிரம்', 'ஆயிரத்து', 'thousand', 'hazaar', 'hazar', 'k');
 mul(100000, 'लाख', 'লাখ', 'লক্ষ', 'లక్ష', 'లక్షల', 'లక్షలు', 'ಲಕ್ಷ', 'லட்சம்', 'லட்சத்து', 'lakh', 'lac', 'lakhs');
 mul(10000000, 'करोड़', 'करोड', 'कोटी', 'কোটি', 'కోటి', 'ಕೋಟಿ', 'கோடி', 'crore', 'crores');
 
@@ -327,8 +327,17 @@ function splitKannada(w: string): Part[] | undefined {
 
 function splitTelugu(w: string): Part[] | undefined {
   if (WORDS[w] !== undefined) return [{ v: WORDS[w] }];
-  if (w.endsWith('న్నర')) {
-    const base = WORDS[w.slice(0, -4) + 'ు'] ?? WORDS[w.slice(0, -4) + 'ి'] ?? WORDS[w.slice(0, -4)];
+  // "రిండునరవేల": a number glued onto thousand / lakh
+  for (const [suf, m] of [['వేలు', 1000], ['వేలా', 1000], ['వేల', 1000], ['లక్షల', 100000], ['లక్ష', 100000]] as [string, number][]) {
+    if (w.endsWith(suf) && w.length > suf.length) {
+      const pre = splitTelugu(w.slice(0, -suf.length));
+      if (pre?.length === 1 && 'v' in pre[0]) return [pre[0], { mul: m }];
+    }
+  }
+  for (const half of ['న్నర', 'నర']) {
+    if (!w.endsWith(half) || w.length <= half.length) continue;
+    const stem = w.slice(0, -half.length);
+    const base = WORDS[stem + 'ు'] ?? WORDS[stem + 'ి'] ?? WORDS[stem];
     if (base !== undefined) return [{ v: base + 0.5 }];
   }
   return undefined;
@@ -384,10 +393,10 @@ const SCRIPT = (w: string) =>
 // edit from a small table of letters that sound alike (or differ only in vowel length), plus adding or
 // dropping a virama / nukta. Accept only when every variant that parses agrees on one value.
 const CONFUSABLE = [
-  'ரற', 'லளழ', 'நணன', 'ிீ', 'ுூ', 'ெே', 'ொோ', // Tamil
+  'ரற', 'லளழ', 'நணன', 'ிீ', 'ுூ', 'ெே', 'ொோ', 'எஏ', 'ஒஓ', // Tamil
   'তট', 'দড', 'থঠ', 'ধঢ', 'নণ', 'শষস', 'িী', 'ুূ', 'জয', 'রড', 'ঁং', // Bengali (ঁ/ং: chandrabindu vs anusvara)
-  'తట', 'దడ', 'నణ', 'లళ', 'ిీ', 'ుూొో', 'ెే', // Telugu
-  'ತಟ', 'ದಡ', 'ನಣ', 'ಲಳ', 'ಿೀ', 'ುೂೊೋ', 'ೆೇ', // Kannada
+  'తట', 'దడ', 'నణ', 'లళ', 'ిీ', 'ుూొో', 'ెే', 'ఎఏ', 'ఒఓ', // Telugu
+  'ತಟ', 'ದಡ', 'ನಣ', 'ಲಳ', 'ಿೀ', 'ುೂೊೋ', 'ೆೇ', 'ಎಏ', 'ಒಓ', // Kannada
   'िी', 'ुू', 'नण', 'शषस', 'ेै', 'ोौ', 'ँं', // Devanagari
 ].map((g) => [...g.normalize('NFC')]);
 const CONF_OF: Record<string, string[]> = {};
@@ -598,6 +607,8 @@ function spokenRun(toks: string[], start: number, i: number): boolean {
   });
 }
 
+// Words before a real "hundred": "मेरे सौ रुपये" (my hundred rupees)
+const POSSESSIVE = ['मेरे', 'मेरा', 'मेरी', 'हमारे', 'आपके', 'उसके', 'उनके', 'माझे', 'माझा', 'আমার', 'আমাদের', 'என்னுடைய', 'எங்க', 'నాకు', 'మా', 'ನನ್ನ', 'ನಮ್ಮ'].map((w) => w.normalize('NFC'));
 // Words that mean "one thousand" on their own (Tamil ஆயிரம், Telugu singular వెయ్యి; misheard "X thousand" uses వేల).
 const ONE_THOUSAND = ['ஆயிரம்', 'ஆயிரத்து', 'వెయ్యి'].map((w) => fold(w));
 // Number only right before "thousand / lakh": ಆಯಿದು ಸಾವಿರ = 5,000, but "ಕಟ್ ಆಯಿದು" = "got cut" (ಆಯಿತು).
@@ -665,14 +676,17 @@ export function numberGroups(text: string): Group[] {
     const near = (k: number) => k >= 0 && k < toks.length && isCurrency(toks[k]);
     const before = toks[start - 1];
     const bare = parts.every((x) => 'mul' in x) && parts.some((x) => 'mul' in x && x.mul >= 1000);
-    const unsure = bare && !!before && before !== '|' && !BARE_OK.includes(before.toLowerCase()) && !isCurrency(before) && !ONE_THOUSAND.includes(fold(toks[start]));
+    // a bare "hundred" too, but only after an unreadable native word ("తుమ్నిది వందలా" = misheard ఎనిమిది వందల);
+    // "सौ रुपये" alone or "मेरे सौ रुपये" is a real 100
+    const bareHundred = parts.length === 1 && 'mul' in parts[0] && parts[0].mul === 100 && !!before && /[^\x00-\x7f]/.test(before) && [...before].length >= 4 && !wordParts(before) && !POSSESSIVE.includes(before);
+    const unsure = (bare && !!before && before !== '|' && !BARE_OK.includes(before.toLowerCase()) && !isCurrency(before) && !ONE_THOUSAND.includes(fold(toks[start]))) || bareHundred;
     groups.push({
       unsure,
       value,
       start,
       end: i,
       currencyNear: near(i) || near(i + 1) || near(start - 1) || near(start - 2) || toks[start - 1]?.toLowerCase() === 'rs',
-      timeAfter: TIME_AFTER.some((t) => toks[i]?.toLowerCase().startsWith(t)) || toks[i]?.endsWith('টায়'),
+      timeAfter: TIME_AFTER.some((t) => toks[i]?.toLowerCase().startsWith(t) || (!!toks[i] && [...t].length >= 3 && fold(toks[i]).startsWith(fold(t)))) || toks[i]?.endsWith('টায়'),
       digitsOnly,
     });
   }
@@ -690,7 +704,11 @@ export function findAmount(text: string): number | undefined {
 
 /** Like findAmount, plus whether the number sat next to a currency word (strong evidence). */
 export function findAmountHit(text: string): { value: number; currencyNear: boolean } | undefined {
-  const groups = numberGroups(text).filter((g) => !g.unsure && !g.timeAfter && g.value >= 1 && g.value < 1e9 && !(g.digitsOnly && String(g.value).length >= 10));
+  const all = numberGroups(text);
+  const groups = all.filter((g) => !g.unsure && !g.timeAfter && g.value >= 1 && g.value < 1e9 && !(g.digitsOnly && String(g.value).length >= 10));
+  // "ఏనిమిది వేల రూపాయలు … ఇరవై నిమిషాల": the amount itself was misheard ("? thousand") and no readable amount sits
+  // next to a currency word. Any other number in the sentence is not the money; ask rather than pick it.
+  if (all.some((g) => g.unsure) && !groups.some((g) => g.currencyNear)) return undefined;
   if (!groups.length) return undefined;
   const toks = tokenize(text).map((t) => t.toLowerCase());
   const corrected = toks.some((t) => NEGATE.includes(t));

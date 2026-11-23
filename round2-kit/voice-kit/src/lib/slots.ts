@@ -102,7 +102,12 @@ function idSequences(c: Ctx): IdSeq[] {
   for (let i = 0; i < c.tokens.length; ) {
     let j = i;
     let d = '';
-    for (let x = digit(c.tokens[j], false); x !== undefined; x = digit(c.tokens[++j])) d += x;
+    for (let x = digit(c.tokens[j], false); x !== undefined; x = digit(c.tokens[++j])) {
+      d += x;
+      // Telugu: Whisper writes the digit 1 as ఒంటి గంట ("one o'clock"), sometimes glued to a zero (గంటసున్నా)
+      if (c.tokens[j] === 'ఒంటి' && /^గంటా?$/.test(c.tokens[j + 1] ?? '')) j++;
+      else if (c.tokens[j] === 'ఒంటి' && /^గంటసున్నా?$/.test(c.tokens[j + 1] ?? '')) (d += '0'), j++;
+    }
     if (d.length >= 7 && !seqs.some((s) => s.start <= i && i < s.end)) seqs.push({ start: i, end: j, digits: d, runs: [] });
     i = Math.max(j, i + 1);
   }

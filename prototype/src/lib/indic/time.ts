@@ -19,10 +19,10 @@ const fuzzyPrefix = (f: string, k: string) => f === k || ([...k].length >= 4 && 
 const has = (t: string, list: string[]) => list.some((w) => t === w || t.startsWith(w)) || folded(list).some((k) => fuzzyPrefix(fold(t), k));
 const is = (t: string, list: string[]) => list.includes(t) || folded(list).includes(fold(t));
 
-const NOW_WORDS = N(['अभी', 'abhi', 'এইমাত্র', 'এইমাত্রো', 'এখনই', 'இப்பதான்', 'இப்போதான்', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ', 'आत्ताच', 'just']);
+const NOW_WORDS = N(['अभी', 'abhi', 'এইমাত্র', 'এইমাত্রো', 'এখনই', 'இப்பதான்', 'இப்போதான்', 'ఇప్పుడే', 'ఇపుడే', 'ಈಗಷ್ಟೇ', 'आत्ताच', 'just']);
 const MIN = N(['मिनट', 'मिनिट', 'minute', 'min', 'মিনিট', 'நிமிட', 'நிமிஷ', 'నిమిష', 'ನಿಮಿಷ']);
 const HOUR = N(['घंटा', 'घंटे', 'घण्टा', 'तास', 'ghanta', 'ghante', 'hour', 'hr', 'ঘণ্টা', 'ঘন্টা', 'மணி நேர', 'நேரத்', 'గంట', 'ಗಂಟೆ']);
-const DAY = N(['दिन', 'दिवस', 'din', 'day', 'দিন', 'நாள', 'நாட்', 'రోజు', 'రోజుల', 'ದಿನ']);
+const DAY = N(['दिन', 'दिवस', 'din', 'day', 'দিন', 'நாள', 'நாட்', 'రోజు', 'రోజుల', 'రోజిల', 'ದಿನ']);
 const AGO = N(['पहले', 'pehle', 'pahle', 'पूर्वी', 'कूर्वी', 'कूरवी', // कूर्वी: how Whisper writes Marathi पूर्वी
   'ago', 'back', 'before', 'আগে', 'முன்னாடி', 'முன்பு', 'முன்', 'க்கு', 'క్రితం', 'కృతం', 'ಹಿಂದೆ']);
 const HALF_UNIT_WORDS: [string, number][] = [

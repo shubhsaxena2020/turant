@@ -132,7 +132,8 @@ describe('ASR misspellings', () => {
     expect(findAmount('ಆರು ಸಾವಿರ ರೂಪಾಯಿ ಕಟ್ ಆಯಿದು')).toBe(6000);
     // an unreadable word before "thousand" is a misheard number: abstain rather than say 1000
     expect(findAmount('না না কোয হাজার তাকা কেটেছে')).toBeUndefined();
-    expect(findAmount('ఇరావాయ వేలు రుపీస్ డెబిటాయి')).toBeUndefined();
+    expect(findAmount('ఇరావాయ వేలు రుపీస్ డెబిటాయి')).toBe(20000); // ఇరావాయ = ఇరవై as Whisper writes it
+    expect(findAmount('కొరావాయ వేలు రుపీస్ డెబిటాయి')).toBeUndefined(); // unreadable word before thousand: ask
     expect(findAmount('a thousand rupees were taken')).toBe(1000);
     expect(findAmount('हज़ार रुपये कट गए')).toBe(1000);
     // Bengali as Whisper writes it
@@ -141,6 +142,11 @@ describe('ASR misspellings', () => {
     expect(findAmount('সত্তোর হাজার তাকা উধাও')).toBe(70000);
     expect(findAmount('চার হজার নসো টাকা')).toBe(4900);
     expect(findAmount('পাঁচহাজার টাকা')).toBe(5000);
+    // Telugu as Whisper writes it
+    expect(findAmount('నా ఖాతానుండి అయదు వేలు రూపాయలు పోయాయి')).toBe(5000);
+    expect(findAmount('రిండునరవేలరుపాయలు కట్ అయాఈ')).toBe(2500);
+    expect(findAmount('తుమేది వేలా తుమేది వందలా తుమేది రూపాయు')).toBe(9909);
+    expect(findAmount('నలభాయ్ ఏడు వేల రూపాయలు')).toBe(47000);
     expect(findAmount('माझा खात्यातून सालेतीन हजार रुपे गेले')).toBe(3500); // साडेतीन as Whisper writes it
     expect(findAmount('साले पाँच हज़ार रुपये ले गए')).toBe(5000); // a separate साले is not a half // ಆಯಿದು = ಆಯಿತು "happened", not 5
     expect(findAmount('UPI reference 40321 7 6 5 4 3 రిండు 5 వేల రూపాయలు పోయాయి')).toBe(5000); // ID digits, then the amount

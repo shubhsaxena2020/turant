@@ -35,13 +35,15 @@ node split.mjs <round> [...]   # dev voice vs held-out voice
 | round15 | + "fon pay" = PhonePe; a Latin bank acronym one letter off (HTFC = HDFC, 4+ letters only) | 100.0% | 45.5% | 46.3% | 38.6% | 30.4% | 72.6 |
 | round16 | + Marathi Whisper forms (कूर्वी = पूर्वी, glued सालेतीन); digit read-outs accept sound slips inside the run (डोन = दोन, साथ = सात, never साठ: the context allows only 0-9), never starting on "ref नो" | 100.0% | 47.0% | 46.9% | 38.6% | 30.7% | 73.4 |
 | round17 | + Bengali zero (শূন্য was missing), পাচ / সত্তোর / আরাই / নশো / হজার, শোয = ছয় only before a multiplier, glued পাঁচহাজার | 100.0% | 48.3% | 47.5% | 39.6% | 30.7% | 73.9 |
+| round18 | + zero in Tamil / Telugu / Kannada (was missing) and "zero" as a loanword in every script (no change here; needed for real read-outs) | 100.0% | 48.3% | 47.5% | 39.6% | 30.7% | 73.9 |
+| round19 | + Telugu Whisper spellings (అయదు, ఇరావాయ, తుమేది, glued రిండునరవేల), ఒంటి గంట = the digit 1 inside a read-out, independent-vowel slips (ఏ/ఎ), time units by sound; no amount if the money itself was misheard and no readable amount sits next to a currency word | 100.0% | 50.0% | 48.4% | 40.4% | 31.1% | 75.7 |
 
 **Net change:** (round9 changed no outcome to correct; it turned 87 wrong amounts into "ask again", raising clean-ASR amount precision from 67% to 76%)
 
 | Measure | Before | After |
 |---|---|---|
-| Clean speech, fully correct | 27.2% | 48.3% (+21.1 points, about 1.8×) |
-| Field F1 | 51.0 | 73.9 |
+| Clean speech, fully correct | 27.2% | 50.0% (+22.8 points, about 1.8×) |
+| Field F1 | 51.0 | 75.7 |
 | Reference text, fully correct | 55.7% | 100% |
 
 No round broke a field that an earlier round got right. Each round's diff against the previous one is checked run by run.
