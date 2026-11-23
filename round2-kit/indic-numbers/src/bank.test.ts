@@ -53,10 +53,12 @@ describe('ASR spellings', () => {
     ['আমার পনেরো হাজার টাকা চলে গেছে, একসিস বাংক তিন দিন আগে', 'axis'],
     ['ఓటి పీ చెప్పాను కినరా బైంక', 'canara'],
     ['No, the bank was HTFC not SBI', 'hdfc'], // one letter off a 4-letter acronym
+    ['பேடியம் மூலமா பணம் குடுத்தேன் பந்தன் பேங்க்', 'bandhan'],
   ];
   for (const [text, key] of cases) it(text, () => expect(findBank(text)?.key).toBe(key));
   it('loose name matching needs the word "bank" right after', () => {
     expect(findBank('कुटाक ने बोला')).toBeUndefined();
     expect(findBank('আমি একসিস দেখেছি')).toBeUndefined();
+    expect(findBank('மிறட்டல் பண்டாங்க பேடியம் மூலமா')).toBeUndefined(); // "did", not Bandhan
   });
 });

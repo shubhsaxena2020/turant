@@ -36,9 +36,9 @@ The harness takes 280 spoken reports in 7 languages through TTS, noise and Whisp
 
 | Measure | Before (23 Nov) | Now |
 |---|---|---|
-| Clean speech, report fully correct | 27.2% | **50.0%** |
-| Held-out voices | 29.4% | **48.4%** |
-| Field F1 | 51 | 76 |
+| Clean speech, report fully correct | 27.2% | **50.7%** |
+| Held-out voices | 29.4% | **48.8%** |
+| Field F1 | 51 | 77 |
 
 - **What changed:** the extractor now reads numbers, times, banks and IDs in all 7 languages, including the misspellings speech recognisers make.
 - **Fuzz checks:** all clean. One mutation is recovered in 99.6-100% of cases, and no ordinary word in 1,510 real transcripts gets turned into a number.

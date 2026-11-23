@@ -133,7 +133,7 @@ export const BANKS: BankDef[] = [
   { key: 'indusind', name: 'IndusInd Bank', names: ['indasind', 'indusind'] },
   { key: 'iob', name: 'Indian Overseas Bank', acronyms: ['iob'], names: ['ovarsis', 'overseas'] },
   { key: 'central', name: 'Central Bank of India', needsBankWord: ['sentral', 'central'] },
-  { key: 'bandhan', name: 'Bandhan Bank', names: ['bandhan', 'bandan'] },
+  { key: 'bandhan', name: 'Bandhan Bank', needsBankWord: ['bandhan', 'bandan'] }, // பண்டாங்க ("did") sounds like it
   { key: 'federal', name: 'Federal Bank', needsBankWord: ['federal', 'fedral'] },
   { key: 'ippb', name: 'India Post Payments Bank', acronyms: ['ippb'], names: ['indiapost'] },
   { key: 'paytm', name: 'Paytm Payments Bank', needsBankWord: ['paytm', 'petiem'] },

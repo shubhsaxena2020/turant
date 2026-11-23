@@ -72,7 +72,7 @@ We can't know the problem statement in advance, so this kit gets everything that
 - **Impact + adoption**: who benefits, a before/after, what blocks adoption and how you'd fix it.
 
 ## Numbers we can show judges (all reproducible from `harness/`)
-- **Speech to report, 7 languages:** fully correct reports went from 27% to 50% on clean speech, and from 29% to 48% on voices never used for tuning. Field F1 rose from 51 to 76.
+- **Speech to report, 7 languages:** fully correct reports went from 27% to 51% on clean speech, and from 29% to 49% on voices never used for tuning. Field F1 rose from 51 to 77.
 - **Reference text:** 100%.
 - **Robustness:** one ASR-style misspelling per number is still read correctly 99.6-100% of the time (24-65% without repair). No ordinary word in 1,510 real transcripts gets turned into a number.
 - **Honest about limits:**
