@@ -45,7 +45,7 @@ The harness takes 280 spoken reports in 7 languages through TTS, noise and Whisp
 - **Rules vs LLM:** measured head to head. On-device rules match the best LLM hybrid (41.2%); the LLM alone scores 16.5% because it invents fields. The decision is to stay offline-first.
 - **Other voice-kit apps:** `kit_apps_eval.mjs` scores khata, health and civic on text or speech. On held-out text the first run scored 38%, 71% and 50%; the remaining gaps are domain words in each language, which is the Round 2 day-1 lesson.
 - **Asking instead of guessing:** an amount under ₹100 is offered back as one-tap "₹5,000?" or "₹5,00,000?"; a bare "thousand" after a misheard word is asked about rather than read as ₹1,000.
-- **Remaining errors:** 84% are speech recognition, mostly in bn/ta/te/kn. A better Indic ASR (Sarvam key needed) is the next big lever.
+- **Remaining errors:** 92% are speech recognition, mostly in bn/ta/te/kn. On clean speech Hindi is 91% fully correct and Tamil 21%. A better Indic ASR (Sarvam key needed) is the next big lever.
 - **Re-run:** `cd harness; .\run.ps1 -Name x` (about 5 s, cached), then `node split.mjs x`.
 
 ## Round 2 (27–29 Nov): `round2-kit/ROUND2_PLAYBOOK.md`

@@ -48,14 +48,14 @@ node split.mjs <round> [...]   # dev voice vs held-out voice
 | Field F1 | 51.0 | 77.4 |
 | Reference text, fully correct | 55.7% | 100% |
 
-No round broke a field that an earlier round got right. Each round's diff against the previous one is checked run by run.
+Each round's per-run diff against the previous one was checked. Real regressions were fixed before committing. What remains as "newly wrong" in some rounds is the extractor now faithfully reading digits Whisper misheard (it used to miss them); the app reads those back for correction. Each commit message lists them.
 
 The Round 2 voice kit's fraud app went through the same fixes (`run_eval.mjs --extractor kit`):
 
 | Measure | Before | After |
 |---|---|---|
 | Reference text | 91.4% | 100% |
-| Clean ASR | 37.5% | 43.0% |
+| Clean ASR | 37.5% | 50.5% |
 
 ## How we kept it honest
 
@@ -199,13 +199,13 @@ The 600 clean clips were re-transcribed with per-language hotwords (currency, th
 
 ## What is left
 
-- **Remaining clean-ASR field errors** (round7):
-  - 84% are the recogniser losing the words.
-  - 16% have the value still in the transcript in a form we don't parse.
+- **Remaining clean-ASR field errors** (round21):
+  - 92% are the recogniser losing the words.
+  - 8% have the value still in the transcript in a form we don't parse.
   - 0% are extractor bugs on correct text.
-- **Ceiling for extractor work alone:** 47% of clean runs.
+- **Ceiling for extractor work alone:** 54.5% of clean runs; we are at 51.5%.
 - **By language:**
-  - Hindi and English are at 72-74% fully correct on clean speech.
-  - Bengali, Tamil, Telugu and Kannada are at 16-25%. Whisper's word error rate there is 75-134%.
+  - On clean speech: Hindi 91%, English 78%, Marathi 60%.
+  - Telugu 39%, Bengali 36%, Kannada 23%, Tamil 21%. Whisper's word error rate there is 75-123%.
   - Most of the remaining gain is in speech recognition (a better Indic ASR, e.g. Sarvam, or hotword prompting) and in the confirmation UX, not in more extraction rules.
 - **Whisper is a stand-in.** The app uses the phone's own speech recogniser (Web Speech), which cannot be benchmarked automatically. A real-phone test script is in `research/findings-2026-11-23.md`.

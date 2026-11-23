@@ -76,8 +76,8 @@ We can't know the problem statement in advance, so this kit gets everything that
 - **Reference text:** 100%.
 - **Robustness:** one ASR-style misspelling per number is still read correctly 99.6-100% of the time (24-65% without repair). No ordinary word in 1,510 real transcripts gets turned into a number.
 - **Honest about limits:**
-  - Bengali, Tamil, Telugu and Kannada are 16-25% fully correct on clean speech, because Whisper mishears 75-134% of the words.
-  - 84% of the remaining errors are speech recognition, not our parsing.
+  - Hindi is 91% fully correct on clean speech, English 78%, Marathi 60%. Telugu, Bengali, Kannada and Tamil are 21-39%, because Whisper mishears 75-123% of the words.
+  - 92% of the remaining errors are speech recognition, not our parsing.
   - Mitigations: read-backs, one-tap fixes (₹5 → "₹5,000?"), and asking rather than guessing.
 
 ## Submission checklist (29 Nov)
