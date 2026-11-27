@@ -331,7 +331,7 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
 
   - Telugu and Kannada in the page now beat server large-v3 on those languages (61% and 46%).
   - **Shipped:** Bengali (loaded from Hugging Face), Telugu and Kannada (served from the site's `/models/`, not in git). **Not shipped:** Tamil, whose 196 MB decoder is over Vercel's 100 MB per-file limit; it needs Hugging Face hosting.
-  - A specialised model that fails to load falls back to whisper-base. Checked end to end in Chromium with a harness clip as the microphone (`?speech=whisper`): Bengali (first use 58 s including the 287 MB download), Kannada (29 s), Telugu on the live site (31 s), each filling amount and time.
+  - The Docker build fetches the Telugu and Kannada files from the live site (checked from a fresh clone: Kannada clip filled amount and time). A specialised model that fails to load falls back to whisper-base. Checked end to end in Chromium with a harness clip as the microphone (`?speech=whisper`): Bengali (first use 58 s including the 287 MB download), Kannada (29 s), Telugu on the live site (31 s), each filling amount and time.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
   | Fully correct, Hinglish model | Clean | 15 dB | 5 dB |
