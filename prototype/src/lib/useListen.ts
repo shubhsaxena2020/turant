@@ -28,6 +28,16 @@ export interface ListenRequest {
 }
 
 const BARS = 28;
+
+/** `?speech=whisper`: skip the browser's recogniser and use only our recorder + in-page Whisper
+ *  (machines where Chrome's recogniser misbehaves, and demo recordings that feed a voice clip as the microphone). */
+const whisperOnly = () => {
+  try {
+    return new URLSearchParams(location.search).get('speech') === 'whisper';
+  } catch {
+    return false;
+  }
+};
 const quietBars = () => Array.from({ length: BARS }, () => 0.06);
 
 /** Phones: Chrome on Android can starve the speech service if we also hold the mic, so we only meter on desktop. */
@@ -198,7 +208,10 @@ export function useListen() {
       const spoke = !!m && (meterDead || m.peak > Math.max(0.015, m.floor * 4));
       const solid = (r: { text: string; conf: number }) => r.text.split(/\s+/).filter(Boolean).length >= 3 && (r.conf === 0 || r.conf >= 0.6);
       // Trust the browser's words when they look solid, or when we have no recording to fall back on.
-      if (result && (solid(result) || !recording || !spoke)) return req.onOutcome({ kind: 'heard', text: result.text, confidence: result.conf, simulated: !!req.simulate });
+      if (result && (solid(result) || !recording || !spoke)) {
+        if (!req.simulate) console.info('[turant] browser recogniser heard:', result.text, result.conf);
+        return req.onOutcome({ kind: 'heard', text: result.text, confidence: result.conf, simulated: !!req.simulate });
+      }
       if (result) console.info('[turant] speech service gave a weak result, reading the recording instead:', result.text);
       // The browser's speech service gave nothing (or failed) although the person spoke: read the recording ourselves.
       if (error) console.info('[turant] speech service error:', error);
@@ -260,7 +273,7 @@ export function useListen() {
       // which used to cut the recording short. The speech service only adds live words when it works.
       const t0 = Date.now();
       let lastVoice = 0;
-      let srDone = false;
+      let srDone = whisperOnly();
       let ended = false;
       let closing: ReturnType<typeof setTimeout> | undefined;
       const end = () => {
@@ -281,7 +294,9 @@ export function useListen() {
         }
         closing = setTimeout(end, 1200);
       };
-      const sr = speech.listen(
+      const sr = whisperOnly()
+        ? { stop: () => undefined, abort: () => undefined, poke: () => undefined }
+        : speech.listen(
         req.lang,
         {
           ...cb,

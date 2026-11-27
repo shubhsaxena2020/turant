@@ -31,6 +31,9 @@ function serviceWorker(): Plugin {
 export default defineConfig({
   base: './',
   plugins: [react(), serviceWorker()],
+  // Cross-origin isolation (same headers as vercel.json / nginx.conf): multi-threaded in-page Whisper.
+  server: { headers: { 'Cross-Origin-Opener-Policy': 'same-origin', 'Cross-Origin-Embedder-Policy': 'credentialless' } },
+  preview: { headers: { 'Cross-Origin-Opener-Policy': 'same-origin', 'Cross-Origin-Embedder-Policy': 'credentialless' } },
   test: {
     include: ['src/**/*.test.ts'],
     environment: 'node',

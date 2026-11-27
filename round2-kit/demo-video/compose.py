@@ -42,6 +42,8 @@ def main(scenario_path, out):
     timeline = json.load(open(os.path.join(out, "timeline.json"), encoding="utf8"))
     total_ms = timeline[-1]["endMs"] + 800
     bg = sc.get("background", "0x13233A")
+    title_color = sc.get("titleColor", "0xF0D7FF")
+    frame_color = sc.get("frameColor", "0x464544")
     title = sc.get("title", "").replace(":", r"\:").replace("'", "")
     caps = []
     audio_inputs, delays = [], []
@@ -51,6 +53,15 @@ def main(scenario_path, out):
         caps.append((tl["startMs"], tl["startMs"] + t["ms"] + 200, t["text"]))
         audio_inputs += ["-i", t["file"]]
         delays.append(tl["startMs"])
+    # A step may carry the voice the app heard (the fake-microphone clip), mixed in when the mic opened.
+    for step, tl in zip(sc["steps"], timeline):
+        clip = step.get("clip")
+        if clip:
+            audio_inputs += ["-i", os.path.abspath(clip["file"])]
+            at = tl["startMs"] + clip.get("delayMs", 300)
+            delays.append(at)
+            if clip.get("caption"):
+                caps.append((at, at + clip.get("captionMs", 9000), clip["caption"]))
 
     n = len(delays)
     amix = "".join(f"[{k + 1}:a]adelay={d}|{d},apad[a{k}];" for k, d in enumerate(delays))
@@ -71,10 +82,10 @@ def main(scenario_path, out):
         else:
             write_ass(os.path.join(out, ass), caps, W, H, fs, mv, mlr)
         vf = (
-            f"[0:v]fps=30,scale=-2:{ph}:flags=lanczos,pad=iw+10:ih+10:5:5:color=0x464544,format=yuv420p[ph];"
+            f"[0:v]fps=30,scale=-2:{ph}:flags=lanczos,pad=iw+10:ih+10:5:5:color={frame_color},format=yuv420p[ph];"
             f"color=c={bg}:s={W}x{H}:d={total_ms / 1000:.2f}[bg];"
             f"[bg][ph]overlay=x={px}:y={py}:shortest=1[v1];"
-            f"[v1]drawtext=text='{title}':fontfile='C\\:/Windows/Fonts/Nirmala.ttc':fontsize=54:fontcolor=0xF0D7FF:x={tx}:y={ty}[v2];"
+            f"[v1]drawtext=text='{title}':fontfile='C\\:/Windows/Fonts/Nirmala.ttc':fontsize=54:fontcolor={title_color}:x={tx}:y={ty}[v2];"
             f"[v2]subtitles={ass}:fontsdir='C\\:/Windows/Fonts'[vout];"
         )
         cmd = ["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", "frames.txt", *audio_inputs,

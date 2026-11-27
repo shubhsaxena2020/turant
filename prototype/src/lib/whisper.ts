@@ -48,6 +48,17 @@ async function hasGpu(): Promise<boolean> {
 /** Progress 0..1 of the one-time model download (summed over its files). */
 export type Progress = (fraction: number) => void;
 
+/** Is this model's largest file already in the browser's cache (so no "downloading" message is needed)? */
+async function cached(model: ModelChoice): Promise<boolean> {
+  try {
+    const file = model.gpu ? 'decoder_model_merged_q4.onnx' : 'decoder_model_merged_quantized.onnx';
+    const c = await caches.open('transformers-cache');
+    return !!(await c.match(`https://huggingface.co/${model.id}/resolve/main/onnx/${file}`));
+  } catch {
+    return false;
+  }
+}
+
 export function loadWhisper(lang: string, onProgress?: Progress): Promise<Asr> {
   const model = modelFor(lang);
   const hit = loading.get(model.id);
@@ -55,6 +66,8 @@ export function loadWhisper(lang: string, onProgress?: Progress): Promise<Asr> {
   const p = (async () => {
     const { pipeline, env } = await import('@huggingface/transformers');
     env.allowLocalModels = false;
+    // Reading the model back from the cache also reports progress: only show it for a real download.
+    if (await cached(model)) onProgress = undefined;
     const files = new Map<string, { loaded: number; total: number }>();
     const progress_callback = (p: { status?: string; file?: string; loaded?: number; total?: number }) => {
       if (p.status !== 'progress' || !p.file || !p.total) return;

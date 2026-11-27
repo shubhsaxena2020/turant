@@ -364,7 +364,7 @@ export function TalkScreen(props: {
           <section className="pt-9">
             <p className="eyebrow">{mic.listening ? t('state_listening') : mic.transcribing ? t('state_transcribing') : t('state_thinking')}</p>
             <p className="mt-3 text-[1.55rem] leading-[1.45] font-medium min-h-[6rem] break-words" data-testid="live" aria-live="polite">
-              {mic.live || <span className="text-ink/45">{mic.transcribing ? '' : t('listenHint')}</span>}
+              {mic.live || <span className="text-ink/45">{mic.listening ? t('listenHint') : ''}</span>}
             </p>
             {mic.modelProgress !== undefined ? (
               <div className="mt-2" data-testid="model-progress">

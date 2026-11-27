@@ -1,0 +1,81 @@
+{
+  "title": "Turant: report a UPI scam by voice",
+  "url": "https://turant-voice.vercel.app/",
+  "locale": "en-IN",
+  "voice": "en-IN-NeerjaNeural",
+  "rate": "+4%",
+  "chrome": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "mic": "C:/Users/shubh/Projects/build-for-bharat/harness/audio/clean/hi-03__Swara__r0.wav",
+  "profile": "C:/Users/shubh/AppData/Local/Temp/claude/ee2e1b5288c671d2/5d9ea911-a717-4d1d-aa93-82b7916fc108/scratchpad/demo-profile",
+  "background": "0xFFFFEB",
+  "titleColor": "0x1A1A1A",
+  "frameColor": "0x1A1A1A",
+  "init": ["localStorage.setItem('turant.lang','hi-IN')"],
+  "steps": [
+    {
+      "say": "When a UPI scam takes someone's money, the first hour decides whether it can still be frozen. But reporting means a phone queue, or a long English form with a twelve-digit transaction number.",
+      "do": [{ "wait": 400 }]
+    },
+    {
+      "say": "Turant turns that into a conversation. This caller speaks Hindi, so she chose Hindi once. She taps, and says what happened in her own words.",
+      "do": [{ "wait": 300 }]
+    },
+    {
+      "say": "",
+      "do": [{ "click": "testid:presence" }],
+      "clip": {
+        "file": "C:/Users/shubh/Projects/build-for-bharat/harness/audio/clean/hi-03__Swara__r0.wav",
+        "delayMs": 600,
+        "caption": "Caller, in Hindi: \"Yesterday at 7 pm a customer care call came, he made me download AnyDesk, and took two lakh rupees from my HDFC account.\"",
+        "captionMs": 12000
+      },
+      "minMs": 13500,
+      "padMs": 200
+    },
+    {
+      "say": "Turant records her, and turns the voice into words on the phone itself. The amount, the time, the type of scam and the bank go straight into the complaint.",
+      "do": [{ "waitFor": "[data-testid^=\"ask-\"]", "timeout": 120000 }]
+    },
+    {
+      "say": "It asks only for what is missing, one thing at a time. Here, the transaction number from the bank SMS. A big keypad is always there for long numbers.",
+      "do": [
+        { "click": "testid:open-keypad" },
+        { "wait": 500 },
+        { "click": "[data-testid=\"keypad\"] button[aria-label=\"4\"]" },
+        { "click": "[data-testid=\"keypad\"] button[aria-label=\"5\"]" },
+        { "click": "[data-testid=\"keypad\"] button[aria-label=\"6\"]" },
+        { "click": "[data-testid=\"keypad\"] button[aria-label=\"7\"]" },
+        { "click": "[data-testid=\"keypad\"] button[aria-label=\"8\"]" },
+        { "click": "[data-testid=\"keypad\"] button[aria-label=\"9\"]" },
+        { "click": "[data-testid=\"keypad\"] button[aria-label=\"0\"]" },
+        { "click": "[data-testid=\"keypad\"] button[aria-label=\"1\"]" },
+        { "click": "[data-testid=\"keypad\"] button[aria-label=\"2\"]" },
+        { "click": "[data-testid=\"keypad\"] button[aria-label=\"3\"]" },
+        { "click": "[data-testid=\"keypad\"] button[aria-label=\"4\"]" },
+        { "click": "[data-testid=\"keypad\"] button[aria-label=\"5\"]" },
+        { "wait": 400 },
+        { "click": "testid:keypad-done" }
+      ]
+    },
+    {
+      "say": "Anything she does not know is left for the 1930 operator to ask. Turant never guesses.",
+      "do": [{ "clickUntil": "testid:skip", "until": "testid:all-right", "max": 6, "gap": 1200 }]
+    },
+    {
+      "say": "One read-back screen. Is this right? Anything can be changed by tapping, or by simply saying it.",
+      "do": [{ "wait": 400 }]
+    },
+    {
+      "say": "Then what to do next. Call 1930 now, with exactly what to say on the call.",
+      "do": [{ "click": "testid:all-right" }, { "wait": 1500 }]
+    },
+    {
+      "say": "And the complete written complaint, in the order the cyber crime portal asks for it, ready to paste.",
+      "do": [{ "click": "testid:see-written" }, { "wait": 1500 }, { "scroll": 500 }]
+    },
+    {
+      "say": "Turant. Speak in seven Indian languages, and get a complete complaint in minutes. No account, nothing to install. Try it at turant voice dot vercel dot app.",
+      "do": [{ "scroll": -2000 }, { "wait": 600 }]
+    }
+  ]
+}
