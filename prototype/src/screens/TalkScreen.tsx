@@ -381,7 +381,7 @@ export function TalkScreen(props: {
           <section className="mt-8">
             <p className="eyebrow">{t('letterTitle')}</p>
             <div className="panel mt-3 px-4 py-4">
-              <LetterView sentences={letter} fresh={fresh} asking={q} className="text-lg text-ink" />
+              <LetterView sentences={letter} fresh={fresh} asking={q} gapLabel={t('notKnownYet')} className="text-lg text-ink" />
             </div>
           </section>
         ) : null}

@@ -8,6 +8,8 @@ export function LetterView(props: {
   fresh?: FieldKey[];
   asking?: QuestionKey;
   onFact?: (q: QuestionKey | 'paymentApp') => void;
+  /** what a screen reader says for a gap ("Not known yet") */
+  gapLabel?: string;
   className?: string;
 }) {
   const { sentences, fresh = [], asking } = props;
@@ -18,7 +20,11 @@ export function LetterView(props: {
           {s.map((seg, j) => {
             if (seg.kind === 'text') return <span key={j}>{seg.text}</span>;
             if (seg.kind === 'gap')
-              return <span key={j} className={`gap ${seg.q === asking ? 'is-asking' : ''}`} aria-label="…" />;
+              return (
+                <span key={j} className={`gap ${seg.q === asking ? 'is-asking' : ''}`}>
+                  <span className="sr-only">{props.gapLabel ?? '…'}</span>
+                </span>
+              );
             if (seg.kind === 'later')
               return (
                 <span key={j} className="opacity-70 italic">
