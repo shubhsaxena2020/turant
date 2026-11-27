@@ -4,7 +4,7 @@ export default {
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
-      // Wispr Flow design language (research/wispr-flow-teardown.md): sand paper, vast ink,
+      // In the style of wisprflow.ai: cream paper, near-black ink,
       // dawn lilac, fathom teal, chord purple. Class names kept so components didn't change.
       colors: {
         paper: '#FFFFEB', // Wispr Flow page cream (wisprflow.ai body)
