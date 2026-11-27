@@ -29,8 +29,9 @@ const BANGLA: ModelChoice = { id: 'shamim1122/whisper-small-bangla-onnx', gpu: f
 // ONNX q8 (103 MB each) and served with the app. Telugu 6.3% -> 68.8%, Kannada 2.5% -> 50.0% fully correct.
 const TELUGU: ModelChoice = { id: 'turant/whisper-telugu-base-onnx', gpu: false, self: true };
 const KANNADA: ModelChoice = { id: 'turant/whisper-kannada-base-onnx', gpu: false, self: true };
-// Tamil (measured, not shipped): vasista22/whisper-tamil-small goes 6.3% -> 47.5%, but its 196 MB decoder file is over
-// the host's 100 MB per-file limit. It stays on whisper-base until it can be served from Hugging Face.
+// Tamil: vasista22/whisper-tamil-small (no base size exists), 289 MB: 6.3% -> 47.5% fully correct. Its 196 MB decoder
+// is split into external-data chunks under the host's 100 MB per-file limit (harness/split_onnx.py; same weights).
+const TAMIL: ModelChoice = { id: 'turant/whisper-tamil-small-onnx', gpu: false, self: true };
 const MODEL_FOR: Record<string, ModelChoice> = {
   'hi-IN': HINGLISH,
   'en-IN': HINGLISH,
@@ -38,6 +39,7 @@ const MODEL_FOR: Record<string, ModelChoice> = {
   'bn-IN': BANGLA,
   'te-IN': TELUGU,
   'kn-IN': KANNADA,
+  'ta-IN': TAMIL,
 };
 /** Where a model's files live: Hugging Face, or Turant's own /models/ folder. */
 const modelHost = (model: ModelChoice) =>

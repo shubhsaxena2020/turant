@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'models', 'turant');
 const SOURCE = process.env.TURANT_MODELS_URL ?? 'https://turant-voice.vercel.app/models/turant';
-const MODELS = ['whisper-telugu-base-onnx', 'whisper-kannada-base-onnx'];
+const MODELS = ['whisper-telugu-base-onnx', 'whisper-kannada-base-onnx', 'whisper-tamil-small-onnx'];
 const FILES = [
   'config.json', 'generation_config.json', 'preprocessor_config.json', 'tokenizer.json', 'tokenizer_config.json',
   'special_tokens_map.json', 'added_tokens.json', 'normalizer.json', 'vocab.json', 'merges.txt',
@@ -17,7 +17,12 @@ const FILES = [
 
 for (const m of MODELS) {
   try {
-    for (const f of FILES) {
+    // a decoder split into external-data chunks (harness/split_onnx.py) lists them in config.json
+    const cfg = await (await fetch(`${SOURCE}/${m}/config.json`)).json();
+    const chunks = Object.entries(cfg['transformers.js_config']?.use_external_data_format ?? {}).flatMap(([f, n]) =>
+      Array.from({ length: Number(n) }, (_, i) => `onnx/${f}_data${i ? '_' + i : ''}`),
+    );
+    for (const f of [...FILES, ...chunks]) {
       const dest = join(ROOT, m, f);
       if (existsSync(dest)) continue;
       const res = await fetch(`${SOURCE}/${m}/${f}`);

@@ -28,6 +28,11 @@ VOICES = {
     "mr": ["mr-IN-AarohiNeural", "mr-IN-ManoharNeural"],
     "kn": ["kn-IN-GaganNeural", "kn-IN-SapnaNeural"],
 }
+# Unseen speakers (tiers "unseen" / "unseen_noise", opt-in): Azure multilingual voices that read all 7 languages
+# (voiceprobe.py, 28 Nov). Never used for tuning; foreign-accented, so a harder test than a new Indian voice.
+# Each case gets one male + one female, alternating pairs.
+UNSEEN_PAIRS = [("fr-FR-RemyMultilingualNeural", "fr-FR-VivienneMultilingualNeural"),
+                ("it-IT-GiuseppeMultilingualNeural", "pt-BR-ThalitaMultilingualNeural")]
 RATES = {"r0": "+0%", "rm15": "-15%", "rp15": "+15%"}
 NOISES = ["pink", "babble", "traffic"]
 SNRS = [15, 5]
@@ -84,10 +89,17 @@ def build_plan(cases):
         v_rate = vs[(k >> 9) % len(vs)]
         rate = "rm15" if (k >> 11) % 2 else "rp15"
         job(audio(clip(case, v_rate, rate)), case, "rate")
+        # tier unseen: two voices never used for tuning, clean; tier unseen_noise: one of them at 15 and 5 dB
+        pair = UNSEEN_PAIRS[n % len(UNSEEN_PAIRS)]
+        for v in pair:
+            job(audio(clip(case, v, "r0")), case, "unseen")
+        u_noise = pair[(k >> 13) % 2]
+        for snr in SNRS:
+            job(audio(clip(case, u_noise, "r0"), NOISES[(k >> 15) % len(NOISES)], snr), case, "unseen_noise")
         # tier auto: language auto-detect on a subset of clean base clips
         if n % AUTO_EVERY == 0:
             job(audio(clip(case, vs[0], "r0")), case, "auto", auto=True)
-    order = {"base": 0, "noise": 1, "rate": 2, "auto": 3}
+    order = {"base": 0, "noise": 1, "rate": 2, "auto": 3, "unseen": 4, "unseen_noise": 5}
     jobs = [j for j in jobs if j["tier"] in TIERS]
     used = {j["audio"] for j in jobs}
     audios = {k: v for k, v in audios.items() if k in used}
