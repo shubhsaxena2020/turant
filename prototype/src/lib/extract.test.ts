@@ -541,3 +541,25 @@ describe('round 39 (typed Marathi and quarter amounts)', () => {
     expect(extractFields('সোয়া লাখ টাকা কেটে নিয়েছে', { now: NOW, lang: 'bn-IN' } as never).amount?.value).toBe(125000);
   });
 });
+
+describe('round 40 (dates and weekdays as answers)', () => {
+  const FRI = new Date('2026-11-27T15:00:00+05:30');
+  const day = (t: string, hint?: string) => {
+    const v = extractFields(t, { now: FRI, lang: 'en-IN', ...(hint ? { hint } : {}) } as never).time?.value;
+    return v ? new Date(v).toLocaleDateString('en-CA', { timeZone: 'Asia/Kolkata' }) : undefined;
+  };
+  it('weekdays and calendar dates, always in the past', () => {
+    expect(day('on Monday', 'time')).toBe('2026-11-23');
+    expect(day('last Friday', 'time')).toBe('2026-11-20');
+    expect(day('25th November', 'time')).toBe('2026-11-25');
+    expect(day('25/11', 'time')).toBe('2026-11-25');
+    expect(day('on 2nd December', 'time')).toBe('2025-12-02');
+    expect(day('25 नवंबर को शाम 7 बजे', 'time')).toBe('2026-11-25');
+    expect(day('On 25th November I lost 5000 rupees from my SBI account')).toBe('2026-11-25');
+  });
+  it('fractions, ranges and "may be" are not dates', () => {
+    expect(day('I lost 2 may be 3 thousand rupees')).toBeUndefined();
+    expect(day('it took 10/12 minutes')).toBeUndefined();
+    expect(day('5000 rupees, 1/2 of my salary')).toBeUndefined();
+  });
+});

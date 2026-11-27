@@ -89,7 +89,7 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   On the **blind set** (new sentences, never tuned on), the in-page model gets Hindi **91.7%** (the same as the text-only ceiling for those sentences), English 61.1% and Marathi 33.3%. In noise, Hindi stays at 80.0% at 15 dB (a busy room) and 52.5% at 5 dB (a roadside).
   Bengali, Tamil, Telugu and Kannada need the browser recogniser, or an Indian-language model (next step).
 - **Fuzz testing:** millions of generated amounts and times are parsed 100% correctly. With one recogniser-style slip per number, 99.6-100% are still read correctly.
-- **Tests:** 153 unit tests in the app, 124 in the parsers and 261 in the voice kit.
+- **Tests:** 155 unit tests in the app, 124 in the parsers and 261 in the voice kit.
 - **Lighthouse** (mobile, live site, 27 Nov): accessibility 100, best practices 100, SEO 100, performance 94 (first paint 2.0 s on a throttled phone connection). Fonts are self-hosted, so the page loads with no third-party requests (the in-page speech model is fetched from Hugging Face only when it is needed).
 
 The full log of every tuning round, what changed and what it gained is in [`harness/JOURNAL.md`](harness/JOURNAL.md).

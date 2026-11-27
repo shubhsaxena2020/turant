@@ -5,7 +5,7 @@ import { combine, fold, foldParts, tokenize, wordParts } from './numbers.ts';
 
 export interface TimeHit {
   date: Date;
-  kind: 'now' | 'ago' | 'clock' | 'daypart' | 'day';
+  kind: 'now' | 'ago' | 'clock' | 'daypart' | 'day' | 'date';
   /** minutes of uncertainty (a bare "yesterday evening" is fuzzy) */
   tolerance: number;
 }
@@ -54,6 +54,74 @@ function dayOffset(toks: string[]): number | undefined {
     if (is(t, TODAY)) return 0;
   }
   return undefined;
+}
+
+// A weekday or a calendar date, as days before today: "on Monday", "last Friday", "25th November", "Nov 25", "25/11",
+// "25 नवंबर", "सोमवार को". Always in the past (a fraud already happened): a date later than today is last year's.
+const WEEKDAYS: [number, string[]][] = [
+  [0, ['sunday', 'ravivar', 'raviwar', 'itvaar', 'itwar', 'रविवार', 'इतवार', 'रविवारी']],
+  [1, ['monday', 'somvar', 'somwar', 'सोमवार', 'सोमवारी']],
+  [2, ['tuesday', 'mangalvar', 'mangalwar', 'मंगलवार', 'मंगळवार', 'मंगळवारी']],
+  [3, ['wednesday', 'budhvar', 'budhwar', 'बुधवार', 'बुधवारी']],
+  [4, ['thursday', 'guruvar', 'guruwar', 'brihaspativar', 'गुरुवार', 'गुरुवारी', 'बृहस्पतिवार']],
+  [5, ['friday', 'shukravar', 'shukrawar', 'शुक्रवार', 'शुक्रवारी']],
+  [6, ['saturday', 'shanivar', 'shaniwar', 'शनिवार', 'शनिवारी']],
+];
+const LAST = ['last', 'pichhle', 'pichle', 'पिछले', 'मागच्या', 'गेल्या'];
+const MONTHS: [number, string[]][] = [
+  [0, ['january', 'jan', 'जनवरी', 'जानेवारी']],
+  [1, ['february', 'feb', 'फरवरी', 'फेब्रुवारी']],
+  [2, ['march', 'mar', 'मार्च']],
+  [3, ['april', 'apr', 'अप्रैल', 'एप्रिल']],
+  [4, ['may', 'मई', 'मे']],
+  [5, ['june', 'jun', 'जून']],
+  [6, ['july', 'jul', 'जुलाई', 'जुलै']],
+  [7, ['august', 'aug', 'अगस्त', 'ऑगस्ट']],
+  [8, ['september', 'sept', 'sep', 'सितंबर', 'सितम्बर', 'सप्टेंबर']],
+  [9, ['october', 'oct', 'अक्टूबर', 'ऑक्टोबर']],
+  [10, ['november', 'nov', 'नवंबर', 'नवम्बर', 'नोव्हेंबर']],
+  [11, ['december', 'dec', 'दिसंबर', 'दिसम्बर', 'डिसेंबर']],
+].map(([m, w]) => [m as number, N(w as string[])]);
+const MONTH_RE = MONTHS.flatMap(([, w]) => w).sort((a, b) => b.length - a.length).join('|');
+
+function dateOffset(text: string, toks: string[], now: Date): number | undefined {
+  const midnight = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+  for (const [dow, words] of WEEKDAYS) {
+    if (!toks.some((t) => words.includes(t))) continue;
+    let back = (now.getDay() - dow + 7) % 7;
+    if (back === 0 && toks.some((t) => LAST.includes(t))) back = 7;
+    return -back;
+  }
+  const monthOf = (w: string) => MONTHS.find(([, ws]) => ws.includes(w.toLowerCase().replace(/\.$/, '')))?.[0];
+  let day: number | undefined;
+  let month: number | undefined;
+  let year: number | undefined;
+  let dm = new RegExp(`(?<![\\d.:])(\\d{1,2})(st|nd|rd|th)?\\s+(of\\s+)?(${MONTH_RE})(?![\\p{L}\\p{M}])\\.?(?:,?\\s+(\\d{4}))?`, 'iu').exec(text);
+  let md = new RegExp(`(?<![\\p{L}\\p{M}])(${MONTH_RE})\\.?\\s+(\\d{1,2})(st|nd|rd|th)?(?![\\d:.])(?:,?\\s+(\\d{4}))?`, 'iu').exec(text);
+  // "may" / मे are also everyday words ("2 may be 3 thousand"): a month only with an ordinal, "of" or a year
+  const vague = (w: string) => /^(may|मे)$/i.test(w);
+  if (dm && vague(dm[4]) && !dm[2] && !dm[3] && !dm[5]) dm = null;
+  if (md && vague(md[1]) && !md[3] && !md[4]) md = null;
+  let num = /(?<![\d.:/])(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?(?![\d/])|(?<![\d.:-])(\d{1,2})-(\d{1,2})-(\d{2,4})(?![\d-])/.exec(text);
+  // a bare "10/12" is a fraction or a range ("10/12 minutes", "1/2 of my salary") unless it has a year, a date cue, or is the whole answer
+  if (num && num[1] && !num[3]) {
+    const before = text.slice(0, num.index).trim().split(/\s+/).pop()?.toLowerCase() ?? '';
+    const after = text.slice(num.index + num[0].length).trim().split(/\s+/)[0]?.toLowerCase() ?? '';
+    const cue = ['on', 'date', 'dated', 'tarikh', 'tareekh', 'तारीख', 'दिनांक'].includes(before) || ['ko', 'को', 'la', 'ला', 'रोजी'].includes(after);
+    if (!cue && text.trim() !== num[0]) num = null;
+  }
+  if (dm) [day, month, year] = [Number(dm[1]), monthOf(dm[4]), dm[5] ? Number(dm[5]) : undefined];
+  else if (md) [day, month, year] = [Number(md[2]), monthOf(md[1]), md[4] ? Number(md[4]) : undefined];
+  else if (num) {
+    const [d, m, y] = num[1] ? [num[1], num[2], num[3]] : [num[4], num[5], num[6]];
+    [day, month, year] = [Number(d), Number(m) - 1, y ? (y.length === 2 ? 2000 + Number(y) : Number(y)) : undefined];
+  }
+  if (day === undefined || month === undefined || day < 1 || day > 31 || month < 0 || month > 11) return undefined;
+  let date = new Date(year ?? now.getFullYear(), month, day);
+  if (date.getMonth() !== month) return undefined; // 31/11
+  if (year === undefined && midnight(date) > midnight(now)) date = new Date(now.getFullYear() - 1, month, day);
+  const days = Math.round((midnight(date) - midnight(now)) / 86_400_000);
+  return days <= 0 && days > -400 ? days : undefined;
 }
 
 function daypart(toks: string[]): 'morning' | 'afternoon' | 'evening' | 'night' | undefined {
@@ -219,7 +287,10 @@ export function findTime(text: string, now: Date = new Date()): TimeHit | undefi
     return { date: new Date(now), kind: 'now', tolerance: 10 };
   }
   if (/\bjust now\b/.test(low)) return { date: new Date(now), kind: 'now', tolerance: 10 };
-  const day = dayOffset(toks);
+  const dayWord = dayOffset(toks);
+  // an explicit date or weekday ("25th November", "on Monday") is an answer in itself; a bare "today" is not
+  const dated = dayWord === undefined ? dateOffset(text, toks, now) : undefined;
+  const day = dayWord ?? dated;
   const part = daypart(toks);
   const clock = clockHours(text, toks);
   if (day === undefined && part === undefined && clock === undefined) return undefined;
@@ -240,5 +311,5 @@ export function findTime(text: string, now: Date = new Date()): TimeHit | undefi
     return { date: d, kind: 'daypart', tolerance: 120 };
   }
   d.setHours(12, 0, 0, 0);
-  return { date: d, kind: 'day', tolerance: 720 };
+  return { date: d, kind: dated !== undefined ? 'date' : 'day', tolerance: 720 };
 }
