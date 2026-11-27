@@ -5,3 +5,6 @@ dist/
 
 # local ASR models (large binaries)
 harness/models/
+
+# deck preview renders
+deck/preview/

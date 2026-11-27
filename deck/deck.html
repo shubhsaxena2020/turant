@@ -1,0 +1,216 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Turant: pitch deck</title><link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet"><style>
+@page { size: 1280px 720px; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #FFFFEB; }
+body { font-family: Figtree, Arial, sans-serif; color: #1A1A1A; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.slide { width: 1280px; height: 720px; padding: 52px 72px 44px; position: relative; overflow: hidden; page-break-after: always; background: #FFFFEB; display: flex; flex-direction: column; }
+.slide:last-child { page-break-after: auto; }
+.eyebrow { font-size: 14px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: rgba(26,26,26,.6); }
+h1 { font-family: 'EB Garamond', Georgia, serif; font-weight: 400; font-size: 46px; line-height: 1.05; letter-spacing: -.02em; margin: 10px 0 18px; }
+.body { flex: 1; overflow: hidden; font-size: var(--fs, 21px); line-height: 1.42; }
+.body p { margin: 0 0 .55em; }
+.body ul, .body ol { margin: 0 0 .5em; padding-left: 1.2em; }
+.body li { margin: 0 0 .32em; }
+.body li > ul { margin-top: .3em; }
+.body strong { font-weight: 700; background-image: linear-gradient(transparent 60%, rgba(240,215,255,.95) 60%); }
+.body table { border-collapse: collapse; width: 100%; margin: .2em 0 .7em; font-size: .86em; }
+.body th { text-align: left; font-weight: 600; border-bottom: 1.6px solid #1A1A1A; padding: 6px 10px 6px 0; }
+.body td { border-bottom: 1px solid #E4E3CC; padding: 6px 10px 6px 0; vertical-align: top; }
+.body code { font-family: 'JetBrains Mono', Consolas, monospace; font-size: .85em; background: #F4F2DA; padding: 0 4px; border-radius: 4px; }
+.foot { position: absolute; left: 72px; right: 72px; bottom: 18px; display: flex; justify-content: space-between; font-size: 12px; color: rgba(26,26,26,.5); }
+.mark { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: #1A1A1A; }
+.mark svg { height: 14px; }
+.title { justify-content: center; }
+.title h1 { font-size: 84px; margin: 14px 0 6px; }
+.title .tag { font-family: 'EB Garamond', Georgia, serif; font-style: italic; font-size: 40px; line-height: 1.1; margin-bottom: 28px; }
+.title .body { flex: none; font-size: 21px; }
+.band { position: absolute; right: 56px; top: 56px; width: 300px; padding: 22px 24px; border-radius: 24px; background: #034F46; color: #FFFFEB; font-size: 17px; line-height: 1.4; }
+.band b { font-family: 'EB Garamond', Georgia, serif; font-weight: 400; font-size: 30px; display: block; line-height: 1.05; margin-bottom: 8px; }
+</style></head><body><section class="slide title"><div class="eyebrow">Build for Bharat 2026 · Public infrastructure and civic services</div><h1>Turant</h1><div class="tag">Report a UPI fraud by voice, in the golden hour.</div><div class="body"><ul>
+<li>A fraud victim says what happened, in their own words and language.</li>
+<li>Turant turns it into a complete complaint, a 1930 call script and a bank message, in minutes.</li>
+<li>Hindi, English/Hinglish, Bengali, Tamil, Telugu, Marathi and Kannada.</li>
+<li>Runs on the phone. No account, no Turant server: the complaint stays on the device unless the user copies or shares it.</li>
+<li>Live: https://turant-voice.vercel.app</li>
+</ul></div><div class="band"><b>Speak. Get a complete complaint.</b>7 Indian languages, on the phone, no account. A 1930 call script and the cybercrime.gov.in text, in minutes.</div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 1 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 02</div><h1>The problem</h1><div class="body"><p><strong>Stolen money can still be frozen, but only if the report is fast and complete.</strong></p>
+<ul>
+<li><strong>Losses:</strong> ₹22,845 crore lost to cyber fraud in 2024, across 36.4 lakh financial-fraud incidents (MoS Home, Lok Sabha, Jul 2025). 2025: ₹22,495 crore across 24 lakh complaints.</li>
+<li><strong>Speed works:</strong> 1930 / CFCFRMS has held back ₹11,158 crore in 32.8 lakh complaints, to 30 Jun 2026 (Rajya Sabha, Aug 2026).</li>
+<li><strong>Golden hour:</strong> victims who report within about 1-3 hours may recover funds (Hyderabad Cyber Crime DCP, Jul 2024).</li>
+<li><strong>Reporting is slow:</strong><ul>
+<li><strong>1930:</strong> each complaint takes 16-18 minutes to register by hand (Bihar, May 2026). Unanswered calls cost victims money, the Home Minister warned (Feb 2026).</li>
+<li><strong>cybercrime.gov.in:</strong> OTP login, captcha, ID upload, bank, UTR, date, amount, and a typed description of at least 200 characters. The form text is English. There is no speech input.</li>
+</ul>
+</li>
+<li>A panicked person must find a 12-digit UTR in their SMS and type all this on a small keyboard. Many wait for a relative. By then the money has moved.</li>
+</ul></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 2 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 03</div><h1>Who suffers most</h1><div class="body"><ul>
+<li><strong>Senior citizens:</strong> 1,03,488 complaints in 2025, ₹4,005 crore lost: about 4% of complaints but about 18% of the money (MHA, Aug 2026).<ul>
+<li>Per senior complaint: ₹4,005.12 crore ÷ 1,03,488 ≈ ₹3.87 lakh, about 4 times the overall average.</li>
+</ul>
+</li>
+<li><strong>Indian-language users:</strong> 870 million of India's 886 million internet users (98%) use the internet in Indian languages (IAMAI-Kantar 2024). The form is in English.</li>
+<li><strong>First-time and rural users:</strong> 488 million internet users are rural. 140 million use voice commands, 55% of them rural (IAMAI-Kantar 2024). Talking is easy for them; an English form is not.</li>
+</ul></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 3 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 04</div><h1>The solution in one flow</h1><div class="body"><ol>
+<li><strong>Speak.</strong> Tap once and say what happened, in any of 7 languages, mixed with English if you like.</li>
+<li><strong>Understood.</strong> Turant picks out amount, time, scam type, bank, payment app, UTR, and the fraudster's UPI ID, phone or account.</li>
+<li><strong>One question at a time</strong> for what is missing. Answer by voice, typing or tapping.</li>
+<li><strong>Read-back:</strong> "Is this right?" Fix anything by voice.</li>
+<li><strong>Ready to act:</strong> a script for the 1930 operator; the complaint text in the portal's order, over 200 characters and free of the characters it rejects; a message for the bank; a checklist.</li>
+</ol></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 4 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 05</div><h1>A worked example</h1><div class="body"><p><strong>The user says:</strong> "Someone called from customer care, made me install AnyDesk, and two lakh rupees went from my ICICI account yesterday at 7 pm."</p>
+<p><strong>Turant fills in:</strong></p>
+<ul>
+<li>Amount: ₹2,00,000</li>
+<li>Time: yesterday, 7:00 pm</li>
+<li>Scam type: fake customer care (portal category: Fraud Call / Vishing)</li>
+<li>Bank: ICICI Bank</li>
+</ul>
+<p><strong>Then asks, one at a time:</strong> "Please read the 12-digit UTR number from the bank SMS." Then the payment app, and the fraudster's phone or UPI ID if known.</p>
+<p><strong>Hands over:</strong> four lines to say on the 1930 call, the portal text, the bank message and the checklist. A detail the user cannot find is marked "Not known", never guessed.</p></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 5 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 06</div><h1>Why voice, and why on the device</h1><div class="body"><ul>
+<li><strong>Voice:</strong> in a panic, people can talk but cannot fill forms. Speaking removes the English barrier and the typing barrier when speed matters most.</li>
+<li><strong>No server:</strong> extraction, questions and outputs run in the page. No login, no database of victims.</li>
+<li><strong>Offline after first load:</strong> an installable web app (PWA). If the network drops, the report stays on the phone.</li>
+<li><strong>No install:</strong> opens from a link, SMS or QR code.</li>
+<li><strong>Privacy, stated honestly:</strong> the browser's own speech recognition (Chrome, Edge) may process audio on the browser maker's servers. Turant's Whisper fallback runs inside the page and uploads no audio.</li>
+</ul></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 6 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 07</div><h1>How it works</h1><div class="body"><ul>
+<li><strong>Two speech recognisers behind one interface (<code>speech.ts</code>):</strong><ul>
+<li>The browser's speech recognition shows live words.</li>
+<li>Turant also records the audio. If the browser returns nothing, one misheard word, or stops early (all seen on Chrome for Windows), Whisper-base transcribes it in the page via transformers.js and ONNX Runtime Web (WebGPU, else WebAssembly). About 100 MB, downloaded once, then cached.</li>
+<li>Turant's own voice detection decides when the person has finished.</li>
+</ul>
+</li>
+<li><strong>Rules, not an LLM:</strong> the rules read numbers, dates, banks and IDs in 7 languages, including recogniser slips ("to lock rupees" = ₹2,00,000; "9 बजकर 30 मिनट" = 9:30; a UTR read digit by digit). On the same transcripts an LLM invented times and scam types: 16.5% fully correct, against 43.5% for the rules then.</li>
+<li><strong>Asking beats guessing:</strong> a wrong amount on a police complaint is worse than a missing one. A spoken "₹5" is offered back as "₹5,000?". Unclear values are asked again.</li>
+</ul></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 7 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 08</div><h1>Measured quality</h1><div class="body"><p><strong>Method:</strong> 280 fraud reports in 7 languages, spoken by Indian neural voices (edge-tts), with noise at 15 and 5 dB, transcribed by Whisper, scored on every field. "Fully correct" = every field right, nothing invented.</p>
+<table>
+<thead>
+<tr>
+<th>Fully correct reports</th>
+<th>Whisper turbo</th>
+<th>Whisper large-v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tuning set, clean speech</td>
+<td>54.2%</td>
+<td>69.3%</td>
+</tr>
+<tr>
+<td>Voices never used for tuning</td>
+<td>53.1%</td>
+<td>67.5%</td>
+</tr>
+<tr>
+<td><strong>Blind set: 84 new sentences, never tuned on</strong></td>
+<td><strong>51.1%</strong></td>
+<td><strong>62.8%</strong></td>
+</tr>
+<tr>
+<td>Reference text, no speech recognition</td>
+<td>100%</td>
+<td>100%</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Honest headline:</strong> about 63% of brand-new spoken reports are fully correct on large-v3. The app asks for what it could not read.</li>
+<li><strong>By language</strong> (large-v3, clean): Hindi 98%, English 90%, Marathi 70%, Tamil 66%, Telugu 61%, Kannada 46%, Bengali 44%.</li>
+<li><strong>About 92% of remaining errors</strong> are the recogniser losing words, not the parsing.</li>
+<li><strong>Fuzz:</strong> millions of generated amounts and times parse 100%; with one slip per number, 99.6-100%. 516 automated tests.</li>
+<li><strong>Limits:</strong> synthetic voices. Whisper turbo and large-v3 stand in for the phone; the phone recogniser and in-page Whisper-base are not benchmarked yet.</li>
+</ul></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 8 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 09</div><h1>Users and how many</h1><div class="body"><p><strong>Core users: people reporting a financial fraud.</strong></p>
+<ul>
+<li>24,02,579 complaints in 2025 (MHA): ÷ 365 ≈ 6,580 a day. 2024: 36,37,288 incidents.</li>
+<li>At stake per complaint: ₹22,495 crore ÷ 24,02,579 ≈ ₹93,600.</li>
+</ul>
+<p><strong>Wider reach:</strong> 870 million Indian-language internet users; 140 million voice users (IAMAI-Kantar 2024). UPI handled 25.47 billion transactions worth ₹31.53 lakh crore in Oct 2026 alone (NPCI, via media).</p>
+<p><strong>Second users:</strong> 1930 operators get a complete, ordered complaint. Banks get the UTR they need to freeze money.</p>
+<p><strong>Planning number (assumption, not a forecast):</strong> 10% of 2025's complainants ≈ 2.4 lakh reports a year, about 660 a day.</p></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 9 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 10</div><h1>What it depends on, and what if it fails</h1><div class="body"><table>
+<thead>
+<tr>
+<th>Dependency</th>
+<th>Cost today</th>
+<th>Risk</th>
+<th>Fallback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Browser speech recognition</td>
+<td>Free</td>
+<td>Fails on some machines; may process audio off the device</td>
+<td>In-page Whisper; typing and tapping</td>
+</tr>
+<tr>
+<td>Whisper-base, transformers.js, ONNX Runtime Web</td>
+<td>Free, open source</td>
+<td>100 MB first download; slow on low-end phones</td>
+<td>WebGPU falls back to WebAssembly; typing</td>
+</tr>
+<tr>
+<td>Hugging Face model hosting</td>
+<td>Free</td>
+<td>Outage or policy change</td>
+<td>Serve the model files from our own host</td>
+</tr>
+<tr>
+<td>Static hosting (Vercel)</td>
+<td>Near zero, no backend</td>
+<td>Pricing changes</td>
+<td>Any static host or our Docker image; PWA works offline</td>
+</tr>
+<tr>
+<td>LLM or paid API</td>
+<td>None used</td>
+<td>Nothing to get costly</td>
+<td>Not needed</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Planned Indian-language ASR</strong> for Bengali, Kannada, Tamil and Telugu: Bhashini (MeitY, 23 voice languages per its Mar 2026 announcement; we will check each language), AI4Bharat IndicConformer (open models), or Sarvam (commercial). All plug in behind the same interface. If one gets costly, we switch, or fall back to the free path.</p></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 10 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 11</div><h1>Launch plan</h1><div class="body"><p><strong>Reach victims where they already turn for help. These are plans; no partnership is signed.</strong></p>
+<ul>
+<li><strong>Weeks 1-4:</strong> real-phone tests with 30-50 people across 7 languages, including seniors and first-time smartphone users.</li>
+<li><strong>Weeks 3-8:</strong> approach one district cyber cell or state 1930 centre. After each call, operators send the Turant link by SMS or WhatsApp.</li>
+<li><strong>The official revamp:</strong> the Home Minister directed an AI, multi-language 1930 (Jun 2026). We will offer our 7-language extractor to it.</li>
+<li><strong>Banks:</strong> a link on fraud-reporting pages and in "report fraud" SMS.</li>
+<li><strong>QR posters</strong> at bank branches and police stations: "Lost money to a UPI scam? Scan, speak, report."</li>
+<li><strong>Community:</strong> senior-citizen groups, RWAs and college NSS units: "save this link before you need it".</li>
+</ul>
+<p><strong>90-day targets:</strong></p>
+<ol>
+<li>Median time from fraud to complete report under 1 hour.</li>
+<li>At least 70% of reports include the UTR.</li>
+<li>At least 40% in a language other than English.</li>
+<li>Completion above 80% for users over 60.</li>
+<li>More money held per complaint than the pilot area's baseline.</li>
+</ol>
+<p>Turant keeps no server data, so we will measure with an opt-in anonymous count (language, fields filled, never content) agreed with the partner, plus the partner's records.</p></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 11 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 12</div><h1>Sustainability</h1><div class="body"><ul>
+<li><strong>Free for citizens, always.</strong></li>
+<li><strong>Near-zero running cost:</strong> speech and understanding run on the user's phone, so one more user costs almost nothing. Hosting is static files.</li>
+<li><strong>Funding to pursue:</strong> a state police or I4C pilot; bank CSR or fraud-prevention budgets; a white-label version for banks, routed to their own fraud desk.</li>
+<li><strong>Reuse:</strong> the engine is also a voice kit, where one config file makes a new form-filling voice app (examples in the repo: khata ledger, health intake, civic grievance).</li>
+</ul></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 12 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 13</div><h1>Accessibility</h1><div class="body"><ul>
+<li><strong>Large text:</strong> never below 16px, with an "Aa" control for +12.5% and +25%.</li>
+<li><strong>Read-back:</strong> the summary is spoken and shown; numbers are confirmed.</li>
+<li><strong>When speech fails:</strong> a shorter re-ask, then choices or a big keypad, then skip. The app blames itself, never the accent.</li>
+<li><strong>Typing and tapping</strong> for every answer. <strong>Quiet mode</strong> turns speech off.</li>
+<li><strong>1930 is one tap away</strong> in the top bar. "UTR" is always explained in plain words.</li>
+<li><strong>No timeouts, no auto-advance;</strong> reduced motion respected.</li>
+</ul></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 13 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 14</div><h1>Roadmap</h1><div class="body"><ol>
+<li><strong>Indian-language ASR</strong> for Bengali, Kannada, Tamil and Telugu, measured on the same harness and blind set.</li>
+<li><strong>Real-phone tests</strong> in every language, with real voices.</li>
+<li><strong>Direct hand-off to 1930 or NCRP</strong> if a public API appears. Today there is none, so the user files.</li>
+<li><strong>More scam types</strong> and payment apps.</li>
+<li><strong>IVR and feature-phone access</strong> for people without a smartphone.</li>
+</ol></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 14 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 15</div><h1>Team and links</h1><div class="body"><ul>
+<li><strong>Team:</strong> Shubh Saxena and Sugandhi Agrawal.</li>
+<li><strong>Live:</strong> https://turant-voice.vercel.app</li>
+<li><strong>Code:</strong> https://github.com/shubhsaxena2020/turant</li>
+<li><strong>Try it:</strong> open in Chrome or Edge, tap "Tap to speak", tell a short fraud story. No mic? Tap "No mic? See a sample".</li>
+<li><strong>Sources:</strong> Parliament replies, official statements, NPCI and IAMAI-Kantar data, with links in <code>research/facts.md</code>.</li>
+</ul></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 15 / 15</span></div></section><script>
+document.querySelectorAll('.slide .body').forEach(b => {
+  let fs = parseFloat(getComputedStyle(b).fontSize);
+  while (b.scrollHeight > b.clientHeight + 1 && fs > 12) { fs -= 0.5; b.style.setProperty('--fs', fs + 'px'); }
+});
+</script></body></html>
