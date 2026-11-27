@@ -314,6 +314,11 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - Digits: "don't" = don (2), "saahab" / "saahas" = saha (6). Hundreds: "nau se" (नऊशे), "paanch se rupe", "donashahar", "sahaashay"; 99: "navyaan / navaay nau". Clock: "dahaavaastha", "vaaraasta", "adhik vaajata" (2:30), "sandhya kar hi" (evening). Ago: "minitaanpurvin", "aappur bhi", "taaza poorvi", "taazaapur bhi", "arthaat taasaapoorvi" (half an hour). "aatach…" = just now. "phone par varun" / "google par varun" = PhonePe / Google Pay. "mahit nahin" = don't know.
   - For all languages: a digit read-out of 6+ digits ends before "<number> hazaar" (a UTR followed by an amount); the parser's reading wins when it only adds a tail below a round hundred ("nau sau ninyanve" = 900 + 99); "ardha" = half; "sandhya" = evening.
   - **In-page model 60.4% → 69.6%** (+36 runs, none lost). Marathi **23.8% → 53.8%**: dev voice 27.5% → 67.5%, **held-out voice 20.0% → 40.0%** (the honest number; the gap is voice-specific spellings). Hindi 85.0% → 87.5%. In noise 55.8% → 60.0% (15 dB) and 35.0% → 39.2% (5 dB). **Blind 61.9% → 64.3%** (Marathi 33.3% → 41.7%). large-v3 +1 run; turbo, kit and blind large-v3 / turbo unchanged run for run.
+- **Round 42** (English UPI IDs and read-outs as the in-page model writes them; dev voice NeerjaExpressive):
+  - "at Vibyal" = ybl (the letters Y B L said aloud). "sharma 01:23 at Paytm" = sharma123@paytm (digits written as a time, right before "at <handle>"). "06:01 to 34567 890" = 601234567890 (the spoken "two" after a clock group is written "to").
+  - **A real bug for every recogniser:** "I paid 2000 at paytm" became the UPI ID 2000@paytm and lost the amount. An all-digit ID now has to be a 10-digit phone number.
+  - In-page model **69.6% → 72.5%** (+9 runs, none lost). English 68.3% → **75.0%**, and the gain is as large on the voices never read: Neerja 72.5% → 77.5%, Prabhat 65.0% → 72.5% (dev 67.5% → 75.0%). Everything else unchanged run for run.
+- "Yesterday at 07:00" (spoken "7 pm", Whisper dropped the pm) is left alone on purpose: guessing pm for a bare 7 would only fit this corpus. The read-back lets the person fix it.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
   | Fully correct, Hinglish model | Clean | 15 dB | 5 dB |
@@ -324,6 +329,8 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   | All three | 60.4% | 55.8% | 35.0% |
   | *after round 41:* Hindi / English / Marathi | 87.5% / 68.3% / 53.8% | 82.5% / 62.5% / 35.0% | 55.0% / 32.5% / 30.0% |
   | *after round 41:* all three | **69.6%** | **60.0%** | **39.2%** |
+  | *after round 42:* Hindi / English / Marathi | 87.5% / 75.0% / 53.8% | 82.5% / 65.0% / 35.0% | 55.0% / 32.5% / 30.0% |
+  | *after round 42:* all three | **72.5%** | **60.8%** | **39.2%** |
 
   Moderate noise (15 dB, a busy room) costs Hindi 5 points. Loud noise (5 dB, a road) costs about a third, as with server Whisper (large-v3: 69.5% → 46.1%).
 - **whisper-small for Bengali / Tamil / Telugu / Kannada, not adopted:** on 40 dev clips it scored 2.5% fully correct (whisper-base 0%). Field F1: ta 53 vs 27, te 38 vs 33, kn 19 vs 13, bn 36 vs 44. It is a 250 MB download and several times slower. These languages need an Indian-language recogniser, not a bigger generic Whisper.

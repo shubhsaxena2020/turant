@@ -615,8 +615,11 @@ export function prepUpi(s: string): string {
   let t = s;
   t = t.replace(/\s*(at the rate of|at the rate|at-the-rate|at rate|एट द रेट|एट दी रेट|एट रेट)\s*/g, '@');
   t = t.replace(/\s+(dot|डॉट|डोट)\s+/g, '.');
+  // "at vibyal" = "Y B L" said aloud ("vai bi el")
+  t = t.replace(/\bat\s+(?:vibyal|vaibiel|vybl|wybl|y\s?b\s?l)\b/g, 'at ybl');
   t = t.replace(new RegExp(`((?:id|आईडी)\\s+(?:hai\\s+|tha\\s+|is\\s+|was\\s+)?)?([a-z0-9][a-z0-9._-]+)\\s+at\\s+(${UPI_HANDLES.join('|')})(?=[^a-z0-9]|$)`, 'g'), (m, pre: string | undefined, id: string, handle: string) =>
-    pre || /[._\d]/.test(id) ? `${pre ?? ''}${id}@${handle}` : m,
+    // an all-digit ID is a 10-digit phone number; "I paid 2000 at paytm" is money, not 2000@paytm
+    /^\d+$/.test(id) && id.length !== 10 ? m : pre || /[._\d]/.test(id) ? `${pre ?? ''}${id}@${handle}` : m,
   );
   t = t.replace(/\s*@\s*/g, '@');
   return t;

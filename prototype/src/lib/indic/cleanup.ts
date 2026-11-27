@@ -87,6 +87,7 @@ export function unifyScript(text: string): string {
 
 const CLOCK_WORDS = /^(at|around|by|before|after|till|until|since|from|yesterday|today|tonight|morning|evening|night|aaj|kal|subah|shaam|raat|baje|am|pm|a\.m\.?|p\.m\.?|o'clock|hrs?|hours?)$/i;
 const ID_WORDS = /^(number|no\.?|num|ref\.?|reference|account|a\/c|utr|id|plus|mobile|phone|upi)$/i;
+const UPI_HANDLE_WORDS = /^(paytm|ybl|ibl|axl|okaxis|okhdfcbank|okicici|oksbi|upi|apl|yapl)$/i;
 
 /**
  * Digits read out one by one, as speech recognisers write them:
@@ -116,11 +117,24 @@ export function spokenDigits(text: string): string {
     if (!m) continue;
     const prev = clean(word(i, -1));
     const next = clean(word(i, 1));
+    // a UPI ID with digits, which Whisper wrote as a time: "sharma 01:23 at paytm" = sharma123@paytm
+    if (next === 'at' && /^[a-z]{3,}$/.test(prev) && !CLOCK_WORDS.test(prev) && UPI_HANDLE_WORDS.test(clean(word(w.indexOf(word(i, 1)!, i + 1), 1)))) {
+      const p = w.lastIndexOf(word(i, -1)!, i - 1);
+      w[p] = w[p] + m[1].replace(/^0(?=\d)/, '') + m[2];
+      w[i] = '';
+      w[i - 1] = '';
+      continue;
+    }
     if (CLOCK_WORDS.test(prev) || CLOCK_WORDS.test(next)) continue;
     const nextAfterTo = next === 'to' ? clean(word(w.indexOf(word(i, 1)!, i + 1), 1)) : '';
     const idCtx = /^\+?\d+$/.test(prev) || ID_WORDS.test(prev) || prev === 'is' || /^\d+$/.test(next) || /^\d+$/.test(nextAfterTo);
     // Whisper pads the hour ("5 0 1" -> "05:01"); in every read-out in the harness the 0 was padding, never spoken
     if (idCtx) w[i] = m[1].replace(/^0(?=\d)/, '') + m[2] + m[3];
+    // ...and the spoken "two" after it is written "to": "06:01 to 34567 890" = 601 2 34567 890
+    if (idCtx && nextAfterTo && /^\d+$/.test(nextAfterTo)) {
+      const k = w.indexOf(word(i, 1)!, i + 1);
+      if (k > i) w[k] = w[k].replace(/^to/i, '2');
+    }
   }
   t = w.join('');
   return t;

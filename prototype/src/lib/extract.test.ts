@@ -579,3 +579,18 @@ describe('round 41 (romanised Marathi from the in-page model, only when speaking
     expect(extractFields('mera phone par varun se baat hui', { now: NOW, lang: 'hi-IN' }).paymentApp).toBeUndefined();
   });
 });
+
+describe('round 42 (UPI IDs and read-outs as Whisper writes them)', () => {
+  const x = (t: string) => extractFields(t, { now: NOW, lang: 'en-IN' });
+  it('handles said aloud, digits written as a time, "two" written "to"', () => {
+    expect(x('It was fraud dot pay at Vibyal.').suspectUpi?.value).toBe('fraud.pay@ybl');
+    expect(x('The UPI ID was sharma 01:23 at Paytm. I sent in 3500.').suspectUpi?.value).toBe('sharma123@paytm');
+    expect(x('The reference number is 06:01 to 34567 890.').utr?.value).toBe('601234567890');
+  });
+  it('a sum paid at an app is money, not an ID', () => {
+    const r = x('my name is priya and I paid 2000 at paytm');
+    expect(r.suspectUpi).toBeUndefined();
+    expect(r.amount?.value).toBe(2000);
+    expect(x('I paid rahul 9876543210 at ybl').suspectUpi?.value).toBe('9876543210@ybl');
+  });
+});
