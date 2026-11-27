@@ -43,6 +43,10 @@ no form submit, no YouTube upload, no upload to Shubh's HF account, no spending.
   of the unseen set; the Giuseppe / Thalita half is the check. Paytm mishearings ("paidum") added: +3 on the
   analysis half, 0 on the check half (that sentence fell only in the analysis half), so not counted as a gain.
 
+- **Round 47 (Marathi, unseen analysis half only):** donon / did laakh, saahazaar, vaaj tak / vaajhata / baajta,
+  daavaajta, sandhya ke, sakai, glued "divsaampur bhi". Unseen Marathi 40.0% -> 42.5% (+1 analysis, **+1 check**),
+  all report sets unchanged run for run: kept.
+
 ## Milestones (notes for Shubh)
 
 - 28 Nov ~02:40: Tamil in-page model live (6.3% -> 47.5%), served by Turant itself via chunked weights; no HF upload needed.

@@ -161,14 +161,24 @@ export function marathiRoman(text: string): string {
   t = t.replace(new RegExp(`\\b${MR_UNIT}\\s+se\\b`, 'gi'), '$1 sau');
   t = t.replace(new RegExp(`\\b${MR_UNIT}a?(?:sh|ss)[a-z]*\\b`, 'gi'), '$1 sau');
   t = t.replace(/\bnav+[a-z]{2,6}\s+nau\b/gi, 'ninyanve');
+  // more number spellings: "donon laakh" (don), "did laakh" (दीड = 1.5), "saahazaar" / "paanchhazaar" (glued)
+  t = t.replace(/\bdonon\s+(?=laakh|lakh|hazaar)/gi, 'don ');
+  t = t.replace(/\bdid\s+(?=laakh|lakh|hazaar)/gi, 'dedh ');
+  t = t.replace(/\bsaa?ha?hazaar\b/gi, 'saha hazaar');
+  t = t.replace(new RegExp(`\\b${MR_UNIT}hazaar\\b`, 'gi'), '$1 hazaar');
+  // वाजता as the model hears it: "vaaj tak", "vaajhata", "vaadta", "baajta"; glued to the hour: "daavaajta" = daha vaajta
+  t = t.replace(/\bvaaj\s+tak\b/gi, 'vaajata').replace(/\b(vaajhata|vaadta|baajta|baajata)\b/gi, 'vaajata');
+  t = t.replace(/\b(daa|dhaa)(vaajta|vaajata|baajta|baaj\s*tha)\b/gi, 'dahaa vaajata');
   t = t.replace(/\b(adhik|adich|adeech)\s+(?=vaa)/gi, 'saadhe don ');
   t = t.replace(/\bdhaan\s+(?=vaa)/gi, 'dahaa ');
   t = t.replace(new RegExp(`\\b${MR_HOUR}(vaajata|vaajta|vajta|vaajastha|vaastha|vaasta|vaaraasta)\\b`, 'gi'), '$1 vaajata');
   t = t.replace(/\b(vaaraasta|vaastha|vaasta)\b/gi, 'vaajata');
-  t = t.replace(/\bsandhya\s+ka[a-z]*(\s+hi)?\b/gi, 'sandhyakaali');
+  t = t.replace(/\bsandhya\s+k[ae][a-z]*(\s+hi)?\b/gi, 'sandhyakaali');
+  t = t.replace(/\bsaka(?:a?hi|i)\b/gi, 'sakaali');
   t = t.replace(/purvin\b/gi, ' purvi');
   t = t.replace(/\baa?pp?ur\s+bhi\b/gi, 'purvi');
   t = t.replace(/\btaa[sz]aa?(?:\s*poorvi|\s*purvi|pur\s+bhi)\b/gi, 'taas purvi');
+  t = t.replace(/pur\s+bhi\b/gi, 'purvi'); // glued to the unit: "divsaampur bhi"
   t = t.replace(/\barthaat\s+(?=taas)/gi, 'ardha ');
   t = t.replace(/\baatach[a-z]*/gi, 'abhi abhi');
   t = t.replace(/\bphone\s*(?:par|pe|pay)\s+var(un)?\b/gi, 'PhonePe var$1');
