@@ -130,12 +130,12 @@ function rulePipeline(c, text) {
 function kitPipeline(c, text) {
   const got = {};
   if (c.kind === 'correction') {
-    const r = K.parseCorrection(K.cfg, text, { now: NOW });
+    const r = K.parseCorrection(K.cfg, text, { now: NOW, lang: c.lang });
     if (r) got[r.field] = r.value;
     return got;
   }
   if (c.kind.startsWith('answer:') && K.detectIntent(text) === 'skip') return { intent: 'skip' };
-  const e = K.extractAll(K.cfg, text, { now: NOW, hint: c.hint });
+  const e = K.extractAll(K.cfg, text, { now: NOW, hint: c.hint, lang: c.lang });
   for (const k of FIELDS) if (e[k]) got[k] = e[k].value;
   return got;
 }

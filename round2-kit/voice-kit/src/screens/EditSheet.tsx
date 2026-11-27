@@ -32,7 +32,7 @@ export function EditSheet(props: { ui: UI; entry: Entry; field: string; onSave: 
   const pool = slot.group ? cfg.slots.filter((s) => s.group === slot.group).map((s) => s.key) : [field];
 
   const interpretFor = (text: string) => {
-    const ext = extractAll(cfg, text, { now: new Date(), hint: slot.group ?? field });
+    const ext = extractAll(cfg, text, { now: new Date(), hint: slot.group ?? field, lang: ui.lang });
     const keys = pool.filter((k) => ext[k] !== undefined);
     return keys.length ? { ext, keys } : null;
   };
@@ -201,7 +201,7 @@ export function FixSheet(props: { ui: UI; onFix: (field: string, value: SlotValu
       silenceMs: 2000,
       onOutcome: (o) => {
         if (o.kind !== 'heard') return setMsg(t('fixPrompt'));
-        const c = parseCorrection(cfg, o.text, { now: new Date() });
+        const c = parseCorrection(cfg, o.text, { now: new Date(), lang: ui.lang });
         if (!c) {
           setMsg(t('couldNotFix'));
           void ui.say((l) => uiText(cfg, l, 'couldNotFix'));

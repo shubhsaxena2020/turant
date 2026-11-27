@@ -11,9 +11,9 @@ type Cfg = Pick<DomainConfig, 'slots' | 'groups' | 'strings'>;
 export type Interpretation = { kind: 'skip' } | { kind: 'miss' } | { kind: 'value'; ext: Extraction; keys: string[] };
 
 /** Read an answer to question `q` (slot key or group name). */
-export function interpret(cfg: Cfg, text: string, q: string, now: Date = new Date()): Interpretation {
+export function interpret(cfg: Cfg, text: string, q: string, now: Date = new Date(), lang?: string): Interpretation {
   if (detectIntent(text) === 'skip') return { kind: 'skip' };
-  const ext = extractAll(cfg, text, { now, hint: q });
+  const ext = extractAll(cfg, text, { now, hint: q, lang });
   const slots = questionOf(cfg, q)?.slots ?? [];
   const keys = slots.map((s) => s.key).filter((k) => ext[k] !== undefined);
   return keys.length ? { kind: 'value', ext, keys } : { kind: 'miss' };

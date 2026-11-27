@@ -2,7 +2,7 @@
 // built on Turant's rules in nlp.ts. Pure functions: no DOM, no network (offline-first).
 import { findAmountHit, fold, numberGroups, readoutDigit, tokenize as indicTokens, wordParts } from './indic/numbers';
 import { findTime, hourMinutePhrase } from './indic/time';
-import { joinSpelled, spokenDigits, unifyScript } from './indic/cleanup';
+import { joinSpelled, marathiRoman, spokenDigits, unifyScript } from './indic/cleanup';
 import type {
   AmountSlot,
   DigitsSlot,
@@ -39,6 +39,8 @@ export interface ExtractOptions {
   hint?: string;
   /** Prefer the last mentioned value (corrections: "SBI nahi, HDFC tha"). */
   preferLast?: boolean;
+  /** The language the person chose to speak ("mr-IN"): turns on fixes that would misread other languages. */
+  lang?: string;
 }
 
 type SlotsLike = Pick<DomainConfig, 'slots'>;
@@ -573,6 +575,7 @@ function reservedWords(slots: SlotDef[]): Set<string> {
 
 /** Extract every slot the rules can find in one utterance (or a whole story). */
 export function extractAll(cfg: SlotsLike, text: string, opts: ExtractOptions = {}): Extraction {
+  if (opts.lang?.startsWith('mr')) text = marathiRoman(text);
   text = hourMinutePhrase(spokenDigits(joinSpelled(unifyScript(text))));
   const norm = N.normalize(text);
   const { ids, rest } = N.extractUpis(N.prepUpi(norm));
@@ -729,7 +732,7 @@ const SHAPE_ORDER: SlotType[] = ['upi', 'digits', 'phone', 'enum', 'datetime', '
 /** "NOMOR BHUL 981112233": an ungrouped 7+ digit run read as ₹98 crore is an ID with a digit lost (money is written 20,000 / 2,50,000). */
 const lostDigitId = (text: string, value: unknown) => Number(value) >= 1_000_000 && /(^|[^\d,])\d{7,}(?![\d,])/.test(text);
 
-export function parseCorrection(cfg: QuestionCfg, text: string, opts: { now?: Date } = {}): Correction | null {
+export function parseCorrection(cfg: QuestionCfg, text: string, opts: { now?: Date; lang?: string } = {}): Correction | null {
   text = unifyScript(text);
   const s = N.normalize(text);
   let named: SlotDef | undefined;
@@ -742,7 +745,7 @@ export function parseCorrection(cfg: QuestionCfg, text: string, opts: { now?: Da
       named = slot;
     }
   }
-  const base = { now: opts.now, preferLast: true };
+  const base = { now: opts.now, preferLast: true, lang: opts.lang };
   if (named) {
     const ext = extractAll(cfg, text, { ...base, hint: named.group ?? named.key });
     let field = named.key;

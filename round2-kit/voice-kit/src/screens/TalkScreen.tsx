@@ -230,7 +230,7 @@ export function TalkScreen(props: {
   }
 
   function answer(question: string, text: string, conf: number, via: Via) {
-    const r = interpret(cfg, text, question);
+    const r = interpret(cfg, text, question, new Date(), ui.lang);
     if (r.kind === 'skip') return skip(question);
     if (r.kind === 'miss') return miss(question);
     if (questionOf(cfg, question)?.explicit && via !== 'typed') {
