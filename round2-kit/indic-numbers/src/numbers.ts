@@ -237,7 +237,7 @@ const TA_STEM: [string, number][] = [
   ['பன்னிரண்ட', 12], ['பதினைந்த', 15], ['பதனேந்த', 15], ['பதினொன்ற', 11], ['பதினாற', 16], ['பதினேழ', 17], ['பதினெட்ட', 18], ['பத்தொன்பத', 19],
   ['இருபத்', 20], ['இருபத', 20], ['முப்பத்', 30], ['முப்பத', 30], ['நாற்பத்', 40], ['நாற்பத', 40], ['ஐம்பத்', 50], ['ஐம்பத', 50],
   ['அறுபத்', 60], ['அறுபத', 60], ['எழுபத்', 70], ['எழுபத', 70], ['எண்பத்', 80], ['எண்பத', 80], ['தொண்ணூத்', 90], ['தொண்ணூற்', 90],
-  ['இரண்ட', 2], ['ரெண்ட', 2], ['மூவ', 3], ['நால', 4], ['ஐய', 5], ['அய', 5], ['அஞ்ச', 5], ['ஆற', 6], ['ஏழ', 7], ['எட்ட', 8], ['ஒன்பத', 9], ['பத்த', 10], ['ஒர', 1],
+  ['இரண்ட', 2], ['ரெண்ட', 2], ['மூவ', 3], ['மூன்ற', 3], ['நால', 4], ['நான்க', 4], ['ஐய', 5], ['ஐந்த', 5], ['அய', 5], ['அஞ்ச', 5], ['ஆற', 6], ['ஏழ', 7], ['எட்ட', 8], ['ஒன்பத', 9], ['பத்த', 10], ['ஒர', 1],
   ['ஐநூற்', 500], ['அறுநூற்', 600], ['இருநூற்', 200], ['எழுநூற்', 700], ['எண்ணூற்', 800], ['நானூற்', 400], ['முந்நூற்', 300], ['தொள்ளாயிரத்', 900],
 ];
 // sandhi: a tens stem ending in "த்" glues to a vowel-initial unit: த்+ஏழு = த்தேழு.
@@ -784,7 +784,8 @@ export function findAmount(text: string): number | undefined {
 /** Like findAmount, plus whether the number sat next to a currency word (strong evidence). */
 export function findAmountHit(text: string): { value: number; currencyNear: boolean } | undefined {
   // a clock time is never the money: "कल रात 9:30 पर पैसे गए" is not ₹30
-  const all = numberGroups(text.replace(/(?<![\d.:])\d{1,2}:\d{2}(?![\d:])/g, ' '));
+  const stripped = text.replace(/(?<![\d.:])\d{1,2}:\d{2}(?![\d:])/g, ' ');
+  const all = numberGroups(stripped);
   const groups = all.filter((g) => !g.unsure && !g.timeAfter && g.value >= 1 && g.value < 1e9 && !(g.digitsOnly && String(g.value).length >= 10));
   // "ఏనిమిది వేల రూపాయలు … ఇరవై నిమిషాల": the amount itself was misheard ("? thousand") and no readable amount sits
   // next to a currency word. Any other number in the sentence is not the money; ask rather than pick it.
@@ -795,6 +796,21 @@ export function findAmountHit(text: string): { value: number; currencyNear: bool
   const money = groups.filter((g) => g.currencyNear);
   const pool = money.length ? money : groups.filter((g) => g.value >= 10);
   if (!pool.length) return undefined;
+  if (corrected) {
+    // "दीड लाख रुपये गेले, नाही नाही, अडीच लाख": the value after the last "no" replaces the money said before it,
+    // even with no currency word of its own (but only a value of the same order, not any later number)
+    const st = tokenize(stripped).map((t) => t.toLowerCase());
+    // "Ref No. 4321…" is "number", not "no": a "no" right before digits or after an ID word is not a correction
+    const isNeg = (t: string, i: number) =>
+      NEGATE.includes(t) && !(t === 'no' && (/^\d/.test(st[i + 1] ?? '') || /^(ref|reference|upi|utr|a\/c|account|txn|transaction|phone|mobile)\.?$/.test(st[i - 1] ?? '')));
+    const lastNeg = st.reduce((at, t, i) => (isNeg(t, i) ? i : at), -1);
+    const before = (money.length ? money : groups).filter((g) => g.end <= lastNeg);
+    const fix = groups.find((g) => g.start > lastNeg && g.value >= 10);
+    if (before.length && fix) {
+      const was = before[before.length - 1].value;
+      if (fix.value * 20 >= was && fix.value <= was * 20) return { value: fix.value, currencyNear: true };
+    }
+  }
   const pick = corrected ? pool[pool.length - 1] : pool.reduce((a, b) => (b.value > a.value && b.currencyNear >= a.currencyNear ? b : a));
   return { value: pick.value, currencyNear: pick.currencyNear };
 }

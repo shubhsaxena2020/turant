@@ -1,0 +1,40 @@
+{"id":"rb-01","lang":"hi","kind":"story","text":"मेरे account से 5 thousand rupees कट गए","expected":{"amount":5000},"tags":["codemix","en_digits"]}
+{"id":"rb-02","lang":"hi","kind":"story","text":"पांच thousand rupees गए मेरे HDFC account से","expected":{"amount":5000,"bank":"hdfc"},"tags":["codemix","en_mult"]}
+{"id":"rb-03","lang":"hi","kind":"story","text":"two lakh fifty thousand रुपये निकल गए","expected":{"amount":250000},"tags":["codemix","en_numwords"]}
+{"id":"rb-04","lang":"hi","kind":"story","text":"डेढ़ करोड़ रुपये का fraud हुआ","expected":{"amount":15000000},"tags":["crore","fraction"]}
+{"id":"rb-05","lang":"hi","kind":"story","text":"2 करोड़ 50 लाख रुपये चले गए","expected":{"amount":25000000},"tags":["crore","lakh"]}
+{"id":"rb-06","lang":"hi","kind":"story","text":"पाँच हज़ार... नहीं नहीं, छह हज़ार रुपये कटे","expected":{"amount":6000},"tags":["selfcorr"]}
+{"id":"rb-07","lang":"hi","kind":"story","text":"paanch sau nahi nahi, saat sau rupaye gaye","expected":{"amount":700},"tags":["selfcorr","hinglish"]}
+{"id":"rb-08","lang":"hi","kind":"story","text":"1.5 lakh rupees kat gaye kal raat 10 baje","expected":{"amount":150000,"time":{"day":-1,"at":"22:00"}},"tags":["lakh","decimal"]}
+{"id":"rb-09","lang":"hi","kind":"story","text":"UTR है 4 0 3 2 1 8 7 6 5 4 3 2, और 3 thousand rupees गए","expected":{"utr":"403218765432","amount":3000},"tags":["en_digits","utr"]}
+{"id":"rb-10","lang":"hi","kind":"story","text":"सवा दो लाख रुपये गए SBI से","expected":{"amount":225000,"bank":"sbi"},"tags":["fraction","lakh"]}
+{"id":"rb-11","lang":"en","kind":"story","text":"I lost 1.2 lakh rupees from my ICICI account","expected":{"amount":120000,"bank":"icici"},"tags":["lakh","decimal"]}
+{"id":"rb-12","lang":"en","kind":"story","text":"they took one crore twenty lakh rupees","expected":{"amount":12000000},"tags":["crore"]}
+{"id":"rb-13","lang":"en","kind":"story","text":"Five thousand, no no, six thousand rupees were debited","expected":{"amount":6000},"tags":["selfcorr"]}
+{"id":"rb-14","lang":"en","kind":"story","text":"about 25k went from my account two days ago","expected":{"amount":25000,"time":{"day":-2,"at":"12:00","tol":720}},"tags":["k_suffix"]}
+{"id":"rb-15","lang":"en","kind":"story","text":"Rs 2,50,000 was debited from my Axis account","expected":{"amount":250000,"bank":"axis"},"tags":["indian_grouping"]}
+{"id":"rb-16","lang":"en","kind":"story","text":"teen hazaar rupees gaye through PhonePe","expected":{"amount":3000,"paymentApp":"phonepe"},"tags":["codemix","hazaar"]}
+{"id":"rb-17","lang":"mr","kind":"story","text":"माझ्या खात्यातून 5 thousand रुपये गेले","expected":{"amount":5000},"tags":["codemix","en_digits"]}
+{"id":"rb-18","lang":"mr","kind":"story","text":"दीड लाख रुपये गेले, नाही नाही, अडीच लाख","expected":{"amount":250000},"tags":["selfcorr","fraction"]}
+{"id":"rb-19","lang":"mr","kind":"story","text":"एक कोटी रुपये गेले","expected":{"amount":10000000},"tags":["crore"]}
+{"id":"rb-20","lang":"mr","kind":"story","text":"सव्वा लाख रुपये कापले गेले","expected":{"amount":125000},"tags":["fraction"]}
+{"id":"rb-21","lang":"bn","kind":"story","text":"আমার account থেকে 5 thousand টাকা কেটে গেছে","expected":{"amount":5000},"tags":["codemix","en_digits"]}
+{"id":"rb-22","lang":"bn","kind":"story","text":"দেড় লাখ টাকা চলে গেছে","expected":{"amount":150000},"tags":["fraction","lakh"]}
+{"id":"rb-23","lang":"bn","kind":"story","text":"পাঁচ হাজার না না, ছয় হাজার টাকা কেটেছে","expected":{"amount":6000},"tags":["selfcorr"]}
+{"id":"rb-24","lang":"bn","kind":"story","text":"এক কোটি টাকা চলে গেছে","expected":{"amount":10000000},"tags":["crore"]}
+{"id":"rb-25","lang":"ta","kind":"story","text":"என் account-லிருந்து 5 thousand ரூபாய் போச்சு","expected":{"amount":5000},"tags":["codemix","en_digits"]}
+{"id":"rb-26","lang":"ta","kind":"story","text":"ஐந்தாயிரம் இல்ல இல்ல, ஆறாயிரம் ரூபாய் போச்சு","expected":{"amount":6000},"tags":["selfcorr"]}
+{"id":"rb-27","lang":"ta","kind":"story","text":"ஒரு கோடி ரூபாய் போய்விட்டது","expected":{"amount":10000000},"tags":["crore"]}
+{"id":"rb-28","lang":"ta","kind":"story","text":"இரண்டரை லட்சம் ரூபாய் போய்விட்டது","expected":{"amount":250000},"tags":["fraction","lakh"]}
+{"id":"rb-29","lang":"te","kind":"story","text":"నా account నుండి 5 thousand రూపాయలు పోయాయి","expected":{"amount":5000},"tags":["codemix","en_digits"]}
+{"id":"rb-30","lang":"te","kind":"story","text":"ఐదు వేలు కాదు కాదు, ఆరు వేల రూపాయలు పోయాయి","expected":{"amount":6000},"tags":["selfcorr"]}
+{"id":"rb-31","lang":"te","kind":"story","text":"ఒక కోటి రూపాయలు పోయాయి","expected":{"amount":10000000},"tags":["crore"]}
+{"id":"rb-32","lang":"te","kind":"story","text":"రెండున్నర లక్షల రూపాయలు పోయాయి","expected":{"amount":250000},"tags":["fraction","lakh"]}
+{"id":"rb-33","lang":"kn","kind":"story","text":"ನನ್ನ account ಇಂದ 5 thousand ರೂಪಾಯಿ ಹೋಯಿತು","expected":{"amount":5000},"tags":["codemix","en_digits"]}
+{"id":"rb-34","lang":"kn","kind":"story","text":"ಐದು ಸಾವಿರ ಅಲ್ಲ ಅಲ್ಲ, ಆರು ಸಾವಿರ ರೂಪಾಯಿ ಹೋಯಿತು","expected":{"amount":6000},"tags":["selfcorr"]}
+{"id":"rb-35","lang":"kn","kind":"story","text":"ಒಂದು ಕೋಟಿ ರೂಪಾಯಿ ಹೋಯಿತು","expected":{"amount":10000000},"tags":["crore"]}
+{"id":"rb-36","lang":"kn","kind":"story","text":"ಎರಡೂವರೆ ಲಕ್ಷ ರೂಪಾಯಿ ಹೋಯಿತು","expected":{"amount":250000},"tags":["fraction","lakh"]}
+{"id":"rb-37","lang":"hi","kind":"correction","text":"नहीं नहीं, 500 था","expected":{"amount":500},"tags":["correction","selfcorr"]}
+{"id":"rb-38","lang":"en","kind":"correction","text":"no no, it was 500","expected":{"amount":500},"tags":["correction"]}
+{"id":"rb-39","lang":"hi","kind":"answer:amount","hint":"amount","text":"5 thousand","expected":{"amount":5000},"tags":["en_mult","short"]}
+{"id":"rb-40","lang":"hi","kind":"answer:amount","hint":"amount","text":"ढाई लाख","expected":{"amount":250000},"tags":["fraction","short"]}

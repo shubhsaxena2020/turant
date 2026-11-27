@@ -596,3 +596,18 @@ describe('round 42 (UPI IDs and read-outs as Whisper writes them)', () => {
     expect(x('maine phone pe baat ki').paymentApp).toBeUndefined();
   });
 });
+
+describe('round 44-45 (Tamil compounds, corrections after the amount)', () => {
+  const x = (t: string, lang?: string) => extractFields(t, { now: NOW, lang });
+  it('Tamil spoken thousands', () => {
+    expect(x('ஐந்தாயிரம் ரூபாய் போய்விட்டது', 'ta-IN').amount?.value).toBe(5000);
+    expect(x('நான்காயிரம் ரூபாய் போச்சு', 'ta-IN').amount?.value).toBe(4000);
+  });
+  it('the value after "no no" replaces the money said before it', () => {
+    expect(x('दीड लाख रुपये गेले, नाही नाही, अडीच लाख', 'mr-IN').amount?.value).toBe(250000);
+    expect(x('5000 gaye nahi nahi 6000').amount?.value).toBe(6000);
+    expect(x('5000 rupaye gaye, paise wapas nahi aaye, 10 minute pehle').amount?.value).toBe(5000);
+    // "Ref No." is "number", not a correction
+    expect(x('The SMS says 15,000 rupees debited from ACXX 4321, UPI Ref No. 4321-7890-5612.').amount?.value).toBe(15000);
+  });
+});
