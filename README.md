@@ -77,7 +77,7 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
 | **Blind set: 84 new sentences written after tuning, never tuned on** | **52.2%** | **62.8%** |
 | Reference text (no speech recognition) | 100% | 100% |
 
-- **By language** (large-v3, clean): Hindi 98%, English 90%, Marathi 70%, Tamil 66%, Telugu 61%, Kannada 46%, Bengali 44%.
+- **By language** (large-v3, clean): Hindi 98%, English 91%, Marathi 73%, Tamil 66%, Telugu 61%, Kannada 46%, Bengali 44%.
 - **Where the errors are:** about 92% of the remaining errors are the recogniser losing words, mostly in Bengali and Kannada, not the parsing. The rules alone can reach at most about 71% on these transcripts.
 - **What ships in the page** (`harness/asr_wbase.mjs` runs the app's own in-page models on the same clips; clean, fully correct reports):
 
@@ -85,7 +85,7 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   |---|---|---|---|---|
   | whisper-base | 13.8% | 50.0% | 10.0% | 2.5-6.3% |
   | **Hindi2Hinglish-Swift + rules tuned to its Hinglish** | **90.0%** | **75.0%** | **53.8%** (held-out voice 40.0%) | not used |
-  | **Indian-language Whisper fine-tunes** (Bangla small; IndicWhisper Telugu / Kannada base) | | | | **Telugu 68.8%, Kannada 50.0%, Tamil 50.0%, Bengali 36.3%** |
+  | **Indian-language Whisper fine-tunes** (Bangla small; IndicWhisper Telugu / Kannada base, Tamil small) | | | | **Telugu 68.8%, Kannada 50.0%, Tamil 50.0%, Bengali 36.3%** |
 
   On the **blind set** (new sentences, never tuned on), the in-page model gets Hindi **91.7%** (the same as the text-only ceiling for those sentences), English 61.1% and Marathi 41.7%. In noise, Hindi stays at 85.0% at 15 dB (a busy room) and 55.0% at 5 dB (a roadside).
   The Indian-language models were measured on both voices with no rule changes. Telugu and Kannada in the page now beat server Whisper large-v3 (61% and 46%). Tamil's 196 MB decoder is split into chunks under the host's 100 MB per-file limit (`harness/split_onnx.py`; same weights, identical transcripts). The Telugu, Kannada and Tamil files are not in git: the Docker build fetches them from the live site (`prototype/scripts/fetch-models.mjs`), and if that fails the app uses whisper-base for them. `harness/convert_whisper.py` rebuilds them from the original models.
@@ -124,7 +124,7 @@ Re-run the speech evaluation (needs Python, edge-tts and a Whisper server; see `
 | Folder | What |
 |---|---|
 | `prototype/` | **The app** (React + TypeScript + Vite PWA, works offline): extraction rules, the question flow, outputs, and the in-page Whisper fallback. |
-| `harness/` | Speech-to-report evaluation: corpus (280 cases plus an 84-case blind set), TTS, noise, ASR, scoring and the tuning journal. |
+| `harness/` | Speech-to-report evaluation: corpus (280 cases), two blind sets (84 + 42 cases, scored only in aggregate), a 40-case robustness set, 4 unseen speakers, TTS, noise, ASR, scoring (`eval_all.sh`, `unseen_report.mjs`) and the tuning journal. |
 | `round2-kit/indic-numbers/` | Shared parsers for numbers, times and banks in 7 languages, with fuzz tests. |
 | `round2-kit/voice-kit/` | The same voice engine as a reusable kit, where one config file makes a new slot-filling voice app (examples: khata ledger, health, civic grievance). |
 | `research/` | Sourced facts, voice-UX and accessibility research, and the design spec. |
@@ -135,13 +135,13 @@ Re-run the speech evaluation (needs Python, edge-tts and a Whisper server; see `
 | Dependency | Used for | If it gets costly or disappears |
 |---|---|---|
 | Browser speech recognition (Chrome / Edge) | Live words while speaking | Free. It already fails on some machines, and the in-page Whisper takes over. |
-| Whisper via transformers.js + ONNX Runtime Web (open source); models from Hugging Face (whisper-base; Oriserve Hindi2Hinglish-Swift, Apache-2.0) | On-device speech recognition fallback | Free and open source. The model files can be self-hosted next to the app. |
+| Whisper via transformers.js + ONNX Runtime Web (open source); models: Oriserve Hindi2Hinglish-Swift and a Bangla whisper-small (from Hugging Face), IIT Madras IndicWhisper Telugu / Kannada / Tamil (converted, served by Turant), whisper-base; all Apache-2.0 | On-device speech recognition fallback | Free and open source; self-hosted where the app serves them. |
 | Hosting (Vercel now; any static host or the Docker image) | Serving the app | Static files only, so near-zero cost. |
-| Better Indian-language ASR (planned: Bhashini / AI4Bharat IndicConformer / Sarvam) | Bengali, Kannada, Tamil and Telugu accuracy | Behind one small interface (`src/lib/speech.ts`), so the provider can be swapped without touching the screens. |
+| Server-grade Indian-language ASR (option: Bhashini / AI4Bharat IndicConformer / Sarvam) | Accuracy beyond the on-device models, mainly Bengali | Behind one small interface (`src/lib/speech.ts`), so the provider can be swapped without touching the screens. |
 
 ## Honest limitations
 
-- **Speech accuracy:** Bengali and Kannada are still weak. That's the recogniser, and the next step is an Indian-language ASR.
+- **Speech accuracy:** about 6 in 10 brand-new spoken reports come out fully correct (blind set and unseen speakers); the app asks for the rest. Bengali is the weakest (in the page about 35%); Marathi and English drop on accented, unseen speakers. Most remaining errors are the recogniser losing words, not the parsing.
 - **Whisper fallback:** the first use downloads about 100 MB. Live words appear only when the browser's own recogniser works. Every language now has an Indian-language model for the in-page fallback; Bengali and Tamil are larger downloads (about 290 MB).
 - **Filing:** Turant prepares the complaint and the call script. Filing still happens on the official 1930 line or cybercrime.gov.in, which have no public API.
 - **Test speech:** our harness voices are synthetic (edge-tts). Real phone tests in each language are the next step.
