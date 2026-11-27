@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 // Tiny hand-written service-worker plugin: emits sw.js with the full list of
@@ -19,7 +19,9 @@ function serviceWorker(): Plugin {
       };
       const files = Object.keys(bundle).filter((f) => !f.endsWith('.map') && size(f) < 1_000_000);
       const template = readFileSync(fileURLToPath(new URL('./src/sw-template.js', import.meta.url)), 'utf8');
-      const precache = ['./', ...files.map((f) => './' + f), './manifest.webmanifest', './icon.svg'];
+      // self-hosted fonts live in public/fonts, outside the bundle
+      const fonts = readdirSync(fileURLToPath(new URL('./public/fonts', import.meta.url))).filter((f) => f.endsWith('.woff2'));
+      const precache = ['./', ...files.map((f) => './' + f), ...fonts.map((f) => './fonts/' + f), './manifest.webmanifest', './icon.svg'];
       const source = template
         .replace('__CACHE_NAME__', 'turant-' + Date.now().toString(36))
         .replace('__PRECACHE__', JSON.stringify(precache));

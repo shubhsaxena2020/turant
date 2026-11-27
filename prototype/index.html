@@ -7,13 +7,11 @@
     <meta name="description" content="Turant: lost money to a UPI scam? Tell us what happened in your own language. We write the complaint for 1930 and cybercrime.gov.in." />
     <link rel="icon" href="./icon.svg" type="image/svg+xml" />
     <link rel="manifest" href="./manifest.webmanifest" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Figtree + EB Garamond (Wispr Flow's open-source faces); Indian scripts fall back to the phone's Noto fonts. -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap"
-    />
+    <!-- Figtree + EB Garamond (Wispr Flow's open-source faces), self-hosted in public/fonts (src/fonts.css);
+         Indian scripts fall back to the phone's Noto fonts. The first screen's three faces are preloaded. -->
+    <link rel="preload" href="./fonts/figtree-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./fonts/ebgaramond-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="./fonts/ebgaramond-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
     <title>Turant: report a UPI fraud by voice</title>
   </head>
   <body>
