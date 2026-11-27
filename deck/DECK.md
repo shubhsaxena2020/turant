@@ -65,7 +65,7 @@ Build for Bharat 2026 (Scaler x Wispr Flow), Round 2. Theme: Public infrastructu
 
 - **Two speech recognisers behind one interface (`speech.ts`):**
   - The browser's speech recognition shows live words.
-  - Turant also records the audio. If the browser returns nothing, one misheard word, or stops early (all seen on Chrome for Windows), Whisper-base transcribes it in the page via transformers.js and ONNX Runtime Web (WebGPU, else WebAssembly). About 100 MB, downloaded once, then cached.
+  - Turant also records the audio. If the browser returns nothing, one misheard word, or stops early (all seen on Chrome for Windows), Whisper transcribes it in the page via transformers.js and ONNX Runtime Web. For Hindi, English and Marathi it uses Oriserve's Hindi2Hinglish Whisper, which writes clean Hinglish. About 100 MB, downloaded once, then cached; a 12-second story takes about 8 seconds.
   - Turant's own voice detection decides when the person has finished.
 - **Rules, not an LLM:** the rules read numbers, dates, banks and IDs in 7 languages, including recogniser slips ("to lock rupees" = ₹2,00,000; "9 बजकर 30 मिनट" = 9:30; a UTR read digit by digit). On the same transcripts an LLM invented times and scam types: 16.5% fully correct, against 43.5% for the rules then.
 - **Asking beats guessing:** a wrong amount on a police complaint is worse than a missing one. A spoken "₹5" is offered back as "₹5,000?". Unclear values are asked again.
@@ -84,8 +84,9 @@ Build for Bharat 2026 (Scaler x Wispr Flow), Round 2. Theme: Public infrastructu
 - **Honest headline:** about 63% of brand-new spoken reports are fully correct on large-v3. The app asks for what it could not read.
 - **By language** (large-v3, clean): Hindi 98%, English 90%, Marathi 70%, Tamil 66%, Telugu 61%, Kannada 46%, Bengali 44%.
 - **About 92% of remaining errors** are the recogniser losing words, not the parsing.
-- **Fuzz:** millions of generated amounts and times parse 100%; with one slip per number, 99.6-100%. 516 automated tests.
-- **Limits:** synthetic voices. Whisper turbo and large-v3 stand in for the phone; the phone recogniser and in-page Whisper-base are not benchmarked yet.
+- **Fuzz:** millions of generated amounts and times parse 100%; with one slip per number, 99.6-100%. 518 automated tests.
+- **What ships in the page, measured on the same clips:** Hindi 85.0% fully correct (stock whisper-base: 13.8%), English 61.7%, Marathi 15.0%. Bengali, Tamil, Telugu and Kannada are 2.5-6.3% in the page, so they rely on the browser's recogniser until an Indian-language model is added.
+- **Limits:** synthetic voices (edge-tts). Real phone tests in every language come next.
 
 ## Slide 9: Users and how many
 

@@ -253,6 +253,32 @@ The held-out split only changes the *voice*; after 30 tuning rounds the *sentenc
 - **Overfitting gap:** about 10 points on clean reference text (90.5% vs 100%) and 6.5 points on large-v3 speech. Rounds 30-32 still gained 3.4 points on the blind set, so the ASR-spelling rules generalise; the text gap is wording the rules have never seen.
 - **Re-run:** `node run_eval.mjs --cases corpus/blind.jsonl --plan plan_blind.json [--transcripts transcripts_lv3] --name blind_x --compare none`. To add clips: `HARNESS_CASES=corpus/blind.jsonl HARNESS_PLAN=plan_blind.json HARNESS_TIERS=base,noise,rate python tts.py` (then noise.py, asr.py / asr_alt.py).
 
+## What actually ships: the in-page models (27 Nov)
+
+Everything above measured server-grade Whisper (turbo, large-v3). When the browser's own recogniser fails (it does on Chrome for Windows: it ends its session about 2 s in, or returns one misheard word), the app transcribes **inside the page** with a small ONNX Whisper. `asr_wbase.mjs` runs that exact model on the harness clips (transformers.js on Node, same files, q8), so the numbers below are what a user gets on that path.
+
+| Fully correct reports, clean speech | hi | en | mr | bn | ta | te | kn |
+|---|---|---|---|---|---|---|---|
+| whisper-base (what shipped until today) | 13.8% | 50.0% | 10.0% | 5.0% | 6.3% | 6.3% | 2.5% |
+| Hindi2Hinglish-Swift, before tuning | 58.8% | 57.9%* | 15.0% | | | | |
+| **Hindi2Hinglish-Swift, after round 34** | **85.0%** | **61.7%** | **15.0%** | | | | |
+
+\* partial run. Hindi2Hinglish-Swift is Oriserve's whisper-base fine-tune (Apache-2.0, about 102 MB). It writes clean Hinglish ("Mere account se paanch hazaar rupe cut gae… KYC update karo, SBI ka account hai"), where whisper-base wrote Hindi in mixed Urdu, Cyrillic and Latin letters.
+
+- **The app now picks the model by speaking language:** Hindi, English (India) and Marathi use Swift, the rest stay on whisper-base.
+- **Round 34** tuned the extractor to Swift's Hinglish:
+  - `laakh` = lakh; `shoony` / `tin` = 0 / 3;
+  - Hinglish digit read-outs for phones, UTRs and accounts (they were ignored);
+  - `pata nahin` = don't know; `access bank` / `stay bank` = Axis / SBI.
+  - Hindi went 58.8% → 85.0%. large-v3 and turbo were unchanged run for run.
+- **Bengali, Tamil, Telugu and Kannada on the in-page fallback are 2.5-6.3%.** In those languages the browser's recogniser is the real path, and an Indian-language model (IndicConformer, Sarvam, Bhashini, or a converted vasista22 small model) is the next step.
+- **Speed:** cross-origin isolation (COOP same-origin + COEP credentialless on Vercel, nginx and vite) gives ONNX Runtime threads. A cached 12-second Hindi story transcribes in about 8.0 s (12.8 s without isolation; the A/B used the same build, clip and profile). The first use downloads the model once (about 100 MB).
+- **Recording fixes found on Shubh's laptop** (Chrome, Windows):
+  - Our own voice detection ends the turn, so the browser recogniser's early end no longer cuts the recording.
+  - A weak browser result (fewer than 3 words or confidence below 0.6) defers to Whisper on the full recording.
+  - A suspended AudioContext is resumed.
+  - `?speech=whisper` skips the browser recogniser entirely. In tests with a fake microphone, Chrome's recogniser listens to the real room microphone, so demos use this option.
+
 ## What is left
 
 - **On large-v3** (round 28, clean), the extractor-only ceiling is 68.0%; we are at 65.7%. The rest is the recogniser losing words. That is concentrated in Bengali (39%; large-v3 did not help it) and Kannada (40%).
