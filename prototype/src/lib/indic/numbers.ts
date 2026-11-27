@@ -20,11 +20,11 @@ add(2, 'दो', 'दोन', 'do', 'don', 'two');
 add(3, 'तीन', 'teen', 'tin', 'three');
 add(4, 'चार', 'char', 'chaar', 'four');
 add(5, 'पाँच', 'पांच', 'पाच', 'paanch', 'panch', 'five');
-add(6, 'छह', 'छः', 'छे', 'छै', 'सहा', 'chhe', 'chhah', 'six');
+add(6, 'छह', 'छः', 'छे', 'छै', 'सहा', 'chhe', 'chhah', 'saha', 'sahaa', 'six');
 add(7, 'सात', 'saat', 'seven');
 add(8, 'आठ', 'aath', 'eight');
 add(9, 'नौ', 'नऊ', 'नव', 'nau', 'nine'); // नव: Marathi spoken form
-add(10, 'दस', 'दहा', 'das', 'dus', 'ten');
+add(10, 'दस', 'दहा', 'das', 'dus', 'dahaa', 'daha', 'dahaan', 'daah', 'ten');
 add(11, 'ग्यारह', 'ग्यारा', 'ज्यारा', 'अकरा', 'gyarah', 'eleven'); // ग्यारा / ज्यारा: ASR spellings
 add(12, 'बारह', 'बारा', 'barah', 'baarah', 'twelve');
 add(13, 'तेरह', 'तेरा', 'terah', 'thirteen');
@@ -570,7 +570,7 @@ export function combine(parts: Part[]): number | undefined {
 }
 
 // ---------- amounts in sentences ----------
-const CURRENCY = ['দাকা', 'रुपये', 'रुपए', 'रुपया', 'रुपयांचे', 'रूपये', 'rupees', 'rupee', 'rupaye', 'rupaiya', 'rs', 'inr', 'টাকা', 'টাকার', 'ரூபாய்', 'ரூபா', 'ருபாய்', 'ருபீஸ்', 'ரூபீஸ்', 'రూపాయలు', 'రూపాయల', 'రూపాయి', 'ರೂಪಾಯಿ', 'ರೂಪಾಯ್', 'ರೂ', 'taka', 'paise', 'पैसे'].map((w) => w.normalize('NFC'));
+const CURRENCY = ['roope', 'roopij', 'দাকা', 'रुपये', 'रुपए', 'रुपया', 'रुपयांचे', 'रूपये', 'rupees', 'rupee', 'rupaye', 'rupaiya', 'rs', 'inr', 'টাকা', 'টাকার', 'ரூபாய்', 'ரூபா', 'ருபாய்', 'ருபீஸ்', 'ரூபீஸ்', 'రూపాయలు', 'రూపాయల', 'రూపాయి', 'ರೂಪಾಯಿ', 'ರೂಪಾಯ್', 'ರೂ', 'taka', 'paise', 'पैसे'].map((w) => w.normalize('NFC'));
 // Currency words as ASR spells them: ருபாய், ரூபாயி, তাকা, రోపాయలు. Compared after folding
 // sound-alike letters and vowel length (same table as above), by prefix.
 // Folding also merges aspirated / unaspirated letters (আধ ~ আদ, ঘণ্টা ~ গন্টা); those are left out of the
@@ -639,7 +639,7 @@ const CONTEXT_MULT: Record<string, number> = Object.fromEntries(
 ); // লাক alone = "luck"
 // Number only right before "thousand / lakh": ಆಯಿದು ಸಾವಿರ = 5,000, but "ಕಟ್ ಆಯಿದು" = "got cut" (ಆಯಿತು).
 const BEFORE_MULT: Record<string, number> = Object.fromEntries(
-  Object.entries({ 'ಆಯಿದು': 5, 'ಆಯದು': 5, 'শোয': 6, 'ছযি': 6, 'সোয': 6, 'পাঁছ': 5, 'পাছ': 5, 'আঠ': 8, 'देड': 1.5, 'डेड': 1.5, to: 2, too: 2 }).map(([w, v]) => [w.normalize('NFC'), v]), // শোয(়) alone = "lie down"
+  Object.entries({ 'ಆಯಿದು': 5, 'ಆಯದು': 5, 'শোয': 6, 'ছযি': 6, 'সোয': 6, 'পাঁছ': 5, 'পাছ': 5, 'আঠ': 8, 'देड': 1.5, 'डेड': 1.5, din: 1.5, deed: 1.5, adich: 2.5, adeech: 2.5, aditi: 2.5, to: 2, too: 2 }).map(([w, v]) => [w.normalize('NFC'), v]), // শোয(়) alone = "lie down"
 );
 // Words that may stand right before a bare "thousand": "a thousand", "around thousand rupees".
 const BARE_OK = ['a', 'one', 'about', 'around', 'approx', 'only', 'just', 'karib', 'lagbhag', 'sirf', 'bas', 'करीब', 'लगभग', 'सिर्फ', 'बस', 'and', 'aur', 'और'];
@@ -651,8 +651,8 @@ export function numberGroups(text: string): Group[] {
   let i = 0;
   while (i < toks.length) {
     // English "to lock rupees" (Whisper for "two lakh"): a context-only multiplier counts here too.
-    const beforeMul = !!toks[i + 1] && (!!wordParts(toks[i + 1])?.every((x) => 'mul' in x && x.mul >= 1000) || (CONTEXT_MULT[toks[i + 1]] ?? 0) >= 1000);
-    const p = toks[i] === '|' ? undefined : (wordParts(toks[i]) ?? (beforeMul && BEFORE_MULT[toks[i]] !== undefined ? [{ v: BEFORE_MULT[toks[i]] }] : undefined));
+    const beforeMul = !!toks[i + 1] && (!!wordParts(toks[i + 1])?.every((x) => 'mul' in x && x.mul >= 1000) || (CONTEXT_MULT[toks[i + 1].toLowerCase()] ?? 0) >= 1000);
+    const p = toks[i] === '|' ? undefined : (wordParts(toks[i]) ?? (beforeMul && BEFORE_MULT[toks[i].toLowerCase()] !== undefined ? [{ v: BEFORE_MULT[toks[i].toLowerCase()] }] : undefined));
     if (!p) {
       i++;
       continue;
@@ -670,7 +670,7 @@ export function numberGroups(text: string): Group[] {
       }
       const last = parts[parts.length - 1];
       const nextIsMul = !!toks[i + 1] && !!wordParts(toks[i + 1])?.every((x) => 'mul' in x && x.mul >= 1000);
-      const q = wordParts(toks[i]) ?? (last && 'v' in last ? (shortMultiplier(toks[i]) ?? (CONTEXT_MULT[toks[i]] ? [{ mul: CONTEXT_MULT[toks[i]] }] : undefined)) : undefined) ?? (nextIsMul && BEFORE_MULT[toks[i]] !== undefined ? [{ v: BEFORE_MULT[toks[i]] }] : undefined);
+      const q = wordParts(toks[i]) ?? (last && 'v' in last ? (shortMultiplier(toks[i]) ?? (CONTEXT_MULT[toks[i].toLowerCase()] ? [{ mul: CONTEXT_MULT[toks[i].toLowerCase()] }] : undefined)) : undefined) ?? (nextIsMul && BEFORE_MULT[toks[i].toLowerCase()] !== undefined ? [{ v: BEFORE_MULT[toks[i].toLowerCase()] }] : undefined);
       if (!q) break;
       // a read-out ID (single spaced digits) never runs into number words
       // digits written by the recogniser are a complete number: \"वय 40 दोन दिवस\" is 40 then 2, never 42

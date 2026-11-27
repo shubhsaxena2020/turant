@@ -461,3 +461,25 @@ describe('round 35 (read-outs as the in-page Hinglish Whisper writes English)', 
     expect(x('I lost 47000 rupees from my quote account').bank?.value).toBe('Kotak Mahindra Bank');
   });
 });
+
+describe('round 36 (romanised Marathi, as the in-page model writes it)', () => {
+  const x = (t: string, o = {}) => extractFields(t, { now: NOW, ...o });
+  const hhmm = (iso?: string) => (iso ? new Date(iso).toTimeString().slice(0, 5) : '');
+  it('amounts', () => {
+    expect(x('Mag HDFC khaate tum don laakh rupe kaadle').amount?.value).toBe(200000);
+    expect(x('Din laakh roope gale').amount?.value).toBe(150000); // दीड लाख
+    expect(x('Aditi hazaar rupe gele').amount?.value).toBe(2500); // अडीच हजार
+    expect(x('saha hazaar rupe gale').amount?.value).toBe(6000);
+    expect(x('I sat at the bank din for an hour').amount).toBeUndefined(); // din alone is not 1.5
+  });
+  it('times', () => {
+    expect(hhmm(x('Kaal sandhyaakaari saat vaajata phone aala').time?.value)).toBe('19:00');
+    expect(hhmm(x('Kaal raatri saadhe nau vaajastha').time?.value)).toBe('21:30');
+    expect(x('Pandrah minutean poorvi').time).toBeDefined();
+    expect(x('tin divsaan poorvi').time).toBeDefined();
+  });
+  it('read-out and skip', () => {
+    expect(x('Tyaacha number saat shoony ek ek don don tin tin chaar chaar.').suspectPhone?.value).toBe('7011223344');
+    expect(detectIntent('maahit naahi')).toBe('skip');
+  });
+});
