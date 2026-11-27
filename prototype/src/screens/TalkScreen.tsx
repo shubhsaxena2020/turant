@@ -427,7 +427,8 @@ export function TalkScreen(props: {
                 </button>
               </div>
             ) : null}
-            <nav className={`flex flex-wrap justify-center gap-x-5 ${mic.listening ? 'invisible' : ''}`}>
+            {/* While answering a question the keypad / type / skip stay available; only the opening story hides them. */}
+            <nav className={`flex flex-wrap justify-center gap-x-5 ${mic.listening && storyMode ? 'invisible' : ''}`}>
               {storyMode ? (
                 <>
                   {!sampleRun ? (
