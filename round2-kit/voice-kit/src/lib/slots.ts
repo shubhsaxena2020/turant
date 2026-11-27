@@ -129,6 +129,31 @@ function idSequences(c: Ctx): IdSeq[] {
       }
     }
   }
+  // "रेफ नो सहा 12345789012": after a UTR / reference word, ONE number word and ONE digit group that make exactly
+  // 12 digits (same rule as Turant's mixedUtrRuns; other mixes are mostly misheard).
+  for (let i = 0; i < c.tokens.length; i++) {
+    if (!c.tokens.slice(Math.max(0, i - 4), i).some((t) => ctxMatch(t, UTR_WORDS, UTR_STEMS))) continue;
+    let d = '';
+    let words = 0;
+    let groups = 0;
+    let j = i;
+    for (; j < c.tokens.length && d.length <= 12; j++) {
+      const t = c.tokens[j];
+      if (/^\d+$/.test(t)) (d += t), t.length > 1 && groups++;
+      else {
+        const v = readoutDigit(t, true);
+        if (v === undefined) break;
+        d += String(v);
+        words++;
+      }
+    }
+    if (d.length === 12 && words && groups === 1) {
+      const overlapping = seqs.filter((s) => s.start < j && i < s.end);
+      for (const s of overlapping) seqs.splice(seqs.indexOf(s), 1);
+      seqs.push({ start: i, end: j, digits: d, runs: overlapping.flatMap((s) => s.runs) });
+      i = j;
+    }
+  }
   return seqs.sort((a, b) => a.start - b.start);
 }
 
@@ -700,6 +725,9 @@ export interface Correction {
 const SHAPE_ORDER: SlotType[] = ['upi', 'digits', 'phone', 'enum', 'datetime', 'duration', 'quantity+unit', 'number', 'amount', 'yesno'];
 
 /** Parse a spoken correction for exactly one slot (or null). Slot names come from aliases + labels. */
+/** "NOMOR BHUL 981112233": an ungrouped 7+ digit run read as ₹98 crore is an ID with a digit lost (money is written 20,000 / 2,50,000). */
+const lostDigitId = (text: string, value: unknown) => Number(value) >= 1_000_000 && /(^|[^\d,])\d{7,}(?![\d,])/.test(text);
+
 export function parseCorrection(cfg: QuestionCfg, text: string, opts: { now?: Date } = {}): Correction | null {
   text = unifyScript(text);
   const s = N.normalize(text);
@@ -724,7 +752,7 @@ export function parseCorrection(cfg: QuestionCfg, text: string, opts: { now?: Da
         ...cfg.slots.filter((x) => named!.group && x.group === named!.group),
         ...cfg.slots.filter((x) => ['upi', 'digits', 'phone'].includes(x.type) && x.type !== named!.type),
         ...cfg.slots.filter((x) => x.type === 'amount' && ['phone', 'digits'].includes(named!.type)),
-      ].find((x) => ext[x.key]);
+      ].find((x) => ext[x.key] && !(x.type === 'amount' && lostDigitId(text, ext[x.key]!.value)));
       if (alt) {
         field = alt.key;
         hit = ext[alt.key];
@@ -740,7 +768,7 @@ export function parseCorrection(cfg: QuestionCfg, text: string, opts: { now?: Da
   const amountSlot = cfg.slots.find((x) => x.type === 'amount');
   if (amountSlot) {
     const amt = extractAll(cfg, text, { ...base, hint: amountSlot.key })[amountSlot.key];
-    if (amt) return { field: amountSlot.key, value: amt.value, confidence: amt.confidence * 0.8 };
+    if (amt && !lostDigitId(text, amt.value)) return { field: amountSlot.key, value: amt.value, confidence: amt.confidence * 0.8 };
   }
   return null;
 }

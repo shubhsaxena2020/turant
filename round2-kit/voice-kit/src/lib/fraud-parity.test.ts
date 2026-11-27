@@ -352,3 +352,19 @@ describe('merge', () => {
     expect(pending(entry.fields, ['amount', 'utr'])).toEqual(['time', 'scamType', 'bank', 'suspect']);
   });
 });
+
+describe('parity with Turant rounds 30-33', () => {
+  it('word + digit-group UTR after a reference word', () => {
+    expect(extractFields('रेफ नो सहा 12345789012', { now: NOW }).utr?.value).toBe('612345789012');
+    expect(extractFields('रेफ नो सहा 1234578901 दो', { now: NOW }).utr?.value).toBe('612345789012');
+    expect(extractFields('नंबर सहा 1234578901', { now: NOW }).utr).toBeUndefined(); // no reference word
+  });
+  it('a lost-digit phone number in a correction is not a ₹98 crore amount', () => {
+    expect(correction('NOMOR BHUL 981112233', { now: NOW })).toBeNull();
+    expect(correction('नमबर गलत है 981112233', { now: NOW })).toBeNull();
+    expect(correction('15,00,000', { now: NOW })?.value).toBe(1500000);
+  });
+  it('"to lock rupees" = two lakh', () => {
+    expect(extractFields('they made me install any desk and to lock rupees are gone', { now: NOW }).amount?.value).toBe(200000);
+  });
+});

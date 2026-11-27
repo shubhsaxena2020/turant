@@ -12,7 +12,7 @@ Turant turns that into a conversation. You tap once and say what happened in you
 3. **Reads it back** ("Is this right?") so you can change anything by voice.
 4. **Hands you what to do next:** a script to read to the 1930 operator, the complaint text in the order the cybercrime.gov.in portal asks for it, a message for your bank, and a checklist.
 
-Everything runs on the phone or laptop. No account, no server, and nothing leaves the device unless you copy or share it.
+No account, no Turant server, and the complaint never leaves the device unless you copy or share it. The understanding (rules) runs on the device. One caveat on audio: when the browser's built-in speech recognition is used (Chrome / Edge), the browser maker may process the audio on its servers. The in-page Whisper fallback keeps audio on the device.
 
 ## Try it in one minute
 
@@ -47,7 +47,7 @@ microphone ──► browser speech recognition (Chrome / Edge, live words)
 
 - **Two speech recognisers:**
   - The browser's own speech recognition gives live words when it works.
-  - Turant also records the audio itself. If the browser returns nothing, returns a single misheard word or ends early (all seen with Chrome on Windows), Whisper reads the recording **inside the page**. That's whisper-base, about 100 MB, downloaded once and then cached. No audio is uploaded.
+  - Turant also records the audio itself. If the browser returns nothing, returns a single misheard word or ends early (all seen with Chrome on Windows), Whisper reads the recording **inside the page**. That's whisper-base, about 100 MB, downloaded once and then cached. This path uploads no audio.
   - Turant's own voice detection decides when the person has finished, so a recogniser that gives up early can't cut them off.
 - **Understanding is rules, not an LLM.** On the same transcripts, an LLM invented times and scam types. On its own it was fully correct on 16.5% of reports, against 43.5% for the rules at the time (see `harness/JOURNAL.md`). The rules read numbers, dates, banks and IDs in **Hindi, English/Hinglish, Bengali, Tamil, Telugu, Marathi and Kannada**, including the misspellings speech recognisers make:
   - "पाँच हज़ार" = ₹5,000.
@@ -71,7 +71,7 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
 - **By language** (large-v3, clean): Hindi 98%, English 90%, Marathi 70%, Tamil 66%, Telugu 61%, Kannada 46%, Bengali 44%.
 - **Where the errors are:** about 92% of the remaining errors are the recogniser losing words, mostly in Bengali and Kannada, not the parsing. The rules alone can reach at most about 71% on these transcripts.
 - **Fuzz testing:** millions of generated amounts and times are parsed 100% correctly. With one recogniser-style slip per number, 99.6-100% are still read correctly.
-- **Tests:** 133 unit tests in the app, 122 in the parsers and 258 in the voice kit.
+- **Tests:** 133 unit tests in the app, 122 in the parsers and 261 in the voice kit.
 
 The full log of every tuning round, what changed and what it gained is in [`harness/JOURNAL.md`](harness/JOURNAL.md).
 
