@@ -147,6 +147,7 @@ Turant keeps no server data, so we will measure with an opt-in anonymous count (
 - **Typing and tapping** for every answer. **Quiet mode** turns speech off.
 - **1930 is one tap away** in the top bar. "UTR" is always explained in plain words.
 - **No timeouts, no auto-advance;** reduced motion respected.
+- **Lighthouse (mobile):** accessibility 100, best practices 100, performance 94. The page loads with no third-party requests: even the fonts are served by Turant.
 
 ## Slide 14: Roadmap
 
