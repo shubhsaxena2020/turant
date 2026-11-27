@@ -626,3 +626,13 @@ describe('round 49 (crore in Latin script, decimals read out, robustness audio)'
     expect(x('Dedh laakh roope ke lie na hi, na hi, adhik laakh.', 'mr-IN').amount?.value).toBe(250000);
   });
 });
+
+describe('round 50 (Bengali as the in-page model spells numbers)', () => {
+  const x = (t: string) => extractFields(t, { now: NOW, lang: 'bn-IN' });
+  it('নৈশ্য / নিরানবই / দেডলাক / হাজা', () => {
+    expect(x('স্ক্যান করতেই চার হাজার নৈশ্য নিরানবই টাকা কেটে গেল').amount?.value).toBe(4999);
+    expect(x('দেডলাক টাকা চলে গেছে').amount?.value).toBe(150000);
+    expect(parseCorrection('টাকার পরিমাণ ভুল ছয় হাজা ছিল', { now: NOW, lang: 'bn-IN' })).toMatchObject({ field: 'amount', value: 6000 });
+    expect(x('এক হাজার দূষো টাকা').amount?.value).toBe(1200);
+  });
+});

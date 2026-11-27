@@ -349,6 +349,7 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - **"karod" (crore in Latin) was unknown to the shared parser**: "Do karod pachaas laakh" gave 50 lakh, "Dedh karod" 1.5. Fixed (karod / karor / kror).
   - "1 point to laakh" = 1.2 lakh (a decimal read out, "two" as "to"); "access account" = Axis; "through phone par" = PhonePe; Marathi "na hi" = नाही, "adhik laakh" = अडीच लाख.
   - Robust audio, in-page Hinglish model: Hindi tuning 69 → 81%, **unseen 69 → 85%**; English tuning 52 → 86%; Marathi 38 → 50% on both. Telugu / Kannada / Tamil 75% on both voice sets. All report sets unchanged run for run.
+- **Round 50 (Bengali spellings of the in-page model, unseen analysis half):** নৈশ্য / নৈশো (900), দূষো (200), নিরানবই / নিরানবী (99), দেড (1.5), লাক (lakh, also glued: দেডলাক), হাজা (thousand). In-page Bengali unseen **25.6% → 34.6%** (analysis +10, **check +1**, held-out tuning voice +1; mostly an analysis-half gain, recorded as such). Turbo +2 in noise. Mutation fuzz unchanged (99.7%); all report sets unchanged run for run.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
   | Fully correct, Hinglish model | Clean | 15 dB | 5 dB |
