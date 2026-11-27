@@ -192,7 +192,7 @@ export function FixSheet(props: { ui: UI; onFix: (field: FieldKey, value: string
       silenceMs: 2000,
       onOutcome: (o) => {
         if (o.kind !== 'heard') return setMsg(t('fixPrompt'));
-        const c = parseCorrection(o.text, { now: new Date() });
+        const c = parseCorrection(o.text, { now: new Date(), lang: ui.speakLang });
         if (!c) {
           setMsg(t('couldNotFix'));
           void ui.say((l) => tr(l, 'couldNotFix'));

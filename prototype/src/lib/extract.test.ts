@@ -566,3 +566,16 @@ describe('round 40 (dates and weekdays as answers)', () => {
     expect(day('5000 rupees, 1/2 of my salary')).toBeUndefined();
   });
 });
+
+describe('round 41 (romanised Marathi from the in-page model, only when speaking Marathi)', () => {
+  const mr = (t: string) => extractFields(t, { now: NOW, lang: 'mr-IN' });
+  it('reads Marathi spellings', () => {
+    expect(mr('UPI reference number chaar shoony tin don ek aath saat saahab paanch chaar tin don').utr?.value).toBe('403218765432');
+    expect(mr('Chaar hazaar nau se navaayant nau.').amount?.value).toBe(4999);
+    expect(mr('Manje, kal doopaari adhik vaajata phone par varun don hazaar sahaashay rupe ke lie.').paymentApp?.value).toBe('PhonePe');
+  });
+  it('leaves Hindi alone', () => {
+    expect(extractFields('saahab, paanch se zyada log the', { now: NOW, lang: 'hi-IN' }).amount).toBeUndefined();
+    expect(extractFields('mera phone par varun se baat hui', { now: NOW, lang: 'hi-IN' }).paymentApp).toBeUndefined();
+  });
+});

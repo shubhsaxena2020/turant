@@ -4,7 +4,7 @@
 // most common words in Bengali, Tamil, Telugu and Kannada.
 
 import { findAmountHit, fold, numberGroups, readoutDigit } from './indic/numbers.ts';
-import { joinSpelled, spokenDigits, unifyScript } from './indic/cleanup.ts';
+import { joinSpelled, marathiRoman, spokenDigits, unifyScript } from './indic/cleanup.ts';
 import { findTime, hourMinutePhrase, type TimeHit } from './indic/time.ts';
 import { findBank, romanize, soundKey } from './indic/bank.ts';
 
@@ -79,6 +79,8 @@ export interface ExtractOptions {
   hint?: Hint;
   /** Prefer the last mentioned value (used for corrections: "SBI nahi, HDFC tha"). */
   preferLast?: boolean;
+  /** The language the person chose to speak ("mr-IN"): turns on fixes that would misread other languages. */
+  lang?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -305,6 +307,11 @@ export function findNumberRuns(tokens: string[]): NumRun[] {
       // digits written by the recogniser are a complete number: "वय 40 दोन दिवस" is 40 then 2, never 42
       const prev = kinds[kinds.length - 1];
       if (k.kind === 'unit' && prev.kind === 'digits' && Number(prev.raw) < 100) break;
+      // a digit read-out (UTR, phone) followed by an amount: "…tin don paanch hazaar rupe" ends the ID before "paanch"
+      if (k.kind === 'unit' && kinds.length >= 6 && kinds.every(isSingleDigit)) {
+        const after = j + 1 < tokens.length ? numKind(tokens[j + 1]) : null;
+        if (after && (after.kind === 'mult' || after.kind === 'hundred')) break;
+      }
       // a number word right before "hours" / "days" counts them, it does not end a big amount:
       // "Rs 12,500 two hours ago", "one lakh twenty thousand, two days ago"
       if (k.kind === 'unit' && (prev.kind === 'mult' || prev.kind === 'hundred' || prev.kind === 'digits') && unitMs(tokens[j + 1])) break;
@@ -864,7 +871,7 @@ function mergeAmount(k: Extracted<number> | undefined, ind: { value: number; cur
   if (!k) return ind.currencyNear || hinted ? { value: ind.value, confidence: ind.currencyNear ? 0.9 : 0.75 } : undefined;
   if (ind.currencyNear && ind.value !== k.value) return { value: ind.value, confidence: 0.9 };
   // the rule stopped at a round number and missed its tail: "तीन हजार पाचशे" = 3000 + 500 (Marathi -शे hundreds)
-  const unit = k.value % 100000 === 0 ? 100000 : k.value % 1000 === 0 ? 1000 : 0;
+  const unit = k.value % 100000 === 0 ? 100000 : k.value % 1000 === 0 ? 1000 : k.value % 100 === 0 ? 100 : 0; // ...and "nau sau ninyanve" = 900 + 99
   if (unit && ind.value > k.value && ind.value - k.value < unit) return { value: ind.value, confidence: 0.85 };
   // Answering "how much?": a longer reading of the same spoken number wins ("चार हजार नऊशे नव्याण्णव" = 4999).
   if (hinted && ind.value > k.value) return { value: ind.value, confidence: 0.85 };
@@ -901,6 +908,7 @@ export function splitGluedUtr(text: string): string {
 }
 
 export function extractFields(text: string, opts: ExtractOptions = {}): Extraction {
+  if (opts.lang?.startsWith('mr')) text = marathiRoman(text);
   text = hourMinutePhrase(splitGluedUtr(spokenDigits(joinSpelled(unifyScript(text)))));
   const norm = normalize(text);
   const prepped = prepUpi(norm);
@@ -935,7 +943,7 @@ export function extractFields(text: string, opts: ExtractOptions = {}): Extracti
 
 export type Intent = 'skip' | 'wait' | 'yes' | 'no';
 
-const SKIP_WORDS = ['maahit naahi', 'mahit nahi', 'skip', 'skip karo', 'pata nahi', 'pata nahin', 'pata nhi', 'nahi pata', 'nahin pata', 'maloom nahi', 'malum nahi', 'nahi maloom', "don't know", 'dont know', 'do not know', 'no idea', 'not sure', 'aage badho', 'छोड़ो', 'छोडो', 'पता नहीं', 'मालूम नहीं', 'स्किप', 'জানি না', 'தெரியாது', 'తెలియదు', 'माहित नाही', 'माहिद नाही', 'ಗೊತ್ತಿಲ್ಲ'];
+const SKIP_WORDS = ['maahit naahi', 'mahit nahi', 'mahit nahin', 'maahit nahin', 'mahit naahi', 'skip', 'skip karo', 'pata nahi', 'pata nahin', 'pata nhi', 'nahi pata', 'nahin pata', 'maloom nahi', 'malum nahi', 'nahi maloom', "don't know", 'dont know', 'do not know', 'no idea', 'not sure', 'aage badho', 'छोड़ो', 'छोडो', 'पता नहीं', 'मालूम नहीं', 'स्किप', 'জানি না', 'தெரியாது', 'తెలియదు', 'माहित नाही', 'माहिद नाही', 'ಗೊತ್ತಿಲ್ಲ'];
 const WAIT_WORDS = ['ek minute ruko', 'ek minute', 'ek min', 'ruko', 'ruk jao', 'rukiye', 'wait', 'hold on', 'one minute', 'रुको', 'रुकिए', 'एक मिनट', 'এক মিনিট', 'দাঁড়ান', 'ஒரு நிமிடம்', 'ஒரு நிமிஷம்', 'ఒక్క నిమిషం', 'थांबा', 'एक मिनिट', 'ಒಂದು ನಿಮಿಷ'];
 const YES_WORDS = ['haan', 'han', 'haa', 'ha', 'ji', 'haan ji', 'yes', 'yeah', 'yep', 'sahi', 'sahi hai', 'theek hai', 'thik hai', 'correct', 'right', 'ok', 'okay', 'हाँ', 'हां', 'जी', 'सही', 'ठीक', 'হ্যাঁ', 'ঠিক', 'ஆம்', 'சரி', 'అవును', 'సరే', 'होय', 'बरोबर', 'ಹೌದು', 'ಸರಿ'];
 const NO_WORDS = ['nahi', 'nahin', 'nhi', 'na', 'no', 'galat', 'wrong', 'नहीं', 'गलत', 'না', 'ভুল', 'இல்லை', 'தவறு', 'కాదు', 'లేదు', 'नाही', 'चूक', 'ಇಲ್ಲ', 'ತಪ್ಪು'];
@@ -1004,7 +1012,7 @@ export interface Correction {
  * Parse a spoken correction such as "amount galat hai, 5999 tha" or
  * "bank SBI nahi HDFC tha". Returns exactly one field (or null).
  */
-export function parseCorrection(text: string, opts: { now?: Date } = {}): Correction | null {
+export function parseCorrection(text: string, opts: { now?: Date; lang?: string } = {}): Correction | null {
   text = unifyScript(text);
   const s = normalize(text);
   let field: FieldKey | undefined;
@@ -1016,7 +1024,7 @@ export function parseCorrection(text: string, opts: { now?: Date } = {}): Correc
       field = key;
     }
   }
-  const base = { now: opts.now, preferLast: true };
+  const base = { now: opts.now, preferLast: true, lang: opts.lang };
   if (field) {
     const ext = extractFields(text, { ...base, hint: TARGETS[field] });
     let hit = ext[field];

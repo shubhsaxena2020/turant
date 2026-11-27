@@ -370,6 +370,11 @@ export function findNumberRuns(tokens: string[]): NumRun[] {
       // digits written by the recogniser are a complete number: "वय 40 दोन दिवस" is 40 then 2, never 42
       const prev = kinds[kinds.length - 1];
       if (k.kind === 'unit' && prev.kind === 'digits' && Number(prev.raw) < 100) break;
+      // a digit read-out (UTR, phone) followed by an amount: "…tin don paanch hazaar rupe" ends the ID before "paanch"
+      if (k.kind === 'unit' && kinds.length >= 6 && kinds.every(isSingleDigit)) {
+        const after = j + 1 < tokens.length ? numKind(tokens[j + 1]) : null;
+        if (after && (after.kind === 'mult' || after.kind === 'hundred')) break;
+      }
       // a number word right before "hours" / "days" counts them, it does not end a big amount:
       // "Rs 12,500 two hours ago", "one lakh twenty thousand, two days ago"
       if (k.kind === 'unit' && (prev.kind === 'mult' || prev.kind === 'hundred' || prev.kind === 'digits') && unitMs(tokens[j + 1])) break;
@@ -638,7 +643,7 @@ export function extractUpis(prepped: string): { ids: string[]; rest: string } {
 
 export type Intent = 'skip' | 'wait' | 'yes' | 'no';
 
-const SKIP_WORDS = ['maahit naahi', 'mahit nahi', 'माहिद नाही', 'skip', 'skip karo', 'pata nahi', 'pata nahin', 'pata nhi', 'nahi pata', 'nahin pata', 'maloom nahi', 'malum nahi', 'nahi maloom', "don't know", 'dont know', 'do not know', 'no idea', 'not sure', 'aage badho', 'छोड़ो', 'छोडो', 'पता नहीं', 'मालूम नहीं', 'स्किप', 'জানি না', 'தெரியாது', 'తెలియదు', 'माहित नाही', 'ಗೊತ್ತಿಲ್ಲ'];
+const SKIP_WORDS = ['maahit naahi', 'mahit nahi', 'mahit nahin', 'maahit nahin', 'mahit naahi', 'माहिद नाही', 'skip', 'skip karo', 'pata nahi', 'pata nahin', 'pata nhi', 'nahi pata', 'nahin pata', 'maloom nahi', 'malum nahi', 'nahi maloom', "don't know", 'dont know', 'do not know', 'no idea', 'not sure', 'aage badho', 'छोड़ो', 'छोडो', 'पता नहीं', 'मालूम नहीं', 'स्किप', 'জানি না', 'தெரியாது', 'తెలియదు', 'माहित नाही', 'ಗೊತ್ತಿಲ್ಲ'];
 const WAIT_WORDS = ['ek minute ruko', 'ek minute', 'ek min', 'ruko', 'ruk jao', 'rukiye', 'wait', 'hold on', 'one minute', 'रुको', 'रुकिए', 'एक मिनट', 'এক মিনিট', 'দাঁড়ান', 'ஒரு நிமிடம்', 'ஒரு நிமிஷம்', 'ఒక్క నిమిషం', 'थांबा', 'एक मिनिट', 'ಒಂದು ನಿಮಿಷ'];
 export const YES_WORDS = ['haan', 'han', 'haa', 'ha', 'ji', 'haan ji', 'yes', 'yeah', 'yep', 'sahi', 'sahi hai', 'theek hai', 'thik hai', 'correct', 'right', 'ok', 'okay', 'हाँ', 'हां', 'जी', 'सही', 'ठीक', 'হ্যাঁ', 'ঠিক', 'ஆம்', 'ஆமா', 'சரி', 'అవును', 'సరే', 'होय', 'बरोबर', 'ಹೌದು', 'ಸರಿ'];
 export const NO_WORDS = ['nahi', 'nahin', 'nhi', 'na', 'no', 'galat', 'wrong', 'नहीं', 'गलत', 'না', 'ভুল', 'இல்லை', 'தவறு', 'కాదు', 'లేదు', 'नाही', 'चूक', 'ಇಲ್ಲ', 'ತಪ್ಪು'];

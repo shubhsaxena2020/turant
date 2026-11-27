@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cleanup, spokenDigits, unifyScript } from './cleanup';
+import { cleanup, marathiRoman, spokenDigits, unifyScript } from './cleanup';
 import { findAmount } from './numbers';
 import { findBank } from './bank';
 
@@ -57,5 +57,20 @@ describe('spokenDigits', () => {
     expect(spokenDigits('UTR is 03:09 876')).toBe('UTR is 309 876');
     expect(spokenDigits('yesterday at 07:00')).toBe('yesterday at 07:00');
     expect(spokenDigits('kal shaam 7:30 baje')).toBe('kal shaam 7:30 baje');
+  });
+});
+
+describe('marathiRoman (Marathi in Latin letters, as the in-page Whisper writes it)', () => {
+  it('digits, hundreds and 99', () => {
+    expect(marathiRoman("saat shoony ek ek don't don't tin tin")).toBe('saat shoony ek ek don don tin tin');
+    expect(marathiRoman('aath saat saahab paanch')).toBe('aath saat saha paanch');
+    expect(marathiRoman('chaar hazaar nau se navaayant nau')).toBe('chaar hazaar nau sau ninyanve');
+    expect(marathiRoman('ek hazaar donashahar rupe')).toBe('ek hazaar don sau rupe');
+  });
+  it('clock, ago, apps', () => {
+    expect(marathiRoman('kaal raatri dahaavaastha')).toBe('kaal raatri dahaa vaajata');
+    expect(marathiRoman("paathavle, don'taasaanpurvi.")).toBe('paathavle, don taasaanpurvi.');
+    expect(marathiRoman('bis minute aappur bhi')).toBe('bis minute purvi');
+    expect(marathiRoman('kal doopaari adhik vaajata phone par varun')).toBe('kal doopaari saadhe don vaajata PhonePe varun');
   });
 });

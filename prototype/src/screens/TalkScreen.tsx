@@ -138,7 +138,7 @@ export function TalkScreen(props: {
       const now = new Date();
       const r = rep.current;
       // Unsure values (e.g. ₹5, probably ₹5,000 with "thousand" lost) are asked about, not written in.
-      const ext = Object.fromEntries(Object.entries(extractFields(text, { now })).filter(([, v]) => v && v.confidence >= 0.5)) as Extraction;
+      const ext = Object.fromEntries(Object.entries(extractFields(text, { now, lang: ui.speakLang })).filter(([, v]) => v && v.confidence >= 0.5)) as Extraction;
       const m = mergeExtraction(r.fields, ext, { source: viaToSource(via), asrConfidence: via === 'typed' ? undefined : conf, mode: 'story' });
       if (m.changed.length) cue('captured');
       setFresh(m.changed);
@@ -195,7 +195,7 @@ export function TalkScreen(props: {
   }
 
   function answer(question: QuestionKey, text: string, conf: number, via: Via) {
-    const r = interpret(text, question);
+    const r = interpret(text, question, new Date(), ui.speakLang);
     if (r.kind === 'skip') return skip(question);
     if (r.kind === 'miss') return miss(question);
     if (EXPLICIT.includes(question) && via !== 'typed') {

@@ -5,9 +5,9 @@ import { displayValue, spokenValue } from './outputs';
 
 export type Interpretation = { kind: 'skip' } | { kind: 'miss' } | { kind: 'value'; ext: Extraction; keys: FieldKey[] };
 
-export function interpret(text: string, q: QuestionKey, now: Date = new Date()): Interpretation {
+export function interpret(text: string, q: QuestionKey, now: Date = new Date(), lang?: string): Interpretation {
   if (detectIntent(text) === 'skip') return { kind: 'skip' };
-  const ext = extractFields(text, { now, hint: q === 'suspect' ? 'suspect' : q });
+  const ext = extractFields(text, { now, hint: q === 'suspect' ? 'suspect' : q, lang });
   const keys = questionFields(q).filter((k) => ext[k] !== undefined);
   return keys.length ? { kind: 'value', ext, keys } : { kind: 'miss' };
 }

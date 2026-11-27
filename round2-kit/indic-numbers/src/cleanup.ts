@@ -125,3 +125,39 @@ export function spokenDigits(text: string): string {
   t = w.join('');
   return t;
 }
+
+const MR_UNIT = '(ek|don|tin|teen|chaar|char|paach|paanch|saha|sahaa|saat|aath|nau)';
+const MR_HOUR = '(ek|don|tin|teen|chaar|paach|paanch|saha|sahaa|saat|aath|nau|daha|dahaa|akra|baara|baarah)';
+
+/**
+ * Marathi as the in-page Hinglish Whisper writes it in Latin letters, rewritten into spellings the rules know.
+ * Only for a person speaking Marathi: several of these are ordinary Hindi words ("se" = from, "saahab" = sir).
+ * - digits: "don't" = don (2), "saahab" / "saahas" = saha (6);
+ * - hundreds: "nau se" (नऊशे), "paanch se rupe", "donashahar", "sahaashay" = nau sau, paanch sau, don sau, saha sau;
+ *   99: "navyaan nau", "navaay nau" = ninyanve;
+ * - clock: "dahaavaastha" = dahaa vaajata, "vaaraasta" = vaajata, "adhik vaajata" = 2:30, "sandhya kar hi" = evening;
+ * - ago: "minitaanpurvin", "aappur bhi", "taaza poorvi", "taazaapur bhi", "arthaat taasaapoorvi" (half an hour);
+ * - now: "aatach…"; apps: "phone par varun" = PhonePe, "google par varun" = Google Pay.
+ */
+export function marathiRoman(text: string): string {
+  let t = text;
+  // "don't don't" = don don; "don'taasaanpurvi" = don taasaanpurvi (the t belongs to taas)
+  t = t.replace(/\bdon't(?![a-z])/gi, 'don').replace(/\bdon'(?=t[a-z])/gi, 'don ');
+  t = t.replace(/\b(saahab|saahas|sahaab|saahaa)\b/gi, 'saha');
+  t = t.replace(new RegExp(`\\b${MR_UNIT}\\s+se\\b`, 'gi'), '$1 sau');
+  t = t.replace(new RegExp(`\\b${MR_UNIT}a?(?:sh|ss)[a-z]*\\b`, 'gi'), '$1 sau');
+  t = t.replace(/\bnav+[a-z]{2,6}\s+nau\b/gi, 'ninyanve');
+  t = t.replace(/\b(adhik|adich|adeech)\s+(?=vaa)/gi, 'saadhe don ');
+  t = t.replace(/\bdhaan\s+(?=vaa)/gi, 'dahaa ');
+  t = t.replace(new RegExp(`\\b${MR_HOUR}(vaajata|vaajta|vajta|vaajastha|vaastha|vaasta|vaaraasta)\\b`, 'gi'), '$1 vaajata');
+  t = t.replace(/\b(vaaraasta|vaastha|vaasta)\b/gi, 'vaajata');
+  t = t.replace(/\bsandhya\s+ka[a-z]*(\s+hi)?\b/gi, 'sandhyakaali');
+  t = t.replace(/purvin\b/gi, ' purvi');
+  t = t.replace(/\baa?pp?ur\s+bhi\b/gi, 'purvi');
+  t = t.replace(/\btaa[sz]aa?(?:\s*poorvi|\s*purvi|pur\s+bhi)\b/gi, 'taas purvi');
+  t = t.replace(/\barthaat\s+(?=taas)/gi, 'ardha ');
+  t = t.replace(/\baatach[a-z]*/gi, 'abhi abhi');
+  t = t.replace(/\bphone\s*(?:par|pe|pay)\s+var(un)?\b/gi, 'PhonePe var$1');
+  t = t.replace(/\b(?:google|goo?gal|[a-z]*googal)\s*(?:par|pe|pay)\s+var(un)?\b/gi, 'Google Pay var$1');
+  return t.replace(/\s{2,}/g, ' ');
+}

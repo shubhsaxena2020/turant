@@ -309,6 +309,11 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - Hindi "25 तारीख को" / "28 tarikh" = that day of this month (last month's if it has not come yet); "pichhle somvar" = last Monday. A date with a day part ("28 tarikh ko shaam ko") beats the bare "evening = yesterday" guess.
   - Not dates: "2 may be 3 thousand" (May needs an ordinal, "of" or a year), "10/12 minutes", "1/2 of my salary" (a bare d/m needs a year, a cue such as "on" / "को", or to be the whole answer).
   - A new `date` kind keeps a bare "today" / "yesterday" from overriding better readings, as before. All six harness report sets unchanged run for run; parser time scorer and fuzz still 100%.
+- **Round 41** (romanised Marathi, as the in-page Hinglish model writes it; read only on the dev voice Aarohi):
+  - The extractor now takes the **speaking language** the person picked (`lang`; the app passes `ui.speakLang`, the harness each case's language). Marathi-only fixes go in `marathiRoman` (shared `cleanup.ts`), because several are ordinary Hindi words ("se" = from, "saahab" = sir).
+  - Digits: "don't" = don (2), "saahab" / "saahas" = saha (6). Hundreds: "nau se" (नऊशे), "paanch se rupe", "donashahar", "sahaashay"; 99: "navyaan / navaay nau". Clock: "dahaavaastha", "vaaraasta", "adhik vaajata" (2:30), "sandhya kar hi" (evening). Ago: "minitaanpurvin", "aappur bhi", "taaza poorvi", "taazaapur bhi", "arthaat taasaapoorvi" (half an hour). "aatach…" = just now. "phone par varun" / "google par varun" = PhonePe / Google Pay. "mahit nahin" = don't know.
+  - For all languages: a digit read-out of 6+ digits ends before "<number> hazaar" (a UTR followed by an amount); the parser's reading wins when it only adds a tail below a round hundred ("nau sau ninyanve" = 900 + 99); "ardha" = half; "sandhya" = evening.
+  - **In-page model 60.4% → 69.6%** (+36 runs, none lost). Marathi **23.8% → 53.8%**: dev voice 27.5% → 67.5%, **held-out voice 20.0% → 40.0%** (the honest number; the gap is voice-specific spellings). Hindi 85.0% → 87.5%. In noise 55.8% → 60.0% (15 dB) and 35.0% → 39.2% (5 dB). **Blind 61.9% → 64.3%** (Marathi 33.3% → 41.7%). large-v3 +1 run; turbo, kit and blind large-v3 / turbo unchanged run for run.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
   | Fully correct, Hinglish model | Clean | 15 dB | 5 dB |
@@ -317,6 +322,8 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   | English | 68.3% | 62.5% | 32.5% |
   | Marathi | 23.8% | 25.0% | 20.0% |
   | All three | 60.4% | 55.8% | 35.0% |
+  | *after round 41:* Hindi / English / Marathi | 87.5% / 68.3% / 53.8% | 82.5% / 62.5% / 35.0% | 55.0% / 32.5% / 30.0% |
+  | *after round 41:* all three | **69.6%** | **60.0%** | **39.2%** |
 
   Moderate noise (15 dB, a busy room) costs Hindi 5 points. Loud noise (5 dB, a road) costs about a third, as with server Whisper (large-v3: 69.5% → 46.1%).
 - **whisper-small for Bengali / Tamil / Telugu / Kannada, not adopted:** on 40 dev clips it scored 2.5% fully correct (whisper-base 0%). Field F1: ta 53 vs 27, te 38 vs 33, kn 19 vs 13, bn 36 vs 44. It is a 250 MB download and several times slower. These languages need an Indian-language recogniser, not a bigger generic Whisper.

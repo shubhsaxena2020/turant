@@ -116,12 +116,13 @@ function rulePipeline(c, text) {
   if (KIT) return kitPipeline(c, text);
   const got = {};
   if (c.kind === 'correction') {
-    const r = X.parseCorrection(text, { now: NOW });
+    const r = X.parseCorrection(text, { now: NOW, lang: c.lang });
     if (r) got[r.field] = r.value;
     return got;
   }
   if (c.kind.startsWith('answer:') && X.detectIntent(text) === 'skip') return { intent: 'skip' };
-  const e = X.extractFields(text, { now: NOW, hint: c.hint });
+  // the app knows the speaking language the person picked; so does each case
+  const e = X.extractFields(text, { now: NOW, hint: c.hint, lang: c.lang });
   for (const k of FIELDS) if (e[k]) got[k] = e[k].value;
   return got;
 }
