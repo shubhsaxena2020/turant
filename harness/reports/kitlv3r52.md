@@ -1,6 +1,6 @@
 # Turant pipeline eval: kitlv3r52
 
-Generated 2026-11-27T23:33:46.352Z. Extractor: `round2-kit/voice-kit (fraud app)`. 280 cases, 1510 ASR transcripts scored.
+Generated 2026-11-27T23:46:05.061Z. Extractor: `round2-kit/voice-kit (fraud app)`. 280 cases, 1510 ASR transcripts scored.
 Speech: edge-tts Indian neural voices (2 per language, 3 for en) -> 16 kHz mono -> optional synthetic noise -> local Whisper large-v3-turbo (int8, OpenVINO) with the language token forced -> `extractFields` / `interpret` / `parseCorrection`. Fixed clock: Sat Nov 21 2026 12:00:00 GMT+0530 (India Standard Time).
 
 ## Headline
