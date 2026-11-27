@@ -203,11 +203,13 @@ export function findTime(text: string, now: Date = new Date()): TimeHit | undefi
   const ago = agoMinutes(toks);
   if (ago !== undefined) return { date: new Date(now.getTime() - ago * 60_000), kind: 'ago', tolerance: Math.max(5, ago * 0.15) };
   // also split in two by the recogniser: "এই মাত্র", "ಇಗ ಸ್ಟೇ" (ಈಗಷ್ಟೇ)
-  const nowWord = toks.some((t, i) => is(t, NOW_WORDS) || (!!toks[i + 1] && /[^\x00-\x7f]/.test(t) && [...t].length <= 3 && is(t + (toks[i + 1] ?? ''), NOW_WORDS)));
+  // "abhi tak" = so far, "abhi bhi" = still: about the present, not when it happened
+  const notNow = (i: number) => ['tak', 'bhi', 'bhee', 'तक', 'भी'].includes(toks[i + 1] ?? '');
+  const nowWord = toks.some((t, i) => (is(t, NOW_WORDS) && !notNow(i)) || (!!toks[i + 1] && /[^\x00-\x7f]/.test(t) && [...t].length <= 3 && is(t + (toks[i + 1] ?? ''), NOW_WORDS)));
   if (nowWord && !/\bjust\b/.test(low.replace('just now', ''))) {
     return { date: new Date(now), kind: 'now', tolerance: 10 };
   }
-  if (/\bjust now\b|right now/.test(low)) return { date: new Date(now), kind: 'now', tolerance: 10 };
+  if (/\bjust now\b/.test(low)) return { date: new Date(now), kind: 'now', tolerance: 10 };
   const day = dayOffset(toks);
   const part = daypart(toks);
   const clock = clockHours(text, toks);

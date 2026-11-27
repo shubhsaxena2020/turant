@@ -492,6 +492,13 @@ describe('round 37 (English false times, plain money words, padded read-outs)', 
     expect(x('he said the rate is low').time).toBeUndefined();
     expect(x('yesterday at 9 am he called').time).toBeDefined();
   });
+  it('"right now", "abhi tak", "abhi bhi" are the present, not when it happened', () => {
+    expect(x('My husband is not at home right now').time).toBeUndefined();
+    expect(x('abhi tak paise wapas nahi aaye').time).toBeUndefined();
+    expect(x('वो अभी भी फोन कर रहा है').time).toBeUndefined();
+    expect(x('abhi abhi paanch hazaar kat gaye').time).toBeDefined();
+    expect(x('it happened just now').time).toBeDefined();
+  });
   it('"amount", "took", "stole" mark money, but not an OTP', () => {
     expect(x('the amount was 5000').amount?.value).toBe(5000);
     expect(x('he took 5000 from me').amount?.value).toBe(5000);

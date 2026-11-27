@@ -1,7 +1,7 @@
 {
  "summary": {
   "name": "swift37",
-  "generatedAt": "2026-11-27T15:12:21.071Z",
+  "generatedAt": "2026-11-27T15:31:06.612Z",
   "extractor": "..\\prototype\\src\\lib\\extract.ts",
   "cases": 280,
   "runs": 520,

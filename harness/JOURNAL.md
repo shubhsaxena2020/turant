@@ -288,6 +288,7 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - **Plain money words:** "the amount was 5000", "he took 5000" gave no amount. amount / rakam / took / taken / stole / cheated / scammed / charged now mark money; a number right after OTP / PIN / CVV / code never does.
   - **Padded read-outs:** Whisper writes a spoken "5 0 1" as "05:01". In every dev read-out the 0 was padding, never spoken (8 of 8), so a clock group inside a read-out now drops it (account 50100234567812, not 0501…).
   - **Split letters:** "ICI C I bank" = ICICI (letter groups that join into a known acronym; 3-letter ones only in capitals).
+  - **Present, not past:** "right now" ("my husband is not at home right now"), "abhi tak" (so far) and "abhi bhi" (still) no longer fill the time as "just now"; "abhi abhi" and "just now" still do. Found with 40 neutral English sentences a victim might say (now 1 of 40 fills a field: "post office" = India Post, which is right).
   - Hinglish model 58.9% → **60.4%** (English 65.0% → **68.3%**); **blind 58.3% → 61.9%** (English 52.8% → **61.1%**), on sentences never tuned on. large-v3 69.3% → 69.5% (held-out voices 67.5% → 67.8%), turbo and blind large-v3 unchanged, kit 67.0% → 67.2%. No regressions.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 

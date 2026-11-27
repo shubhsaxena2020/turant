@@ -1,6 +1,6 @@
 # Turant pipeline eval: swift37
 
-Generated 2026-11-27T15:12:21.071Z. Extractor: `..\prototype\src\lib\extract.ts`. 280 cases, 520 ASR transcripts scored, **990 transcripts missing** (run asr.py).
+Generated 2026-11-27T15:31:06.612Z. Extractor: `..\prototype\src\lib\extract.ts`. 280 cases, 520 ASR transcripts scored, **990 transcripts missing** (run asr.py).
 Speech: edge-tts Indian neural voices (2 per language, 3 for en) -> 16 kHz mono -> optional synthetic noise -> local Whisper large-v3-turbo (int8, OpenVINO) with the language token forced -> `extractFields` / `interpret` / `parseCorrection`. Fixed clock: Sat Nov 21 2026 12:00:00 GMT+0530 (India Standard Time).
 
 ## Headline

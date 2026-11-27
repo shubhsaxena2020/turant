@@ -223,7 +223,9 @@ const DAY_WORDS: [number, string[]][] = [
   [-1, ['kal', 'kaal', 'yesterday', 'कल', 'काल', 'গতকাল', 'কাল', 'நேற்று', 'నిన్న', 'ನಿನ್ನೆ']],
   [-2, ['parso', 'parson', 'parsoon', 'परसों', 'परसो', 'परवा', 'পরশু', 'முந்தாநாள்', 'మొన్న', 'ಮೊನ್ನೆ']],
 ];
-const NOW_WORDS = ['abhi', 'abhi abhi', 'just now', 'right now', 'abhi turant', 'अभी', 'अभी अभी', 'आत्ता', 'आताच', 'এইমাত্র', 'এখনই', 'இப்போது', 'இப்பொழுது', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ'];
+// "abhi tak" = so far, "abhi bhi" = still: about the present, not when it happened
+const NOT_NOW = /(?:abhi|अभी)\s+(?:tak|bhi|bhee|तक|भी)(?![\p{L}\p{M}])/giu;
+const NOW_WORDS = ['abhi', 'abhi abhi', 'just now', 'abhi turant', 'अभी', 'अभी अभी', 'आत्ता', 'आताच', 'এইমাত্র', 'এখনই', 'இப்போது', 'இப்பொழுது', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ'];
 
 const DEBIT_EXACT = set(['debated', 'kaaple', 'kaapale', 'kaapla', 'kat', 'kaat', 'kate', 'kati', 'kata', 'cut', 'debit', 'debited', 'deducted', 'gaye', 'gaya', 'gye', 'gya', 'lost', 'loss', 'nikal', 'nikle', 'nikla', 'transfer', 'transferred', 'bheja', 'bheje', 'bhej', 'sent', 'paid', 'liya', 'liye', 'chale', 'chala', 'withdrawn', 'fraud', 'amount', 'rakam', 'रकम', 'राशि', 'took', 'taken', 'stole', 'stolen', 'cheated', 'scammed', 'charged']);
 const DEBIT_PREFIX = ['कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'डेविट', 'देविट', 'देबिट', 'ডেবিট', 'டெபிட்', 'డెబిట్', 'ಡೆಬಿಟ್', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ'].map(nw);
@@ -555,7 +557,7 @@ function extractTime(text: string, tokens: string[], runs: NumRun[], opts: Extra
       }
     }
   }
-  if (hasPhrase(text, NOW_WORDS) >= 0 && hour === undefined && dayOffset === undefined && !part) {
+  if (hasPhrase(text.replace(NOT_NOW, ' '), NOW_WORDS) >= 0 && hour === undefined && dayOffset === undefined && !part) {
     return { value: iso(now), confidence: 0.85 };
   }
   if (hour === undefined && dayOffset === undefined && !part) return undefined;
