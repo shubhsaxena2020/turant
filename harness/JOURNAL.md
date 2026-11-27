@@ -318,6 +318,7 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - "at Vibyal" = ybl (the letters Y B L said aloud). "sharma 01:23 at Paytm" = sharma123@paytm (digits written as a time, right before "at <handle>"). "06:01 to 34567 890" = 601234567890 (the spoken "two" after a clock group is written "to").
   - **A real bug for every recogniser:** "I paid 2000 at paytm" became the UPI ID 2000@paytm and lost the amount. An all-digit ID now has to be a 10-digit phone number.
   - In-page model **69.6% → 72.5%** (+9 runs, none lost). English 68.3% → **75.0%**, and the gain is as large on the voices never read: Neerja 72.5% → 77.5%, Prabhat 65.0% → 72.5% (dev 67.5% → 75.0%). Everything else unchanged run for run.
+- **Round 43:** "phone par se 2600 rupe gae" = PhonePe se ("from phone-par"; "phone par" alone stays "on the phone"). In-page model 72.5% → **73.2%** (Hindi 87.5% → **90.0%**; 2 of the 3 runs on the held-out voice), none lost.
 - "Yesterday at 07:00" (spoken "7 pm", Whisper dropped the pm) is left alone on purpose: guessing pm for a bare 7 would only fit this corpus. The read-back lets the person fix it.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
@@ -331,6 +332,7 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   | *after round 41:* all three | **69.6%** | **60.0%** | **39.2%** |
   | *after round 42:* Hindi / English / Marathi | 87.5% / 75.0% / 53.8% | 82.5% / 65.0% / 35.0% | 55.0% / 32.5% / 30.0% |
   | *after round 42:* all three | **72.5%** | **60.8%** | **39.2%** |
+  | *after round 43:* all three (Hindi 90.0% / 85.0% / 55.0%) | **73.2%** | **61.7%** | **39.2%** |
 
   Moderate noise (15 dB, a busy room) costs Hindi 5 points. Loud noise (5 dB, a road) costs about a third, as with server Whisper (large-v3: 69.5% → 46.1%).
 - **whisper-small for Bengali / Tamil / Telugu / Kannada, not adopted:** on 40 dev clips it scored 2.5% fully correct (whisper-base 0%). Field F1: ta 53 vs 27, te 38 vs 33, kn 19 vs 13, bn 36 vs 44. It is a 250 MB download and several times slower. These languages need an Indian-language recogniser, not a bigger generic Whisper.

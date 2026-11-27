@@ -912,6 +912,8 @@ export function splitGluedUtr(text: string): string {
 
 export function extractFields(text: string, opts: ExtractOptions = {}): Extraction {
   if (opts.lang?.startsWith('mr')) text = marathiRoman(text);
+  // "phone par se 2600 rupe gae": "from phone-par" is PhonePe as the recogniser hears it ("phone par" alone = on the phone)
+  text = text.replace(/\bphone\s*(?:par|pe|pay)\s+se\b/gi, 'PhonePe se');
   text = hourMinutePhrase(splitGluedUtr(spokenDigits(joinSpelled(unifyScript(text)))));
   const norm = normalize(text);
   const prepped = prepUpi(norm);

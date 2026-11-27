@@ -592,5 +592,7 @@ describe('round 42 (UPI IDs and read-outs as Whisper writes them)', () => {
     expect(r.suspectUpi).toBeUndefined();
     expect(r.amount?.value).toBe(2000);
     expect(x('I paid rahul 9876543210 at ybl').suspectUpi?.value).toBe('9876543210@ybl');
+    expect(x('Kal dophar karib dhai baje phone par se chhabbis sau rupe gae.').paymentApp?.value).toBe('PhonePe');
+    expect(x('maine phone pe baat ki').paymentApp).toBeUndefined();
   });
 });
