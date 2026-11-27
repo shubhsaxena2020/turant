@@ -26,7 +26,13 @@ const LANG = { hi: 'hindi', en: 'english', bn: 'bengali', ta: 'tamil', te: 'telu
 const { pipeline, env } = await import(pathToFileURL(path.join(HERE, '..', 'prototype', 'node_modules', '@huggingface', 'transformers', 'src', 'transformers.js')).href).catch(
   () => import(pathToFileURL(path.join(HERE, '..', 'prototype', 'node_modules', '@huggingface', 'transformers', 'dist', 'transformers.node.mjs')).href),
 );
-env.allowLocalModels = false;
+// --local <dir>: load --model from a local folder (a model converted with harness/convert_whisper.py)
+const LOCAL = arg('--local', '');
+env.allowLocalModels = !!LOCAL;
+if (LOCAL) {
+  env.localModelPath = LOCAL.endsWith('/') ? LOCAL : LOCAL + '/';
+  env.allowRemoteModels = false;
+}
 
 /** 16-bit PCM WAV -> Float32 mono at the file's rate (the harness writes 16 kHz mono). */
 function readWav(file) {

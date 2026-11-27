@@ -85,7 +85,7 @@ Build for Bharat 2026 (Scaler x Wispr Flow), Round 2. Theme: Public infrastructu
 - **By language** (large-v3, clean): Hindi 98%, English 90%, Marathi 70%, Tamil 66%, Telugu 61%, Kannada 46%, Bengali 44%.
 - **About 92% of remaining errors** are the recogniser losing words, not the parsing.
 - **Fuzz:** millions of generated amounts and times parse 100%; with one slip per number, 99.6-100%. 546 automated tests.
-- **What ships in the page, measured on the same clips:** Hindi 90.0% fully correct (stock whisper-base: 13.8%), English 75.0%, Marathi 53.8% (40.0% on a voice never tuned on); on the blind set (new sentences) Hindi 91.7%, English 61.1%, Marathi 41.7%. Hindi in noise: 85.0% at 15 dB, 55.0% at 5 dB. Bengali, Tamil, Telugu and Kannada are 2.5-6.3% in the page, so they rely on the browser's recogniser until an Indian-language model is added.
+- **What ships in the page, measured on the same clips:** Hindi 90.0% fully correct (stock whisper-base: 13.8%), English 75.0%, Marathi 53.8% (40.0% on a voice never tuned on); on the blind set (new sentences) Hindi 91.7%, English 61.1%, Marathi 41.7%. Hindi in noise: 85.0% at 15 dB, 55.0% at 5 dB. Indian-language Whisper fine-tunes in the page (stock whisper-base: 2.5-6.3%): Telugu 68.8%, Kannada 50.0%, Bengali 36.3%; Tamil measured at 47.5%, not shipped yet.
 - **Limits:** synthetic voices (edge-tts). Real phone tests in every language come next.
 
 ## Slide 9: Users and how many

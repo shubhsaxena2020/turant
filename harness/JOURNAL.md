@@ -320,6 +320,18 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - In-page model **69.6% → 72.5%** (+9 runs, none lost). English 68.3% → **75.0%**, and the gain is as large on the voices never read: Neerja 72.5% → 77.5%, Prabhat 65.0% → 72.5% (dev 67.5% → 75.0%). Everything else unchanged run for run.
 - **Round 43:** "phone par se 2600 rupe gae" = PhonePe se ("from phone-par"; "phone par" alone stays "on the phone"). In-page model 72.5% → **73.2%** (Hindi 87.5% → **90.0%**; 2 of the 3 runs on the held-out voice), none lost.
 - "Yesterday at 07:00" (spoken "7 pm", Whisper dropped the pm) is left alone on purpose: guessing pm for a bare 7 would only fit this corpus. The read-back lets the person fix it.
+- **Indian-language models in the page (28 Nov):** the other four languages were on stock whisper-base (2.5-6.3%). Three open fine-tunes, converted to transformers.js ONNX with `convert_whisper.py` (8-bit weights; the two decoders quantised first and merged after so the 8-bit weights are shared; exported with transformers 4.40 because 4.43+ adds a `cache_position` input transformers.js 3.8 does not send). Measured with `asr_wbase.mjs --local` on all 80 clean clips per language (both voices, no rule changes):
+
+  | Language | whisper-base | Fine-tune | Size | Fully correct | Fields right | Word error |
+  |---|---|---|---|---|---|---|
+  | Telugu | 6.3% | vasista22/whisper-telugu-base | 103 MB | **68.8%** | 82.0% | 228 → 45 |
+  | Kannada | 2.5% | vasista22/whisper-kannada-base | 103 MB | **50.0%** | 71.9% | 388 → 48 |
+  | Tamil | 6.3% | vasista22/whisper-tamil-small | 289 MB | **47.5%** | 68.1% | 171 → 49 |
+  | Bengali | 5.0% | shamim1122/whisper-small-bangla-onnx | 287 MB | **36.3%** | 56.4% | 165 → 47 |
+
+  - Telugu and Kannada in the page now beat server large-v3 on those languages (61% and 46%).
+  - **Shipped:** Bengali (loaded from Hugging Face), Telugu and Kannada (served from the site's `/models/`, not in git). **Not shipped:** Tamil, whose 196 MB decoder is over Vercel's 100 MB per-file limit; it needs Hugging Face hosting.
+  - A specialised model that fails to load falls back to whisper-base. Checked end to end in Chromium with a harness clip as the microphone (`?speech=whisper`): Bengali (first use 58 s including the 287 MB download), Kannada (29 s), Telugu on the live site (31 s), each filling amount and time.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
   | Fully correct, Hinglish model | Clean | 15 dB | 5 dB |

@@ -1,1 +1,3 @@
 .vercel
+# self-hosted speech models (about 100 MB each): deployed with the site, not kept in git; rebuild with harness/convert_whisper.py
+public/models/

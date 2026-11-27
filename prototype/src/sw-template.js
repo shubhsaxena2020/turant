@@ -21,6 +21,8 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
+  // self-hosted speech models (about 100 MB each): transformers.js keeps them in its own cache
+  if (url.pathname.includes('/models/')) return;
 
   if (req.mode === 'navigate') {
     // Network first for the page, fall back to the cached shell when offline.

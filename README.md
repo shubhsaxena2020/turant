@@ -54,8 +54,8 @@ microphone ──► browser speech recognition (Chrome / Edge, live words)
   - Turant also records the audio itself. If the browser returns nothing, returns a single misheard word or ends early (all seen with Chrome on Windows), Whisper reads the recording **inside the page**. This path uploads no audio.
   - **The in-page model depends on the speaking language:**
     - Hindi, English (India) and Marathi use **Whisper-Hindi2Hinglish-Swift** (Oriserve, Apache-2.0), which writes clean Hinglish.
-    - The other languages use whisper-base.
-  - **Download and speed:** about 100 MB, downloaded once and then cached. A 12-second story transcribes in about 8 seconds on a laptop: cross-origin isolation lets it use several CPU threads.
+    - Bengali uses a Bangla whisper-small fine-tune (arif11/bangla-ASR-v5, Apache-2.0); Telugu and Kannada use IIT Madras's **IndicWhisper** base fine-tunes (vasista22, Apache-2.0), converted to ONNX by `harness/convert_whisper.py` and served with the site from `/models/`. Tamil stays on whisper-base for now (see below).
+  - **Download and speed:** about 100 MB (Bengali 287 MB), downloaded once and then cached. A 12-second story transcribes in about 8 seconds on a laptop: cross-origin isolation lets it use several CPU threads.
   - Turant's own voice detection decides when the person has finished, so a recogniser that gives up early can't cut them off.
   - Add `?speech=whisper` to the link to skip the browser recogniser and use only the in-page path.
 - **Understanding is rules, not an LLM.** On the same transcripts, an LLM invented times and scam types. On its own it was fully correct on 16.5% of reports, against 43.5% for the rules at the time (see `harness/JOURNAL.md`). The rules read numbers, dates, banks and IDs in **Hindi, English/Hinglish, Bengali, Tamil, Telugu, Marathi and Kannada**, including the misspellings speech recognisers make:
@@ -85,9 +85,10 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   |---|---|---|---|---|
   | whisper-base | 13.8% | 50.0% | 10.0% | 2.5-6.3% |
   | **Hindi2Hinglish-Swift + rules tuned to its Hinglish** | **90.0%** | **75.0%** | **53.8%** (held-out voice 40.0%) | not used |
+  | **Indian-language Whisper fine-tunes** (Bangla small; IndicWhisper Telugu / Kannada base) | | | | **Bengali 36.3%, Telugu 68.8%, Kannada 50.0%** (Tamil small: 47.5%, measured, not shipped) |
 
   On the **blind set** (new sentences, never tuned on), the in-page model gets Hindi **91.7%** (the same as the text-only ceiling for those sentences), English 61.1% and Marathi 41.7%. In noise, Hindi stays at 85.0% at 15 dB (a busy room) and 55.0% at 5 dB (a roadside).
-  Bengali, Tamil, Telugu and Kannada need the browser recogniser, or an Indian-language model (next step).
+  The Indian-language models were measured on both voices with no rule changes. Telugu and Kannada in the page now beat server Whisper large-v3 (61% and 46%). Tamil's model works (6.3% → 47.5%) but its 196 MB file is over the host's 100 MB per-file limit, so it waits for Hugging Face hosting. The Telugu and Kannada files are not in git: a fresh `docker compose up` uses whisper-base for them; `harness/convert_whisper.py` rebuilds them.
 - **Fuzz testing:** millions of generated amounts and times are parsed 100% correctly. With one recogniser-style slip per number, 99.6-100% are still read correctly.
 - **Tests:** 159 unit tests in the app, 126 in the parsers and 261 in the voice kit.
 - **Lighthouse** (mobile, live site, 27 Nov): accessibility 100, best practices 100, SEO 100, performance 94 (first paint 2.0 s on a throttled phone connection). Fonts are self-hosted, so the page loads with no third-party requests (the in-page speech model is fetched from Hugging Face only when it is needed).
@@ -131,7 +132,7 @@ Re-run the speech evaluation (needs Python, edge-tts and a Whisper server; see `
 ## Honest limitations
 
 - **Speech accuracy:** Bengali and Kannada are still weak. That's the recogniser, and the next step is an Indian-language ASR.
-- **Whisper fallback:** the first use downloads about 100 MB. Live words appear only when the browser's own recogniser works. In Bengali, Tamil, Telugu and Kannada the in-page fallback is weak (2.5-6.3%), so those languages rely on the browser's recogniser for now.
+- **Whisper fallback:** the first use downloads about 100 MB. Live words appear only when the browser's own recogniser works. Tamil's in-page fallback is still weak (whisper-base, 6.3%), so Tamil relies on the browser's recogniser for now.
 - **Filing:** Turant prepares the complaint and the call script. Filing still happens on the official 1930 line or cybercrime.gov.in, which have no public API.
 - **Test speech:** our harness voices are synthetic (edge-tts). Real phone tests in each language are the next step.
 
