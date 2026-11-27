@@ -294,7 +294,7 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - "lost Rs 12,500 about 2 hours ago" was read as **12,502 hours** ago (June 2025): the count walked back past "about" into the amount. A hedge word (about / around / lagbhag) now starts the count, and written digits never join a count that already has a word.
   - "Rs 12,500 two hours ago" and "one lakh twenty thousand, two days ago" lost the amount: the number word before hours / days was glued onto it (12,502; 1,20,002). A number word right before a duration word now ends the amount.
   - "about 1 lakh 20 thousand was stolen" got the time 1 pm: "about N" is a clock time only when no amount word (lakh, thousand, rupees…) or duration follows.
-  - "4,500 was gone" = money.
+  - "4,500 was gone" = money; so are fee / fees / penalty / फीस / शुल्क / जुर्माना ("5000 registration fees li"). 12 new Hinglish stories (Latin script, as the in-page model writes) went 11 → 12 of 12, and 10 in Devanagari (as Chrome writes) 9 → 10 of 10.
   - Harness unchanged run for run on all six report sets (one reference case, "half an hour ago", broke on the first try and was fixed before committing).
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 

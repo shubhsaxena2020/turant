@@ -509,6 +509,10 @@ describe('round 37 (English false times, plain money words, padded read-outs)', 
     expect(x('I got a call yesterday evening around 6').time).toBeDefined();
     expect(x('After I told him, 4,500 was gone from my Canara Bank account').amount?.value).toBe(4500);
   });
+  it('fees and penalties are money', () => {
+    expect(x('Teen din pehle job ke naam pe 5000 registration fees li').amount?.value).toBe(5000);
+    expect(x('तीन दिन पहले नौकरी के नाम पे 5000 रजिस्ट्रेशन फीस ली').amount?.value).toBe(5000);
+  });
   it('"amount", "took", "stole" mark money, but not an OTP', () => {
     expect(x('the amount was 5000').amount?.value).toBe(5000);
     expect(x('he took 5000 from me').amount?.value).toBe(5000);
