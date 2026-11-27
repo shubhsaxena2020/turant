@@ -92,7 +92,7 @@ const ID_WORDS = /^(number|no\.?|num|ref\.?|reference|account|a\/c|utr|id|plus|m
  * Digits read out one by one, as speech recognisers write them:
  * - "9 double 8 7 6" / "triple 0" / "double 8754321" (common in Indian English) -> "9 88 7 6" / "000" / "88754321".
  * - A clock-looking group inside a read-out ("plus 9 1 07:01 2344", "reference number is 06:01 to 34567",
- *   "45678 08:01 2 345") -> its digits ("0701"), when it sits next to other digits or after an ID word and no
+ *   "45678 08:01 2 345") -> its digits ("701", without Whisper's padded 0), when it sits next to other digits or after an ID word and no
  *   time word is near. "yesterday at 07:00" and "7:30 pm" are left alone.
  */
 export function spokenDigits(text: string): string {
@@ -119,7 +119,8 @@ export function spokenDigits(text: string): string {
     if (CLOCK_WORDS.test(prev) || CLOCK_WORDS.test(next)) continue;
     const nextAfterTo = next === 'to' ? clean(word(w.indexOf(word(i, 1)!, i + 1), 1)) : '';
     const idCtx = /^\+?\d+$/.test(prev) || ID_WORDS.test(prev) || prev === 'is' || /^\d+$/.test(next) || /^\d+$/.test(nextAfterTo);
-    if (idCtx) w[i] = m[1] + m[2] + m[3];
+    // Whisper pads the hour ("5 0 1" -> "05:01"); in every read-out in the harness the 0 was padding, never spoken
+    if (idCtx) w[i] = m[1].replace(/^0(?=\d)/, '') + m[2] + m[3];
   }
   t = w.join('');
   return t;

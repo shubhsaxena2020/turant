@@ -283,6 +283,22 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
 - **Blind set on the in-page Hinglish model** (new sentences, never tuned on; `blind_swift35`): Hindi **91.7%** fully correct, equal to the reference-text score for those sentences, so speech recognition loses nothing there. English 52.8% (reference 83.3%), Marathi 25.0% (reference 83.3%).
 - **First use is faster:** the in-page model is prefetched while the person is still talking (after ~2 s of voice with no words from the browser, or right away with `?speech=whisper`). Fresh profile, 12-second Hindi story: the wait after speaking drops from ~12.6 s to ~1 s.
 - **Round 36** (romanised Marathi, as the in-page model writes it): number words don, saha, dahaa/daah; fractions din / adich / aditi, only right before lakh or thousand; time words vaajata, sakaari, sandhyaakaari, raatri, doopaari, kaal, poorvi, taas, divas, minitaan; kaaple = debited; roope = rupees; maahit naahi = don't know. Context-only number lookups are now case-insensitive ("Din laakh…", "To lock…" at the start of a sentence). Hinglish model +8 runs: Marathi 15.0% → **23.8%**, English 64.2% → 65.0%; blind Marathi 25.0% → **33.3%**. turbo +1, whisper-base +3, large-v3 unchanged, no regressions.
+- **Round 37** (generic English fixes found while reading the in-page model's misses):
+  - **False times in English, a real bug:** time words matched by prefix, so "I am…", "amount" and "Amazon" read as 9 am today, and "rate" as night. Latin words now match short time words only as whole words, and "am" counts only right after a number ("9 am").
+  - **Plain money words:** "the amount was 5000", "he took 5000" gave no amount. amount / rakam / took / taken / stole / cheated / scammed / charged now mark money; a number right after OTP / PIN / CVV / code never does.
+  - **Padded read-outs:** Whisper writes a spoken "5 0 1" as "05:01". In every dev read-out the 0 was padding, never spoken (8 of 8), so a clock group inside a read-out now drops it (account 50100234567812, not 0501…).
+  - **Split letters:** "ICI C I bank" = ICICI (letter groups that join into a known acronym; 3-letter ones only in capitals).
+  - Hinglish model 58.9% → **60.4%** (English 65.0% → **68.3%**); **blind 58.3% → 61.9%** (English 52.8% → **61.1%**), on sentences never tuned on. large-v3 69.3% → 69.5% (held-out voices 67.5% → 67.8%), turbo and blind large-v3 unchanged, kit 67.0% → 67.2%. No regressions.
+- **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
+
+  | Fully correct, Hinglish model | Clean | 15 dB | 5 dB |
+  |---|---|---|---|
+  | Hindi | 85.0% | 80.0% | 52.5% |
+  | English | 68.3% | 62.5% | 32.5% |
+  | Marathi | 23.8% | 25.0% | 20.0% |
+  | All three | 60.4% | 55.8% | 35.0% |
+
+  Moderate noise (15 dB, a busy room) costs Hindi 5 points. Loud noise (5 dB, a road) costs about a third, as with server Whisper (large-v3: 69.5% → 46.1%).
 - **whisper-small for Bengali / Tamil / Telugu / Kannada, not adopted:** on 40 dev clips it scored 2.5% fully correct (whisper-base 0%). Field F1: ta 53 vs 27, te 38 vs 33, kn 19 vs 13, bn 36 vs 44. It is a 250 MB download and several times slower. These languages need an Indian-language recogniser, not a bigger generic Whisper.
 
 ## What is left

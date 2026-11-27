@@ -483,3 +483,23 @@ describe('round 36 (romanised Marathi, as the in-page model writes it)', () => {
     expect(detectIntent('maahit naahi')).toBe('skip');
   });
 });
+
+describe('round 37 (English false times, plain money words, padded read-outs)', () => {
+  const x = (t: string, o = {}) => extractFields(t, { now: NOW, ...o });
+  it('"I am" / "amount" / "rate" are not times', () => {
+    expect(x('I am very scared').time).toBeUndefined();
+    expect(x('the amount was 5000 on Amazon').time).toBeUndefined();
+    expect(x('he said the rate is low').time).toBeUndefined();
+    expect(x('yesterday at 9 am he called').time).toBeDefined();
+  });
+  it('"amount", "took", "stole" mark money, but not an OTP', () => {
+    expect(x('the amount was 5000').amount?.value).toBe(5000);
+    expect(x('he took 5000 from me').amount?.value).toBe(5000);
+    expect(x('he took my OTP 4567').amount).toBeUndefined();
+  });
+  it('a padded clock group in a read-out loses its 0; split letters name the bank', () => {
+    expect(x('I sent money to account number 05:01 00234567812 around 4000 rupees.').suspectAccount?.value).toBe('50100234567812');
+    expect(x('bis hazaar roopij debit jha le ICI C I bank').bank?.value).toBe('ICICI Bank');
+    expect(x('I sent it to a b i account').bank).toBeUndefined();
+  });
+});

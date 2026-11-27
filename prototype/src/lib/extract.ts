@@ -225,7 +225,7 @@ const DAY_WORDS: [number, string[]][] = [
 ];
 const NOW_WORDS = ['abhi', 'abhi abhi', 'just now', 'right now', 'abhi turant', 'अभी', 'अभी अभी', 'आत्ता', 'आताच', 'এইমাত্র', 'এখনই', 'இப்போது', 'இப்பொழுது', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ'];
 
-const DEBIT_EXACT = set(['debated', 'kaaple', 'kaapale', 'kaapla', 'kat', 'kaat', 'kate', 'kati', 'kata', 'cut', 'debit', 'debited', 'deducted', 'gaye', 'gaya', 'gye', 'gya', 'lost', 'loss', 'nikal', 'nikle', 'nikla', 'transfer', 'transferred', 'bheja', 'bheje', 'bhej', 'sent', 'paid', 'liya', 'liye', 'chale', 'chala', 'withdrawn', 'fraud']);
+const DEBIT_EXACT = set(['debated', 'kaaple', 'kaapale', 'kaapla', 'kat', 'kaat', 'kate', 'kati', 'kata', 'cut', 'debit', 'debited', 'deducted', 'gaye', 'gaya', 'gye', 'gya', 'lost', 'loss', 'nikal', 'nikle', 'nikla', 'transfer', 'transferred', 'bheja', 'bheje', 'bhej', 'sent', 'paid', 'liya', 'liye', 'chale', 'chala', 'withdrawn', 'fraud', 'amount', 'rakam', 'रकम', 'राशि', 'took', 'taken', 'stole', 'stolen', 'cheated', 'scammed', 'charged']);
 const DEBIT_PREFIX = ['कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'डेविट', 'देविट', 'देबिट', 'ডেবিট', 'டெபிட்', 'డెబిట్', 'ಡೆಬಿಟ್', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ'].map(nw);
 
 const UTR_CTX = set(['utr', 'ref', 'reference', 'refno', 'rrn', 'transaction', 'txn', 'trans', 'id', 'यूटीआर', 'ट्रांजैक्शन', 'ट्रांजेक्शन', 'रेफरेंस', 'आईडी', 'रेफ', 'রেফ', 'ரெஃப்', 'రెఫ్', 'ರೆಫ್']);
@@ -415,6 +415,7 @@ function extractAmount(tokens: string[], runs: NumRun[], opts: ExtractOptions): 
   for (const r of runs) {
     if (r.isSeq || r.value <= 0 || r.value >= 1e9) continue;
     if (/x{2,}/i.test(tokens[r.start - 1] ?? '')) continue; // bank SMS "A/c XX4321": masked account digits, not money
+    if (/^(otp|pin|cvv|mpin|password|code)$/.test(tokens[r.start - 1] ?? '')) continue; // "he took the OTP 4567": a code, not money
     const next = tokens[r.end];
     if (unitMs(next) || isClockMarker(next)) continue;
     if (/^\d{1,2}(am|pm)$/.test(next ?? '')) continue;

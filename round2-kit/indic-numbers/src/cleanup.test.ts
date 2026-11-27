@@ -52,7 +52,9 @@ describe('spokenDigits', () => {
     expect(spokenDigits('9 double 8754321')).toBe('9 88754321');
   });
   it('turns a clock group inside a read-out into digits, but keeps real times', () => {
-    expect(spokenDigits('plus 9 1 07:01 to 2344')).toBe('plus 9 1 0701 to 2344');
+    expect(spokenDigits('plus 9 1 07:01 to 2344')).toBe('plus 9 1 701 to 2344');
+    expect(spokenDigits('account number 05:01 00234567812')).toBe('account number 501 00234567812');
+    expect(spokenDigits('UTR is 03:09 876')).toBe('UTR is 309 876');
     expect(spokenDigits('yesterday at 07:00')).toBe('yesterday at 07:00');
     expect(spokenDigits('kal shaam 7:30 baje')).toBe('kal shaam 7:30 baje');
   });

@@ -213,6 +213,14 @@ export function findBank(text: string): BankHit | undefined {
         const joined = soundKey(toks.slice(i, i + n).map((t) => (/^[a-z]+$/i.test(t) ? t.toLowerCase() : romanize(t))).join(''));
         const hit = KEYS.find((k) => k.spelled.some((sp) => sp.length >= 5 && similarity(joined, sp) >= 0.85));
         if (hit) consider({ key: hit.b.key, name: hit.b.name, confidence: 0.85 });
+        // the letters themselves split into groups: "ICI C I", "H D F C"; 3-letter ones (S B I) only in capitals
+        const group = toks.slice(i, i + n);
+        if (group.every((t) => /^[a-z]{1,3}$/i.test(t))) {
+          const letters = group.join('').toLowerCase();
+          const acr = KEYS.find((k) => (k.b.acronyms ?? []).includes(letters));
+          if (acr && (letters.length >= 4 || group.every((t) => t === t.toUpperCase())))
+            consider({ key: acr.b.key, name: acr.b.name, confidence: 0.9 });
+        }
       }
     for (const { b, exact, sounds, nameSounds, acronymSkels, generic } of KEYS) {
       if (exact.includes(low)) consider({ key: b.key, name: b.name, confidence: 1 });

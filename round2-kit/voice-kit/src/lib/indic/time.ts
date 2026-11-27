@@ -18,6 +18,9 @@ const folded = (list: string[]) => FOLDED.get(list) ?? (FOLDED.set(list, list.ma
 const fuzzyPrefix = (f: string, k: string) => f === k || ([...k].length >= 4 && f.startsWith(k));
 const has = (t: string, list: string[]) => list.some((w) => t === w || t.startsWith(w)) || folded(list).some((k) => fuzzyPrefix(fold(t), k));
 const is = (t: string, list: string[]) => list.includes(t) || folded(list).includes(fold(t));
+// English words must not prefix-match short time words: "amount" / "Amazon" are not "am", "rate" is not "rat" (night).
+const wordHas = (t: string, list: string[]) =>
+  /^[a-z]+$/.test(t) ? list.some((w) => t === w || (w.length >= 4 && t.startsWith(w))) || folded(list).some((k) => fuzzyPrefix(fold(t), k)) : has(t, list);
 
 const NOW_WORDS = N(['अभी', 'abhi', 'এইমাত্র', 'এইমাত্রো', 'এইমত্র', 'এখনই', 'இப்பதான்', 'இப்போதான்', 'ఇప్పుడే', 'ఇపుడే', 'ಈಗಷ್ಟೇ', 'आत्ताच', 'just']);
 const MIN = N(['minitaan', 'minutean', 'मिनट', 'मिनिट', 'minute', 'min', 'মিনিট', 'நிமிட', 'நிமிஷ', 'நிமிண', 'నిమిష', 'ನಿಮಿಷ']);
@@ -54,11 +57,14 @@ function dayOffset(toks: string[]): number | undefined {
 }
 
 function daypart(toks: string[]): 'morning' | 'afternoon' | 'evening' | 'night' | undefined {
-  for (const t of toks) {
-    if (has(t, NIGHT)) return 'night';
-    if (has(t, EVENING)) return 'evening';
-    if (has(t, AFTERNOON)) return 'afternoon';
-    if (has(t, MORNING)) return 'morning';
+  for (let i = 0; i < toks.length; i++) {
+    const t = toks[i];
+    // "am" is a daypart only after a number ("9 am"), never in "I am"
+    if (t === 'am' && !(i > 0 && (/^\d/.test(toks[i - 1]) || wordParts(toks[i - 1])))) continue;
+    if (wordHas(t, NIGHT)) return 'night';
+    if (wordHas(t, EVENING)) return 'evening';
+    if (wordHas(t, AFTERNOON)) return 'afternoon';
+    if (wordHas(t, MORNING)) return 'morning';
   }
   return undefined;
 }
@@ -97,7 +103,7 @@ function clockHours(text: string, toks: string[]): number | undefined {
         if (v !== undefined && v <= 12) return v + half;
       }
     }
-    if ((has(toks[i], OCLOCK) || toks[i] === 'clock') && i > 0) {
+    if ((wordHas(toks[i], OCLOCK) || toks[i] === 'clock') && i > 0) {
       // number words right before "बजे" (saade nau baje, ढाई बजे, 7 मणिक्कु, "four o'clock")
       let j = toks[i] === 'clock' && toks[i - 1] === 'o' ? i - 2 : i - 1;
       const parts = [];

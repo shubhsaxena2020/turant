@@ -31,7 +31,7 @@ h1 { font-family: 'EB Garamond', Georgia, serif; font-weight: 400; font-size: 46
 .body ul, .body ol { margin: 0 0 .5em; padding-left: 1.2em; }
 .body li { margin: 0 0 .32em; }
 .body li > ul { margin-top: .3em; }
-.body strong { font-weight: 700; background-image: linear-gradient(transparent 60%, rgba(240,215,255,.95) 60%); }
+.body strong { font-weight: 700; box-shadow: inset 0 -0.42em 0 rgba(240,215,255,.95); -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .body table { border-collapse: collapse; width: 100%; margin: .2em 0 .7em; font-size: .86em; }
 .body th { text-align: left; font-weight: 600; border-bottom: 1.6px solid #1A1A1A; padding: 6px 10px 6px 0; }
 .body td { border-bottom: 1px solid #E4E3CC; padding: 6px 10px 6px 0; vertical-align: top; }

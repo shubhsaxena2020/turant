@@ -211,6 +211,7 @@ function extractAmount(c: Ctx, s: AmountSlot): Extracted | undefined {
   for (const { r, i } of freeRuns(c)) {
     if (r.value <= 0 || r.value >= 1e9) continue;
     if (/x{2,}/i.test(c.tokens[r.start - 1] ?? '')) continue; // bank SMS "A/c XX4321": masked account digits, not money
+    if (/^(otp|pin|cvv|mpin|password|code)$/.test(c.tokens[r.start - 1] ?? '')) continue; // "he took the OTP 4567": a code, not money
     const tokens = c.tokens;
     const next = tokens[r.end];
     if (N.unitMs(next) || N.isClockMarker(next)) continue;
