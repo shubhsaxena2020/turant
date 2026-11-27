@@ -290,6 +290,12 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - **Split letters:** "ICI C I bank" = ICICI (letter groups that join into a known acronym; 3-letter ones only in capitals).
   - **Present, not past:** "right now" ("my husband is not at home right now"), "abhi tak" (so far) and "abhi bhi" (still) no longer fill the time as "just now"; "abhi abhi" and "just now" still do. Found with 40 neutral English sentences a victim might say (now 1 of 40 fills a field: "post office" = India Post, which is right).
   - Hinglish model 58.9% → **60.4%** (English 65.0% → **68.3%**); **blind 58.3% → 61.9%** (English 52.8% → **61.1%**), on sentences never tuned on. large-v3 69.3% → 69.5% (held-out voices 67.5% → 67.8%), turbo and blind large-v3 unchanged, kit 67.0% → 67.2%. No regressions.
+- **Round 38** (12 new English stories written the way a judge might type them; 9 of 12 were fully right, now 12 of 12):
+  - "lost Rs 12,500 about 2 hours ago" was read as **12,502 hours** ago (June 2025): the count walked back past "about" into the amount. A hedge word (about / around / lagbhag) now starts the count, and written digits never join a count that already has a word.
+  - "Rs 12,500 two hours ago" and "one lakh twenty thousand, two days ago" lost the amount: the number word before hours / days was glued onto it (12,502; 1,20,002). A number word right before a duration word now ends the amount.
+  - "about 1 lakh 20 thousand was stolen" got the time 1 pm: "about N" is a clock time only when no amount word (lakh, thousand, rupees…) or duration follows.
+  - "4,500 was gone" = money.
+  - Harness unchanged run for run on all six report sets (one reference case, "half an hour ago", broke on the first try and was fixed before committing).
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
   | Fully correct, Hinglish model | Clean | 15 dB | 5 dB |

@@ -121,7 +121,10 @@ function clockHours(text: string, toks: string[]): number | undefined {
   // "7 pm" written as one token, or "around 10" next to a day part
   const pm = text.match(/\b(\d{1,2})\s*(am|pm)\b/i);
   if (pm) return Number(pm[1]) + (pm[2].toLowerCase() === 'pm' && Number(pm[1]) < 12 ? 12 : 0);
-  const around = text.match(/(?:around|at|about|karib|lagbhag)\s+(\d{1,2})\b(?![,.]\d)/i); // not \"around 4,999 rupees\"
+  // not "around 4,999 rupees", not "about 1 lakh" / "around 5 thousand" (an amount)
+  const around = text.match(
+    /(?:around|at|about|karib|lagbhag)\s+(\d{1,2})\b(?![,.]\d)(?!\s*(?:lakhs?|lacs?|laakhs?|thousand|hazaa?r|hajar|crores?|k\b|hundred|sau|rupees?|rs\b|rupaye|rupaiye|₹|%|percent|times|minutes?|mins?|hours?|hrs?|days?|ghante|din))/i,
+  );
   if (around && Number(around[1]) <= 12) return Number(around[1]);
   return undefined;
 }
@@ -143,10 +146,16 @@ function agoMinutes(toks: string[]): number | undefined {
     let j = i - 1;
     const parts = [];
     while (j >= 0 && j >= i - 3) {
-      if (['an', 'a', 'about', 'around', 'karib', 'lagbhag', 'करीब', 'लगभग'].includes(toks[j])) {
+      // a hedge word starts the count: "Rs 12,500 about 2 hours ago" is 2 hours, not 12,502
+      if (['about', 'around', 'karib', 'lagbhag', 'करीब', 'लगभग'].includes(toks[j])) break;
+      // "half an hour": skip the article, but written digits before it are not the count ("Rs 500 an hour ago")
+      if (['an', 'a'].includes(toks[j])) {
+        if (/^[\d,.]+$/.test(toks[j - 1] ?? '')) break;
         j--;
         continue;
       }
+      // written digits never join a count that already has a word after them ("12,500 two hours")
+      if (parts.length && /^[\d,.]+$/.test(toks[j])) break;
       const half = HALF_UNIT_WORDS.find(([w]) => toks[j] === w || toks[j].startsWith(w) || fold(toks[j]) === fold(w));
       if (half && half[1] < 1) {
         parts.unshift({ v: half[1] });

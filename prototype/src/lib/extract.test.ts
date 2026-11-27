@@ -499,6 +499,16 @@ describe('round 37 (English false times, plain money words, padded read-outs)', 
     expect(x('abhi abhi paanch hazaar kat gaye').time).toBeDefined();
     expect(x('it happened just now').time).toBeDefined();
   });
+  it('a number before "hours" / "days" counts them; "about 1 lakh" is money, not a clock time', () => {
+    const a = x('Someone called pretending to be from SBI and I lost Rs 12,500 about 2 hours ago');
+    expect(a.amount?.value).toBe(12500);
+    expect(new Date(a.time!.value).getTime()).toBe(NOW.getTime() - 2 * 3600e3);
+    expect(x('lost Rs 12,500 two hours ago').amount?.value).toBe(12500);
+    expect(x('Money was stolen, about one lakh twenty thousand, two days ago').amount?.value).toBe(120000);
+    expect(x('about 1 lakh 20 thousand was stolen').time).toBeUndefined();
+    expect(x('I got a call yesterday evening around 6').time).toBeDefined();
+    expect(x('After I told him, 4,500 was gone from my Canara Bank account').amount?.value).toBe(4500);
+  });
   it('"amount", "took", "stole" mark money, but not an OTP', () => {
     expect(x('the amount was 5000').amount?.value).toBe(5000);
     expect(x('he took 5000 from me').amount?.value).toBe(5000);

@@ -227,7 +227,7 @@ const DAY_WORDS: [number, string[]][] = [
 const NOT_NOW = /(?:abhi|अभी)\s+(?:tak|bhi|bhee|तक|भी)(?![\p{L}\p{M}])/giu;
 const NOW_WORDS = ['abhi', 'abhi abhi', 'just now', 'abhi turant', 'अभी', 'अभी अभी', 'आत्ता', 'आताच', 'এইমাত্র', 'এখনই', 'இப்போது', 'இப்பொழுது', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ'];
 
-const DEBIT_EXACT = set(['debated', 'kaaple', 'kaapale', 'kaapla', 'kat', 'kaat', 'kate', 'kati', 'kata', 'cut', 'debit', 'debited', 'deducted', 'gaye', 'gaya', 'gye', 'gya', 'lost', 'loss', 'nikal', 'nikle', 'nikla', 'transfer', 'transferred', 'bheja', 'bheje', 'bhej', 'sent', 'paid', 'liya', 'liye', 'chale', 'chala', 'withdrawn', 'fraud', 'amount', 'rakam', 'रकम', 'राशि', 'took', 'taken', 'stole', 'stolen', 'cheated', 'scammed', 'charged']);
+const DEBIT_EXACT = set(['debated', 'kaaple', 'kaapale', 'kaapla', 'kat', 'kaat', 'kate', 'kati', 'kata', 'cut', 'debit', 'debited', 'deducted', 'gaye', 'gaya', 'gye', 'gya', 'lost', 'loss', 'nikal', 'nikle', 'nikla', 'transfer', 'transferred', 'bheja', 'bheje', 'bhej', 'sent', 'paid', 'liya', 'liye', 'chale', 'chala', 'withdrawn', 'fraud', 'amount', 'rakam', 'रकम', 'राशि', 'took', 'taken', 'stole', 'stolen', 'cheated', 'scammed', 'charged', 'gone']);
 const DEBIT_PREFIX = ['कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'डेविट', 'देविट', 'देबिट', 'ডেবিট', 'டெபிட்', 'డెబిట్', 'ಡೆಬಿಟ್', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ'].map(nw);
 
 const UTR_CTX = set(['utr', 'ref', 'reference', 'refno', 'rrn', 'transaction', 'txn', 'trans', 'id', 'यूटीआर', 'ट्रांजैक्शन', 'ट्रांजेक्शन', 'रेफरेंस', 'आईडी', 'रेफ', 'রেফ', 'ரெஃப்', 'రెఫ్', 'ರೆಫ್']);
@@ -305,6 +305,9 @@ export function findNumberRuns(tokens: string[]): NumRun[] {
       // digits written by the recogniser are a complete number: "वय 40 दोन दिवस" is 40 then 2, never 42
       const prev = kinds[kinds.length - 1];
       if (k.kind === 'unit' && prev.kind === 'digits' && Number(prev.raw) < 100) break;
+      // a number word right before "hours" / "days" counts them, it does not end a big amount:
+      // "Rs 12,500 two hours ago", "one lakh twenty thousand, two days ago"
+      if (k.kind === 'unit' && (prev.kind === 'mult' || prev.kind === 'hundred' || prev.kind === 'digits') && unitMs(tokens[j + 1])) break;
       if (kinds.some(isLongDigits) && k.kind !== 'digits') break;
       if (k.kind === 'and') {
         const after = j + 1 < tokens.length ? numKind(tokens[j + 1]) : null;
