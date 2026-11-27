@@ -15,7 +15,7 @@ no form submit, no YouTube upload, no upload to Shubh's HF account, no spending.
 | 2 | Per-language error analysis on the worst fields; keep only fixes that hold on unseen voices | todo |
 | 3 | Tamil model under 100 MB per file (so Turant can serve it), accuracy vs whisper-base | **done**: split into external-data chunks, identical output, live |
 | 4 | Bengali model smaller / faster, accuracy vs load time | todo |
-| 5 | Robustness cases: code-mixing, English digits inside Indic speech, lakh/crore/hazaar, "nahi nahi, 500" | **done (text)**: corpus/robust.jsonl 40 cases, 97.5% -> 100%; audio version: todo |
+| 5 | Robustness cases: code-mixing, English digits inside Indic speech, lakh/crore/hazaar, "nahi nahi, 500" | **done**: text 97.5% -> 100%; audio (167 clips, tuning + unseen voices) through every in-page model; round 49 fixes (karod!) +4 on unseen Hindi |
 | 6 | README / JOURNAL / deck numbers in sync, every claim with a tuned vs unseen vs blind split | **done** for unseen (re-sync after each round) |
 
 ## 1. Unseen speakers
@@ -48,5 +48,7 @@ no form submit, no YouTube upload, no upload to Shubh's HF account, no spending.
   all report sets unchanged run for run: kept.
 
 ## Milestones (notes for Shubh)
+
+- 28 Nov ~05:30: unseen-speaker eval done for every path (large-v3 unseen 61.6% = blind 62.8%); "karod" (crore) bug found via robustness audio and fixed.
 
 - 28 Nov ~02:40: Tamil in-page model live (6.3% -> 47.5%), served by Turant itself via chunked weights; no HF upload needed.

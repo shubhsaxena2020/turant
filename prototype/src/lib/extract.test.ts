@@ -611,3 +611,18 @@ describe('round 44-45 (Tamil compounds, corrections after the amount)', () => {
     expect(x('The SMS says 15,000 rupees debited from ACXX 4321, UPI Ref No. 4321-7890-5612.').amount?.value).toBe(15000);
   });
 });
+
+describe('round 49 (crore in Latin script, decimals read out, robustness audio)', () => {
+  const x = (t: string, lang?: string) => extractFields(t, { now: NOW, lang });
+  it('karod / dedh karod / 1 point to laakh', () => {
+    expect(x('Do karod pachaas laakh rupe chale gae.').amount?.value).toBe(25000000);
+    expect(x('Dedh karod rupe ka fraud hua.').amount?.value).toBe(15000000);
+    expect(x('I lost 1 point to laakh rupees from my ICICI account.').amount?.value).toBe(120000);
+    expect(x('he said it is 2 point 5 percent').amount).toBeUndefined();
+  });
+  it('access account = Axis, through phone par = PhonePe, Marathi na hi / adhik laakh', () => {
+    expect(x('rupees was debited from my access account').bank?.value).toBe('Axis Bank');
+    expect(x('Tin hazaar rupees gae through phone par.').paymentApp?.value).toBe('PhonePe');
+    expect(x('Dedh laakh roope ke lie na hi, na hi, adhik laakh.', 'mr-IN').amount?.value).toBe(250000);
+  });
+});

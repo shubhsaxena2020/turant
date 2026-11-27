@@ -635,7 +635,7 @@ export const BANKS: { name: string; keys: string[] }[] = [
   { name: 'State Bank of India (SBI)', keys: ['sbi', 'state bank', 'stay bank', 'state bank of india', 'yono', 'एसबीआई', 'स्टेट बैंक', 'স্টেট ব্যাংক', 'এসবিআই', 'எஸ்பிஐ', 'ஸ்டேட் பேங்க்', 'ఎస్బీఐ', 'ఎస్‌బీఐ', 'ఎస్బిఐ', 'స్టేట్ బ్యాంక్', 'ಎಸ್‌ಬಿಐ', 'ಎಸ್ಬಿಐ', 'ಸ್ಟೇಟ್ ಬ್ಯಾಂಕ್'] },
   { name: 'HDFC Bank', keys: ['hdfc', 'एचडीएफसी', 'এইচডিএফসি', 'ஹெச்டிஎஃப்சி', 'హెచ్‌డీఎఫ్‌సీ', 'ಎಚ್‌ಡಿಎಫ್‌ಸಿ'] },
   { name: 'ICICI Bank', keys: ['icici', 'आईसीआईसीआई', 'আইসিআইসিআই', 'ஐசிஐசிஐ', 'ఐసీఐసీఐ', 'ಐಸಿಐಸಿಐ'] },
-  { name: 'Axis Bank', keys: ['axis', 'access bank', 'एक्सिस', 'অ্যাক্সিস', 'ஆக்சிஸ்', 'ஆக்சுஸ்', 'యాక్సిస్', 'ಆಕ್ಸಿಸ್'] },
+  { name: 'Axis Bank', keys: ['axis', 'access bank', 'access account', 'एक्सिस', 'অ্যাক্সিস', 'ஆக்சிஸ்', 'ஆக்சுஸ்', 'యాక్సిస్', 'ಆಕ್ಸಿಸ್'] },
   { name: 'Punjab National Bank (PNB)', keys: ['pnb', 'punjab national', 'पीएनबी', 'पंजाब नेशनल'] },
   { name: 'Bank of Baroda', keys: ['bank of baroda', 'baroda', 'बैंक ऑफ बड़ौदा', 'बड़ौदा', 'बडौदा'] },
   { name: 'Canara Bank', keys: ['canara', 'kenara', 'केनरा', 'कैनरा', 'ಕೆನರಾ', 'கனரா'] },
@@ -914,6 +914,7 @@ export function extractFields(text: string, opts: ExtractOptions = {}): Extracti
   if (opts.lang?.startsWith('mr')) text = marathiRoman(text);
   // "phone par se 2600 rupe gae": "from phone-par" is PhonePe as the recogniser hears it ("phone par" alone = on the phone)
   text = text.replace(/\bphone\s*(?:par|pe|pay)\s+se\b/gi, 'PhonePe se');
+  text = text.replace(/\b(through|via|using)\s+phone\s*(?:par|pe|pay)\b/gi, '$1 PhonePe'); // "gaye through phone par"
   text = hourMinutePhrase(splitGluedUtr(spokenDigits(joinSpelled(unifyScript(text)))));
   const norm = normalize(text);
   const prepped = prepUpi(norm);

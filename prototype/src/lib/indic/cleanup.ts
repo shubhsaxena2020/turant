@@ -106,6 +106,11 @@ export function spokenDigits(text: string): string {
   t = t.replace(/\b(double|triple)\s+(zero|oh|one|two|three|four|five|six|seven|eight|nine)\b/gi, (_, k: string, w: string) =>
     Array(k.toLowerCase() === 'double' ? 2 : 3).fill(w).join(' '),
   );
+  // "1 point to laakh" = 1.2 lakh: a decimal read out before a multiplier, the "two" heard as "to"
+  const DIGIT: Record<string, string> = { zero: '0', oh: '0', one: '1', to: '2', too: '2', two: '2', three: '3', four: '4', five: '5', six: '6', seven: '7', eight: '8', nine: '9' };
+  t = t.replace(/\b(\d+)\s+point\s+(\d|zero|oh|one|to|too|two|three|four|five|six|seven|eight|nine)\s+(?=(?:laakh|lakh|lakhs|crore|crores|karod|hazaar|thousand)\b)/gi, (_, a: string, b: string) =>
+    `${a}.${DIGIT[b.toLowerCase()] ?? b} `,
+  );
   const w = t.split(/(\s+)/);
   const clean = (s: string | undefined) => (s ?? '').replace(/[.,;:!?]+$/, '').toLowerCase();
   const word = (k: number, dir: 1 | -1) => {
@@ -164,6 +169,8 @@ export function marathiRoman(text: string): string {
   // more number spellings: "donon laakh" (don), "did laakh" (दीड = 1.5), "saahazaar" / "paanchhazaar" (glued)
   t = t.replace(/\bdonon\s+(?=laakh|lakh|hazaar)/gi, 'don ');
   t = t.replace(/\bdid\s+(?=laakh|lakh|hazaar)/gi, 'dedh ');
+  t = t.replace(/\badhik\s+(?=laakh|lakh|hazaar)/gi, 'adich '); // अडीच लाख = 2.5 lakh
+  t = t.replace(/\bna\s+hi\b/gi, 'naahi'); // नाही ("no") split in two
   t = t.replace(/\bsaa?ha?hazaar\b/gi, 'saha hazaar');
   t = t.replace(new RegExp(`\\b${MR_UNIT}hazaar\\b`, 'gi'), '$1 hazaar');
   // वाजता as the model hears it: "vaaj tak", "vaajhata", "vaadta", "baajta"; glued to the hour: "daavaajta" = daha vaajta
