@@ -98,5 +98,5 @@ export async function transcribe(blob: Blob, lang: string, onProgress?: Progress
   }
   const text = (Array.isArray(out) ? out.map((o) => o.text).join(' ') : out.text).replace(/\s+/g, ' ').trim();
   // Whisper's stock outputs for silence or noise
-  return /^(\[.*\]|\(.*\)|you\.?|thank you\.?|thanks for watching!?)$/i.test(text) ? '' : text;
+  return /^(\[.*\]|\(.*\)|you\.?|thanks?\.?|thank you\.?|thanks for watching!?|bye\.?)$/i.test(text) ? '' : text;
 }
