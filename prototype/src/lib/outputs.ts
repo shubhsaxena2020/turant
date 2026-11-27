@@ -63,15 +63,17 @@ function suspectPhrase(fields: Fields, lang: LangCode, spoken: boolean): string 
 export function build1930Script(report: Report, lang: LangCode, opts: { spoken?: boolean; now?: Date } = {}): string[] {
   const f = report.fields;
   const unknown = t(lang, 'unknown');
-  const amount = f.amount ? formatINR(Number(f.amount.value)) : unknown;
-  const bank = str(f, 'bank') ?? unknown;
-  const when = f.time ? formatWhen(String(f.time.value), lang, opts.now) : unknown;
+  // unknown values must still read as a sentence: "Money was taken from my bank account", not "not known was taken"
+  const amount = f.amount ? formatINR(Number(f.amount.value)) : t(lang, 'moneyWord');
+  const bank = str(f, 'bank') ?? t(lang, 'bankWord');
+  const when = f.time ? formatWhen(String(f.time.value), lang, opts.now) : undefined;
   const scam = f.scamType ? scamLabel(lang, f.scamType.value as ScamType) : unknown;
   const utr = str(f, 'utr');
   const suspect = suspectPhrase(f, lang, !!opts.spoken);
   return [
     t(lang, 'script1', { amount, bank }),
-    t(lang, 'script2', { when, scam }),
+    // no time: keep only the "Type of fraud" sentence of script2
+    when ? t(lang, 'script2', { when, scam }) : t(lang, 'script2', { when: '', scam }).split(/(?<=[.।])\s+/).slice(1).join(' '),
     utr ? t(lang, 'script3', { utr: opts.spoken ? spokenDigits(utr) : groupDigits(utr) }) : t(lang, 'script3none'),
     suspect ? t(lang, 'script4', { suspect }) : t(lang, 'script4none'),
   ];
@@ -80,7 +82,7 @@ export function build1930Script(report: Report, lang: LangCode, opts: { spoken?:
 const SCAM_STORY: Record<ScamType, string> = {
   fake_kyc: 'I received a call from a person who claimed to be from my bank and said my KYC had to be updated or my account would be blocked.',
   otp_shared: 'A person tricked me into sharing an OTP sent to my phone.',
-  fake_customer_care: 'I contacted a fake customer care number, and the person asked me to make a payment or install a screen-sharing app.',
+  fake_customer_care: 'A person pretending to be customer care contacted me and asked me to make a payment or install an app.',
   wrong_transfer: 'A person claimed that money had been sent to me by mistake and asked me to return it or accept a refund request.',
   qr_scan: 'A person sent me a QR code saying I would receive money, and scanning it debited money from my account instead.',
   investment_task: 'I was offered an investment / part-time task job with high returns and was made to pay money.',
@@ -98,6 +100,15 @@ const PORTAL_SUBCATEGORY: Record<ScamType, string> = {
   sextortion: 'Online Financial Fraud (Sextortion)',
   other: 'UPI Related Frauds',
 };
+
+/** Fake customer care, told the way it happened: who contacted whom, and the remote-access app if one was named. */
+function customerCareStory(said: string): string {
+  const s = said.toLowerCase();
+  const app = /any ?desk|एनी ?डेस्क/.test(s) ? 'the screen-sharing app AnyDesk' : /team ?viewer|टीम ?व्यूअर/.test(s) ? 'the screen-sharing app TeamViewer' : /rust ?desk/.test(s) ? 'the screen-sharing app RustDesk' : /quick ?support/.test(s) ? 'the screen-sharing app QuickSupport' : /screen ?shar|स्क्रीन शेयर/.test(s) ? 'a screen-sharing app' : undefined;
+  const searched = /\b(searched|google|googled|online search|found (the|their|a) number|internet)\b|search kiya|सर्च|गूगल/.test(s);
+  const start = searched ? 'I called a customer care number I found online, and the person' : 'A person pretending to be customer care contacted me and';
+  return app ? `${start} made me install ${app}.` : `${start} asked me to make a payment or install an app.`;
+}
 
 /** "A person..." -> "a person..." but keep the pronoun "I". */
 const lowerFirst = (s: string) => (/^I\b/.test(s) ? s : s.charAt(0).toLowerCase() + s.slice(1));
@@ -118,9 +129,10 @@ export function buildPortalDescription(report: Report): string {
   const acct = str(f, 'suspectAccount');
   const bank = str(f, 'bank');
   const app = str(f, 'paymentApp');
+  const story = scam === 'fake_customer_care' ? customerCareStory(report.turns.join(' ')) : SCAM_STORY[scam];
   const sentences = [
     `I wish to report an online financial fraud.`,
-    time ? `On ${portalDate(time)} at about ${portalTime(time)}, ${lowerFirst(SCAM_STORY[scam])}` : SCAM_STORY[scam],
+    time ? `On ${portalDate(time)} at about ${portalTime(time)}, ${lowerFirst(story)}` : story,
     amount !== undefined
       ? `An amount of Rs. ${amount} (Rupees ${amountInWords(amount)} only) was debited from my ${bank ?? 'bank'} account${app ? ` through ${app}` : ''} without my consent.`
       : `Money was debited from my ${bank ?? 'bank'} account without my consent.`,
@@ -222,9 +234,11 @@ export function buildBankMessage(report: Report): string {
 
 export function buildFamilyMessage(report: Report, lang: LangCode): string {
   const f = report.fields;
-  const amount = f.amount ? formatINR(Number(f.amount.value)) : t(lang, 'unknown');
-  const scam = f.scamType ? scamLabel(lang, f.scamType.value as ScamType) : t(lang, 'unknown');
-  return t(lang, 'familyMsg', { amount, scam });
+  // unknown values: "I lost money in an online fraud.", not "I lost not known … (not known)"
+  const money = t(lang, 'moneyWord');
+  const amount = f.amount ? formatINR(Number(f.amount.value)) : money.charAt(0).toLowerCase() + money.slice(1);
+  const scam = f.scamType ? scamLabel(lang, f.scamType.value as ScamType) : '';
+  return t(lang, 'familyMsg', { amount, scam }).replace(/\s*\(\)/, '');
 }
 
 export function whatsappLink(text: string): string {

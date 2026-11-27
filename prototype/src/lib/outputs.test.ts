@@ -163,3 +163,44 @@ describe('portal description', () => {
     expect(d).not.toMatch(PORTAL_BANNED);
   });
 });
+
+describe('fake customer care, told the way it happened', () => {
+  const story = (said: string) => {
+    const r = newReport('en-IN', { now: NOW });
+    r.turns = [said];
+    r.fields = { scamType: { value: 'fake_customer_care', confidence: 0.9, source: 'voice' }, amount: { value: 18500, confidence: 0.95, source: 'voice' } };
+    return buildPortalDescription(r);
+  };
+  it('a call that installed AnyDesk', () => {
+    const d = story('Someone called pretending to be HDFC customer care, made me install AnyDesk and 18,500 went');
+    expect(d).toContain('A person pretending to be customer care contacted me and made me install the screen-sharing app AnyDesk.');
+    expect(d).not.toContain('I contacted');
+  });
+  it('a number found online', () => {
+    expect(story('I searched the Swiggy customer care number on Google and called it, he sent a link')).toContain('I called a customer care number I found online, and the person asked me to make a payment or install an app.');
+  });
+});
+
+describe('1930 script with values still unknown', () => {
+  const r = () => {
+    const x = newReport('en-IN', { now: NOW });
+    x.fields = { scamType: { value: 'otp_shared', confidence: 0.9, source: 'voice' } };
+    return x;
+  };
+  it('reads as sentences, not "not known was taken"', () => {
+    const en = build1930Script(r(), 'en-IN', { now: NOW });
+    expect(en[0]).toBe('Hello, I want to report an online payment fraud. Money was taken from my bank account.');
+    expect(en[1]).toBe('Type of fraud: Shared an OTP.');
+    const hi = build1930Script(r(), 'hi-IN', { now: NOW });
+    expect(hi[0]).toContain('मेरे बैंक खाते से पैसे कट गए हैं।');
+    expect(hi[1].startsWith('धोखे का तरीका')).toBe(true);
+  });
+});
+
+describe('family message with values still unknown', () => {
+  it('reads as a sentence', () => {
+    const x = newReport('en-IN', { now: NOW });
+    expect(buildFamilyMessage(x, 'en-IN').startsWith('I lost money in an online fraud. I am reporting')).toBe(true);
+    expect(buildFamilyMessage(x, 'hi-IN')).toContain('पैसे गए।');
+  });
+});

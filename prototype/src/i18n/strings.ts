@@ -134,6 +134,8 @@ const en = {
   soundOff: 'Sound off',
   language: 'Language',
   unknown: 'not known',
+  moneyWord: 'Money', // the 1930 script when the amount is not known: "Money was taken from my … account"
+  bankWord: 'bank', // …and the bank: "my bank account"
   gotIt: 'Got it',
   summaryIntro: 'Here is your complaint.',
   scam_fake_kyc: 'Fake KYC / bank call',
@@ -145,7 +147,7 @@ const en = {
   scam_sextortion: 'Sextortion / blackmail',
   scam_other: 'Something else',
   script1: 'Hello, I want to report an online payment fraud. {amount} was taken from my {bank} account.',
-  script2: 'It happened {when}. Type of fraud: {scam}.',
+  script2: 'It happened on {when}. Type of fraud: {scam}.',
   script3: 'The UTR transaction number is {utr}.',
   script3none: 'I do not have the UTR number yet, I will share it from the bank SMS.',
   script4: "The fraudster's {suspect}. Please freeze this money immediately.",
@@ -223,6 +225,7 @@ const en = {
   copyAll: 'Copy the whole complaint',
   copiedAll: 'Copied',
   portalReady: 'Ready for the portal',
+  portalChars: '{n} characters (the portal needs 200)',
   hearSummary: 'Hear it',
   textSize: 'Text size',
   closeSheet: 'Close',
@@ -361,6 +364,8 @@ const hi: Strings = {
   soundOff: 'आवाज़ बंद',
   language: 'भाषा',
   unknown: 'पता नहीं',
+  moneyWord: 'पैसे', // the 1930 script when the amount is not known: "Money was taken from my … account"
+  bankWord: 'बैंक', // …and the bank: "my bank account"
   gotIt: 'समझ गया',
   summaryIntro: 'यह रही आपकी शिकायत।',
   scam_fake_kyc: 'नकली KYC / बैंक कॉल',
@@ -633,6 +638,8 @@ const bn: Strings = {
   privacyNote: 'কোনো অ্যাকাউন্ট লাগে না। আপনি কপি বা শেয়ার না টিপলে কিছুই ফোনের বাইরে যায় না।',
   back: 'পিছনে',
   unknown: 'জানা নেই',
+  moneyWord: 'টাকা', // the 1930 script when the amount is not known: "Money was taken from my … account"
+  bankWord: 'ব্যাংক', // …and the bank: "my bank account"
   summaryIntro: 'এই হল আপনার অভিযোগ।',
   familyMsg: 'অনলাইন প্রতারণায় আমার {amount} চলে গেছে ({scam})। আমি 1930 আর cybercrime.gov.in-এ অভিযোগ করছি। কখনও কাউকে OTP বা PIN বলবে না।',
 };
@@ -811,6 +818,8 @@ const ta: Strings = {
   privacyNote: 'கணக்கு தேவையில்லை. நீங்கள் காப்பி அல்லது பகிர் தட்டும் வரை எதுவும் போனை விட்டு வெளியே போகாது.',
   back: 'பின்',
   unknown: 'தெரியாது',
+  moneyWord: 'பணம்', // the 1930 script when the amount is not known: "Money was taken from my … account"
+  bankWord: 'வங்கி', // …and the bank: "my bank account"
   summaryIntro: 'இதோ உங்கள் புகார்.',
   familyMsg: 'ஆன்லைன் மோசடியில் {amount} இழந்தேன் ({scam}). 1930-இலும் cybercrime.gov.in-இலும் புகார் செய்கிறேன். யாரிடமும் OTP அல்லது PIN சொல்லாதீர்கள்.',
 };
@@ -989,6 +998,8 @@ const te: Strings = {
   privacyNote: 'ఖాతా అవసరం లేదు. మీరు కాపీ లేదా షేర్ నొక్కే వరకు ఏదీ ఫోన్ బయటకు వెళ్ళదు.',
   back: 'వెనక్కి',
   unknown: 'తెలియదు',
+  moneyWord: 'డబ్బు', // the 1930 script when the amount is not known: "Money was taken from my … account"
+  bankWord: 'బ్యాంక్', // …and the bank: "my bank account"
   summaryIntro: 'ఇదిగో మీ ఫిర్యాదు.',
   familyMsg: 'ఆన్‌లైన్ మోసంలో నేను {amount} పోగొట్టుకున్నాను ({scam}). 1930 లో, cybercrime.gov.in లో ఫిర్యాదు చేస్తున్నాను. ఎవరికీ OTP లేదా PIN చెప్పకండి.',
 };
@@ -1167,6 +1178,8 @@ const mr: Strings = {
   privacyNote: 'अकाउंट लागत नाही. तुम्ही कॉपी किंवा शेअर दाबल्याशिवाय काहीही फोनबाहेर जात नाही.',
   back: 'मागे',
   unknown: 'माहीत नाही',
+  moneyWord: 'पैसे', // the 1930 script when the amount is not known: "Money was taken from my … account"
+  bankWord: 'बँक', // …and the bank: "my bank account"
   summaryIntro: 'ही आहे तुमची तक्रार.',
   familyMsg: 'ऑनलाइन फसवणुकीत माझे {amount} गेले ({scam}). मी 1930 आणि cybercrime.gov.in वर तक्रार करत आहे. कधीही कोणालाही OTP किंवा PIN सांगू नका.',
 };
@@ -1345,6 +1358,8 @@ const kn: Strings = {
   privacyNote: 'ಖಾತೆ ಬೇಕಿಲ್ಲ. ನೀವು ಕಾಪಿ ಅಥವಾ ಶೇರ್ ಒತ್ತುವವರೆಗೆ ಏನೂ ಫೋನ್‌ನಿಂದ ಹೊರಗೆ ಹೋಗುವುದಿಲ್ಲ.',
   back: 'ಹಿಂದೆ',
   unknown: 'ಗೊತ್ತಿಲ್ಲ',
+  moneyWord: 'ಹಣ', // the 1930 script when the amount is not known: "Money was taken from my … account"
+  bankWord: 'ಬ್ಯಾಂಕ್', // …and the bank: "my bank account"
   summaryIntro: 'ಇದೋ ನಿಮ್ಮ ದೂರು.',
   familyMsg: 'ಆನ್‌ಲೈನ್ ವಂಚನೆಯಲ್ಲಿ ನಾನು {amount} ಕಳೆದುಕೊಂಡೆ ({scam}). 1930 ಮತ್ತು cybercrime.gov.in ನಲ್ಲಿ ದೂರು ನೀಡುತ್ತಿದ್ದೇನೆ. ಯಾರಿಗೂ OTP ಅಥವಾ PIN ಹೇಳಬೇಡಿ.',
 };

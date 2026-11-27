@@ -19,7 +19,7 @@ function Typeset({ text }: { text: string }) {
         if (i === 0) return <h3 key={i} className="text-title leading-snug">{line}</h3>;
         if (i === 1) return <p key={i} className="text-label text-muted">{line}</p>;
         if (!line.trim()) return <div key={i} className="h-3" />;
-        if (/^\d\.\s+[A-Z'’ ()]+$/.test(line))
+        if (/^\d\.\s+[A-Z'’ ]+(?:\s\([^)]*\))?$/.test(line))
           return (
             <h4 key={i} className="mt-4 mb-1 font-sans text-label font-bold uppercase tracking-wide text-muted">
               {line.replace(/^\d\.\s+/, '')}
@@ -70,7 +70,7 @@ export function DocumentScreen(props: { ui: UI; report: Report; onChange: (r: Re
           <Typeset text={complaint} />
         </section>
         <p className="px-5 pt-3 flex items-center gap-2 text-label text-ok font-semibold">
-          <CheckIcon className="w-5 h-5" /> {t('portalReady')} · {description.length}+
+          <CheckIcon className="w-5 h-5" /> {t('portalReady')} · {t('portalChars', { n: description.length })}
         </p>
 
         <nav className="px-5 flex flex-col items-start">
