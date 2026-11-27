@@ -3,6 +3,10 @@
 **Live:** https://turant-voice.vercel.app · **Run it yourself:** `docker compose up`, then open http://localhost:3000
 Theme: *Public infrastructure and civic services* (Build for Bharat, Scaler × Wispr Flow, Round 2)
 
+![Turant, left to right: tell what happened → it listens and writes → one read-back screen → call 1930 with a script → the complaint for cybercrime.gov.in](docs/img/flow.png)
+
+Demo video (1:52, a real Hindi voice going through the live app): [`demo/turant_demo_landscape.mp4`](demo/turant_demo_landscape.mp4)
+
 Someone has just lost money to a UPI scam. The money can still be frozen if it is reported within the first hour or two, but reporting means a 1930 call queue or the cybercrime.gov.in form: an OTP login, a captcha, and a 200-character description with the bank, UTR, date and amount typed in English.
 
 Turant turns that into a conversation. You tap once and say what happened in your own words, for example: *"Someone called from customer care, made me install AnyDesk, and two lakh rupees went from my ICICI account yesterday at 7 pm."* Turant then:
