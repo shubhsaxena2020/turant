@@ -28,6 +28,21 @@ no form submit, no YouTube upload, no upload to Shubh's HF account, no spending.
   ASR on them: large-v3 (GPU), turbo (GPU server), the in-page models (CPU; laptop 2 if set up).
   Then noise (15 / 5 dB) on the unseen clips, and speed perturbation (+/-15% via the existing rate tier).
 
+- **First unseen-voice result (in-page Hinglish model, `unseen_report.mjs swift45 unseen_swift46`):**
+
+  | lang | tuned | held-out | unseen | unseen 15 dB | unseen 5 dB |
+  |---|---|---|---|---|---|
+  | hi | 87.5% | 92.5% | 81.3% | 75.0% | 52.5% |
+  | en | 75.0% | 75.0% | 47.5% | 52.5% | 42.5% |
+  | mr | 67.5% | 40.0% | 40.0% | 37.5% | 20.0% |
+  | all | 76.7% | 70.6% | **56.3%** | 55.0% | 38.3% |
+
+  Hindi generalises; Marathi's tuned-voice number is inflated (unseen = held-out = 40%); English drops on these
+  foreign-accented voices, mostly recogniser losses, and partly because several English cases are romanised Hindi
+  read with a European accent (not a realistic Indian speaker). Error analysis reads only the Remy / Vivienne half
+  of the unseen set; the Giuseppe / Thalita half is the check. Paytm mishearings ("paidum") added: +3 on the
+  analysis half, 0 on the check half (that sentence fell only in the analysis half), so not counted as a gain.
+
 ## Milestones (notes for Shubh)
 
 - 28 Nov ~02:40: Tamil in-page model live (6.3% -> 47.5%), served by Turant itself via chunked weights; no HF upload needed.

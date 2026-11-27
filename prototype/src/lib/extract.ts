@@ -680,7 +680,7 @@ function extractBank(text: string, opts: ExtractOptions): Extracted<string> | un
 const APPS: { name: string; keys: string[] }[] = [
   { name: 'PhonePe', keys: ['phonepe', 'phone pay', 'phonpe', 'phone-pe', 'fon pay', 'fon pe', 'fonpe', 'फोनपे', 'ফোনপে', 'போன்பே', 'ఫోన్‌పే', 'ఫోన్పే', 'ಫೋನ್‌ಪೇ', 'ফোন পে', 'ఫోన్ పే', 'போன் பே', 'ಫೋನ್ ಪೇ', 'ஹோன்பே', 'ஹோன் பே', 'फोन पे वरून', 'फोन पे द्वारे'] },
   { name: 'Google Pay', keys: ['google pay', 'gpay', 'g pay', 'googlepay', 'tez', 'गूगल पे', 'গুগল পে', 'கூகுள் பே', 'గూగుల్ పే', 'ಗೂಗಲ್ ಪೇ', 'கூபுள் பே', 'గూబుల్ పే', 'गूबल पे'] },
-  { name: 'Paytm', keys: ['paytm', 'pay tm', 'पेटीएम', 'পেটিএম', 'பேடிஎம்', 'పేటీఎం', 'పేటియం', 'ಪೇಟಿಎಂ', 'ಪೇಟಿಯೆ', 'ಪೇಟಿಯಂ', 'पेटी एम', 'पे टी एम', 'पेटी इन', 'பேடியம்', 'পেটি এম'] },
+  { name: 'Paytm', keys: ['paytm', 'pay tm', 'paidum', 'paytem', 'peitum', 'paitm', 'पेटीएम', 'পেটিএম', 'பேடிஎம்', 'పేటీఎం', 'పేటియం', 'ಪೇಟಿಎಂ', 'ಪೇಟಿಯೆ', 'ಪೇಟಿಯಂ', 'पेटी एम', 'पे टी एम', 'पेटी इन', 'பேடியம்', 'পেটি এম'] },
   { name: 'BHIM', keys: ['bhim', 'भीम ऐप', 'भीम यूपीआई'] },
   { name: 'Amazon Pay', keys: ['amazon pay', 'अमेज़न पे'] },
   { name: 'CRED', keys: ['cred'] },
