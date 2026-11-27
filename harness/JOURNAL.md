@@ -345,6 +345,7 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   | in-page hi / en / mr | 87.5 / 75.0 / 67.5 | 92.5 / 75.0 / 40.0 | **83.8 / 47.5 / 42.5** | 77.5 / 52.5 / 37.5 | 55.0 / 42.5 / 20.0 |
   | in-page te / kn / ta / bn | 70.0 / 50.0 / 52.5 / 35.0 | 67.5 / 50.0 / 47.5 / 37.5 | **68.8 / 53.8 / 53.8 / 25.6** | 62.5 / 47.5 / 47.5 / 28.2 | 45.0 / 17.5 / 45.0 / 20.5 |
 
+  - **English, split:** on English sentences, unseen speakers get 58.1% in the page (tuning voices 76.3%) and 87.1% on large-v3; on the 18 romanised-Hindi "English" cases read with a European accent, 11.1% and 16.7%. That accent is not a realistic Indian speaker, so the English unseen drop is mostly a property of the test, not the rules.
   - Rounds 47-48 from the analysis half: Marathi spellings (unseen mr 40.0 → 42.5, +1 on each half), Hindi "der laakh" = डेढ़ लाख and "Badauda" (unseen hi 81.3 → 83.8; check half 0, but **blind +1**). No run lost anywhere.
 - **Round 49 (robustness audio):** the 40 robustness cases rendered with the tuning and unseen voices (167 clips) and run through every in-page model. Read the tuning-voice failures only; the unseen voices are the check.
   - **"karod" (crore in Latin) was unknown to the shared parser**: "Do karod pachaas laakh" gave 50 lakh, "Dedh karod" 1.5. Fixed (karod / karor / kror).
