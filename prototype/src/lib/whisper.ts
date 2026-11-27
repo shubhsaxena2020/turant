@@ -17,8 +17,10 @@ interface ModelChoice {
 }
 const BASE: ModelChoice = { id: 'onnx-community/whisper-base', gpu: true };
 const HINGLISH: ModelChoice = { id: 'Hirecentive-D3l/Whisper-Hindi2Hinglish-Swift-ONNX', gpu: false };
-// Measured on the harness clips (clean, fully correct reports): Hindi 13.8% -> 85.0%, English (India) 48.3% -> 61.7%.
-const MODEL_FOR: Record<string, ModelChoice> = { 'hi-IN': HINGLISH, 'en-IN': HINGLISH };
+// Measured on the harness clips (clean, fully correct reports, after round 34):
+//   Hindi 13.8% -> 85.0%, English (India) 50.0% -> 61.7%, Marathi 10.0% -> 15.0% (base -> Hinglish model).
+// Bengali, Tamil, Telugu and Kannada stay on whisper-base (2.5-6.3%): weak; the browser recogniser is the main path there.
+const MODEL_FOR: Record<string, ModelChoice> = { 'hi-IN': HINGLISH, 'en-IN': HINGLISH, 'mr-IN': HINGLISH };
 const modelFor = (lang: string) => MODEL_FOR[lang] ?? BASE;
 const WHISPER_LANG: Record<string, string> = {
   'en-IN': 'english',
