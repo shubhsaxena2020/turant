@@ -280,6 +280,8 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - `?speech=whisper` skips the browser recogniser entirely. In tests with a fake microphone, Chrome's recogniser listens to the real room microphone, so demos use this option.
 
 - **Round 35** (English as the Hinglish model writes it): a clock-looking group inside a read-out ("plus 9 1 07:01 2344", "reference number is 06:01 to 34567") is digits, not a time; "double / triple" digits and digit words (Indian English); paanchas = 50; debated = debited; "quote account" = Kotak (shared `cleanup.ts` `spokenDigits`, also in the kit). Hinglish model +3 runs; large-v3, turbo and whisper-base unchanged run for run. Where the model dropped a digit inside a read-out, the app now gives no value instead of a fake time.
+- **Blind set on the in-page Hinglish model** (new sentences, never tuned on; `blind_swift35`): Hindi **91.7%** fully correct, equal to the reference-text score for those sentences, so speech recognition loses nothing there. English 52.8% (reference 83.3%), Marathi 25.0% (reference 83.3%).
+- **First use is faster:** the in-page model is prefetched while the person is still talking (after ~2 s of voice with no words from the browser, or right away with `?speech=whisper`). Fresh profile, 12-second Hindi story: the wait after speaking drops from ~12.6 s to ~1 s.
 - **whisper-small for Bengali / Tamil / Telugu / Kannada, not adopted:** on 40 dev clips it scored 2.5% fully correct (whisper-base 0%). Field F1: ta 53 vs 27, te 38 vs 33, kn 19 vs 13, bn 36 vs 44. It is a 250 MB download and several times slower. These languages need an Indian-language recogniser, not a bigger generic Whisper.
 
 ## What is left
