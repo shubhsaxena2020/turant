@@ -430,3 +430,17 @@ describe('round 32 (hour-and-minute phrases)', () => {
     expect(x('ಕೇವ ಆಯಸಿ ಅಪ್ಡೇಟ್ ಮಾಡಿ').scamType?.value).toBe('fake_kyc');
   });
 });
+
+describe('round 34 (Hinglish as the in-page Hindi Whisper writes it)', () => {
+  const x = (t: string, o = {}) => extractFields(t, { now: NOW, ...o });
+  it('numbers and read-outs', () => {
+    expect(x('mere HDFC account se do laakh rupe nikaal lie').amount?.value).toBe(200000);
+    expect(x('Dedh laakh rupe gae hain').amount?.value).toBe(150000);
+    expect(x('Uska number saat shoony ek ek do do tin tin chaar chaar.').suspectPhone?.value).toBe('7011223344');
+    expect(x('UTR number hai chaar paanch chhah saat aath nau shoony ek do tin chaar paanch').utr?.value).toBe('456789012345');
+    expect(x('tis hazaar rupe cut gae access bank se').bank?.value).toBe('Axis Bank');
+  });
+  it('skip', () => {
+    expect(detectIntent('Pata nahin chhodo.')).toBe('skip');
+  });
+});

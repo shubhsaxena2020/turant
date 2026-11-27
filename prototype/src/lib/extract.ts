@@ -164,7 +164,8 @@ const UNITS = map({
   eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18,
   nineteen: 19, twenty: 20, thirty: 30, forty: 40, fifty: 50, sixty: 60, seventy: 70, eighty: 80, ninety: 90,
   // Hinglish
-  shunya: 0, ek: 1, do: 2, teen: 3, char: 4, chaar: 4, paanch: 5, panch: 5, paach: 5, panj: 5,
+  // shoony / tin: how the Hindi2Hinglish Whisper (the app's in-page model for Hindi) spells shunya / teen
+  shunya: 0, shoony: 0, shoonya: 0, shuny: 0, ek: 1, do: 2, teen: 3, tin: 3, char: 4, chaar: 4, paanch: 5, panch: 5, paach: 5, panj: 5,
   chhe: 6, chhah: 6, chah: 6, che: 6, cheh: 6, chhey: 6, saat: 7, aath: 8, aat: 8, nau: 9,
   das: 10, dus: 10, gyarah: 11, gyara: 11, barah: 12, bara: 12, terah: 13, tera: 13, chaudah: 14, chauda: 14,
   pandrah: 15, pandra: 15, solah: 16, sola: 16, satrah: 17, satra: 17, atharah: 18, athara: 18, unnis: 19,
@@ -616,10 +617,10 @@ function extractScamType(text: string, opts: ExtractOptions): Extracted<ScamType
 const KYC_UPDATE = /(?:^|\s)[कকಕకக](?=[^\s]{0,4}[कखसषকখসষಕಖಸಷకఖసషகச])[^\s]{1,5}\s+[अআঅಅఅஅ][पপಪపப][^\s]{0,5}[टটಟటட]/u;
 
 export const BANKS: { name: string; keys: string[] }[] = [
-  { name: 'State Bank of India (SBI)', keys: ['sbi', 'state bank', 'state bank of india', 'yono', 'एसबीआई', 'स्टेट बैंक', 'স্টেট ব্যাংক', 'এসবিআই', 'எஸ்பிஐ', 'ஸ்டேட் பேங்க்', 'ఎస్బీఐ', 'ఎస్‌బీఐ', 'ఎస్బిఐ', 'స్టేట్ బ్యాంక్', 'ಎಸ್‌ಬಿಐ', 'ಎಸ್ಬಿಐ', 'ಸ್ಟೇಟ್ ಬ್ಯಾಂಕ್'] },
+  { name: 'State Bank of India (SBI)', keys: ['sbi', 'state bank', 'stay bank', 'state bank of india', 'yono', 'एसबीआई', 'स्टेट बैंक', 'স্টেট ব্যাংক', 'এসবিআই', 'எஸ்பிஐ', 'ஸ்டேட் பேங்க்', 'ఎస్బీఐ', 'ఎస్‌బీఐ', 'ఎస్బిఐ', 'స్టేట్ బ్యాంక్', 'ಎಸ್‌ಬಿಐ', 'ಎಸ್ಬಿಐ', 'ಸ್ಟೇಟ್ ಬ್ಯಾಂಕ್'] },
   { name: 'HDFC Bank', keys: ['hdfc', 'एचडीएफसी', 'এইচডিএফসি', 'ஹெச்டிஎஃப்சி', 'హెచ్‌డీఎఫ్‌సీ', 'ಎಚ್‌ಡಿಎಫ್‌ಸಿ'] },
   { name: 'ICICI Bank', keys: ['icici', 'आईसीआईसीआई', 'আইসিআইসিআই', 'ஐசிஐசிஐ', 'ఐసీఐసీఐ', 'ಐಸಿಐಸಿಐ'] },
-  { name: 'Axis Bank', keys: ['axis', 'एक्सिस', 'অ্যাক্সিস', 'ஆக்சிஸ்', 'ஆக்சுஸ்', 'యాక్సిస్', 'ಆಕ್ಸಿಸ್'] },
+  { name: 'Axis Bank', keys: ['axis', 'access bank', 'एक्सिस', 'অ্যাক্সিস', 'ஆக்சிஸ்', 'ஆக்சுஸ்', 'యాక్సిస్', 'ಆಕ್ಸಿಸ್'] },
   { name: 'Punjab National Bank (PNB)', keys: ['pnb', 'punjab national', 'पीएनबी', 'पंजाब नेशनल'] },
   { name: 'Bank of Baroda', keys: ['bank of baroda', 'baroda', 'बैंक ऑफ बड़ौदा', 'बड़ौदा', 'बडौदा'] },
   { name: 'Canara Bank', keys: ['canara', 'kenara', 'केनरा', 'कैनरा', 'ಕೆನರಾ', 'கனரா'] },
@@ -920,7 +921,7 @@ export function extractFields(text: string, opts: ExtractOptions = {}): Extracti
 
 export type Intent = 'skip' | 'wait' | 'yes' | 'no';
 
-const SKIP_WORDS = ['skip', 'skip karo', 'pata nahi', 'pata nhi', 'nahi pata', 'nahin pata', 'maloom nahi', 'malum nahi', 'nahi maloom', "don't know", 'dont know', 'do not know', 'no idea', 'not sure', 'aage badho', 'छोड़ो', 'छोडो', 'पता नहीं', 'मालूम नहीं', 'स्किप', 'জানি না', 'தெரியாது', 'తెలియదు', 'माहित नाही', 'माहिद नाही', 'ಗೊತ್ತಿಲ್ಲ'];
+const SKIP_WORDS = ['skip', 'skip karo', 'pata nahi', 'pata nahin', 'pata nhi', 'nahi pata', 'nahin pata', 'maloom nahi', 'malum nahi', 'nahi maloom', "don't know", 'dont know', 'do not know', 'no idea', 'not sure', 'aage badho', 'छोड़ो', 'छोडो', 'पता नहीं', 'मालूम नहीं', 'स्किप', 'জানি না', 'தெரியாது', 'తెలియదు', 'माहित नाही', 'माहिद नाही', 'ಗೊತ್ತಿಲ್ಲ'];
 const WAIT_WORDS = ['ek minute ruko', 'ek minute', 'ek min', 'ruko', 'ruk jao', 'rukiye', 'wait', 'hold on', 'one minute', 'रुको', 'रुकिए', 'एक मिनट', 'এক মিনিট', 'দাঁড়ান', 'ஒரு நிமிடம்', 'ஒரு நிமிஷம்', 'ఒక్క నిమిషం', 'थांबा', 'एक मिनिट', 'ಒಂದು ನಿಮಿಷ'];
 const YES_WORDS = ['haan', 'han', 'haa', 'ha', 'ji', 'haan ji', 'yes', 'yeah', 'yep', 'sahi', 'sahi hai', 'theek hai', 'thik hai', 'correct', 'right', 'ok', 'okay', 'हाँ', 'हां', 'जी', 'सही', 'ठीक', 'হ্যাঁ', 'ঠিক', 'ஆம்', 'சரி', 'అవును', 'సరే', 'होय', 'बरोबर', 'ಹೌದು', 'ಸರಿ'];
 const NO_WORDS = ['nahi', 'nahin', 'nhi', 'na', 'no', 'galat', 'wrong', 'नहीं', 'गलत', 'না', 'ভুল', 'இல்லை', 'தவறு', 'కాదు', 'లేదు', 'नाही', 'चूक', 'ಇಲ್ಲ', 'ತಪ್ಪು'];

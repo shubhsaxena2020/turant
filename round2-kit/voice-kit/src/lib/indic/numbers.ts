@@ -9,7 +9,7 @@ const WORDS: Record<string, number> = {};
 const add = (v: number, ...ws: string[]) => ws.forEach((w) => (WORDS[w.normalize('NFC')] = v));
 
 // Hindi / Marathi (Devanagari + common Latin)
-add(0, 'शून्य', 'shunya', 'zero', 'ज़ीरो', 'जीरो', 'झीरो');
+add(0, 'शून्य', 'shunya', 'shoony', 'shoonya', 'shuny', 'zero', 'ज़ीरो', 'जीरो', 'झीरो');
 // English number words written in Devanagari by the recogniser ("फाइव साल", "ट्वेंटी थाउज़ेंड")
 add(2, 'टू'); // not वन ("forest") or सेवन ("intake"): ordinary Hindi words add(3, 'थ्री'); add(4, 'फोर'); add(5, 'फाइव', 'फ़ाइव'); add(6, 'सिक्स'); add(8, 'एट', 'ऐट'); add(9, 'नाइन'); add(10, 'टेन');
 add(20, 'ट्वेंटी', 'ट्वेन्टी'); add(30, 'थर्टी'); add(40, 'फोर्टी'); add(50, 'फिफ्टी'); add(60, 'सिक्सटी'); add(70, 'सेवेंटी'); add(80, 'एटी', 'ऐटी'); add(90, 'नाइंटी');
@@ -220,7 +220,7 @@ const MULT: Record<string, number> = {};
 const mul = (v: number, ...ws: string[]) => ws.forEach((w) => (MULT[w.normalize('NFC')] = v));
 mul(100, 'सौ', 'सौं', 'सौँ', 'शे', 'শো', 'শ', 'వంద', 'వందల', 'వందలు', 'వందలా', 'నూట', 'నూరు', 'ನೂರು', 'நூறு', 'हंड्रेड', 'hundred', 'sau');
 mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजारो', 'হাজার', 'হজার', 'হাজাত', 'వేలు', 'వేల', 'వేలా', 'వెయ్యి', 'ಸಾವರದ', 'ಸಾವರ', 'ಸಾವರಿದ', 'ಸಾವಿರ', 'ಸಾವಿರದ', 'ಸಾವಿರು', 'ಸಾವಿಳ', 'ಸಾವಿಲ', 'தாயிரம்', 'தாயரம்', 'ஆயிரம்', 'ஆயிரத்து', 'थाउज़ेंड', 'थाउजेंड', 'thousand', 'hazaar', 'hazar', 'k');
-mul(100000, 'लाख', 'লাখ', 'লক্ষ', 'లక్ష', 'లక్షల', 'లక్షలు', 'ಲಕ್ಷ', 'லட்சம்', 'லட்சத்து', 'lakh', 'lac', 'lakhs');
+mul(100000, 'लाख', 'লাখ', 'লক্ষ', 'లక్ష', 'లక్షల', 'లక్షలు', 'ಲಕ್ಷ', 'லட்சம்', 'லட்சத்து', 'lakh', 'lac', 'lakhs', 'laakh', 'laakhs');
 mul(10000000, 'करोड़', 'करोड', 'कोटी', 'কোটি', 'కోటి', 'ಕೋಟಿ', 'கோடி', 'crore', 'crores');
 
 const HALF_PREFIX = ['साढ़े', 'साढे', 'साडे', 'साधे', 'সাড়ে', 'সারে', 'saadhe', 'sadhe', 'saade', 'sade', 'saare', 'sare', 'saadey'].map((w) => w.normalize('NFC'));

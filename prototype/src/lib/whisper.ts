@@ -1,11 +1,25 @@
 // In-page speech-to-text with Whisper (transformers.js + ONNX Runtime Web). The fallback for when the
 // browser's own speech service hears the microphone but returns no words (seen on Chrome for Windows).
-// Loaded only when needed: the first use downloads the model (77 MB) and runtime (21 MB), then the browser caches them.
-// Everything runs on the device; no audio leaves it.
+// Loaded only when needed: the first use downloads the model (about 80-100 MB) and runtime (21 MB), then the browser
+// caches them. Everything runs on the device; no audio leaves it.
+//
+// Model by speaking language (measured with harness/asr_wbase.mjs on the same clips, see harness/JOURNAL.md):
+// stock whisper-base writes Hindi in Urdu / Cyrillic / Latin letters (13.8% fully correct reports), so Hindi uses
+// Oriserve's Whisper-Hindi2Hinglish-Swift (a whisper-base fine-tune, Apache-2.0), which writes clean Hinglish.
+// Indian English is better on it too, so English (India) uses it as well.
 
 type Asr = (audio: Float32Array, opts: Record<string, unknown>) => Promise<{ text: string } | { text: string }[]>;
 
-const MODEL = 'onnx-community/whisper-base';
+interface ModelChoice {
+  id: string;
+  /** Has fp32/q4 files for the WebGPU path; otherwise WebAssembly q8 only. */
+  gpu: boolean;
+}
+const BASE: ModelChoice = { id: 'onnx-community/whisper-base', gpu: true };
+const HINGLISH: ModelChoice = { id: 'Hirecentive-D3l/Whisper-Hindi2Hinglish-Swift-ONNX', gpu: false };
+// Measured on the harness clips (clean, fully correct reports): Hindi 13.8% -> 85.0%, English (India) 48.3% -> 61.7%.
+const MODEL_FOR: Record<string, ModelChoice> = { 'hi-IN': HINGLISH, 'en-IN': HINGLISH };
+const modelFor = (lang: string) => MODEL_FOR[lang] ?? BASE;
 const WHISPER_LANG: Record<string, string> = {
   'en-IN': 'english',
   'hi-IN': 'hindi',
@@ -16,7 +30,7 @@ const WHISPER_LANG: Record<string, string> = {
   'kn-IN': 'kannada',
 };
 
-let loading: Promise<Asr> | null = null;
+const loading = new Map<string, Promise<Asr>>();
 let forceWasm = false;
 
 /** navigator.gpu can exist with no usable adapter (headless, blocklisted drivers): ask for one first. */
@@ -32,9 +46,11 @@ async function hasGpu(): Promise<boolean> {
 /** Progress 0..1 of the one-time model download (summed over its files). */
 export type Progress = (fraction: number) => void;
 
-export function loadWhisper(onProgress?: Progress): Promise<Asr> {
-  if (loading) return loading;
-  loading = (async () => {
+export function loadWhisper(lang: string, onProgress?: Progress): Promise<Asr> {
+  const model = modelFor(lang);
+  const hit = loading.get(model.id);
+  if (hit) return hit;
+  const p = (async () => {
     const { pipeline, env } = await import('@huggingface/transformers');
     env.allowLocalModels = false;
     const files = new Map<string, { loaded: number; total: number }>();
@@ -46,9 +62,9 @@ export function loadWhisper(onProgress?: Progress): Promise<Asr> {
       for (const f of files.values()) (a += f.loaded), (b += f.total);
       onProgress?.(b ? a / b : 0);
     };
-    if (!forceWasm && (await hasGpu())) {
+    if (model.gpu && !forceWasm && (await hasGpu())) {
       try {
-        return (await pipeline('automatic-speech-recognition', MODEL, {
+        return (await pipeline('automatic-speech-recognition', model.id, {
           device: 'webgpu',
           dtype: { encoder_model: 'fp32', decoder_model_merged: 'q4' },
           progress_callback,
@@ -57,12 +73,11 @@ export function loadWhisper(onProgress?: Progress): Promise<Asr> {
         /* no usable WebGPU adapter: fall back to WebAssembly */
       }
     }
-    return (await pipeline('automatic-speech-recognition', MODEL, { device: 'wasm', dtype: 'q8', progress_callback })) as unknown as Asr;
+    return (await pipeline('automatic-speech-recognition', model.id, { device: 'wasm', dtype: 'q8', progress_callback })) as unknown as Asr;
   })();
-  loading.catch(() => {
-    loading = null; // let a later attempt retry
-  });
-  return loading;
+  loading.set(model.id, p);
+  p.catch(() => loading.delete(model.id)); // let a later attempt retry
+  return p;
 }
 
 /** Recorded audio (any format the browser can decode) -> 16 kHz mono samples. */
@@ -84,7 +99,7 @@ async function toPcm16k(blob: Blob): Promise<Float32Array> {
 
 /** Transcribe a recording in the given speaking language. Resolves to '' if nothing was understood. */
 export async function transcribe(blob: Blob, lang: string, onProgress?: Progress): Promise<string> {
-  const [asr, pcm] = await Promise.all([loadWhisper(onProgress), toPcm16k(blob)]);
+  const [asr, pcm] = await Promise.all([loadWhisper(lang, onProgress), toPcm16k(blob)]);
   const opts = { language: WHISPER_LANG[lang] ?? 'english', task: 'transcribe', chunk_length_s: 30, stride_length_s: 5 };
   let out: Awaited<ReturnType<Asr>>;
   try {
@@ -93,8 +108,8 @@ export async function transcribe(blob: Blob, lang: string, onProgress?: Progress
     if (forceWasm) throw e;
     // The GPU path failed at run time: rebuild on WebAssembly once and retry.
     forceWasm = true;
-    loading = null;
-    out = await (await loadWhisper(onProgress))(pcm, opts);
+    loading.delete(modelFor(lang).id);
+    out = await (await loadWhisper(lang, onProgress))(pcm, opts);
   }
   const text = (Array.isArray(out) ? out.map((o) => o.text).join(' ') : out.text).replace(/\s+/g, ' ').trim();
   // Whisper's stock outputs for silence or noise
