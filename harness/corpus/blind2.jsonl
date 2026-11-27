@@ -1,0 +1,42 @@
+{"id":"hi-c01","lang":"hi","kind":"story","text":"एक आदमी ने खुद को बैंक का अफसर बताया, ओटीपी माँगा और मैंने दे दिया, फिर मेरे केनरा बैंक खाते से सात हज़ार रुपये कट गए, बीस मिनट पहले","expected":{"amount":7000,"time":{"ago":20},"scamType":"otp_shared","bank":"canara"},"tags":["blind2"]}
+{"id":"hi-c02","lang":"hi","kind":"story","text":"टेलीग्राम पर टास्क वाली नौकरी के नाम पर मुझसे तीस हज़ार रुपये भरवाए, गूगल पे से भेजे थे","expected":{"amount":30000,"scamType":"investment_task","paymentApp":"gpay"},"tags":["blind2"]}
+{"id":"hi-c03","lang":"hi","kind":"answer:time","hint":"time","text":"परसों रात साढ़े दस बजे","expected":{"time":{"day":-2,"at":"22:30"}},"tags":["blind2"]}
+{"id":"hi-c04","lang":"hi","kind":"answer:amount","hint":"amount","text":"सवा लाख रुपये","expected":{"amount":125000},"tags":["blind2"]}
+{"id":"hi-c05","lang":"hi","kind":"answer:suspect","hint":"suspect","text":"उसका नंबर था 8 7 6 5 4 3 2 1 0 9","expected":{"suspectPhone":"8765432109"},"tags":["blind2"]}
+{"id":"hi-c06","lang":"hi","kind":"correction","text":"बैंक गलत है, एक्सिस बैंक था","expected":{"bank":"axis"},"tags":["blind2"]}
+{"id":"en-c01","lang":"en","kind":"story","text":"Someone claiming to be from the electricity board said my power would be cut tonight, I paid 3,450 rupees through Paytm an hour ago","expected":{"amount":3450,"time":{"ago":60},"paymentApp":"paytm"},"tags":["blind2"]}
+{"id":"en-c02","lang":"en","kind":"story","text":"A buyer on OLX sent me a QR code to receive payment, I scanned it and 18,000 was debited from my Kotak account yesterday at 4 pm","expected":{"amount":18000,"time":{"day":-1,"at":"16:00"},"scamType":"qr_scan","bank":"kotak"},"tags":["blind2"]}
+{"id":"en-c03","lang":"en","kind":"answer:utr","hint":"utr","text":"the UTR is 5 0 7 1 2 3 4 5 6 7 8 9","expected":{"utr":"507123456789"},"tags":["blind2"]}
+{"id":"en-c04","lang":"en","kind":"answer:amount","hint":"amount","text":"one lakh seventy five thousand","expected":{"amount":175000},"tags":["blind2"]}
+{"id":"en-c05","lang":"en","kind":"answer:suspect","hint":"suspect","text":"the UPI ID was lucky dot winner at okaxis","expected":{"suspectUpi":"lucky.winner@okaxis"},"tags":["blind2"]}
+{"id":"en-c06","lang":"en","kind":"correction","text":"no, the amount was 9,500 not 5,900","expected":{"amount":9500},"tags":["blind2"]}
+{"id":"mr-c01","lang":"mr","kind":"story","text":"माझ्या बँक ऑफ इंडिया खात्यातून बारा हजार रुपये गेले, एका माणसाने ओटीपी मागितला आणि मी सांगितला, अर्ध्या तासापूर्वी","expected":{"amount":12000,"time":{"ago":30},"scamType":"otp_shared","bank":"boi"},"tags":["blind2"]}
+{"id":"mr-c02","lang":"mr","kind":"story","text":"काल दुपारी तीन वाजता फोनपे वरून चार हजार पाचशे रुपये गेले","expected":{"amount":4500,"time":{"day":-1,"at":"15:00"},"paymentApp":"phonepe"},"tags":["blind2"]}
+{"id":"mr-c03","lang":"mr","kind":"answer:time","hint":"time","text":"दोन तासांपूर्वी","expected":{"time":{"ago":120}},"tags":["blind2"]}
+{"id":"mr-c04","lang":"mr","kind":"answer:amount","hint":"amount","text":"पावणे दोन लाख","expected":{"amount":175000},"tags":["blind2"]}
+{"id":"mr-c05","lang":"mr","kind":"answer:bank","hint":"bank","text":"एचडीएफसी बँक","expected":{"bank":"hdfc"},"tags":["blind2"]}
+{"id":"mr-c06","lang":"mr","kind":"correction","text":"रक्कम चुकीची आहे, आठ हजार होते","expected":{"amount":8000},"tags":["blind2"]}
+{"id":"bn-c01","lang":"bn","kind":"story","text":"একজন বলল আমার কেওয়াইসি আপডেট করতে হবে, না হলে অ্যাকাউন্ট বন্ধ হয়ে যাবে, তারপর আমার এসবিআই অ্যাকাউন্ট থেকে আট হাজার টাকা কেটে গেল","expected":{"amount":8000,"scamType":"fake_kyc","bank":"sbi"},"tags":["blind2"]}
+{"id":"bn-c02","lang":"bn","kind":"story","text":"গতকাল সন্ধ্যা ছটায় ফোনপে দিয়ে দুই হাজার টাকা চলে গেছে","expected":{"amount":2000,"time":{"day":-1,"at":"18:00"},"paymentApp":"phonepe"},"tags":["blind2"]}
+{"id":"bn-c03","lang":"bn","kind":"answer:time","hint":"time","text":"চল্লিশ মিনিট আগে","expected":{"time":{"ago":40}},"tags":["blind2"]}
+{"id":"bn-c04","lang":"bn","kind":"answer:amount","hint":"amount","text":"এক লাখ বিশ হাজার","expected":{"amount":120000},"tags":["blind2"]}
+{"id":"bn-c05","lang":"bn","kind":"answer:bank","hint":"bank","text":"পাঞ্জাব ন্যাশনাল ব্যাংক","expected":{"bank":"pnb"},"tags":["blind2"]}
+{"id":"bn-c06","lang":"bn","kind":"correction","text":"টাকার পরিমাণ ভুল, পাঁচ হাজার ছিল","expected":{"amount":5000},"tags":["blind2"]}
+{"id":"ta-c01","lang":"ta","kind":"story","text":"ஒருவர் வங்கியிலிருந்து பேசுவதாகச் சொல்லி ஓடிபி கேட்டார், நான் சொன்னேன், என் இந்தியன் வங்கி கணக்கிலிருந்து ஆறாயிரம் ரூபாய் போய்விட்டது","expected":{"amount":6000,"scamType":"otp_shared","bank":"indian"},"tags":["blind2"]}
+{"id":"ta-c02","lang":"ta","kind":"story","text":"நேற்று இரவு எட்டு மணிக்கு கூகுள் பே மூலம் மூவாயிரம் ரூபாய் போனது","expected":{"amount":3000,"time":{"day":-1,"at":"20:00"},"paymentApp":"gpay"},"tags":["blind2"]}
+{"id":"ta-c03","lang":"ta","kind":"answer:time","hint":"time","text":"இருபது நிமிடங்களுக்கு முன்பு","expected":{"time":{"ago":20}},"tags":["blind2"]}
+{"id":"ta-c04","lang":"ta","kind":"answer:amount","hint":"amount","text":"ஒன்றரை லட்சம் ரூபாய்","expected":{"amount":150000},"tags":["blind2"]}
+{"id":"ta-c05","lang":"ta","kind":"answer:bank","hint":"bank","text":"கனரா வங்கி","expected":{"bank":"canara"},"tags":["blind2"]}
+{"id":"ta-c06","lang":"ta","kind":"correction","text":"தொகை தவறு, ஏழாயிரம் ரூபாய்","expected":{"amount":7000},"tags":["blind2"]}
+{"id":"te-c01","lang":"te","kind":"story","text":"ఒకతను బ్యాంకు నుండి అని చెప్పి ఓటీపీ అడిగాడు, నేను చెప్పాను, నా ఐసీఐసీఐ ఖాతా నుండి పది వేల రూపాయలు పోయాయి","expected":{"amount":10000,"scamType":"otp_shared","bank":"icici"},"tags":["blind2"]}
+{"id":"te-c02","lang":"te","kind":"story","text":"నిన్న మధ్యాహ్నం రెండు గంటలకు పేటీఎం ద్వారా నాలుగు వేల రూపాయలు పోయాయి","expected":{"amount":4000,"time":{"day":-1,"at":"14:00"},"paymentApp":"paytm"},"tags":["blind2"]}
+{"id":"te-c03","lang":"te","kind":"answer:time","hint":"time","text":"ముప్పై నిమిషాల క్రితం","expected":{"time":{"ago":30}},"tags":["blind2"]}
+{"id":"te-c04","lang":"te","kind":"answer:amount","hint":"amount","text":"రెండు లక్షల రూపాయలు","expected":{"amount":200000},"tags":["blind2"]}
+{"id":"te-c05","lang":"te","kind":"answer:bank","hint":"bank","text":"యూనియన్ బ్యాంక్","expected":{"bank":"union"},"tags":["blind2"]}
+{"id":"te-c06","lang":"te","kind":"correction","text":"మొత్తం తప్పు, మూడు వేలు","expected":{"amount":3000},"tags":["blind2"]}
+{"id":"kn-c01","lang":"kn","kind":"story","text":"ಒಬ್ಬರು ಬ್ಯಾಂಕಿನಿಂದ ಎಂದು ಹೇಳಿ ಓಟಿಪಿ ಕೇಳಿದರು, ನಾನು ಹೇಳಿದೆ, ನನ್ನ ಕೆನರಾ ಬ್ಯಾಂಕ್ ಖಾತೆಯಿಂದ ಎಂಟು ಸಾವಿರ ರೂಪಾಯಿ ಹೋಯಿತು","expected":{"amount":8000,"scamType":"otp_shared","bank":"canara"},"tags":["blind2"]}
+{"id":"kn-c02","lang":"kn","kind":"story","text":"ನಿನ್ನೆ ಸಂಜೆ ಏಳು ಗಂಟೆಗೆ ಫೋನ್‌ಪೇ ಮೂಲಕ ಎರಡು ಸಾವಿರ ರೂಪಾಯಿ ಹೋಯಿತು","expected":{"amount":2000,"time":{"day":-1,"at":"19:00"},"paymentApp":"phonepe"},"tags":["blind2"]}
+{"id":"kn-c03","lang":"kn","kind":"answer:time","hint":"time","text":"ಹತ್ತು ನಿಮಿಷಗಳ ಹಿಂದೆ","expected":{"time":{"ago":10}},"tags":["blind2"]}
+{"id":"kn-c04","lang":"kn","kind":"answer:amount","hint":"amount","text":"ಒಂದು ಲಕ್ಷ ರೂಪಾಯಿ","expected":{"amount":100000},"tags":["blind2"]}
+{"id":"kn-c05","lang":"kn","kind":"answer:bank","hint":"bank","text":"ಎಸ್‌ಬಿಐ ಬ್ಯಾಂಕ್","expected":{"bank":"sbi"},"tags":["blind2"]}
+{"id":"kn-c06","lang":"kn","kind":"correction","text":"ಮೊತ್ತ ತಪ್ಪು, ಆರು ಸಾವಿರ","expected":{"amount":6000},"tags":["blind2"]}

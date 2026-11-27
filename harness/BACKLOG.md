@@ -18,6 +18,7 @@ no form submit, no YouTube upload, no upload to Shubh's HF account, no spending.
 | 5 | Robustness cases: code-mixing, English digits inside Indic speech, lakh/crore/hazaar, "nahi nahi, 500" | **done**: text 97.5% -> 100%; audio (167 clips, tuning + unseen voices) through every in-page model; round 49 fixes (karod!) +4 on unseen Hindi |
 | 7 | Turbo on the unseen set; add to the generalisation table | **done**: unseen 47.1% (tuned 52.4%) |
 | 8 | Next error-analysis pass (all languages, unseen analysis half, check half must move) | **round 51 done** (one rule reverted on check-half evidence); keep going |
+| 9 | Second blind set (42 cases, written after round 51), aggregate only: text 97.6%; audio (large-v3 + in-page, tuning + unseen voices) | in progress |
 | 6 | README / JOURNAL / deck numbers in sync, every claim with a tuned vs unseen vs blind split | **done** for unseen (re-sync after each round) |
 
 ## 1. Unseen speakers
