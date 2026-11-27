@@ -84,3 +84,43 @@ export function unifyScript(text: string): string {
   if (!/[ఀ-౿]/.test(text)) return text;
   return text.replace(/[ಀ-೿]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x80));
 }
+
+const CLOCK_WORDS = /^(at|around|by|before|after|till|until|since|from|yesterday|today|tonight|morning|evening|night|aaj|kal|subah|shaam|raat|baje|am|pm|a\.m\.?|p\.m\.?|o'clock|hrs?|hours?)$/i;
+const ID_WORDS = /^(number|no\.?|num|ref\.?|reference|account|a\/c|utr|id|plus|mobile|phone|upi)$/i;
+
+/**
+ * Digits read out one by one, as speech recognisers write them:
+ * - "9 double 8 7 6" / "triple 0" / "double 8754321" (common in Indian English) -> "9 88 7 6" / "000" / "88754321".
+ * - A clock-looking group inside a read-out ("plus 9 1 07:01 2344", "reference number is 06:01 to 34567",
+ *   "45678 08:01 2 345") -> its digits ("0701"), when it sits next to other digits or after an ID word and no
+ *   time word is near. "yesterday at 07:00" and "7:30 pm" are left alone.
+ */
+export function spokenDigits(text: string): string {
+  // only the first digit is repeated: "double 8754321" = 88754321; a lone digit stays a lone digit ("4 4"),
+  // so a one-by-one read-out keeps its shape; digit words too ("double four" = "four four")
+  let t = text.replace(/\b(double|triple)\s+(\d)(\d*)\b/gi, (_, k: string, d: string, rest: string) => {
+    const n = k.toLowerCase() === 'double' ? 2 : 3;
+    return rest ? d.repeat(n) + rest : Array(n).fill(d).join(' ');
+  });
+  t = t.replace(/\b(double|triple)\s+(zero|oh|one|two|three|four|five|six|seven|eight|nine)\b/gi, (_, k: string, w: string) =>
+    Array(k.toLowerCase() === 'double' ? 2 : 3).fill(w).join(' '),
+  );
+  const w = t.split(/(\s+)/);
+  const clean = (s: string | undefined) => (s ?? '').replace(/[.,;:!?]+$/, '').toLowerCase();
+  const word = (k: number, dir: 1 | -1) => {
+    for (let j = k + dir; j >= 0 && j < w.length; j += dir) if (w[j].trim()) return w[j];
+    return undefined;
+  };
+  for (let i = 0; i < w.length; i++) {
+    const m = /^(\d{1,2}):(\d{2})([.,]?)$/.exec(w[i]);
+    if (!m) continue;
+    const prev = clean(word(i, -1));
+    const next = clean(word(i, 1));
+    if (CLOCK_WORDS.test(prev) || CLOCK_WORDS.test(next)) continue;
+    const nextAfterTo = next === 'to' ? clean(word(w.indexOf(word(i, 1)!, i + 1), 1)) : '';
+    const idCtx = /^\+?\d+$/.test(prev) || ID_WORDS.test(prev) || prev === 'is' || /^\d+$/.test(next) || /^\d+$/.test(nextAfterTo);
+    if (idCtx) w[i] = m[1] + m[2] + m[3];
+  }
+  t = w.join('');
+  return t;
+}

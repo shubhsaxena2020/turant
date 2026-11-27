@@ -39,7 +39,7 @@ add(25, 'पच्चीस', 'पंचवीस', 'pachchis', 'pachees', 'twen
 add(30, 'तीस', 'tees', 'thirty');
 add(40, 'चालीस', 'चाळीस', 'chalis', 'forty');
 add(47, 'सैंतालीस', 'सत्तेचाळीस');
-add(50, 'पचास', 'पन्नास', 'pachaas', 'pachas', 'fifty');
+add(50, 'पचास', 'पन्नास', 'pachaas', 'pachas', 'paanchas', 'fifty');
 add(60, 'साठ', 'saath', 'sixty');
 add(70, 'सत्तर', 'sattar', 'seventy');
 add(75, 'पचहत्तर', 'पंचाहत्तर');

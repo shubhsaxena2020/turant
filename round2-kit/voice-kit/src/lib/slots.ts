@@ -2,7 +2,7 @@
 // built on Turant's rules in nlp.ts. Pure functions: no DOM, no network (offline-first).
 import { findAmountHit, fold, numberGroups, readoutDigit, tokenize as indicTokens, wordParts } from './indic/numbers';
 import { findTime, hourMinutePhrase } from './indic/time';
-import { joinSpelled, unifyScript } from './indic/cleanup';
+import { joinSpelled, spokenDigits, unifyScript } from './indic/cleanup';
 import type {
   AmountSlot,
   DigitsSlot,
@@ -572,7 +572,7 @@ function reservedWords(slots: SlotDef[]): Set<string> {
 
 /** Extract every slot the rules can find in one utterance (or a whole story). */
 export function extractAll(cfg: SlotsLike, text: string, opts: ExtractOptions = {}): Extraction {
-  text = hourMinutePhrase(joinSpelled(unifyScript(text)));
+  text = hourMinutePhrase(spokenDigits(joinSpelled(unifyScript(text))));
   const norm = N.normalize(text);
   const { ids, rest } = N.extractUpis(N.prepUpi(norm));
   const cleaned = rest.replace(/\s+/g, ' ').trim();

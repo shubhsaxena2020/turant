@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cleanup, unifyScript } from './cleanup';
+import { cleanup, spokenDigits, unifyScript } from './cleanup';
 import { findAmount } from './numbers';
 import { findBank } from './bank';
 
@@ -42,5 +42,18 @@ describe('unifyScript', () => {
   });
   it('leaves Kannada text alone', () => {
     expect(unifyScript('ಐದು ಸಾವಿರ ರೂಪಾಯಿ')).toBe('ಐದು ಸಾವಿರ ರೂಪಾಯಿ');
+  });
+});
+
+describe('spokenDigits', () => {
+  it('expands double / triple', () => {
+    expect(spokenDigits('triple 0 and double 9')).toBe('0 0 0 and 9 9');
+    expect(spokenDigits('double four three')).toBe('four four three');
+    expect(spokenDigits('9 double 8754321')).toBe('9 88754321');
+  });
+  it('turns a clock group inside a read-out into digits, but keeps real times', () => {
+    expect(spokenDigits('plus 9 1 07:01 to 2344')).toBe('plus 9 1 0701 to 2344');
+    expect(spokenDigits('yesterday at 07:00')).toBe('yesterday at 07:00');
+    expect(spokenDigits('kal shaam 7:30 baje')).toBe('kal shaam 7:30 baje');
   });
 });

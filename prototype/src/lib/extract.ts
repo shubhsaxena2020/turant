@@ -4,7 +4,7 @@
 // most common words in Bengali, Tamil, Telugu and Kannada.
 
 import { findAmountHit, fold, numberGroups, readoutDigit } from './indic/numbers.ts';
-import { joinSpelled, unifyScript } from './indic/cleanup.ts';
+import { joinSpelled, spokenDigits, unifyScript } from './indic/cleanup.ts';
 import { findTime, hourMinutePhrase, type TimeHit } from './indic/time.ts';
 import { findBank, romanize, soundKey } from './indic/bank.ts';
 
@@ -170,7 +170,7 @@ const UNITS = map({
   das: 10, dus: 10, gyarah: 11, gyara: 11, barah: 12, bara: 12, terah: 13, tera: 13, chaudah: 14, chauda: 14,
   pandrah: 15, pandra: 15, solah: 16, sola: 16, satrah: 17, satra: 17, atharah: 18, athara: 18, unnis: 19,
   unnees: 19, bees: 20, pachis: 25, pachees: 25, pachchis: 25, tees: 30, chalis: 40, chaalis: 40,
-  pachas: 50, pachaas: 50, sattar: 70, assi: 80, nabbe: 90,
+  pachas: 50, pachaas: 50, paanchas: 50, sattar: 70, assi: 80, nabbe: 90,
   // Devanagari (Hindi + Marathi)
   'शून्य': 0, 'एक': 1, 'दो': 2, 'दोन': 2, 'तीन': 3, 'चार': 4, 'पांच': 5, 'पाँच': 5, 'पाच': 5, 'छह': 6, 'छः': 6,
   'छे': 6, 'सहा': 6, 'सात': 7, 'आठ': 8, 'नौ': 9, 'नऊ': 9, 'दस': 10, 'दहा': 10, 'ग्यारह': 11, 'बारह': 12,
@@ -225,7 +225,7 @@ const DAY_WORDS: [number, string[]][] = [
 ];
 const NOW_WORDS = ['abhi', 'abhi abhi', 'just now', 'right now', 'abhi turant', 'अभी', 'अभी अभी', 'आत्ता', 'आताच', 'এইমাত্র', 'এখনই', 'இப்போது', 'இப்பொழுது', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ'];
 
-const DEBIT_EXACT = set(['kat', 'kaat', 'kate', 'kati', 'kata', 'cut', 'debit', 'debited', 'deducted', 'gaye', 'gaya', 'gye', 'gya', 'lost', 'loss', 'nikal', 'nikle', 'nikla', 'transfer', 'transferred', 'bheja', 'bheje', 'bhej', 'sent', 'paid', 'liya', 'liye', 'chale', 'chala', 'withdrawn', 'fraud']);
+const DEBIT_EXACT = set(['debated', 'kat', 'kaat', 'kate', 'kati', 'kata', 'cut', 'debit', 'debited', 'deducted', 'gaye', 'gaya', 'gye', 'gya', 'lost', 'loss', 'nikal', 'nikle', 'nikla', 'transfer', 'transferred', 'bheja', 'bheje', 'bhej', 'sent', 'paid', 'liya', 'liye', 'chale', 'chala', 'withdrawn', 'fraud']);
 const DEBIT_PREFIX = ['कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'डेविट', 'देविट', 'देबिट', 'ডেবিট', 'டெபிட்', 'డెబిట్', 'ಡೆಬಿಟ್', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ'].map(nw);
 
 const UTR_CTX = set(['utr', 'ref', 'reference', 'refno', 'rrn', 'transaction', 'txn', 'trans', 'id', 'यूटीआर', 'ट्रांजैक्शन', 'ट्रांजेक्शन', 'रेफरेंस', 'आईडी', 'रेफ', 'রেফ', 'ரெஃப்', 'రెఫ్', 'ರೆಫ್']);
@@ -625,7 +625,7 @@ export const BANKS: { name: string; keys: string[] }[] = [
   { name: 'Bank of Baroda', keys: ['bank of baroda', 'baroda', 'बैंक ऑफ बड़ौदा', 'बड़ौदा', 'बडौदा'] },
   { name: 'Canara Bank', keys: ['canara', 'kenara', 'केनरा', 'कैनरा', 'ಕೆನರಾ', 'கனரா'] },
   { name: 'Union Bank of India', keys: ['union bank', 'union bank of india', 'यूनियन बैंक'] },
-  { name: 'Kotak Mahindra Bank', keys: ['kotak', 'कोटक'] },
+  { name: 'Kotak Mahindra Bank', keys: ['kotak', 'कोटक', 'quote account', 'quote bank'] },
   { name: 'IndusInd Bank', keys: ['indusind', 'induslnd', 'इंडसइंड'] },
   { name: 'Yes Bank', keys: ['yes bank', 'यस बैंक'] },
   { name: 'IDFC FIRST Bank', keys: ['idfc', 'आईडीएफसी'] },
@@ -887,7 +887,7 @@ export function splitGluedUtr(text: string): string {
 }
 
 export function extractFields(text: string, opts: ExtractOptions = {}): Extraction {
-  text = hourMinutePhrase(splitGluedUtr(joinSpelled(unifyScript(text))));
+  text = hourMinutePhrase(splitGluedUtr(spokenDigits(joinSpelled(unifyScript(text)))));
   const norm = normalize(text);
   const prepped = prepUpi(norm);
   const { ids, rest } = extractUpis(prepped);

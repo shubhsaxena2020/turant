@@ -279,6 +279,9 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - A suspended AudioContext is resumed.
   - `?speech=whisper` skips the browser recogniser entirely. In tests with a fake microphone, Chrome's recogniser listens to the real room microphone, so demos use this option.
 
+- **Round 35** (English as the Hinglish model writes it): a clock-looking group inside a read-out ("plus 9 1 07:01 2344", "reference number is 06:01 to 34567") is digits, not a time; "double / triple" digits and digit words (Indian English); paanchas = 50; debated = debited; "quote account" = Kotak (shared `cleanup.ts` `spokenDigits`, also in the kit). Hinglish model +3 runs; large-v3, turbo and whisper-base unchanged run for run. Where the model dropped a digit inside a read-out, the app now gives no value instead of a fake time.
+- **whisper-small for Bengali / Tamil / Telugu / Kannada, not adopted:** on 40 dev clips it scored 2.5% fully correct (whisper-base 0%). Field F1: ta 53 vs 27, te 38 vs 33, kn 19 vs 13, bn 36 vs 44. It is a 250 MB download and several times slower. These languages need an Indian-language recogniser, not a bigger generic Whisper.
+
 ## What is left
 
 - **On large-v3** (round 28, clean), the extractor-only ceiling is 68.0%; we are at 65.7%. The rest is the recogniser losing words. That is concentrated in Bengali (39%; large-v3 did not help it) and Kannada (40%).

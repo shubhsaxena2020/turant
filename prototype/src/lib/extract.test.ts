@@ -444,3 +444,20 @@ describe('round 34 (Hinglish as the in-page Hindi Whisper writes it)', () => {
     expect(detectIntent('Pata nahin chhodo.')).toBe('skip');
   });
 });
+
+describe('round 35 (read-outs as the in-page Hinglish Whisper writes English)', () => {
+  const x = (t: string, o = {}) => extractFields(t, { now: NOW, ...o });
+  it('a clock-looking group inside a read-out is digits, not a time', () => {
+    expect(x('The reference number is 06:01 to 34567 890.').time).toBeUndefined();
+    expect(x('UPI refer number 45678 08:01 2 345. Not you, call your bank.').time).toBeUndefined();
+    expect(x('This happened yesterday at 7:30 pm.').time).toBeDefined();
+  });
+  it('double / triple digits', () => {
+    expect(x('his number is 98765 double 4 3 2 1').suspectPhone?.value).toBe('9876544321');
+    expect(x('his number is nine eight seven six five double four three two one').suspectPhone?.value).toBe('9876544321');
+  });
+  it('spellings', () => {
+    expect(x('Do laakh paanchas hazaar rupe invest karvae').amount?.value).toBe(250000);
+    expect(x('I lost 47000 rupees from my quote account').bank?.value).toBe('Kotak Mahindra Bank');
+  });
+});
