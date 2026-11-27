@@ -48,6 +48,7 @@ const BANKS: [string, string[]][] = [
   ['Indian Bank', ['indian bank', 'इंडियन बैंक']],
   ['UCO Bank', ['uco', 'यूको']],
   ['Federal Bank', ['federal bank']],
+  ['Bank of Maharashtra', ['bank of maharashtra', 'maharashtra bank', 'बँक ऑफ महाराष्ट्र', 'बैंक ऑफ महाराष्ट्र', 'महाराष्ट्र बँक', 'महाराष्ट्र बैंक']],
   ['Bandhan Bank', ['bandhan', 'बंधन']],
   ['India Post Payments Bank', ['india post', 'post office', 'ippb', 'पोस्ट ऑफिस', 'डाकघर']],
   ['Airtel Payments Bank', ['airtel payments', 'airtel bank']],
@@ -59,7 +60,7 @@ const BANK_BY_KEY: Record<string, string> = {
   sbi: 'State Bank of India (SBI)', hdfc: 'HDFC Bank', icici: 'ICICI Bank', axis: 'Axis Bank', pnb: 'Punjab National Bank (PNB)',
   bob: 'Bank of Baroda', canara: 'Canara Bank', union: 'Union Bank of India', kotak: 'Kotak Mahindra Bank', indusind: 'IndusInd Bank',
   yes: 'Yes Bank', idfc: 'IDFC FIRST Bank', boi: 'Bank of India', central: 'Central Bank of India', iob: 'Indian Overseas Bank',
-  indian: 'Indian Bank', federal: 'Federal Bank', bandhan: 'Bandhan Bank', ippb: 'India Post Payments Bank', airtel: 'Airtel Payments Bank', paytm: 'Paytm Payments Bank',
+  indian: 'Indian Bank', federal: 'Federal Bank', bandhan: 'Bandhan Bank', ippb: 'India Post Payments Bank', airtel: 'Airtel Payments Bank', paytm: 'Paytm Payments Bank', mahb: 'Bank of Maharashtra',
 };
 const resolveBank = (raw: string) => {
   const hit = findBank(raw);

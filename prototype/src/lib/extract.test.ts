@@ -524,3 +524,19 @@ describe('round 37 (English false times, plain money words, padded read-outs)', 
     expect(x('I sent it to a b i account').bank).toBeUndefined();
   });
 });
+
+describe('round 39 (typed Marathi and quarter amounts)', () => {
+  const x = (t: string) => extractFields(t, { now: NOW, lang: 'mr-IN' } as never);
+  it('Marathi spellings of banks', () => {
+    expect(x('माझ्या एसबीआय खात्यातून दहा हजार रुपये कापले गेले').bank?.value).toBe('State Bank of India (SBI)');
+    expect(x('माझ्या आयसीआयसीआय बँक खात्यातून पैसे गेले').bank?.value).toBe('ICICI Bank');
+    expect(x('माझ्या बाबांच्या खात्यातून दीड लाख रुपये गेले, बँक ऑफ महाराष्ट्र आहे').bank?.value).toBe('Bank of Maharashtra');
+    expect(x('I live in Maharashtra and 5000 was debited').bank).toBeUndefined();
+  });
+  it('quarters, halves and Marathi hundreds', () => {
+    expect(x('सवा लाख रुपये कट गए').amount?.value).toBe(125000);
+    expect(x('पावणे दोन लाख रुपये गेले').amount?.value).toBe(175000);
+    expect(x('साडेतीन लाख काढून घेतले').amount?.value).toBe(350000);
+    expect(x('माझ्या फोनपे वरून तीन हजार पाचशे गेले').amount?.value).toBe(3500);
+  });
+});

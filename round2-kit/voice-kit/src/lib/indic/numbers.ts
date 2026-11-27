@@ -2,7 +2,7 @@
 // Words are split into number parts (Tamil/Kannada glue them: நாற்பத்தேழாயிரம் = 40 + 7 + thousand),
 // then combined with hundred / thousand / lakh / crore multipliers. Pure, no DOM.
 
-type Part = { v: number } | { mul: number } | { half: true };
+type Part = { v: number } | { mul: number } | { half: true } | { quarter: number };
 
 // ---------- lexicons (value words) ----------
 const WORDS: Record<string, number> = {};
@@ -223,6 +223,8 @@ mul(1000, 'हज़ार', 'हजार', 'हज़ारों', 'हजा
 mul(100000, 'लाख', 'লাখ', 'লক্ষ', 'లక్ష', 'లక్షల', 'లక్షలు', 'ಲಕ್ಷ', 'லட்சம்', 'லட்சத்து', 'lakh', 'lac', 'lakhs', 'laakh', 'laakhs');
 mul(10000000, 'करोड़', 'करोड', 'कोटी', 'কোটি', 'కోటి', 'ಕೋಟಿ', 'கோடி', 'crore', 'crores');
 
+// सवा / सव्वा = and a quarter, पौने / पावणे = less a quarter: "सवा लाख" = 1.25 lakh, "पौने दो लाख" = 1.75 lakh
+const QUARTER: Record<string, number> = { 'सवा': 0.25, 'सव्वा': 0.25, sava: 0.25, sawa: 0.25, savva: 0.25, 'पौने': -0.25, 'पावणे': -0.25, paune: -0.25, paavne: -0.25, pavne: -0.25 };
 const HALF_PREFIX = ['साढ़े', 'साढे', 'साडे', 'साधे', 'সাড়ে', 'সারে', 'saadhe', 'sadhe', 'saade', 'sade', 'saare', 'sare', 'saadey'].map((w) => w.normalize('NFC'));
 
 // Half prefixes accepted only glued onto a number: Whisper writes साडेतीन as सालेतीन, but a separate
@@ -518,6 +520,7 @@ export function wordParts(raw: string, minRepair = 4): Part[] | undefined {
 function exactParts(w: string): Part[] | undefined {
   if (MULT[w] !== undefined) return [{ mul: MULT[w] }];
   if (HALF_PREFIX.includes(w)) return [{ half: true }];
+  if (QUARTER[w] !== undefined) return [{ quarter: QUARTER[w] }];
   const digits = foldDigits(w).replace(/^(?:₹|rs\.?|रु\.?|ரூ\.?|రూ\.?|ರೂ\.?)/, '').replace(/,(?=\d{2,3}\b)/g, '');
   if (/^\d+(\.\d+)?$/.test(digits)) return [{ v: Number(digits) }];
   const kMatch = digits.match(/^(\d+(?:\.\d+)?)k$/);
@@ -546,23 +549,33 @@ export function combine(parts: Part[]): number | undefined {
   let total = 0;
   let cur = 0;
   let half = false;
+  let quarter = 0;
   let any = false;
   for (const p of parts) {
     if ('half' in p) {
       half = true;
       continue;
     }
+    if ('quarter' in p) {
+      quarter = p.quarter;
+      continue;
+    }
     if ('v' in p) {
       // "साढ़े 3,500": the half is already in the digits; "saade 3000" (साढ़े तीन हज़ार written as digits) = 3,500
       cur += p.v + (!half ? 0 : p.v < 100 ? 0.5 : p.v % 100000 === 0 && p.v < 10000000 ? 50000 : p.v % 1000 === 0 && p.v < 100000 ? 500 : 0);
+      if (quarter && p.v < 100) cur += quarter;
       half = false;
+      quarter = 0;
       any = true;
       continue;
     }
     any = true;
-    if (p.mul === 100) cur = (cur || 1) * 100;
+    // a quarter word with no number before the multiplier: सवा लाख = 1.25 lakh, पौने लाख = 0.75 lakh
+    const one = 1 + quarter;
+    quarter = 0;
+    if (p.mul === 100) cur = (cur || one) * 100;
     else {
-      total += (cur || 1) * p.mul;
+      total += (cur || one) * p.mul;
       cur = 0;
     }
   }

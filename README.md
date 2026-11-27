@@ -72,9 +72,9 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
 
 | Fully correct reports (every field right, nothing spurious) | Whisper turbo | Whisper large-v3 |
 |---|---|---|
-| Tuning corpus, clean speech (280 cases, 7 languages) | 54.2% | 69.3% |
-| Voices never used for tuning | 53.1% | 67.5% |
-| **Blind set: 84 new sentences written after tuning, never tuned on** | **51.1%** | **62.8%** |
+| Tuning corpus, clean speech (280 cases, 7 languages) | 54.5% | 69.5% |
+| Voices never used for tuning | 53.4% | 67.8% |
+| **Blind set: 84 new sentences written after tuning, never tuned on** | **52.2%** | **62.8%** |
 | Reference text (no speech recognition) | 100% | 100% |
 
 - **By language** (large-v3, clean): Hindi 98%, English 90%, Marathi 70%, Tamil 66%, Telugu 61%, Kannada 46%, Bengali 44%.
@@ -89,7 +89,7 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   On the **blind set** (new sentences, never tuned on), the in-page model gets Hindi **91.7%** (the same as the text-only ceiling for those sentences), English 61.1% and Marathi 33.3%. In noise, Hindi stays at 80.0% at 15 dB (a busy room) and 52.5% at 5 dB (a roadside).
   Bengali, Tamil, Telugu and Kannada need the browser recogniser, or an Indian-language model (next step).
 - **Fuzz testing:** millions of generated amounts and times are parsed 100% correctly. With one recogniser-style slip per number, 99.6-100% are still read correctly.
-- **Tests:** 151 unit tests in the app, 124 in the parsers and 261 in the voice kit.
+- **Tests:** 153 unit tests in the app, 124 in the parsers and 261 in the voice kit.
 
 The full log of every tuning round, what changed and what it gained is in [`harness/JOURNAL.md`](harness/JOURNAL.md).
 

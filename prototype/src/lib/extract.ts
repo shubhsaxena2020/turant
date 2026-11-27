@@ -192,7 +192,7 @@ const MULTS = map({
   'হাজার': 1000, 'লাখ': 100000, 'ஆயிரம்': 1000, 'லட்சம்': 100000, 'వేలు': 1000, 'వెయ్యి': 1000, 'లక్ష': 100000,
   'ಸಾವಿರ': 1000, 'ಲಕ್ಷ': 100000,
 });
-const FRAC_PREFIX = map({ saade: 0.5, sade: 0.5, saadhe: 0.5, sadhe: 0.5, 'साढ़े': 0.5, 'साडे': 0.5, 'साधे': 0.5, sava: 0.25, sawa: 0.25, 'सवा': 0.25, paune: -0.25, pone: -0.25, 'पौने': -0.25 });
+const FRAC_PREFIX = map({ saade: 0.5, sade: 0.5, saadhe: 0.5, sadhe: 0.5, 'साढ़े': 0.5, 'साडे': 0.5, 'साधे': 0.5, sava: 0.25, sawa: 0.25, 'सवा': 0.25, paune: -0.25, pone: -0.25, 'पौने': -0.25, savva: 0.25, 'सव्वा': 0.25, paavne: -0.25, pavne: -0.25, 'पावणे': -0.25 });
 const STANDALONE = map({ dedh: 1.5, derh: 1.5, dhed: 1.5, 'डेढ़': 1.5, 'दीड': 1.5, dhai: 2.5, dhaai: 2.5, adhai: 2.5, 'ढाई': 2.5, 'अढ़ाई': 2.5, 'अडीच': 2.5 });
 const REPEAT = map({ double: 2, triple: 3, 'डबल': 2, 'ट्रिपल': 3 });
 
@@ -371,8 +371,10 @@ function buildRun(kinds: NumKind[], start: number, end: number): NumRun {
         hasMult = true;
         break;
       case 'mult':
-        total += (current || 1) * k.v;
+        // "सवा लाख" / "पौने लाख": a fraction with no number means one and a quarter / three quarters
+        total += (current || 1 + frac) * k.v;
         current = 0;
+        frac = 0;
         hasMult = true;
         break;
       default:
@@ -641,6 +643,7 @@ export const BANKS: { name: string; keys: string[] }[] = [
   { name: 'Indian Bank', keys: ['indian bank', 'इंडियन बैंक'] },
   { name: 'UCO Bank', keys: ['uco', 'यूको'] },
   { name: 'Federal Bank', keys: ['federal bank'] },
+  { name: 'Bank of Maharashtra', keys: ['bank of maharashtra', 'maharashtra bank', 'बँक ऑफ महाराष्ट्र', 'बैंक ऑफ महाराष्ट्र', 'महाराष्ट्र बँक', 'महाराष्ट्र बैंक'] },
   { name: 'Bandhan Bank', keys: ['bandhan', 'बंधन'] },
   { name: 'India Post Payments Bank', keys: ['india post', 'post office', 'ippb', 'पोस्ट ऑफिस', 'डाकघर'] },
   { name: 'Airtel Payments Bank', keys: ['airtel payments', 'airtel bank'] },
@@ -851,7 +854,8 @@ const BARE_MULTS = [1000, 100000, 10000000];
 function mergeAmount(k: Extracted<number> | undefined, ind: { value: number; currencyNear: boolean } | undefined, opts: ExtractOptions, text: string): Extracted<number> | undefined {
   // The rule read only "thousand" (বারো হাজার -> 1000): the cross-language reading has the number in front.
   if (k && BARE_MULTS.includes(k.value)) {
-    if (ind && ind.value > k.value && ind.value % k.value === 0) return { value: ind.value, confidence: 0.85 };
+    // quarter steps too: साडेतीन / दीड / सव्वा लाख = 3.5 / 1.5 / 1.25 lakh
+    if (ind && ind.value > k.value && (ind.value * 4) % k.value === 0) return { value: ind.value, confidence: 0.85 };
     // "শোয হাজার": a misheard number before "thousand". Ask, don't guess 1000.
     if (numberGroups(text).some((g) => g.unsure && g.value === k.value)) return undefined;
   }
@@ -859,6 +863,9 @@ function mergeAmount(k: Extracted<number> | undefined, ind: { value: number; cur
   const hinted = opts.hint === 'amount';
   if (!k) return ind.currencyNear || hinted ? { value: ind.value, confidence: ind.currencyNear ? 0.9 : 0.75 } : undefined;
   if (ind.currencyNear && ind.value !== k.value) return { value: ind.value, confidence: 0.9 };
+  // the rule stopped at a round number and missed its tail: "तीन हजार पाचशे" = 3000 + 500 (Marathi -शे hundreds)
+  const unit = k.value % 100000 === 0 ? 100000 : k.value % 1000 === 0 ? 1000 : 0;
+  if (unit && ind.value > k.value && ind.value - k.value < unit) return { value: ind.value, confidence: 0.85 };
   // Answering "how much?": a longer reading of the same spoken number wins ("चार हजार नऊशे नव्याण्णव" = 4999).
   if (hinted && ind.value > k.value) return { value: ind.value, confidence: 0.85 };
   return k;
@@ -877,6 +884,7 @@ const BANK_BY_KEY: Record<string, string> = {
   bob: 'Bank of Baroda', canara: 'Canara Bank', union: 'Union Bank of India', kotak: 'Kotak Mahindra Bank', indusind: 'IndusInd Bank',
   yes: 'Yes Bank', idfc: 'IDFC FIRST Bank', boi: 'Bank of India', central: 'Central Bank of India', iob: 'Indian Overseas Bank',
   indian: 'Indian Bank', federal: 'Federal Bank', bandhan: 'Bandhan Bank', ippb: 'India Post Payments Bank', airtel: 'Airtel Payments Bank', paytm: 'Paytm Payments Bank',
+  mahb: 'Bank of Maharashtra',
 };
 
 function indicBank(text: string): Extracted<string> | undefined {

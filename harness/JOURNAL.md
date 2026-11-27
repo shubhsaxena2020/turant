@@ -247,6 +247,7 @@ The held-out split only changes the *voice*; after 30 tuning rounds the *sentenc
 |---|---|---|---|---|---|
 | round 29 (before the blind set existed) | 90.5% | 59.4% | 58.3% | 50.6% | 39.3% |
 | round 32 | 90.5% | **62.8%** | 61.9% | **51.1%** | 39.3% |
+| round 39 (typed-story probes, Marathi, quarter amounts) | **92.9%** | 62.8% | 61.9% | **52.2%** | 40.5% |
 | *tuning corpus, round 32, for comparison* | *100%* | *69.3%* | *62.9%* | *54.2%* | *42.9%* |
 
 - **The honest headline number is the blind one:** about 63% of brand-new spoken reports come out fully correct on large-v3, 51% on turbo.
@@ -296,6 +297,12 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - "about 1 lakh 20 thousand was stolen" got the time 1 pm: "about N" is a clock time only when no amount word (lakh, thousand, rupees…) or duration follows.
   - "4,500 was gone" = money; so are fee / fees / penalty / फीस / शुल्क / जुर्माना ("5000 registration fees li"). 12 new Hinglish stories (Latin script, as the in-page model writes) went 11 → 12 of 12, and 10 in Devanagari (as Chrome writes) 9 → 10 of 10.
   - Harness unchanged run for run on all six report sets (one reference case, "half an hour ago", broke on the first try and was fixed before committing).
+- **Round 39** (8 typed Marathi stories in Devanagari, as Chrome writes them; 5 of 8 were fully right, now 8 of 8):
+  - Marathi spells the letter I as आय: "एसबीआय", "आयसीआयसीआय" now match SBI / ICICI (an "ay" / "aya" spelling of every acronym).
+  - **Bank of Maharashtra** was missing from the bank list ("Bank of Maharashtra", "महाराष्ट्र बँक"; the state name alone is not a bank).
+  - Quarter amounts: सवा / सव्वा = 1¼, पौने / पावणे = ¾ ("सवा लाख" = 1,25,000 gave nothing at all; "पावणे दोन लाख" gave 2 lakh). In both the rule extractor and the shared parser.
+  - "साडेतीन लाख" gave 1 lakh and "तीन हजार पाचशे" 3,000: the rule read a bare multiplier / a round number and ignored the parser's longer reading. The parser now wins when it only adds a fraction or a smaller tail.
+  - **Blind set, reference text 90.5% → 92.9%**; blind turbo 51.1% → 52.2%; turbo +1 run; everything else unchanged run for run. Parser fuzz and scorers all still 100%.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
   | Fully correct, Hinglish model | Clean | 15 dB | 5 dB |

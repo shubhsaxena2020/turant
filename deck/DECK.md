@@ -76,15 +76,15 @@ Build for Bharat 2026 (Scaler x Wispr Flow), Round 2. Theme: Public infrastructu
 
 | Fully correct reports | Whisper turbo | Whisper large-v3 |
 |---|---|---|
-| Tuning set, clean speech | 54.2% | 69.3% |
-| Voices never used for tuning | 53.1% | 67.5% |
-| **Blind set: 84 new sentences, never tuned on** | **51.1%** | **62.8%** |
+| Tuning set, clean speech | 54.5% | 69.5% |
+| Voices never used for tuning | 53.4% | 67.8% |
+| **Blind set: 84 new sentences, never tuned on** | **52.2%** | **62.8%** |
 | Reference text, no speech recognition | 100% | 100% |
 
 - **Honest headline:** about 63% of brand-new spoken reports are fully correct on large-v3. The app asks for what it could not read.
 - **By language** (large-v3, clean): Hindi 98%, English 90%, Marathi 70%, Tamil 66%, Telugu 61%, Kannada 46%, Bengali 44%.
 - **About 92% of remaining errors** are the recogniser losing words, not the parsing.
-- **Fuzz:** millions of generated amounts and times parse 100%; with one slip per number, 99.6-100%. 536 automated tests.
+- **Fuzz:** millions of generated amounts and times parse 100%; with one slip per number, 99.6-100%. 538 automated tests.
 - **What ships in the page, measured on the same clips:** Hindi 85.0% fully correct (stock whisper-base: 13.8%), English 68.3%, Marathi 23.8%; on the blind set (new sentences) Hindi 91.7%, English 61.1%, Marathi 33.3%. Hindi in noise: 80.0% at 15 dB, 52.5% at 5 dB. Bengali, Tamil, Telugu and Kannada are 2.5-6.3% in the page, so they rely on the browser's recogniser until an Indian-language model is added.
 - **Limits:** synthetic voices (edge-tts). Real phone tests in every language come next.
 

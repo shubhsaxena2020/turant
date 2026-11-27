@@ -104,6 +104,9 @@ const LETTER: Record<string, string> = {
   q: 'kyu', r: 'ar', s: 'es', t: 'ti', u: 'yu', v: 'vi', w: 'dablyu', x: 'eks', y: 'vai', z: 'jed',
 };
 const spell = (acr: string) => [...acr].map((c) => LETTER[c]).join('');
+// Marathi writes the letter I as आय ("ay"): एसबीआय, आयसीआयसीआय
+const spellI = (acr: string, i: string) => [...acr].map((c) => (c === 'i' ? i : LETTER[c])).join('');
+const spellings = (acr: string) => (acr.includes('i') ? [spell(acr), spellI(acr, 'ay'), spellI(acr, 'aya')] : [spell(acr)]);
 
 export interface BankDef {
   key: string;
@@ -138,6 +141,7 @@ export const BANKS: BankDef[] = [
   { key: 'ippb', name: 'India Post Payments Bank', acronyms: ['ippb'], names: ['indiapost'] },
   { key: 'paytm', name: 'Paytm Payments Bank', needsBankWord: ['paytm', 'petiem'] },
   { key: 'airtel', name: 'Airtel Payments Bank', needsBankWord: ['airtel', 'eyartel'] },
+  { key: 'mahb', name: 'Bank of Maharashtra', needsBankWord: ['maharashtra', 'maharastra', 'maharashtr'] }, // the state name alone is not a bank
 ];
 
 // "bank" in any script, with case endings: बैंक बँकेतून ব্যাংকের பேங்க்ல వంకి ಬ್ಯಾಂಕ್‌ನಿಂದ வங்கி
@@ -154,9 +158,9 @@ const indic = (w: string) => /[ऀ-෿]/.test(w);
 const KEYS = BANKS.map((b) => ({
   b,
   exact: [...(b.acronyms ?? []), ...(b.names ?? [])].map((x) => x.toLowerCase()),
-  sounds: [...(b.acronyms ?? []).map(spell), ...(b.names ?? [])].map(soundKey),
+  sounds: [...(b.acronyms ?? []).flatMap(spellings), ...(b.names ?? [])].map(soundKey),
   nameSounds: (b.names ?? []).map(soundKey),
-  spelled: (b.acronyms ?? []).map((a) => soundKey(spell(a))),
+  spelled: (b.acronyms ?? []).flatMap(spellings).map(soundKey),
   acronymSkels: (b.acronyms ?? []).map((a) => skel(soundKey(spell(a)))).filter((k) => k.length >= 4),
   generic: (b.needsBankWord ?? []).map(soundKey),
 }));
@@ -205,6 +209,7 @@ export function findBank(text: string): BankHit | undefined {
       if (similarity(prev.slice(0, 4), 'stet') >= 0.75) consider({ key: 'sbi', name: BANKS[0].name, confidence: 0.95 });
       else if (named) consider({ key: named.b.key, name: named.b.name, confidence: 0.95 }); // Union/Central Bank of India
       else if (similarity(after, soundKey('baroda')) >= 0.6) consider({ key: 'bob', name: 'Bank of Baroda', confidence: 0.95 });
+      else if (similarity(after.slice(0, 6), soundKey('maharashtra').slice(0, 6)) >= 0.7) consider({ key: 'mahb', name: 'Bank of Maharashtra', confidence: 0.95 });
       else if (similarity(after.slice(0, 5), soundKey('india')) >= 0.6) consider({ key: 'boi', name: 'Bank of India', confidence: 0.9 });
     }
     // an acronym spoken letter by letter over several words: आई सी आई सी आई, ఏచ్డి ఎఫ్సీ
