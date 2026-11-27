@@ -306,6 +306,7 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - **Blind set, reference text 90.5% → 92.9%**; blind turbo 51.1% → 52.2%; turbo +1 run; everything else unchanged run for run. Parser fuzz and scorers all still 100%.
 - **Round 40** (short answers to the follow-up questions, 30 probes; 28 were right):
   - "When did it happen?" now understands **weekdays and dates**: "on Monday", "last Friday", "25th November", "Nov 25", "25/11", "25 नवंबर", "सोमवार को", and with a time ("on Monday at 7 pm"). Always in the past: a date later than today is last year's.
+  - Hindi "25 तारीख को" / "28 tarikh" = that day of this month (last month's if it has not come yet); "pichhle somvar" = last Monday. A date with a day part ("28 tarikh ko shaam ko") beats the bare "evening = yesterday" guess.
   - Not dates: "2 may be 3 thousand" (May needs an ordinal, "of" or a year), "10/12 minutes", "1/2 of my salary" (a bare d/m needs a year, a cue such as "on" / "को", or to be the whole answer).
   - A new `date` kind keeps a bare "today" / "yesterday" from overriding better readings, as before. All six harness report sets unchanged run for run; parser time scorer and fuzz still 100%.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):

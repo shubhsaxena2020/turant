@@ -601,7 +601,7 @@ export function extractAll(cfg: SlotsLike, text: string, opts: ExtractOptions = 
     const hit = N.parsePastTime(cleaned, tokens, c.runs, c.now);
     // Cross-language time parser (bn/ta/te/kn/mr relative + clock times; 113/113 on the corpus).
     const ind = findTime(text, c.now);
-    const sure = ind && (ind.kind === 'clock' || ind.kind === 'ago' || ind.kind === 'now');
+    const sure = ind && (ind.kind === 'clock' || ind.kind === 'ago' || ind.kind === 'now' || ind.kind === 'date');
     const differs = hit && ind && Math.abs(new Date(String(hit.value)).getTime() - ind.date.getTime()) > 20 * 60_000;
     if (hit && !(sure && differs)) {
       if (hit.run !== undefined) c.claimed.add(hit.run);

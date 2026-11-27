@@ -556,6 +556,9 @@ describe('round 40 (dates and weekdays as answers)', () => {
     expect(day('on 2nd December', 'time')).toBe('2025-12-02');
     expect(day('25 नवंबर को शाम 7 बजे', 'time')).toBe('2026-11-25');
     expect(day('On 25th November I lost 5000 rupees from my SBI account')).toBe('2026-11-25');
+    expect(day('25 तारीख को', 'time')).toBe('2026-11-25');
+    expect(day('28 tarikh ko shaam ko', 'time')).toBe('2026-10-28');
+    expect(day('pichhle somvar', 'time')).toBe('2026-11-23');
   });
   it('fractions, ranges and "may be" are not dates', () => {
     expect(day('I lost 2 may be 3 thousand rupees')).toBeUndefined();

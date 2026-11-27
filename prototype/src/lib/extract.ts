@@ -873,7 +873,7 @@ function mergeAmount(k: Extracted<number> | undefined, ind: { value: number; cur
 
 function mergeTime(k: Extracted<string> | undefined, ind: TimeHit | undefined): Extracted<string> | undefined {
   if (!ind) return k;
-  const sure = ind.kind === 'clock' || ind.kind === 'ago' || ind.kind === 'now';
+  const sure = ind.kind === 'clock' || ind.kind === 'ago' || ind.kind === 'now' || ind.kind === 'date'; // an explicit date beats a bare "yesterday evening" guess
   if (k && !(sure && Math.abs(new Date(k.value).getTime() - ind.date.getTime()) > 20 * 60_000)) return k;
   if (ind.kind === 'day') return k;
   return { value: ind.date.toISOString(), confidence: ind.kind === 'daypart' ? 0.6 : 0.85 };

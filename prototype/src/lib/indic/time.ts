@@ -110,6 +110,15 @@ function dateOffset(text: string, toks: string[], now: Date): number | undefined
     const cue = ['on', 'date', 'dated', 'tarikh', 'tareekh', 'तारीख', 'दिनांक'].includes(before) || ['ko', 'को', 'la', 'ला', 'रोजी'].includes(after);
     if (!cue && text.trim() !== num[0]) num = null;
   }
+  // "25 तारीख को" / "25 tarikh": the 25th of this month (last month's if it has not come yet)
+  const tarikh = /(?<![\d.:])(\d{1,2})\s*(?:tarikh|tareekh|tarik|तारीख|तारीखला|तारखेला|तारीखे)(?![\p{L}\p{M}])/iu.exec(text);
+  if (!dm && !md && tarikh) {
+    const d = Number(tarikh[1]);
+    let at = new Date(now.getFullYear(), now.getMonth(), d);
+    if (midnight(at) > midnight(now)) at = new Date(now.getFullYear(), now.getMonth() - 1, d);
+    if (at.getDate() !== d) return undefined;
+    return Math.round((midnight(at) - midnight(now)) / 86_400_000);
+  }
   if (dm) [day, month, year] = [Number(dm[1]), monthOf(dm[4]), dm[5] ? Number(dm[5]) : undefined];
   else if (md) [day, month, year] = [Number(md[2]), monthOf(md[1]), md[4] ? Number(md[4]) : undefined];
   else if (num) {
@@ -308,7 +317,7 @@ export function findTime(text: string, now: Date = new Date()): TimeHit | undefi
     d.setHours(h, 0, 0, 0);
     // "evening" said at noon with no day: it was yesterday evening (the fraud already happened)
     if (day === undefined && d.getTime() > now.getTime() + 30 * 60_000) d.setDate(d.getDate() - 1);
-    return { date: d, kind: 'daypart', tolerance: 120 };
+    return { date: d, kind: dated !== undefined ? 'date' : 'daypart', tolerance: 120 };
   }
   d.setHours(12, 0, 0, 0);
   return { date: d, kind: dated !== undefined ? 'date' : 'day', tolerance: 720 };
