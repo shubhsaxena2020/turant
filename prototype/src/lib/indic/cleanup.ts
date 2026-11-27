@@ -106,6 +106,8 @@ export function spokenDigits(text: string): string {
   t = t.replace(/\b(double|triple)\s+(zero|oh|one|two|three|four|five|six|seven|eight|nine)\b/gi, (_, k: string, w: string) =>
     Array(k.toLowerCase() === 'double' ? 2 : 3).fill(w).join(' '),
   );
+  // "501-002-345-678-1-2": an ID read out in groups and written with hyphens; 9+ digits only (a date 25-11-2026 has 8)
+  t = t.replace(/(?<![\d-])\d{1,5}(?:-\d{1,5}){2,}(?![\d-])/g, (m) => (m.replace(/-/g, '').length >= 9 ? m.replace(/-/g, '') : m));
   // "1 point to laakh" = 1.2 lakh: a decimal read out before a multiplier, the "two" heard as "to"
   const DIGIT: Record<string, string> = { zero: '0', oh: '0', one: '1', to: '2', too: '2', two: '2', three: '3', four: '4', five: '5', six: '6', seven: '7', eight: '8', nine: '9' };
   t = t.replace(/\b(\d+)\s+point\s+(\d|zero|oh|one|to|too|two|three|four|five|six|seven|eight|nine)\s+(?=(?:laakh|lakh|lakhs|crore|crores|karod|hazaar|thousand)\b)/gi, (_, a: string, b: string) =>

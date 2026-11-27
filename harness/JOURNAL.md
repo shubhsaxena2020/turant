@@ -341,6 +341,7 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   | Path | tuned | held-out | unseen | unseen 15 dB | unseen 5 dB |
   |---|---|---|---|---|---|
   | large-v3, all 7 | 71.8% | 68.8% | **61.6%** | 62.0% | 53.0% |
+  | turbo, all 7 | 52.4% | 53.9% | **47.1%** | 44.4% | 34.4% |
   | in-page hi / en / mr | 87.5 / 75.0 / 67.5 | 92.5 / 75.0 / 40.0 | **83.8 / 47.5 / 42.5** | 77.5 / 52.5 / 37.5 | 55.0 / 42.5 / 20.0 |
   | in-page te / kn / ta / bn | 70.0 / 50.0 / 52.5 / 35.0 | 67.5 / 50.0 / 47.5 / 37.5 | **68.8 / 53.8 / 53.8 / 25.6** | 62.5 / 47.5 / 47.5 / 28.2 | 45.0 / 17.5 / 45.0 / 20.5 |
 
@@ -351,6 +352,8 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - Robust audio, in-page Hinglish model: Hindi tuning 69 → 81%, **unseen 69 → 85%**; English tuning 52 → 86%; Marathi 38 → 50% on both. Telugu / Kannada / Tamil 75% on both voice sets. All report sets unchanged run for run.
 - **Round 50 (Bengali spellings of the in-page model, unseen analysis half):** নৈশ্য / নৈশো (900), দূষো (200), নিরানবই / নিরানবী (99), দেড (1.5), লাক (lakh, also glued: দেডলাক), হাজা (thousand). In-page Bengali unseen **25.6% → 34.6%** (analysis +10, **check +1**, held-out tuning voice +1; mostly an analysis-half gain, recorded as such). Turbo +2 in noise. Mutation fuzz unchanged (99.7%); all report sets unchanged run for run.
 - **Smaller Bengali model, rejected:** arif11/bangla-ASR-v5 re-converted with 4-bit matrix weights (`convert_whisper.py --bits 4`): 287 → 205 MB, but about 3× slower per clip on CPU and less accurate on the same 25 clips (16.0% vs 20.0% fully correct, word error 43.5 vs 36.9). The 8-bit model stays.
+- **Round 51 (large-v3, unseen analysis half):** "AnyDisk" = AnyDesk; Marathi "पूर्वे" = पूर्वी; debit stems without the virama ("ಡೆಬಿಟಾಗಿದೆ"); IDs written in hyphen groups ("501-002-345-678-1-2", 9+ digits; dates untouched); account stem "खत्य". Analysis half +4, check half 0 (none of these patterns occurs there), but **blind turbo 15 dB +1** and large-v3 / turbo / kit tuning sets +2 / +1 / +2: kept.
+  - **Tried and reverted:** an 11-digit mobile with a doubled last digit ("98765432100") trimmed to 10. The check half has "99988776655", where the *first* digit is the extra one: trimming guesses, and a wrong number is worse than asking.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
   | Fully correct, Hinglish model | Clean | 15 dB | 5 dB |

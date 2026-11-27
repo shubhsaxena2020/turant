@@ -192,7 +192,7 @@ const NOT_NOW = /(?:abhi|अभी)\s+(?:tak|bhi|bhee|तक|भी)(?![\p{L}\p{
 const NOW_WORDS = ['abhi', 'abhi abhi', 'just now', 'abhi turant', 'अभी', 'अभी अभी', 'आत्ता', 'आताच', 'এইমাত্র', 'এখনই', 'இப்போது', 'இப்பொழுது', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ'];
 
 const DEBIT_EXACT = wordSet(['debated', 'kaaple', 'kaapale', 'kaapla', 'kat', 'kaat', 'kate', 'kati', 'kata', 'cut', 'debit', 'debited', 'deducted', 'gaye', 'gaya', 'gye', 'gya', 'lost', 'loss', 'nikal', 'nikle', 'nikla', 'transfer', 'transferred', 'bheja', 'bheje', 'bhej', 'sent', 'paid', 'liya', 'liye', 'chale', 'chala', 'withdrawn', 'fraud', 'amount', 'rakam', 'रकम', 'राशि', 'took', 'taken', 'stole', 'stolen', 'cheated', 'scammed', 'charged', 'gone', 'fee', 'fees', 'penalty', 'फीस', 'फ़ीस', 'शुल्क', 'जुर्माना']);
-const DEBIT_PREFIX = ['डेविट', 'देविट', 'देबिट', 'ডেবিট', 'டெபிட்', 'డెబిట్', 'ಡೆಬಿಟ್', 'कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ'].map(nw);
+const DEBIT_PREFIX = ['डेविट', 'देविट', 'देबिट', 'ডেবিট', 'டெபிட்', 'డెబిట్', 'ಡೆಬಿಟ್', 'कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ', 'ಡೆಬಿಟ', 'డెబిట', 'டெபிட'].map(nw);
 
 // ---------------------------------------------------------------------------
 // Phrase matching

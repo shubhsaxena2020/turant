@@ -94,6 +94,7 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   | Path | Tuned voice | Held-out Indian voice | **Unseen speakers** | Unseen, 15 dB noise |
   |---|---|---|---|---|
   | Server Whisper large-v3, all 7 languages | 71.8% | 68.8% | **61.6%** | 62.0% |
+  | Server Whisper turbo, all 7 languages | 52.4% | 53.9% | **47.1%** | 44.4% |
   | In-page Hinglish model: Hindi / English / Marathi | 87.5 / 75.0 / 67.5% | 92.5 / 75.0 / 40.0% | **83.8 / 47.5 / 42.5%** | 77.5 / 52.5 / 37.5% |
   | In-page Telugu / Kannada / Tamil / Bengali | 70.0 / 50.0 / 52.5 / 35.0% | 67.5 / 50.0 / 47.5 / 40.0% | **68.8 / 53.8 / 53.8 / 34.6%** | 62.5 / 47.5 / 47.5 / 35.9% |
 

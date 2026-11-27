@@ -230,7 +230,7 @@ const NOT_NOW = /(?:abhi|अभी)\s+(?:tak|bhi|bhee|तक|भी)(?![\p{L}\p{
 const NOW_WORDS = ['abhi', 'abhi abhi', 'just now', 'abhi turant', 'अभी', 'अभी अभी', 'आत्ता', 'आताच', 'এইমাত্র', 'এখনই', 'இப்போது', 'இப்பொழுது', 'ఇప్పుడే', 'ಈಗಷ್ಟೇ'];
 
 const DEBIT_EXACT = set(['debated', 'kaaple', 'kaapale', 'kaapla', 'kat', 'kaat', 'kate', 'kati', 'kata', 'cut', 'debit', 'debited', 'deducted', 'gaye', 'gaya', 'gye', 'gya', 'lost', 'loss', 'nikal', 'nikle', 'nikla', 'transfer', 'transferred', 'bheja', 'bheje', 'bhej', 'sent', 'paid', 'liya', 'liye', 'chale', 'chala', 'withdrawn', 'fraud', 'amount', 'rakam', 'रकम', 'राशि', 'took', 'taken', 'stole', 'stolen', 'cheated', 'scammed', 'charged', 'gone', 'fee', 'fees', 'penalty', 'फीस', 'फ़ीस', 'शुल्क', 'जुर्माना']);
-const DEBIT_PREFIX = ['कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'डेविट', 'देविट', 'देबिट', 'ডেবিট', 'டெபிட்', 'డెబిట్', 'ಡೆಬಿಟ್', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ'].map(nw);
+const DEBIT_PREFIX = ['कट', 'काट', 'गए', 'गये', 'गया', 'निकल', 'भेज', 'डेबिट', 'डेविट', 'देविट', 'देबिट', 'ডেবিট', 'டெபிட்', 'డెబిట్', 'ಡೆಬಿಟ್', 'कापल', 'गेल', 'কেটে', 'গেছে', 'চলে', 'போய', 'போன', 'பிடிக்க', 'పోయ', 'కట్', 'ಕಡಿತ', 'ಹೋಯ', 'ಹೋಗಿ', 'ಡೆಬಿಟ', 'డెబిట', 'டெபிட'].map(nw);
 
 const UTR_CTX = set(['utr', 'ref', 'reference', 'refno', 'rrn', 'transaction', 'txn', 'trans', 'id', 'यूटीआर', 'ट्रांजैक्शन', 'ट्रांजेक्शन', 'रेफरेंस', 'आईडी', 'रेफ', 'রেফ', 'ரெஃப்', 'రెఫ్', 'ರೆಫ್']);
 const PHONE_CTX = set(['phone', 'mobile', 'mob', 'call', 'calling', 'whatsapp', 'फोन', 'मोबाइल', 'कॉल', 'ফোন', 'போன்', 'ఫోన్', 'ಫೋನ್', 'मोबाईल']);
@@ -602,7 +602,7 @@ const SCAM_RULES: [ScamType, string[]][] = [
   ['sextortion', ['sextortion', 'nude', 'naked', 'video call record', 'blackmail', 'blackmailing', 'blackmailed', 'ब्लाकमेल', 'ಬ್ಲಾಕ್ ಮೇಲ್', 'ಬ್ಲಾಕ್‌ಮೇಲ್', 'viral kar', 'obscene', 'अश्लील', 'ब्लैकमेल', 'न्यूड', 'ব্ল্যাকমেইল', 'மிரட்டல்', 'బ్లాక్‌మెయిల్', 'బ్లాక్ మేల్', 'ब्लॅकमेल', 'ಬ್ಲ್ಯಾಕ್‌ಮೇಲ್']],
   ['investment_task', ['investment', 'invest', 'trading', 'stock tip', 'crypto', 'bitcoin', 'task', 'tasks', 'part time job', 'part-time job', 'work from home', 'youtube like', 'like karne', 'rating task', 'telegram', 'paisa double', 'double ho', 'high return', 'निवेश', 'टास्क', 'ट्रेडिंग', 'टेलीग्राम', 'इन्वेस्ट', 'डबल हो', 'दुप्पट', 'दुपट', 'गुंतवणु', 'বিনিয়োগ', 'ইনভেস্ট', 'ডাবল', 'টেলিগ্রাম', 'টাস্ক', 'முதலீடு', 'இன்வெஸ்ட்', 'டெலிகிராம்', 'டாஸ்க்', 'పెట్టుబడి', 'పిటుబడి', 'ఇన్వెస్ట్', 'టెలిగ్రామ్', 'టాస్క్', 'गुंतवणूक', 'ಹೂಡಿಕೆ', 'ಇನ್ವೆಸ್ಟ್', 'ಟೆಲಿಗ್ರಾಮ್', 'ಟಾಸ್ಕ್']],
   ['qr_scan', ['qr', 'qr code', 'scan', 'scanner', 'scanned', 'क्यूआर', 'स्कैन', 'স্ক্যান', 'কিউআর', 'ஸ்கேன்', 'స్కాన్', 'క్యువార', 'క్యూఆర్', 'स्कॅन', 'ಸ್ಕ್ಯಾನ್']],
-  ['fake_customer_care', ['customer care', 'customer service', 'customer support', 'helpline number', 'care number', 'anydesk', 'any desk', 'teamviewer', 'screen share', 'quick support', 'कस्टमर केयर', 'कस्टमर केअर', 'कस्टमर केर', 'কাস্টমার কেয়ার', 'கஸ்டமர் கேர்', 'కస్టమర్ కేర్', 'ಕಸ್ಟಮರ್ ಕೇರ್']],
+  ['fake_customer_care', ['customer care', 'customer service', 'customer support', 'helpline number', 'care number', 'anydesk', 'any desk', 'anydisk', 'any disk', 'एनीडेस्क', 'एनी डेस्क', 'एनीडिस्क', 'teamviewer', 'screen share', 'quick support', 'कस्टमर केयर', 'कस्टमर केअर', 'कस्टमर केर', 'কাস্টমার কেয়ার', 'கஸ்டமர் கேர்', 'కస్టమర్ కేర్', 'ಕಸ್ಟಮರ್ ಕೇರ್']],
   ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'கேவாயசி', 'கேவைசி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'ಕೈಕ ಅಪ್', 'ಕೈಕ್ಕ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'केवाई सी', 'केवाय सी', 'केवा ऐसी', 'केवाऐसी', 'के वाईसी', 'के वाइसी', 'ಕೇವ ಆಯಸಿ', 'ಕೆವಾಯಸಿ', 'కెవాయసి', 'కేవాయసి', 'కేవ ఆయసి', 'के yc', 'yc अपडेट', 'yc update', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
   ['wrong_transfer', ['galti se', 'galati se', 'by mistake', 'mistakenly', 'wrong transfer', 'wrongly sent', 'refund', 'paise wapas', 'paisa wapas', 'wapas bhej', 'return the money', 'गलती से', 'वापस भेज', 'रिफंड', 'ভুল করে', 'রিফান্ড', 'தவறுதலாக', 'தவர்தலா', 'పొరపాటున', 'चुकून', 'ತಪ್ಪಾಗಿ']],
   ['otp_shared', ['otp', 'ओटीपी', 'ওটিপি', 'ஓடிபி', 'ஓட்டிப்', 'ஓட்டிபி', 'ఓటీపీ', 'ఓటి పీ', 'ಒಟಿಪಿ', 'code bataya', 'code bata diya', 'pin bataya', 'pin bata diya']],
@@ -741,7 +741,7 @@ function extractUpis(prepped: string): { ids: string[]; rest: string } {
 }
 
 // Native-script ID context words, matched as stems on the sound-alike key (অ্যাকাউন্টে, खात्यात, அக்கவுண்ட்ல).
-const ACCOUNT_STEMS = ['अकाउंट', 'खात', 'অ্যাকাউন্ট', 'একাউন্ট', 'খাত', 'அக்கவுண்ட்', 'கணக்க', 'అకౌంట్', 'ఖాతా', 'ಅಕೌಂಟ್', 'ಖಾತೆ'].map(fold);
+const ACCOUNT_STEMS = ['अकाउंट', 'खात', 'खत्य', 'অ্যাকাউন্ট', 'একাউন্ট', 'খাত', 'அக்கவுண்ட்', 'கணக்க', 'అకౌంట్', 'ఖాతా', 'ಅಕೌಂಟ್', 'ಖಾತೆ'].map(fold);
 const UTR_STEMS = ['यूटीआर', 'यूपीआय रेफरन्स', 'रेफरन्स', 'रेफरेंस', 'ইউটিআর', 'রেফারেন্স', 'யூடிஆர்', 'యూటీఆర్', 'ಯುಟಿಆರ್'].map(fold);
 const nativeStem = (t: string, stems: string[]) => /[^\x00-\x7f]/.test(t) && stems.some((st) => fold(t).startsWith(st));
 
@@ -842,6 +842,8 @@ function extractIds(tokens: string[], runs: NumRun[], opts: ExtractOptions) {
       put('suspectPhone', d, ctxPhone || opts.hint === 'suspect' ? 0.95 : 0.85);
     } else if (d.length === 11 && /^0[6-9]/.test(d)) {
       put('suspectPhone', d.slice(1), 0.9);
+    // (Not done: an 11-digit mobile with a repeated digit is ambiguous. "98765432100" doubled the last digit, but
+    // "99988776655" tripled the first: trimming either end guesses, and a wrong number is worse than asking.)
     } else if (d.length === 12 && /^91[6-9]/.test(d)) {
       put('suspectPhone', d.slice(2), 0.9);
     // Without an account word, 9-10 digits after "who was it?" are a phone number with a digit lost, not an account.
