@@ -1,6 +1,6 @@
 # Turant pipeline eval: blind_swift39
 
-Generated 2026-11-27T16:26:37.388Z. Extractor: `..\prototype\src\lib\extract.ts`. 84 cases, 84 ASR transcripts scored.
+Generated 2026-11-27T16:37:52.583Z. Extractor: `..\prototype\src\lib\extract.ts`. 84 cases, 84 ASR transcripts scored.
 Speech: edge-tts Indian neural voices (2 per language, 3 for en) -> 16 kHz mono -> optional synthetic noise -> local Whisper large-v3-turbo (int8, OpenVINO) with the language token forced -> `extractFields` / `interpret` / `parseCorrection`. Fixed clock: Sat Nov 21 2026 12:00:00 GMT+0530 (India Standard Time).
 
 ## Headline

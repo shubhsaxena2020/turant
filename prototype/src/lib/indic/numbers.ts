@@ -224,7 +224,8 @@ mul(100000, 'लाख', 'লাখ', 'লক্ষ', 'లక్ష', 'లక్
 mul(10000000, 'करोड़', 'करोड', 'कोटी', 'কোটি', 'కోటి', 'ಕೋಟಿ', 'கோடி', 'crore', 'crores');
 
 // सवा / सव्वा = and a quarter, पौने / पावणे = less a quarter: "सवा लाख" = 1.25 lakh, "पौने दो लाख" = 1.75 lakh
-const QUARTER: Record<string, number> = { 'सवा': 0.25, 'सव्वा': 0.25, sava: 0.25, sawa: 0.25, savva: 0.25, 'पौने': -0.25, 'पावणे': -0.25, paune: -0.25, paavne: -0.25, pavne: -0.25 };
+const QUARTER: Record<string, number> = { 'सवा': 0.25, 'सव्वा': 0.25, sava: 0.25, sawa: 0.25, savva: 0.25, 'पौने': -0.25, 'पावणे': -0.25, paune: -0.25, paavne: -0.25, pavne: -0.25, 'সোয়া': 0.25, 'সওয়া': 0.25, 'পৌনে': -0.25 };
+const QUARTER_NFC: Record<string, number> = Object.fromEntries(Object.entries(QUARTER).map(([k, v]) => [k.normalize('NFC'), v]));
 const HALF_PREFIX = ['साढ़े', 'साढे', 'साडे', 'साधे', 'সাড়ে', 'সারে', 'saadhe', 'sadhe', 'saade', 'sade', 'saare', 'sare', 'saadey'].map((w) => w.normalize('NFC'));
 
 // Half prefixes accepted only glued onto a number: Whisper writes साडेतीन as सालेतीन, but a separate
@@ -520,7 +521,8 @@ export function wordParts(raw: string, minRepair = 4): Part[] | undefined {
 function exactParts(w: string): Part[] | undefined {
   if (MULT[w] !== undefined) return [{ mul: MULT[w] }];
   if (HALF_PREFIX.includes(w)) return [{ half: true }];
-  if (QUARTER[w] !== undefined) return [{ quarter: QUARTER[w] }];
+  const q = QUARTER[w] ?? QUARTER[w.normalize('NFC')] ?? QUARTER_NFC[w.normalize('NFC')];
+  if (q !== undefined) return [{ quarter: q }];
   const digits = foldDigits(w).replace(/^(?:₹|rs\.?|रु\.?|ரூ\.?|రూ\.?|ರೂ\.?)/, '').replace(/,(?=\d{2,3}\b)/g, '');
   if (/^\d+(\.\d+)?$/.test(digits)) return [{ v: Number(digits) }];
   const kMatch = digits.match(/^(\d+(?:\.\d+)?)k$/);

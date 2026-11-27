@@ -1,7 +1,7 @@
 {
  "summary": {
   "name": "blind_lv3_r39",
-  "generatedAt": "2026-11-27T16:26:19.102Z",
+  "generatedAt": "2026-11-27T16:37:33.242Z",
   "extractor": "..\\prototype\\src\\lib\\extract.ts",
   "cases": 84,
   "runs": 432,

@@ -538,5 +538,6 @@ describe('round 39 (typed Marathi and quarter amounts)', () => {
     expect(x('पावणे दोन लाख रुपये गेले').amount?.value).toBe(175000);
     expect(x('साडेतीन लाख काढून घेतले').amount?.value).toBe(350000);
     expect(x('माझ्या फोनपे वरून तीन हजार पाचशे गेले').amount?.value).toBe(3500);
+    expect(extractFields('সোয়া লাখ টাকা কেটে নিয়েছে', { now: NOW, lang: 'bn-IN' } as never).amount?.value).toBe(125000);
   });
 });

@@ -1,7 +1,7 @@
 {
  "summary": {
   "name": "blind_turbo_r39",
-  "generatedAt": "2026-11-27T16:27:18.399Z",
+  "generatedAt": "2026-11-27T16:38:16.697Z",
   "extractor": "..\\prototype\\src\\lib\\extract.ts",
   "cases": 84,
   "runs": 432,

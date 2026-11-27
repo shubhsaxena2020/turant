@@ -300,8 +300,9 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
 - **Round 39** (8 typed Marathi stories in Devanagari, as Chrome writes them; 5 of 8 were fully right, now 8 of 8):
   - Marathi spells the letter I as आय: "एसबीआय", "आयसीआयसीआय" now match SBI / ICICI (an "ay" / "aya" spelling of every acronym).
   - **Bank of Maharashtra** was missing from the bank list ("Bank of Maharashtra", "महाराष्ट्र बँक"; the state name alone is not a bank).
-  - Quarter amounts: सवा / सव्वा = 1¼, पौने / पावणे = ¾ ("सवा लाख" = 1,25,000 gave nothing at all; "पावणे दोन लाख" gave 2 lakh). In both the rule extractor and the shared parser.
+  - Quarter amounts: सवा / सव्वा / সোয়া = 1¼, पौने / पावणे / পৌনে = ¾ ("सवा लाख" = 1,25,000 gave nothing at all; "पावणे दोन लाख" gave 2 lakh). In both the rule extractor and the shared parser.
   - "साडेतीन लाख" gave 1 lakh and "तीन हजार पाचशे" 3,000: the rule read a bare multiplier / a round number and ignored the parser's longer reading. The parser now wins when it only adds a fraction or a smaller tail.
+  - Typed stories in Bengali, Tamil, Telugu and Kannada (15, as Chrome writes them): 14 of 15 were already right; the miss was সোয়া লাখ.
   - **Blind set, reference text 90.5% → 92.9%**; blind turbo 51.1% → 52.2%; turbo +1 run; everything else unchanged run for run. Parser fuzz and scorers all still 100%.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
