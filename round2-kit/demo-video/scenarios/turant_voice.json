@@ -1,6 +1,6 @@
 {
   "title": "Turant: report a UPI scam by voice",
-  "url": "https://turant-voice.vercel.app/",
+  "url": "https://turant-voice.vercel.app/?speech=whisper",
   "locale": "en-IN",
   "voice": "en-IN-NeerjaNeural",
   "rate": "+4%",
