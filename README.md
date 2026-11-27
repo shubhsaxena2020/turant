@@ -85,10 +85,19 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   |---|---|---|---|---|
   | whisper-base | 13.8% | 50.0% | 10.0% | 2.5-6.3% |
   | **Hindi2Hinglish-Swift + rules tuned to its Hinglish** | **90.0%** | **75.0%** | **53.8%** (held-out voice 40.0%) | not used |
-  | **Indian-language Whisper fine-tunes** (Bangla small; IndicWhisper Telugu / Kannada base) | | | | **Telugu 68.8%, Kannada 50.0%, Tamil 47.5%, Bengali 36.3%** |
+  | **Indian-language Whisper fine-tunes** (Bangla small; IndicWhisper Telugu / Kannada base) | | | | **Telugu 68.8%, Kannada 50.0%, Tamil 50.0%, Bengali 36.3%** |
 
   On the **blind set** (new sentences, never tuned on), the in-page model gets Hindi **91.7%** (the same as the text-only ceiling for those sentences), English 61.1% and Marathi 41.7%. In noise, Hindi stays at 85.0% at 15 dB (a busy room) and 55.0% at 5 dB (a roadside).
   The Indian-language models were measured on both voices with no rule changes. Telugu and Kannada in the page now beat server Whisper large-v3 (61% and 46%). Tamil's 196 MB decoder is split into chunks under the host's 100 MB per-file limit (`harness/split_onnx.py`; same weights, identical transcripts). The Telugu, Kannada and Tamil files are not in git: the Docker build fetches them from the live site (`prototype/scripts/fetch-models.mjs`), and if that fails the app uses whisper-base for them. `harness/convert_whisper.py` rebuilds them from the original models.
+- **Generalisation: speakers never used for tuning.** The rules were tuned by reading one Indian voice per language. To check they generalise, every case was also read by four Azure multilingual voices that were never used for tuning (French, Italian and Brazilian speakers reading the Indian-language text: a harder, accented test). Fully correct reports, clean speech (`harness/unseen_report.mjs`):
+
+  | Path | Tuned voice | Held-out Indian voice | **Unseen speakers** | Unseen, 15 dB noise |
+  |---|---|---|---|---|
+  | Server Whisper large-v3, all 7 languages | 71.8% | 68.8% | **61.6%** | 62.0% |
+  | In-page Hinglish model: Hindi / English / Marathi | 87.5 / 75.0 / 67.5% | 92.5 / 75.0 / 40.0% | **83.8 / 47.5 / 42.5%** | 77.5 / 52.5 / 37.5% |
+  | In-page Telugu / Kannada / Tamil / Bengali | 70.0 / 50.0 / 52.5 / 35.0% | 67.5 / 50.0 / 47.5 / 37.5% | **68.8 / 53.8 / 53.8 / 25.6%** | 62.5 / 47.5 / 47.5 / 28.2% |
+
+  The unseen numbers agree with the blind set (62.8% on large-v3), so about 6 in 10 brand-new spoken reports come out fully correct and the app asks for the rest. Hindi, Telugu, Kannada and Tamil hold up on new speakers; the Marathi tuned-voice number is inflated (held-out and unseen are about 40%); English drops on these voices, partly because several English cases are romanised Hindi read with a European accent.
 - **Fuzz testing:** millions of generated amounts and times are parsed 100% correctly. With one recogniser-style slip per number, 99.6-100% are still read correctly.
 - **Tests:** 161 unit tests in the app, 126 in the parsers and 261 in the voice kit.
 - **Lighthouse** (mobile, live site, 27 Nov): accessibility 100, best practices 100, SEO 100, performance 94 (first paint 2.0 s on a throttled phone connection). Fonts are self-hosted, so the page loads with no third-party requests (the in-page speech model is fetched from Hugging Face only when it is needed).

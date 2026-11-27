@@ -654,7 +654,7 @@ const CONTEXT_MULT: Record<string, number> = Object.fromEntries(
 ); // লাক alone = "luck"
 // Number only right before "thousand / lakh": ಆಯಿದು ಸಾವಿರ = 5,000, but "ಕಟ್ ಆಯಿದು" = "got cut" (ಆಯಿತು).
 const BEFORE_MULT: Record<string, number> = Object.fromEntries(
-  Object.entries({ 'ಆಯಿದು': 5, 'ಆಯದು': 5, 'শোয': 6, 'ছযি': 6, 'সোয': 6, 'পাঁছ': 5, 'পাছ': 5, 'আঠ': 8, 'देड': 1.5, 'डेड': 1.5, din: 1.5, deed: 1.5, adich: 2.5, adeech: 2.5, aditi: 2.5, to: 2, too: 2 }).map(([w, v]) => [w.normalize('NFC'), v]), // শোয(়) alone = "lie down"
+  Object.entries({ 'ಆಯಿದು': 5, 'ಆಯದು': 5, 'শোয': 6, 'ছযি': 6, 'সোয': 6, 'পাঁছ': 5, 'পাছ': 5, 'আঠ': 8, 'देड': 1.5, 'डेड': 1.5, din: 1.5, deed: 1.5, der: 1.5, derh: 1.5, adich: 2.5, adeech: 2.5, aditi: 2.5, to: 2, too: 2 }).map(([w, v]) => [w.normalize('NFC'), v]), // শোয(়) alone = "lie down"
 );
 // Words that may stand right before a bare "thousand": "a thousand", "around thousand rupees".
 const BARE_OK = ['a', 'one', 'about', 'around', 'approx', 'only', 'just', 'karib', 'lagbhag', 'sirf', 'bas', 'करीब', 'लगभग', 'सिर्फ', 'बस', 'and', 'aur', 'और'];

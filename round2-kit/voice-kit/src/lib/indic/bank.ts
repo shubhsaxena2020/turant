@@ -126,7 +126,7 @@ export const BANKS: BankDef[] = [
   { key: 'axis', name: 'Axis Bank', names: ['aksis', 'eksis', 'aksisa', 'aiksis', 'yaksis'] },
   { key: 'kotak', name: 'Kotak Mahindra Bank', names: ['kotak', 'kotek', 'kottak', 'kotakmahindra'] },
   { key: 'pnb', name: 'Punjab National Bank (PNB)', acronyms: ['pnb'], names: ['panjab', 'punjab', 'panjabnesanal'] },
-  { key: 'bob', name: 'Bank of Baroda', acronyms: ['bob'], names: ['baroda', 'barodaa', 'badoda', 'baroda'] },
+  { key: 'bob', name: 'Bank of Baroda', acronyms: ['bob'], names: ['baroda', 'barodaa', 'badoda', 'badauda', 'baroda'] },
   { key: 'canara', name: 'Canara Bank', names: ['kenara', 'kanara', 'kanada', 'kanra', 'canara', 'kenra'] },
   { key: 'union', name: 'Union Bank of India', needsBankWord: ['yuniyan', 'yunian', 'union', 'yuniyana'] },
   { key: 'boi', name: 'Bank of India', acronyms: ['boi'] },

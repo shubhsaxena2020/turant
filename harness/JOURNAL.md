@@ -336,6 +336,15 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - Tamil spoken thousands: ஐந்தாயிரம் / நான்காயிரம் / மூன்றாயிரம் (the formal ஐயாயிரம் was the only 5,000 known). In-page Tamil 47.5% → 50.0% (both voices +1).
   - A correction after the amount: the first value after the last "no" replaces the money before it, even without a currency word, if it is the same order (×20). The first try broke 7 runs: "UPI Ref **No.** 4321…" read as a correction; "no" before digits or after an ID word is now "number". Final: all seven report sets unchanged run for run, robust set 100%.
   - `eval_all.sh <new> <old>`: every report set (tuning, held-out, blind, kit, robust) re-scored and diffed run by run in one command.
+- **Unseen speakers (28 Nov night):** tiers `unseen` / `unseen_noise` (plan_unseen.json): every case read by 2 of 4 Azure multilingual voices never used for tuning (fr-FR Remy / Vivienne, it-IT Giuseppe, pt-BR Thalita; 558 clips + noise). Error analysis reads only the Remy / Vivienne half; Giuseppe / Thalita is the check. `unseen_report.mjs <base> <unseen>`:
+
+  | Path | tuned | held-out | unseen | unseen 15 dB | unseen 5 dB |
+  |---|---|---|---|---|---|
+  | large-v3, all 7 | 71.8% | 68.8% | **61.6%** | 62.0% | 53.0% |
+  | in-page hi / en / mr | 87.5 / 75.0 / 67.5 | 92.5 / 75.0 / 40.0 | **83.8 / 47.5 / 42.5** | 77.5 / 52.5 / 37.5 | 55.0 / 42.5 / 20.0 |
+  | in-page te / kn / ta / bn | 70.0 / 50.0 / 52.5 / 35.0 | 67.5 / 50.0 / 47.5 / 37.5 | **68.8 / 53.8 / 53.8 / 25.6** | 62.5 / 47.5 / 47.5 / 28.2 | 45.0 / 17.5 / 45.0 / 20.5 |
+
+  - Rounds 47-48 from the analysis half: Marathi spellings (unseen mr 40.0 → 42.5, +1 on each half), Hindi "der laakh" = डेढ़ लाख and "Badauda" (unseen hi 81.3 → 83.8; check half 0, but **blind +1**). No run lost anywhere.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
   | Fully correct, Hinglish model | Clean | 15 dB | 5 dB |

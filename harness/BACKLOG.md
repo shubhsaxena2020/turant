@@ -11,12 +11,12 @@ no form submit, no YouTube upload, no upload to Shubh's HF account, no spending.
 
 | # | Item | State |
 |---|---|---|
-| 1 | Unseen-speaker set + per-voice report (tuned / held-out / unseen) for every language | in progress |
+| 1 | Unseen-speaker set + per-voice report (tuned / held-out / unseen) for every language | **done** (large-v3 + all in-page models; turbo running) |
 | 2 | Per-language error analysis on the worst fields; keep only fixes that hold on unseen voices | todo |
 | 3 | Tamil model under 100 MB per file (so Turant can serve it), accuracy vs whisper-base | **done**: split into external-data chunks, identical output, live |
 | 4 | Bengali model smaller / faster, accuracy vs load time | todo |
 | 5 | Robustness cases: code-mixing, English digits inside Indic speech, lakh/crore/hazaar, "nahi nahi, 500" | **done (text)**: corpus/robust.jsonl 40 cases, 97.5% -> 100%; audio version: todo |
-| 6 | README / JOURNAL / deck numbers in sync, every claim with a tuned vs unseen vs blind split | todo |
+| 6 | README / JOURNAL / deck numbers in sync, every claim with a tuned vs unseen vs blind split | **done** for unseen (re-sync after each round) |
 
 ## 1. Unseen speakers
 
