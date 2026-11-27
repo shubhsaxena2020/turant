@@ -33,6 +33,9 @@ const WHISPER_LANG: Record<string, string> = {
 };
 
 const loading = new Map<string, Promise<Asr>>();
+/** Everyone waiting on a model's download (a background prefetch and, later, the transcription itself). */
+const listeners = new Map<string, Set<Progress>>();
+const lastFraction = new Map<string, number>();
 let forceWasm = false;
 
 /** navigator.gpu can exist with no usable adapter (headless, blocklisted drivers): ask for one first. */
@@ -59,23 +62,33 @@ async function cached(model: ModelChoice): Promise<boolean> {
   }
 }
 
+/** Load (or join the loading of) the in-page model for a speaking language. Safe to call early as a prefetch. */
 export function loadWhisper(lang: string, onProgress?: Progress): Promise<Asr> {
   const model = modelFor(lang);
+  const ls = listeners.get(model.id) ?? new Set<Progress>();
+  listeners.set(model.id, ls);
+  if (onProgress) {
+    ls.add(onProgress);
+    const f = lastFraction.get(model.id);
+    if (f !== undefined && f < 1) onProgress(f); // joined a download already under way
+  }
   const hit = loading.get(model.id);
   if (hit) return hit;
   const p = (async () => {
     const { pipeline, env } = await import('@huggingface/transformers');
     env.allowLocalModels = false;
     // Reading the model back from the cache also reports progress: only show it for a real download.
-    if (await cached(model)) onProgress = undefined;
+    const quiet = await cached(model);
     const files = new Map<string, { loaded: number; total: number }>();
     const progress_callback = (p: { status?: string; file?: string; loaded?: number; total?: number }) => {
-      if (p.status !== 'progress' || !p.file || !p.total) return;
+      if (quiet || p.status !== 'progress' || !p.file || !p.total) return;
       files.set(p.file, { loaded: p.loaded ?? 0, total: p.total });
       let a = 0;
       let b = 0;
       for (const f of files.values()) (a += f.loaded), (b += f.total);
-      onProgress?.(b ? a / b : 0);
+      const frac = b ? a / b : 0;
+      lastFraction.set(model.id, frac);
+      for (const l of ls) l(frac);
     };
     if (model.gpu && !forceWasm && (await hasGpu())) {
       try {
@@ -91,6 +104,11 @@ export function loadWhisper(lang: string, onProgress?: Progress): Promise<Asr> {
     return (await pipeline('automatic-speech-recognition', model.id, { device: 'wasm', dtype: 'q8', progress_callback })) as unknown as Asr;
   })();
   loading.set(model.id, p);
+  void p.finally(() => {
+    lastFraction.set(model.id, 1);
+    for (const l of ls) l(1);
+    ls.clear();
+  }).catch(() => undefined);
   p.catch(() => loading.delete(model.id)); // let a later attempt retry
   return p;
 }

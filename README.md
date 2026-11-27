@@ -80,7 +80,7 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   | In-page model | Hindi | English | Marathi | Bengali / Tamil / Telugu / Kannada |
   |---|---|---|---|---|
   | whisper-base | 13.8% | 50.0% | 10.0% | 2.5-6.3% |
-  | **Hindi2Hinglish-Swift + rules tuned to its Hinglish** | **85.0%** | **61.7%** | **15.0%** | not used |
+  | **Hindi2Hinglish-Swift + rules tuned to its Hinglish** | **85.0%** | **64.2%** | **15.0%** | not used |
 
   Bengali, Tamil, Telugu and Kannada need the browser recogniser, or an Indian-language model (next step).
 - **Fuzz testing:** millions of generated amounts and times are parsed 100% correctly. With one recogniser-style slip per number, 99.6-100% are still read correctly.

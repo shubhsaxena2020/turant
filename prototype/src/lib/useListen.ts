@@ -8,7 +8,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { simulateListen, speech, type ListenHandle, type SpeechErrorCode } from './speech';
 import { cue } from './cues';
-import { transcribe } from './whisper';
+import { loadWhisper, transcribe } from './whisper';
 
 /** 'no-words': sound reached the mic but the speech service returned nothing. 'silent': the mic gave no sound. */
 export type ListenErrorCode = SpeechErrorCode | 'no-words' | 'silent';
@@ -273,6 +273,9 @@ export function useListen() {
       // which used to cut the recording short. The speech service only adds live words when it works.
       const t0 = Date.now();
       let lastVoice = 0;
+      let firstVoice = 0;
+      let gotWords = false;
+      let prefetched = false;
       let srDone = whisperOnly();
       let ended = false;
       let closing: ReturnType<typeof setTimeout> | undefined;
@@ -300,6 +303,10 @@ export function useListen() {
         req.lang,
         {
           ...cb,
+          onInterim: (s: string) => {
+            if (s.trim()) gotWords = true;
+            cb.onInterim(s);
+          },
           onEnd: () => {
             srDone = true;
             // The service may end early (or with one misheard word) while the person is still talking:
@@ -311,11 +318,18 @@ export function useListen() {
       );
       m.onVoice = () => {
         lastVoice = Date.now();
+        if (!firstVoice) firstVoice = lastVoice;
         sr.poke?.();
       };
       const watch = setInterval(() => {
         const now = Date.now();
         const quietFor = lastVoice ? now - lastVoice : 0;
+        // ~2 s of voice and still no words from the browser: it is probably failing. Start fetching the in-page
+        // model now, while the person is still talking, instead of after they finish (first use: ~100 MB).
+        if (!prefetched && firstVoice && (whisperOnly() || (!gotWords && now - firstVoice > 2000))) {
+          prefetched = true;
+          void loadWhisper(req.lang).catch(() => undefined);
+        }
         if ((lastVoice && quietFor > silenceMs) || (!lastVoice && now - t0 > 9000) || now - t0 > 45000) wrapUp();
       }, 150);
       handle.current = {
