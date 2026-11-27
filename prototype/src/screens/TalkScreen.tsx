@@ -436,22 +436,11 @@ export function TalkScreen(props: {
                       {t('sampleLink')}
                     </button>
                   ) : null}
-                  {props.hasDraft ? (
-                    <button className="link-quiet" onClick={props.onDraft}>
-                      {t('draftAgain')}
-                    </button>
-                  ) : null}
                   {canMic ? (
                     <button className="link-quiet" onClick={() => setTyping(true)}>
                       {t('typeInstead')}
                     </button>
                   ) : null}
-                  <button className="link-quiet" onClick={() => ui.setQuiet(!ui.quiet)}>
-                    {ui.quiet ? t('soundBack') : t('quietMode')}
-                  </button>
-                  <button className="link-quiet" onClick={props.onHistory}>
-                    {t('pastReports')}
-                  </button>
                 </>
               ) : q ? (
                 <>
@@ -490,6 +479,23 @@ export function TalkScreen(props: {
           </>
         )}
       </div>
+
+      {/* Less frequent choices sit below the pinned area, so the pinned area stays short on small phones with large text. */}
+      {storyMode && !mic.listening && !confirm ? (
+        <nav className="flex flex-wrap justify-center gap-x-5 px-5 pb-6" data-testid="more-links">
+          {props.hasDraft ? (
+            <button className="link-quiet" onClick={props.onDraft}>
+              {t('draftAgain')}
+            </button>
+          ) : null}
+          <button className="link-quiet" onClick={() => ui.setQuiet(!ui.quiet)}>
+            {ui.quiet ? t('soundBack') : t('quietMode')}
+          </button>
+          <button className="link-quiet" onClick={props.onHistory}>
+            {t('pastReports')}
+          </button>
+        </nav>
+      ) : null}
 
       {sheet === 'keypad' && q && kpField ? (
         <Sheet title={t(`q_${q}` as StrKey)} closeLabel={t('closeSheet')} onClose={() => setSheet(null)} testId="sheet-keypad">
