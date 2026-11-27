@@ -12,13 +12,15 @@ no form submit, no YouTube upload, no upload to Shubh's HF account, no spending.
 | # | Item | State |
 |---|---|---|
 | 1 | Unseen-speaker set + per-voice report (tuned / held-out / unseen) for every language | **done** (large-v3 + all in-page models; turbo running) |
-| 2 | Per-language error analysis on the worst fields; keep only fixes that hold on unseen voices | todo |
+| 2 | Per-language error analysis on the worst fields; keep only fixes that hold on unseen voices | **done** as rounds 47-52 (see item 8) |
 | 3 | Tamil model under 100 MB per file (so Turant can serve it), accuracy vs whisper-base | **done**: split into external-data chunks, identical output, live |
 | 4 | Bengali model smaller / faster, accuracy vs load time | **done, rejected**: 4-bit (MatMulNBits) 287 -> 205 MB but 3x slower on CPU and less accurate (16.0 vs 20.0% on 25 clips, WER 43.5 vs 36.9); no licensed whisper-base Bengali fine-tune exists; stays 8-bit |
 | 5 | Robustness cases: code-mixing, English digits inside Indic speech, lakh/crore/hazaar, "nahi nahi, 500" | **done**: text 97.5% -> 100%; audio (167 clips, tuning + unseen voices) through every in-page model; round 49 fixes (karod!) +4 on unseen Hindi |
 | 7 | Turbo on the unseen set; add to the generalisation table | **done**: unseen 47.1% (tuned 52.4%) |
-| 8 | Next error-analysis pass (all languages, unseen analysis half, check half must move) | **round 51 done** (one rule reverted on check-half evidence); keep going |
-| 9 | Second blind set (42 cases, written after round 51), aggregate only: text 97.6%; audio (large-v3 + in-page, tuning + unseen voices) | in progress |
+| 8 | Next error-analysis pass (all languages, unseen analysis half, check half must move) | rounds 47-52 done (one rule reverted on check-half evidence); remaining failures are almost all recogniser losses |
+| 10 | Voice-kit parity: speaking-language option + Marathi normaliser | **done** |
+| 11 | English unseen split (English vs romanised-Hindi cases) | **done**: 58.1% / 87.1% on English sentences |
+| 9 | Second blind set (42 cases, written after round 51), aggregate only | **done**: text 97.6%; large-v3 68% / 73% unseen; in-page 67% / 67% |
 | 6 | README / JOURNAL / deck numbers in sync, every claim with a tuned vs unseen vs blind split | **done** for unseen (re-sync after each round) |
 
 ## 1. Unseen speakers

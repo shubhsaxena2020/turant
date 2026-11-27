@@ -85,7 +85,7 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   |---|---|---|---|---|
   | whisper-base | 13.8% | 50.0% | 10.0% | 2.5-6.3% |
   | **Hindi2Hinglish-Swift + rules tuned to its Hinglish** | **90.0%** | **75.0%** | **53.8%** (held-out voice 40.0%) | not used |
-  | **Indian-language Whisper fine-tunes** (Bangla small; IndicWhisper Telugu / Kannada base, Tamil small) | | | | **Telugu 68.8%, Kannada 50.0%, Tamil 50.0%, Bengali 36.3%** |
+  | **Indian-language Whisper fine-tunes** (Bangla small; IndicWhisper Telugu / Kannada base, Tamil small) | | | | **Telugu 68.8%, Kannada 50.0%, Tamil 50.0%, Bengali 37.5%** |
 
   On the **blind set** (new sentences, never tuned on), the in-page model gets Hindi **91.7%** (the same as the text-only ceiling for those sentences), English 61.1% and Marathi 41.7%. In noise, Hindi stays at 85.0% at 15 dB (a busy room) and 55.0% at 5 dB (a roadside).
   The Indian-language models were measured on both voices with no rule changes. Telugu and Kannada in the page now beat server Whisper large-v3 (61% and 46%). Tamil's 196 MB decoder is split into chunks under the host's 100 MB per-file limit (`harness/split_onnx.py`; same weights, identical transcripts). The Telugu, Kannada and Tamil files are not in git: the Docker build fetches them from the live site (`prototype/scripts/fetch-models.mjs`), and if that fails the app uses whisper-base for them. `harness/convert_whisper.py` rebuilds them from the original models.
@@ -97,6 +97,8 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   | Server Whisper turbo, all 7 languages | 52.4% | 53.9% | **47.1%** | 44.4% |
   | In-page Hinglish model: Hindi / English / Marathi | 87.5 / 75.0 / 67.5% | 92.5 / 75.0 / 40.0% | **83.8 / 47.5 / 42.5%** | 77.5 / 52.5 / 37.5% |
   | In-page Telugu / Kannada / Tamil / Bengali | 70.0 / 50.0 / 52.5 / 35.0% | 67.5 / 50.0 / 47.5 / 40.0% | **68.8 / 53.8 / 53.8 / 34.6%** | 62.5 / 47.5 / 47.5 / 35.9% |
+
+  A **second blind set** (42 cases, written after all of the above, scored only in aggregate): reference text 97.6%; large-v3 68% fully correct on the tuning voices and 73% on unseen speakers; the in-page models 67% on both.
 
   The unseen numbers agree with the blind set (62.8% on large-v3), so about 6 in 10 brand-new spoken reports come out fully correct and the app asks for the rest. Hindi, Telugu, Kannada and Tamil hold up on new speakers; the Marathi tuned-voice number is inflated (held-out and unseen are about 40%); English drops on these voices mostly because 18 of the English cases are romanised Hindi read with a European accent (11-17% fully correct, not a realistic speaker); on the English sentences themselves, unseen speakers get 58.1% in the page and 87.1% on large-v3.
 - **Fuzz testing:** millions of generated amounts and times are parsed 100% correctly. With one recogniser-style slip per number, 99.6-100% are still read correctly.
