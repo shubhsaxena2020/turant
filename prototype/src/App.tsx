@@ -23,8 +23,15 @@ const SCALES = [1, 1.125, 1.25];
 // Wispr Flow cream on every screen.
 const PAPER = { cls: 'bg-paper text-ink', hex: '#FFFFEB', tone: 'paper' as const };
 
-/** Everything on screen and everything Turant says is in English. */
-const UI_LANG: LangCode = 'en-IN';
+/** Experiment (exp/localised-ui): the screen and Turant's voice follow the speaking language, unless the person
+ * turns on "English screen" (remembered on this device). Strings a language lacks fall back to English. */
+function loadEnglishUI(): boolean {
+  try {
+    return localStorage.getItem('turant.englishUI') === '1';
+  } catch {
+    return false;
+  }
+}
 
 /** The language the person will *speak* (only the recogniser uses it). Default English (India), which also hears Hinglish. */
 function guessSpeakLang(): LangCode {
@@ -57,8 +64,17 @@ function useOnline() {
 }
 
 export default function App() {
-  const lang = UI_LANG;
   const [speakLang, setSpeakLang] = useState<LangCode>(guessSpeakLang);
+  const [englishUI, setEnglishUIState] = useState(loadEnglishUI);
+  const lang: LangCode = englishUI ? 'en-IN' : speakLang;
+  const setEnglishUI = (v: boolean) => {
+    setEnglishUIState(v);
+    try {
+      localStorage.setItem('turant.englishUI', v ? '1' : '0');
+    } catch {
+      /* ignore */
+    }
+  };
   const [stage, setStage] = useState<Stage>('talk');
   const [report, setReport] = useState<Report>(() => newReport(guessSpeakLang()));
   const [sample, setSample] = useState<string | null>(null);
@@ -80,10 +96,10 @@ export default function App() {
   }, [scale]);
 
   useEffect(() => {
-    document.documentElement.lang = 'en';
+    document.documentElement.lang = lang.slice(0, 2);
     document.body.style.background = PAPER.hex;
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', PAPER.hex);
-  }, [stage]);
+  }, [stage, lang]);
 
   const refreshDraft = useCallback(() => {
     void loadReports().then((list) => setDraft(list.find((r) => r.status === 'draft' && r.turns.length > 0) ?? null));
@@ -96,10 +112,11 @@ export default function App() {
     if (q) speech.cancelSpeech();
   };
 
-  // Device may lack a voice for the chosen language: fall back to Hindi, then English.
+  // Device may lack a voice for the chosen language: Marathi falls back to Hindi (close enough to follow), every other
+  // language to English (a Tamil or Telugu speaker is better served by English than by Hindi).
   const voiceLang = useCallback((l: LangCode): LangCode => {
     if (speech.hasVoice(l) !== false) return l;
-    if (speech.hasVoice('hi-IN')) return 'hi-IN';
+    if (l === 'mr-IN' && speech.hasVoice('hi-IN')) return 'hi-IN';
     return 'en-IN';
   }, []);
 
@@ -148,7 +165,7 @@ export default function App() {
   const fresh = (opts: { sample?: boolean } = {}) => {
     const r = newReport(speakLang, opts);
     setReport(r);
-    setSample(opts.sample ? SAMPLE_STORIES[UI_LANG] : null);
+    setSample(opts.sample ? SAMPLE_STORIES[lang] : null);
     refreshDraft();
     go('talk');
   };
@@ -217,7 +234,7 @@ export default function App() {
         {stage === 'doc' ? <DocumentScreen ui={ui} report={report} onChange={persist} onNew={() => fresh()} /> : null}
         {stage === 'history' ? <HistoryScreen ui={ui} onOpen={open} onDeleted={refreshDraft} /> : null}
       </div>
-      {langSheet ? <LanguageSheet ui={ui} onPick={pickLang} onClose={() => setLangSheet(false)} /> : null}
+      {langSheet ? <LanguageSheet ui={ui} onPick={pickLang} englishUI={englishUI} onEnglishUI={setEnglishUI} onClose={() => setLangSheet(false)} /> : null}
     </div>
   );
 }

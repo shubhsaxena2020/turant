@@ -42,9 +42,9 @@ export function CheckScreen(props: { ui: UI; report: Report; onChange: (r: Repor
   const row = (k: FieldKey, label?: string) => {
     const value = displayValue(k, report.fields, ui.lang);
     return (
-      <div key={k} className="flex items-start gap-4 py-5" data-testid={`row-${k}`}>
-        <div className="flex-1 min-w-0">
-          <p className="text-label text-muted">{label ?? t(`f_${k}` as StrKey)}</p>
+      <div key={k} className="flex flex-wrap items-start gap-x-4 py-5" data-testid={`row-${k}`}>
+        <div className="flex-1 min-w-[9rem]">
+          <p className="text-label text-muted break-words">{label ?? t(`f_${k}` as StrKey)}</p>
           {value ? (
             <>
               <p className="mt-0.5 text-lg font-medium text-ink break-words">{value}</p>
@@ -77,11 +77,11 @@ export function CheckScreen(props: { ui: UI; report: Report; onChange: (r: Repor
 
         <section className="mt-8" data-testid="row-amount">
           <p className="text-label text-muted">{t('f_amount')}</p>
-          <div className="flex items-end gap-4">
+          <div className="flex flex-wrap items-end gap-x-4">
             {amount ? (
-              <p className="flex-1 text-hero font-display tabular-nums">{amount}</p>
+              <p className="flex-1 min-w-[9rem] break-words text-hero font-display tabular-nums">{amount}</p>
             ) : (
-              <p className="flex-1 text-title text-amber">{t('notKnownYet')}</p>
+              <p className="flex-1 min-w-[9rem] break-words text-title text-amber">{t('notKnownYet')}</p>
             )}
             <button className="link shrink-0" onClick={() => setEdit('amount')} data-testid="change-amount">
               {amount ? t('change') : t('tellIt')}

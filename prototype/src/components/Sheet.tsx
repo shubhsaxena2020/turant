@@ -35,8 +35,8 @@ export function Sheet(props: { title: string; closeLabel: string; onClose: () =>
       <div ref={panel} tabIndex={-1} className="sheet-in relative w-full max-w-[560px] max-h-[88vh] overflow-y-auto rounded-t-[24px] border-t border-hair bg-paper text-ink px-5 pt-3 pb-6" style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))', outline: 'none' }}>
         <div className="mx-auto mb-3 h-1.5 w-12 rounded-full bg-hair" aria-hidden />
         <div className="flex items-start gap-3">
-          <h2 className="flex-1 text-title font-display">{props.title}</h2>
-          <button className="link-quiet -mt-1" onClick={props.onClose}>
+          <h2 className="flex-1 min-w-0 break-words text-title font-display">{props.title}</h2>
+          <button className="link-quiet -mt-1 shrink-0" onClick={props.onClose}>
             {props.closeLabel}
           </button>
         </div>

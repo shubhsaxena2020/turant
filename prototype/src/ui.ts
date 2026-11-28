@@ -3,7 +3,7 @@ import type { StrKey } from './i18n/strings';
 
 /** Shared app context handed to every screen. */
 export interface UI {
-  /** Display language: always English. */
+  /** Display language: the speaking language, or English when the person chose "English screen" (exp/localised-ui). */
   lang: LangCode;
   /** The language the person speaks; only the recogniser uses it. */
   speakLang: LangCode;
