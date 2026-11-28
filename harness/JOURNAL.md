@@ -28,6 +28,16 @@
 - Fixed: a failed download now says what happened, instead of blaming the browser.
 - Known and not fixed: on a 6x slower CPU the "Listening" bar ends about 8 s late, while the model warms up. Tapping the bar ends it.
 
+**Ready if you want it: speech model in a worker** (branch `exp/asr-worker`, commit 30827cb; Vercel preview https://prototype-d2cyqi0u1-shubh-saxena-s-projects.vercel.app, which needs your Vercel login; production is unchanged):
+- **What it fixes:** the slow-phone "Listening runs 8 s late" problem. The in-page model loads and runs in a background worker. If the worker fails to start, stalls or errors, the app falls back to today's main-thread path by itself, and the console logs which path ran.
+- **Measured, CPU 6x:** listening ends 1.7 s after speech instead of 11.0 s; main thread busy 19% vs 87%; end of speech to report 8.8 s vs 19.1 s. That last figure is optimistic: DevTools throttling does not slow worker threads. At normal speed both paths are about the same.
+- **Safety checks:**
+  - The same audio gives identical transcripts on both paths (Hindi, English, Telugu).
+  - Blocking the worker script, or its transformers.js copy, falls back and still fills the report.
+  - All 172 tests and every harness set are unchanged.
+  - Not exercised: a worker that starts and then hangs (a 90 s stall timer covers it).
+- **My recommendation:** merge it only if it works once on a real Android phone. Open the preview with `?speech=whisper`, speak a short story, and check that a report fills in. Otherwise keep production as it is; it works, just slower to react on very slow phones.
+
 **Only you can do these** (details in `SUBMISSION-CHECKLIST.md`):
 1. Answer the 18+ eligibility question.
 2. Fill in the State field.
