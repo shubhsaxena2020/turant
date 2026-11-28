@@ -41,6 +41,18 @@
   - **A worker that starts and then hangs** (debug flag `?asr-worker-hang`): the stall limit is now tied to the clip, at max(20 s, 4x the audio). On an 11.3 s clip the worker was declared stalled 45 s into transcription. The main thread took over and filled the report with the same transcript (67.5 s after tapping). The screen showed "Turning your voice into words…" throughout, never a frozen "Listening". The weak spot: 45 s with no change is a long wait. A shorter limit would risk cutting off a slow but working phone.
 - **My recommendation:** merge it only if it works once on a real Android phone. Open the preview with `?speech=whisper`, speak a short story, and check that a report fills in. Otherwise keep production as it is; it works, just slower to react on very slow phones.
 
+**Final live check before the freeze** (10:30-10:50, live bundle `index-Dhlo4jmh.js`; nothing was broken, nothing changed):
+- **Typed, all 7 languages:** the 4 `JUDGES.md` samples plus fresh Telugu, Marathi and Kannada sentences. Every stated field was correct, and the read-back screen matched.
+- **One recorded clip per language through the live in-page speech path:**
+  - All 7 models loaded and filled a report in 16-45 s, including the first download.
+  - English and Bengali: every field correct.
+  - Hindi, Marathi, Tamil and Telugu: amount, time and bank right; scam type missed. The recogniser misheard "KYC".
+  - Kannada: the bank was missed ("SBI" heard as "ಸ್ಪೇ").
+  - These are recogniser losses, as the harness says.
+- **Not checkable here:** the browser's own speech recognition (Chrome / Edge send audio to Google / Microsoft) does not run in headless Chromium.
+- **Other live checks:** the time flag ("aaj raat 9 baje" typed at 10:34 shows the warning), mic-denied fallback, and offline reload all passed.
+- **`docker compose up` from a fresh GitHub clone (commit 8b6239c):** all 3 self-hosted models ready and byte-identical, serving the same bundle as the live site.
+
 **Only you can do these** (details in `SUBMISSION-CHECKLIST.md`):
 1. Answer the 18+ eligibility question.
 2. Fill in the State field.
