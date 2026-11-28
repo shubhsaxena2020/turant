@@ -14,7 +14,7 @@ Deadline **Mon 30 Nov 2026, 11:59 pm**. One submission per team, final once veri
 | 4 · Live link | https://turant-voice.vercel.app |
 
 Tick all four boxes only after checking them:
-- [ ] The GitHub repo is public and starts with `docker compose up` (checked from a fresh GitHub clone, 28 Nov: all three self-hosted speech models build and serve).
+- [ ] The GitHub repo is public and starts with `docker compose up` (checked strictly on 28 Nov: fresh anonymous GitHub clone, empty build cache, exactly `docker compose up`, ready in 164 s with all three self-hosted speech models; the build also finishes with the model host down or on a throttled, flaky connection. Details in the brief at the top of `harness/JOURNAL.md`).
 - [ ] The YouTube video is Unlisted or Public, and at most 3 minutes (ours is 1:52).
 - [ ] The deck is a PDF.
 - [ ] The build instructions were read and followed.

@@ -54,6 +54,26 @@
 - **Other live checks:** the time flag ("aaj raat 9 baje" typed at 10:34 shows the warning), mic-denied fallback, and offline reload all passed.
 - **`docker compose up` from a fresh GitHub clone (commit 8b6239c):** all 3 self-hosted models ready and byte-identical, serving the same bundle as the live site.
 
+**Strict `docker compose up` check, as a judge would run it** (28 Nov, 14:43-15:13; this check is pass/fail for scoring; **passed**; no code changed, README requirements added):
+- **Setup:** anonymous clone of the public repo (`git clone https://github.com/shubhsaxena2020/turant.git turant`, commit 52759d8) into an empty folder: no `.env`, no `prototype/public/models`, no git-lfs files. A brand-new buildx builder with an empty cache (`BUILDX_BUILDER=turant-judge`), so the base images were pulled fresh and no layer was reused. No image named `turant-turant` existed beforehand.
+- **Command:** exactly `docker compose up`, nothing before it. There were no prompts. `npm ci` took 21 s, the models 31 s (Telugu, Kannada and Tamil all "ready"), then the Vite build and image export. **http://localhost:3000 answered 164 s after `up`.** It uses no GPU, no Whisper server or port 8790, no secret, and no ignored or untracked file.
+- **What it serves:** the model files are byte-identical to the live site (sha256 on the Telugu encoder, Kannada decoder and Tamil config) and served with the right content types.
+- **Core flow on the container** (headless Chromium, `judge_e2e.mjs`):
+  - Typed English report: amount, scam type, bank, UTR and app all correct, reaching the review screen in 1.7 s. "today at 11 pm" shows *"You said 11:00 pm today; that hasn't happened yet. Please check the time."*
+  - Recorded Hindi clip (`?speech=whisper`, model from Hugging Face): heard in 21 s, with amount, time and bank filled.
+  - Recorded Telugu clip (model served by the container itself): heard in 23 s, with amount, time and bank filled.
+  - Scam type is missed on both clips because "KYC" is misheard, the same as on the live site this morning.
+- **Model host down** (`docker buildx build --no-cache --add-host turant-voice.vercel.app:127.0.0.1`): all three fetches failed after their retries, and **the build still finished** (76 s). In that image the Telugu clip fell back to stock whisper-base and still reached the review screen (bank only; it asks for the rest). Typed and Hindi were unaffected.
+- **Slow and flaky connection** (`fetch-models.mjs` through a local proxy throttled to 2 MB/s):
+  - The proxy cut every file's first attempt halfway (36 drops) and stalled one file with no bytes.
+  - Every file was retried. The stalled one timed out after 5 minutes and was retried (15:01:21 to 15:06:29).
+  - All three models arrived in 795 s, all 39 files byte-identical to the deployed copies, with no partial files left. Exit 0.
+  - A slow line makes the build slower, not broken.
+- **Measured needs:** Docker with Compose v2 (checked on Docker 29.9.3 and Compose 5.7.0). About 4 GB disk (2.9 GB build cache plus a 0.92 GB image). The build peaked at 1.1 GB RAM; the running container uses about 10 MB.
+  - At runtime the browser also fetches from huggingface.co (the Hindi/English/Marathi and Bengali models) and cdn.jsdelivr.net (the speech runtime).
+  - These needs, the build time and the port override are now in the README ("Run and develop", linked from the first line).
+- **Cleaned up afterwards:** the judge container, its image, the temporary builder and the proxy. Production is unchanged.
+
 **Only you can do these** (details in `SUBMISSION-CHECKLIST.md`):
 1. Answer the 18+ eligibility question.
 2. Fill in the State field.

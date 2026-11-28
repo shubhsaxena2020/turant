@@ -1,6 +1,6 @@
 # Turant: report a UPI fraud by voice, in the golden hour
 
-**Live:** https://turant-voice.vercel.app · **Run it yourself:** `docker compose up`, then open http://localhost:3000
+**Live:** https://turant-voice.vercel.app · **Run it yourself:** `docker compose up`, then open http://localhost:3000 (the first run builds for about 3 minutes; no keys, no `.env`, no GPU; [requirements](#run-and-develop))
 Theme: *Public infrastructure and civic services* (Build for Bharat, Scaler × Wispr Flow, Round 2)
 
 ![Turant, left to right: tell what happened → it listens and writes → one read-back screen → call 1930 with a script → the complaint for cybercrime.gov.in](docs/img/flow.png)
@@ -139,6 +139,13 @@ npm install
 npm run dev                      # http://localhost:5173
 npm test                         # unit tests
 ```
+
+`docker compose up` needs nothing else: no API keys, no `.env`, no GPU, no git-lfs and no local model files.
+- **Docker:** Docker with Compose v2 (the `docker compose` command): Docker Desktop, or Docker Engine 20.10+ with the compose plugin. Checked on 28 Nov with Docker 29.9.3 and Compose 5.7.0, from a fresh GitHub clone with an empty build cache: ready on http://localhost:3000 in 164 s.
+- **Machine:** about 4 GB free disk (base images, build cache and the 0.9 GB image) and about 2 GB of memory available to Docker (the build peaked at 1.1 GB); the running server uses about 10 MB.
+- **Internet during the build:** npm packages, the two Docker base images, and the Telugu, Kannada and Tamil speech models (about 490 MB, fetched from the live site). Each file is retried, and a stalled download times out and is retried. A model that still fails is skipped: the build finishes and the app uses stock whisper-base for that language (checked with the model host blocked).
+- **In the browser:** on first use, the Hindi, English and Marathi model and the Bengali model download from Hugging Face, and the speech runtime from cdn.jsdelivr.net. Typing a report works without them.
+- **Port 3000 taken?** `TURANT_PORT=3001 docker compose up`, or put `TURANT_PORT=3001` in a `.env` file (see `.env.example`).
 
 Re-run the speech evaluation (needs Python, edge-tts and a Whisper server; see `harness/README.md`): `cd harness && node run_eval.mjs --name x`.
 
