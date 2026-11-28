@@ -61,7 +61,7 @@ Recomputed on 28 Nov from the round-58 reports in `harness/reports/` (current ru
 | Unseen, in-page: Hindi 83.8, English 47.5, Marathi 42.5; Telugu 70.0, Kannada 53.8, Tamil 53.8, Bengali 37.2 | | `unseen_swift58`; `te/kn/ta/bn_unseen58` |
 | Blind set 2: large-v3 68% / 73% unseen; in-page 71% / 69% | | `blind2_report.sh 56` (frozen after three aggregate scorings) |
 | "About 92% of remaining errors are the recogniser" | | Round 21 error split on turbo (`harness/JOURNAL.md`); round 58 in-page bn/te/kn/ta: 69 of 72 |
-| 565 automated tests (slide 8) | | app 172 + parsers 132 + kit 261 |
+| 566 automated tests (slide 8) | | app 172 + parsers 133 + kit 261 |
 | Lighthouse 96 / 100 / 100 / 100 (slide 13) | | live site, 28 Nov |
 | Blind set 3 (headline) | **pending** | scored once at the 12:00 IST freeze by `harness/blind3_report.sh --final` |
 

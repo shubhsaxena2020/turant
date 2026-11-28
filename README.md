@@ -5,6 +5,8 @@ Theme: *Public infrastructure and civic services* (Build for Bharat, Scaler × W
 
 ![Turant, left to right: tell what happened → it listens and writes → one read-back screen → call 1930 with a script → the complaint for cybercrime.gov.in](docs/img/flow.png)
 
+**Judges:** a one-page guide with sample sentences in four languages is in [`JUDGES.md`](JUDGES.md) (PDF: [`docs/Turant-judges-guide.pdf`](docs/Turant-judges-guide.pdf)).
+
 Demo video (1:52, a real Hindi voice going through the live app): [`demo/turant_demo_landscape.mp4`](demo/turant_demo_landscape.mp4)
 
 Someone has just lost money to a UPI scam. The money can still be frozen if it is reported within the first hour or two, but reporting means a 1930 call queue or the cybercrime.gov.in form: an OTP login, a captcha, and a 200-character description with the bank, UTR, date and amount typed in English.
@@ -107,7 +109,7 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   The unseen numbers agree with the blind set (62.8% on large-v3), so about 6 in 10 brand-new spoken reports come out fully correct and the app asks for the rest. Hindi, Telugu, Kannada and Tamil hold up on new speakers; the Marathi tuned-voice number is inflated (held-out and unseen are about 40%); English drops on these voices mostly because 18 of the English cases are romanised Hindi read with a European accent (11-17% fully correct, not a realistic speaker); on the English sentences themselves, unseen speakers get 58.1% in the page and 87.1% on large-v3.
 - **What is left is the recogniser, not the rules.** On the unseen speakers' analysis half, Bengali / Tamil / Telugu / Kannada in the page have 72 field errors; 69 are the recogniser losing the words and 3 were a form the rules missed (fixed in round 58; the Telugu and Bengali unseen numbers above include them, gained on the analysis half only). A bigger Kannada model (IndicWhisper small, 288 MB) was measured as the next lever and **not adopted**: no gain on unseen speakers (53.8% both), worse on Indian voices (41.3% vs 50.0%), 3x the download (`harness/JOURNAL.md`, item 17). A Marathi whisper-small fine-tune was worse still (unseen 16.3% vs 42.5% on the Hinglish model; item 18), so Marathi stays on the Hinglish model.
 - **Fuzz testing:** millions of generated amounts and times are parsed 100% correctly. With one recogniser-style slip per number, 99.6-100% are still read correctly.
-- **Tests:** 172 unit tests in the app, 132 in the parsers and 261 in the voice kit.
+- **Tests:** 172 unit tests in the app, 133 in the parsers and 261 in the voice kit.
 - **Lighthouse** (mobile, live site, 28 Nov): accessibility 100, best practices 100, SEO 100, performance 96 (first paint 1.1 s, largest paint 2.5 s on a throttled phone connection). Fonts are self-hosted, so the page loads with no third-party requests (the Hinglish and Bengali speech models are fetched from Hugging Face only when the in-page fallback is needed; Telugu, Kannada and Tamil are served by Turant).
 
 ### Performance on low-end phones
