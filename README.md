@@ -96,13 +96,14 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   | Server Whisper large-v3, all 7 languages | 71.8% | 68.8% | **61.6%** | 62.0% |
   | Server Whisper turbo, all 7 languages | 52.4% | 53.9% | **47.1%** | 44.4% |
   | In-page Hinglish model: Hindi / English / Marathi | 87.5 / 75.0 / 67.5% | 92.5 / 75.0 / 40.0% | **83.8 / 47.5 / 42.5%** | 77.5 / 52.5 / 37.5% |
-  | In-page Telugu / Kannada / Tamil / Bengali | 70.0 / 50.0 / 52.5 / 35.0% | 67.5 / 50.0 / 47.5 / 40.0% | **68.8 / 53.8 / 53.8 / 34.6%** | 62.5 / 47.5 / 47.5 / 35.9% |
+  | In-page Telugu / Kannada / Tamil / Bengali | 70.0 / 50.0 / 52.5 / 35.0% | 67.5 / 50.0 / 47.5 / 40.0% | **70.0 / 53.8 / 53.8 / 37.2%** | 62.5 / 47.5 / 47.5 / 35.9% |
 
   A **second blind set** (42 cases, written after the night's tuning, scored only in aggregate, three times: when written and after the English rounds, then frozen): reference text 97.6%; large-v3 68% fully correct on the tuning voices and 73% on unseen speakers; the in-page models 71% (69% with unseen speakers).
 
   The unseen numbers agree with the blind set (62.8% on large-v3), so about 6 in 10 brand-new spoken reports come out fully correct and the app asks for the rest. Hindi, Telugu, Kannada and Tamil hold up on new speakers; the Marathi tuned-voice number is inflated (held-out and unseen are about 40%); English drops on these voices mostly because 18 of the English cases are romanised Hindi read with a European accent (11-17% fully correct, not a realistic speaker); on the English sentences themselves, unseen speakers get 58.1% in the page and 87.1% on large-v3.
+- **What is left is the recogniser, not the rules.** On the unseen speakers' analysis half, Bengali / Tamil / Telugu / Kannada in the page have 72 field errors; 69 are the recogniser losing the words and 3 were a form the rules missed (fixed in round 58; the Telugu and Bengali unseen numbers above include them, gained on the analysis half only). A bigger Kannada model (IndicWhisper small, 288 MB) was measured as the next lever and **not adopted**: no gain on unseen speakers (53.8% both), worse on Indian voices (41.3% vs 50.0%), 3x the download (`harness/JOURNAL.md`, item 17).
 - **Fuzz testing:** millions of generated amounts and times are parsed 100% correctly. With one recogniser-style slip per number, 99.6-100% are still read correctly.
-- **Tests:** 167 unit tests in the app, 126 in the parsers and 261 in the voice kit.
+- **Tests:** 170 unit tests in the app, 126 in the parsers and 261 in the voice kit.
 - **Lighthouse** (mobile, live site, 27 Nov): accessibility 100, best practices 100, SEO 100, performance 94 (first paint 2.0 s on a throttled phone connection). Fonts are self-hosted, so the page loads with no third-party requests (the in-page speech model is fetched from Hugging Face only when it is needed).
 
 The full log of every tuning round, what changed and what it gained is in [`harness/JOURNAL.md`](harness/JOURNAL.md).
