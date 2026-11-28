@@ -1,7 +1,7 @@
 // Generic, config-driven slot extraction. One typed extractor per slot type, all
 // built on Turant's rules in nlp.ts. Pure functions: no DOM, no network (offline-first).
 import { findAmountHit, fold, numberGroups, readoutDigit, tokenize as indicTokens, wordParts } from './indic/numbers';
-import { findTime, hourMinutePhrase } from './indic/time';
+import { findTime, hourMinutePhrase, notInFuture } from './indic/time';
 import { joinSpelled, marathiRoman, spokenDigits, unifyScript } from './indic/cleanup';
 import type {
   AmountSlot,
@@ -30,6 +30,8 @@ import * as N from './nlp';
 export interface Extracted {
   value: SlotValue;
   confidence: number;
+  /** Something for the person to check (e.g. "7:00 pm today", a time they said that is still ahead). */
+  note?: string;
 }
 export type Extraction = Partial<Record<string, Extracted>>;
 
@@ -606,12 +608,18 @@ export function extractAll(cfg: SlotsLike, text: string, opts: ExtractOptions = 
     const ind = findTime(text, c.now);
     const sure = ind && (ind.kind === 'clock' || ind.kind === 'ago' || ind.kind === 'now' || ind.kind === 'date');
     const differs = hit && ind && Math.abs(new Date(String(hit.value)).getTime() - ind.date.getTime()) > 20 * 60_000;
-    if (hit && !(sure && differs)) {
+    if (ind?.future) {
+      // "today at 7 pm" said in the morning: the day they said, the time now, flagged for checking
+      put(s.key, { value: ind.date.toISOString(), confidence: 0.55, note: ind.future === 'afternoon' ? 'this afternoon' : ind.future === 'evening' ? 'this evening' : ind.future === 'night' ? 'tonight' : `${ind.future} today` });
+    } else if (hit && !(sure && differs)) {
       if (hit.run !== undefined) c.claimed.add(hit.run);
       put(s.key, { value: hit.value, confidence: hit.confidence });
     } else if (ind && ind.kind !== 'day') {
       put(s.key, { value: ind.date.toISOString(), confidence: ind.kind === 'daypart' ? 0.6 : 0.85 });
     }
+    // a past-time slot is never later than now, whichever rule produced it
+    const got = out[s.key];
+    if (got && typeof got.value === 'string' && !Number.isNaN(Date.parse(got.value))) got.value = notInFuture(new Date(got.value), c.now).toISOString();
   }
   for (const s of of('duration')) put(s.key, extractDuration(c, s));
   for (const s of of('quantity+unit')) put(s.key, extractQuantities(c, s));

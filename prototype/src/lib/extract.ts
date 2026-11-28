@@ -5,7 +5,7 @@
 
 import { findAmountHit, fold, numberGroups, readoutDigit } from './indic/numbers.ts';
 import { joinSpelled, marathiRoman, spokenDigits, unifyScript } from './indic/cleanup.ts';
-import { findTime, hourMinutePhrase, type TimeHit } from './indic/time.ts';
+import { findTime, hourMinutePhrase, notInFuture, type TimeHit } from './indic/time.ts';
 import { findBank, romanize, soundKey } from './indic/bank.ts';
 
 export type FieldKey =
@@ -55,6 +55,8 @@ export const SCAM_TYPES: ScamType[] = [
 export interface Extracted<T> {
   value: T;
   confidence: number;
+  /** Something for the person to check, shown on the read-back screen (e.g. a time they said that is still ahead). */
+  note?: string;
 }
 
 export interface Extraction {
@@ -885,11 +887,14 @@ function mergeAmount(k: Extracted<number> | undefined, ind: { value: number; cur
 
 function mergeTime(k: Extracted<string> | undefined, ind: TimeHit | undefined): Extracted<string> | undefined {
   if (!ind) return k;
+  // "today at 7 pm" said in the morning: the day they said, the time now, low confidence and a note to check it
+  if (ind.future) return { value: ind.date.toISOString(), confidence: 0.55, note: FUTURE_SAID[ind.future] ?? `${ind.future} today` };
   const sure = ind.kind === 'clock' || ind.kind === 'ago' || ind.kind === 'now' || ind.kind === 'date'; // an explicit date beats a bare "yesterday evening" guess
   if (k && !(sure && Math.abs(new Date(k.value).getTime() - ind.date.getTime()) > 20 * 60_000)) return k;
   if (ind.kind === 'day') return k;
   return { value: ind.date.toISOString(), confidence: ind.kind === 'daypart' ? 0.6 : 0.85 };
 }
+const FUTURE_SAID: Record<string, string> = { afternoon: 'this afternoon', evening: 'this evening', night: 'tonight' };
 
 const BANK_BY_KEY: Record<string, string> = {
   sbi: 'State Bank of India (SBI)', hdfc: 'HDFC Bank', icici: 'ICICI Bank', axis: 'Axis Bank', pnb: 'Punjab National Bank (PNB)',
@@ -930,8 +935,10 @@ export function extractFields(text: string, opts: ExtractOptions = {}): Extracti
   // Under ₹100 in a fraud report: every one in the harness was a dropped "thousand" / "lakh" (5 for 5,000).
   // Keep it, but unsure: the app asks and offers ₹5,000 / ₹5,00,000.
   if (amount) out.amount = amount.value < 100 ? { ...amount, confidence: Math.min(amount.confidence, 0.45) } : amount;
-  const time = mergeTime(extractTime(cleaned, tokens, runs, opts), findTime(text, opts.now ?? new Date()));
-  if (time) out.time = time;
+  const now = opts.now ?? new Date();
+  const time = mergeTime(extractTime(cleaned, tokens, runs, opts), findTime(text, now));
+  // a fraud report is about the past: whichever rule produced the time, never later than now
+  if (time) out.time = { ...time, value: notInFuture(new Date(time.value), now).toISOString() };
   const scam = extractScamType(cleaned, opts);
   if (scam) out.scamType = scam;
   // In a correction ("HDFC, not SBI") the cross-language matcher reads the negation; the rule only takes the last name.

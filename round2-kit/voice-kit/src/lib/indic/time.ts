@@ -8,7 +8,14 @@ export interface TimeHit {
   kind: 'now' | 'ago' | 'clock' | 'daypart' | 'day' | 'date';
   /** minutes of uncertainty (a bare "yesterday evening" is fuzzy) */
   tolerance: number;
+  /** Set when the person said "today" with a time still ahead ("7:00 pm", "evening"): the date is now, to be checked. */
+  future?: string;
 }
+
+const clockLabel = (d: Date) => {
+  const h = d.getHours();
+  return `${h % 12 || 12}:${String(d.getMinutes()).padStart(2, '0')} ${h < 12 ? 'am' : 'pm'}`;
+};
 
 const N = (l: string[]) => l.map((w) => w.normalize('NFC'));
 // ASR spells time words one letter off (மனிக்கு, নিমিশাল, শকাল): also compare sound-alike keys.
@@ -341,6 +348,8 @@ function resolveTime(text: string, now: Date): TimeHit | undefined {
     d.setHours(Math.floor(h), Math.round((h % 1) * 60), 0, 0);
     // "10 baje" with no day said and later than now: it was yesterday
     if (day === undefined && d.getTime() > now.getTime() + 30 * 60_000) d.setDate(d.getDate() - 1);
+    // "today at 7 pm" said at 10 am: keep the day they said, use now, and flag it for them to check
+    if (day === 0 && d.getTime() > now.getTime() + 30 * 60_000) return { date: new Date(now), kind: 'clock', tolerance: 20, future: clockLabel(d) };
     return { date: d, kind: 'clock', tolerance: 20 };
   }
   if (part) {
@@ -349,10 +358,11 @@ function resolveTime(text: string, now: Date): TimeHit | undefined {
     // "evening" said at noon with no day: it was yesterday evening (the fraud already happened)
     if (day === undefined && d.getTime() > now.getTime() + 30 * 60_000) d.setDate(d.getDate() - 1);
     // "today" + a part of the day that is still ahead: the fraud already happened, so never a future time.
-    // Evening / night: the one just gone ("आज रात" said in the morning = last night). Morning / afternoon: earlier today.
+    // "this morning" before 9 am: earlier this morning. Afternoon / evening / night still ahead: keep the day they
+    // said, use now, and flag it for them to check (never silently move it to a day they did not say).
     else if (day === 0 && d.getTime() > now.getTime()) {
-      if (part === 'evening' || part === 'night') d.setDate(d.getDate() - 1);
-      else d.setTime(now.getTime());
+      if (part === 'morning') d.setTime(now.getTime());
+      else return { date: new Date(now), kind: dated !== undefined ? 'date' : 'daypart', tolerance: 120, future: part };
     }
     return { date: d, kind: dated !== undefined ? 'date' : 'daypart', tolerance: 120 };
   }

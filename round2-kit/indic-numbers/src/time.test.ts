@@ -14,7 +14,7 @@ const at = (day: number, h: number, m = 0) => {
 const cases: [string, number][] = [
   ['पाँच मिनट पहले', ago(5)],
   ['तीन घंटे पहले पैसे कटे', ago(180)],
-  ['आज दोपहर 3 बजे', at(-1, 15)], // said at noon, 3 pm today has not happened: never a future time (round 62)
+  ['आज दोपहर 3 बजे', at(0, 12)], // said at noon, 3 pm today has not happened: today, now, flagged for checking (round 63)
   ['परसों रात 11 बजे फोन आया', at(-2, 23)],
   ['कल सुबह 8 बजे', at(-1, 8)],
   ['two hours back', ago(120)],
@@ -22,7 +22,7 @@ const cases: [string, number][] = [
   ['this morning around 9 they called', at(0, 9)],
   ['পাঁচ মিনিট আগে', ago(5)],
   ['গতকাল রাত এগারোটায়', at(-1, 23)],
-  ['আজ বিকেল চারটায়', at(-1, 16)], // same: 4 pm today is still ahead at noon
+  ['আজ বিকেল চারটায়', at(0, 12)], // same: 4 pm today is still ahead at noon
   ['ஐந்து நிமிஷத்துக்கு முன்னாடி', ago(5)],
   ['நேற்று காலை 8 மணிக்கு', at(-1, 8)],
   ['இரண்டு மணி நேரத்துக்கு முன்னாடி', ago(120)],
@@ -144,9 +144,9 @@ describe('time of day: never in the future, at any clock', () => {
       }
     });
   }
-  it('"tonight" said in the morning is the night just gone; "this afternoon" before it is earlier today', () => {
+  it('"tonight" / "this afternoon" said before it keep today, use now and are flagged', () => {
     const seven = new Date('2026-11-21T07:00:00+05:30');
-    expect(findTime('आज रात', seven)!.date.getTime()).toBe(new Date('2026-11-20T21:00:00+05:30').getTime());
+    expect(findTime('आज रात', seven)).toMatchObject({ date: seven, future: 'night' }); // today kept, flagged
     expect(findTime('aaj dopahar', seven)!.date.getTime()).toBe(seven.getTime());
     expect(findTime('aaj raat', new Date('2026-11-21T23:50:00+05:30'))!.date.getTime()).toBe(new Date('2026-11-21T21:00:00+05:30').getTime());
   });
@@ -192,9 +192,12 @@ describe('the invariant: no resolved time is later than now (round 62)', () => {
       }
     });
   }
-  it('a little ahead is a rounded now; well ahead is the day before', () => {
+  it('a little ahead is a rounded now; well ahead: the day before, or today flagged when today was said', () => {
     const now = new Date('2026-11-21T11:59:00+05:30');
     expect(findTime('at 12:20', now)!.date.getTime()).toBe(now.getTime());
-    expect(findTime('today at 5 pm', now)!.date.getTime()).toBe(new Date('2026-11-20T17:00:00+05:30').getTime());
+    expect(findTime('today at 5 pm', now)).toMatchObject({ date: now, future: '5:00 pm' }); // the day they said, flagged
+    expect(findTime('aaj shaam 7 baje', new Date('2026-11-21T10:00:00+05:30'))).toMatchObject({ future: '7:00 pm' });
+    expect(findTime('shaam 7 baje', new Date('2026-11-21T10:00:00+05:30'))!.date.getTime()).toBe(new Date('2026-11-20T19:00:00+05:30').getTime()); // no day said: yesterday, unflagged
+    expect(findTime('shaam 7 baje', new Date('2026-11-21T10:00:00+05:30'))!.future).toBeUndefined();
   });
 });

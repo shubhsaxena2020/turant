@@ -46,7 +46,14 @@ export function CheckScreen(props: { ui: UI; report: Report; onChange: (r: Repor
         <div className="flex-1 min-w-0">
           <p className="text-label text-muted">{label ?? t(`f_${k}` as StrKey)}</p>
           {value ? (
-            <p className="mt-0.5 text-lg font-medium text-ink break-words">{value}</p>
+            <>
+              <p className="mt-0.5 text-lg font-medium text-ink break-words">{value}</p>
+              {report.fields[k]?.note ? (
+                <p className="mt-1 text-base font-medium text-amber" role="note" data-testid={`note-${k}`}>
+                  {t('timeNotYet', { said: String(report.fields[k]?.note) })}
+                </p>
+              ) : null}
+            </>
           ) : (
             <p className="mt-0.5 text-lg font-medium text-amber flex items-center gap-2">
               <span className="h-2.5 w-2.5 rounded-full bg-amber" aria-hidden /> {t('notKnownYet')}

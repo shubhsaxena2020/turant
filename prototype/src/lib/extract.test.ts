@@ -704,7 +704,8 @@ describe('pinned: corrections in Tamil, Marathi and English (behaviour as shippe
 });
 
 describe('a report time is never in the future, at any clock (rounds 59-62)', () => {
-  const phrases = ['3 baje', 'shaam 7 baje', 'aaj shaam 7 baje', 'aaj 3 baje', 'आज रात 10 बजे', 'today at 5 pm', 'at 12:20', 'aaj subah 11 baje', 'this afternoon', 'at 11:30', 'the time was today at 7 pm'];
+  const phrases = ['3 baje', 'shaam 7 baje', 'aaj shaam 7 baje', 'aaj 3 baje', 'आज रात 10 बजे', 'today at 5 pm', 'at 12:20', 'aaj subah 11 baje', 'this afternoon', 'at 11:30', 'the time was today at 7 pm',
+    'today evening', 'today in the evening my money went', 'aaj shaam', 'आज रात', 'this evening', 'aaj dopahar', 'today night'];
   for (const clock of ['07:00', '10:00', '11:59', '12:01', '23:50', '00:10']) {
     it(`said at ${clock}`, () => {
       const now = new Date(`2026-11-21T${clock}:00+05:30`);
@@ -716,4 +717,25 @@ describe('a report time is never in the future, at any clock (rounds 59-62)', ()
       }
     });
   }
+});
+
+describe('round 63: "today" + a time still ahead keeps today, uses now and is flagged', () => {
+  const ten = new Date('2026-11-21T10:00:00+05:30');
+  it('the field carries a note; with no day said it is yesterday and unflagged', () => {
+    const t = extractFields('aaj shaam 7 baje 5000 rupaye gaye', { now: ten, lang: 'hi-IN' }).time!;
+    expect(new Date(t.value).getTime()).toBe(ten.getTime());
+    expect(t.note).toBe('7:00 pm today');
+    expect(t.confidence).toBeLessThan(0.6);
+    expect(extractFields('today in the evening my money went', { now: new Date('2026-11-21T07:00:00+05:30'), lang: 'en-IN' }).time?.note).toBe('this evening');
+    const y = extractFields('shaam 7 baje 5000 rupaye gaye', { now: ten, lang: 'hi-IN' }).time!;
+    expect(y.note).toBeUndefined();
+    expect(new Date(y.value).getTime()).toBe(new Date('2026-11-20T19:00:00+05:30').getTime());
+  });
+  it('the note reaches the report field, and a corrected time clears it', () => {
+    const ext = extractFields('aaj shaam 7 baje 5000 rupaye gaye', { now: ten, lang: 'hi-IN' });
+    const { fields } = mergeExtraction({}, ext, { source: 'voice', mode: 'story' } as Parameters<typeof mergeExtraction>[2]);
+    expect(fields.time?.note).toBe('7:00 pm today');
+    const fixed = mergeExtraction(fields, { time: { value: new Date('2026-11-21T09:00:00+05:30').toISOString(), confidence: 1 } }, { source: 'edited', mode: 'answer', overwrite: ['time'] } as Parameters<typeof mergeExtraction>[2]);
+    expect(fixed.fields.time?.note).toBeUndefined();
+  });
 });

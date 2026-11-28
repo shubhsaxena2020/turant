@@ -8,6 +8,8 @@ export interface FieldValue {
   value: string | number;
   confidence: number;
   source: Source;
+  /** Shown on the read-back screen for the person to check (e.g. "7:00 pm today", a time still ahead). */
+  note?: string;
 }
 
 export type Fields = Partial<Record<FieldKey, FieldValue>>;
@@ -105,6 +107,7 @@ export function mergeExtraction(fields: Fields, ext: Extraction, opts: MergeOpti
       value: hit.value,
       confidence: scaleConfidence(hit.confidence, opts.asrConfidence),
       source: opts.source,
+      ...(hit.note ? { note: hit.note } : {}),
     };
     const cur = next[key];
     if (!cur) {

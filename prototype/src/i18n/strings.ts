@@ -37,6 +37,7 @@ const en = {
   micDeniedBody: 'Click the icon next to the web address, set Microphone to Allow, then reload this page. You can type below meanwhile.',
   noSpeech: "This browser can't do voice typing. Open this page in Chrome or Edge, or type below.",
   err_noWords: "I could hear you, but this browser didn't turn your voice into words. Try once more, use Chrome or Edge, or type below.",
+  timeNotYet: "You said {said}; that hasn't happened yet. Please check the time.",
   err_model: 'I heard you, but the voice model could not download on this connection. Tap to speak again when the signal is better, or type below.',
   err_silent: "I can't hear anything from your microphone. Check it isn't muted or that the right mic is selected, then tap Speak again.",
   speakingIn: 'Speaking {lang}',
