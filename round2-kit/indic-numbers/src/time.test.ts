@@ -105,3 +105,13 @@ describe('pinned: times from the 27-28 Nov rounds', () => {
     expect(findTime('kal shaam 7 baje', NOW)?.date.getTime()).toBe(at(-1, 19));
   });
 });
+
+describe('a time said in the morning is never in the future', () => {
+  const early = new Date('2026-11-21T08:49:00+05:30');
+  it('"this morning" before 9 am and "today" before noon resolve to now, not later', () => {
+    expect(findTime('இன்று காலை', early)?.date.getTime()).toBe(early.getTime());
+    expect(findTime('aaj subah', early)?.date.getTime()).toBe(early.getTime());
+    expect(findTime('today', early)?.date.getTime()).toBe(early.getTime());
+    expect(findTime('aaj subah', NOW)?.date.getTime()).toBe(at(0, 9)); // said at noon: 9 am as before
+  });
+});

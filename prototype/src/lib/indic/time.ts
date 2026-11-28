@@ -317,8 +317,12 @@ export function findTime(text: string, now: Date = new Date()): TimeHit | undefi
     d.setHours(h, 0, 0, 0);
     // "evening" said at noon with no day: it was yesterday evening (the fraud already happened)
     if (day === undefined && d.getTime() > now.getTime() + 30 * 60_000) d.setDate(d.getDate() - 1);
+    // "this morning" said before 9 am: it happened earlier this morning, never later
+    else if (day === 0 && part === 'morning' && d.getTime() > now.getTime()) d.setTime(now.getTime());
     return { date: d, kind: dated !== undefined ? 'date' : 'daypart', tolerance: 120 };
   }
   d.setHours(12, 0, 0, 0);
+  // "today" said before noon: it happened earlier today, not at noon
+  if (day === 0 && d.getTime() > now.getTime()) d.setTime(now.getTime());
   return { date: d, kind: dated !== undefined ? 'date' : 'day', tolerance: 720 };
 }
