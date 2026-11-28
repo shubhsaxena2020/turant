@@ -123,12 +123,42 @@
   - On the container: the typed report and time flag work; recorded Hindi (21 s) and Telugu (23 s, model served by the container) clips reach the review screen; the Telugu scam type is fixed by one chip tap.
   - README's first line now says the first build takes "a few minutes, 3 to 8 in our checks".
 
+**Ready if you want it: screen in the speaking language** (branch `exp/localised-ui`, commit 0e950d8; Vercel preview https://prototype-hzgj2s0hn-shubh-saxena-s-projects.vercel.app, which needs your Vercel login; production is unchanged on `index-IEskvsbX.js`)
+- **What it does:**
+  - The screen text and Turant's voice follow the speaking language, using the strings already in `strings.ts`.
+  - An "English screen" checkbox in the language sheet keeps everything in English, remembered on the device (`turant.englishUI`).
+  - These follow the screen language: chips, read-back labels, the 1930 script, the family message and the sample story.
+  - These stay English, as the portal needs: the cybercrime.gov.in complaint, the portal description and the bank message.
+  - With no device voice for the language, Marathi falls back to Hindi and the rest to English (production falls back to Hindi for all, which only mattered when the screen was English).
+- **Checked:**
+  - Every screen (greeting, language sheet, each question, review, done, documents): 7 languages, 360 px wide, text size 1x and 1.25x, 154 screens. Result: no page overflow, no clipped or off-screen buttons, no page errors.
+  - Before a layout fix, Tamil had the review screen's "Tell me" button (சொல்லுங்கள்) and the sheet's Close button pushed off screen. Long-word rows now wrap the button under the value; English rows are unchanged.
+  - Toggle checked in Tamil: on gives an English page and survives a reload.
+  - 596 tests pass; harness round 67: −0 +0 on every set (no extractor change).
+  - Bundle +659 bytes raw / +176 bytes gzip (all languages' strings were already bundled).
+- **Screenshots** (1.25x, each strip in this order: en, hi, mr, bn, ta, te, kn): `docs/img/localised-ui/greeting_125x.png`, `ask-scamType_125x.png`, `check_125x.png`.
+- **Strings missing or not translated** (listed, not invented; a missing string shows in English):
+  - Bengali, Tamil, Telugu, Marathi, Kannada: the same **47 of 233** strings are missing, including the greeting headline (`heroA`, `heroB`), the main button (`tapToSpeak`) and all error messages:
+    - langSub, langSpeak, langSpeakHint, trySampleHint, continueDraft, tapToSpeak, tryAgain, keyboardFallback, paused, resumeNow
+    - err_noWords, timeNotYet, err_model, err_silent, speakingIn, state_transcribing, modelLoading
+    - heroA, heroB, voiceFallback, savedOnPhone, questionNofM, answerByVoice, help_suspect, useSampleAnswer
+    - reviewHint, edit, needed, add, notGiven, updated, conf_high, conf_mid, conf_low
+    - actionSub, complaintTitle, complaintSub, copied, share, familyTitle, reportsTitle, savedAt, soundOn, soundOff, language, gotIt, portalChars
+  - Hindi: 10 missing (err_noWords, timeNotYet, err_model, err_silent, speakingIn, state_transcribing, modelLoading, heroA, heroB, portalChars), and `langSub` is English ("Choose your language").
+  - **Quality:** the existing translations date from the Round 1 commit (04df28f) and have no record of a native-speaker review. Treat them as drafts.
+- **Known limit** (same on production): with the typing box open at 1.25x, the pinned box covers most of the scam-type chips, so the person scrolls.
+- **Recommendation:** keep the English screen for the Round 2 submission.
+  - With 47 strings missing in five languages, the first screen a Tamil or Telugu speaker sees is mixed: an English headline under a Tamil line, as in the greeting strip.
+  - The drafts need a native read before judges see them.
+  - If you want it: get the 47 + 10 strings written and reviewed by native speakers, then merge the branch. The code, layout fixes and toggle are done and tested.
+
 **Only you can do these** (details in `SUBMISSION-CHECKLIST.md`):
 1. Answer the 18+ eligibility question.
 2. Fill in the State field.
 3. Upload the demo to YouTube as Unlisted.
 4. Try the live app once with your own voice.
 5. Submit the form before Mon 30 Nov, 11:59 pm.
+6. Optional: decide on the screen-in-your-language experiment (above; recommendation: keep English for Round 2) and the speech-worker experiment.
 
 ---
 
