@@ -18,7 +18,8 @@ Deadline: **Mon 30 Nov 2026, 11:59 pm**. The form fields and the YouTube text ar
 | Code | https://github.com/shubhsaxena2020/turant (public) | `docker compose up` from a fresh clone builds and serves all three self-hosted speech models (fixed 28 Nov; before that Kannada and Tamil were silently missing) |
 | Pitch deck | `deck/Turant-pitch-deck.pdf` (15 pages, 0.4 MB), text in `deck/DECK.md` | Numbers traced below; no slide overflows |
 | Demo video | `demo/turant_demo_landscape.mp4` (1:52), `demo/turant_demo_vertical.mp4` | Under the 3-minute limit; not uploaded |
-| Tests | app 172, parsers 132, voice kit 261 | All pass |
+| Tests | app 172, parsers 133, voice kit 261 | All pass |
+| Judges' quick guide | `JUDGES.md`, one page as `docs/Turant-judges-guide.pdf` (attach or link it if the form allows) | Every step and sample checked on the live site, 28 Nov |
 
 ## Demo video: shot list (the existing 1:52 cut)
 
