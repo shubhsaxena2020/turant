@@ -93,6 +93,9 @@
   - Kit +1 (−0).
   - Tests 594 (app 181 with the new mishearing and not-KYC cases, parsers 152, kit 261).
   - The README tables, deck and checklist now cite the round-65 reports.
+- **Deployed** (commit 0576560, live bundle `index-DxcJaESY.js`, 16:05). The first `vercel --prod` failed with "fetch failed" and the retry went through.
+  - Live smoke with `judge_e2e.mjs`: typed report and the time flag fine. The Hindi demo clip (Madhur, "ki vaah si update karo") now comes out as Fake KYC; this morning it missed the scam type. Telugu still misses it, because the recogniser drops KYC entirely.
+  - The strict `docker compose up` check is to be re-run once on the final commit before submission.
 
 **Only you can do these** (details in `SUBMISSION-CHECKLIST.md`):
 1. Answer the 18+ eligibility question.
