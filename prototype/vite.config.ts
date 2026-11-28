@@ -33,6 +33,8 @@ function serviceWorker(): Plugin {
 export default defineConfig({
   base: './',
   plugins: [react(), serviceWorker()],
+  // the in-page Whisper worker imports transformers.js lazily, which needs ES-module workers
+  worker: { format: 'es' },
   // Cross-origin isolation (same headers as vercel.json / nginx.conf): multi-threaded in-page Whisper.
   server: { headers: { 'Cross-Origin-Opener-Policy': 'same-origin', 'Cross-Origin-Embedder-Policy': 'credentialless' } },
   preview: { headers: { 'Cross-Origin-Opener-Policy': 'same-origin', 'Cross-Origin-Embedder-Policy': 'credentialless' } },

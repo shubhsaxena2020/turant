@@ -90,6 +90,111 @@ async function cached(model: ModelChoice): Promise<boolean> {
   }
 }
 
+// ---------- Worker path (experimental branch) ----------
+// The model runs in a worker (whisperWorker.ts) so loading and inference never block the page. Any trouble with
+// the worker (no answer to a ping, a stall, an error) terminates it for the rest of the visit and the same model
+// loads on the main thread exactly as before, so the worst case is the main-thread path. ?asr-main forces it.
+const PING_MS = 5_000;
+const STALL_MS = 90_000; // no message at all from the worker for this long while loading
+const RUN_MS = 120_000;
+let workerBroken = typeof Worker === 'undefined' || /[?&]asr-main\b/.test(typeof location === 'undefined' ? '' : location.search);
+let worker: Worker | null = null;
+let workerUp: Promise<boolean> | null = null;
+const workerWaiters = new Set<(e: Error) => void>();
+let runId = 0;
+
+function notePath(path: string) {
+  console.info('[turant] in-page Whisper path:', path);
+  (globalThis as { __turantAsrPath?: string }).__turantAsrPath = path;
+}
+function killWorker(reason: string) {
+  if (workerBroken && !worker) return;
+  worker?.terminate();
+  worker = null;
+  workerBroken = true;
+  workerUp = Promise.resolve(false);
+  notePath(`main thread (worker ${reason})`);
+  for (const reject of workerWaiters) reject(new Error(`worker ${reason}`));
+  workerWaiters.clear();
+}
+function startWorker(): Promise<boolean> {
+  if (workerBroken) return Promise.resolve(false);
+  if (workerUp) return workerUp;
+  workerUp = new Promise<boolean>((resolve) => {
+    let w: Worker;
+    try {
+      w = new Worker(new URL('./whisperWorker.ts', import.meta.url), { type: 'module' });
+    } catch {
+      killWorker('could not be created');
+      return resolve(false);
+    }
+    worker = w;
+    const t = setTimeout(() => (killWorker('did not answer'), resolve(false)), PING_MS);
+    w.addEventListener('error', () => (clearTimeout(t), killWorker('failed to start'), resolve(false)), { once: true });
+    const onPong = (ev: MessageEvent) => {
+      if (ev.data?.type !== 'pong') return;
+      clearTimeout(t);
+      w.removeEventListener('message', onPong);
+      resolve(true);
+    };
+    w.addEventListener('message', onPong);
+    w.postMessage({ type: 'ping' });
+  });
+  return workerUp;
+}
+/** Wait for the worker's answer to one request; a stall or a dead worker rejects. */
+function ask<T>(send: unknown, match: (d: { type?: string; id?: string; rid?: number }) => T | undefined, stallMs: number, onMsg?: (d: { type?: string; id?: string; frac?: number }) => void): Promise<T> {
+  const w = worker;
+  if (!w) return Promise.reject(new Error('no worker'));
+  return new Promise<T>((resolve, reject) => {
+    let timer = setTimeout(() => killWorker('stalled'), stallMs);
+    const done = () => {
+      clearTimeout(timer);
+      w.removeEventListener('message', listen);
+      workerWaiters.delete(fail);
+    };
+    const fail = (e: Error) => (done(), reject(e));
+    const listen = (ev: MessageEvent) => {
+      onMsg?.(ev.data);
+      const hit = match(ev.data);
+      if (hit !== undefined) return done(), resolve(hit);
+      if (ev.data?.type === 'alive' || ev.data?.type === 'progress') {
+        clearTimeout(timer);
+        timer = setTimeout(() => killWorker('stalled'), stallMs);
+      }
+    };
+    workerWaiters.add(fail);
+    w.addEventListener('message', listen);
+    w.postMessage(send);
+  });
+}
+async function loadInWorker(model: ModelChoice, quiet: boolean, report: (f: number) => void): Promise<Asr> {
+  const { host, path } = modelHost(model);
+  type Load = { ok: true } | { ok: false; message: string };
+  const r = await ask<Load>(
+    { type: 'load', id: model.id, gpu: model.gpu, host, path, quiet, forceWasm },
+    (d) => (d.id !== model.id ? undefined : d.type === 'ready' ? { ok: true } : d.type === 'error' ? { ok: false, message: String((d as { message?: string }).message) } : undefined),
+    STALL_MS,
+    (d) => d.id === model.id && d.type === 'progress' && d.frac !== undefined && report(d.frac),
+  );
+  if (!r.ok) {
+    // Could be the network or the worker itself: either way, retry on the main thread (today's path).
+    killWorker(`could not load the model (${r.message.slice(0, 80)})`);
+    throw new Error('worker failed');
+  }
+  notePath('worker');
+  return async (audio, opts) => {
+    const rid = ++runId;
+    type Run = { out?: { text: string } | { text: string }[]; error?: string };
+    const res = await ask<Run>({ type: 'run', rid, id: model.id, pcm: audio, opts }, (d) => (d.rid === rid ? (d as Run) : undefined), RUN_MS);
+    if (res.error || !res.out) {
+      killWorker('failed to transcribe');
+      throw new Error(res.error ?? 'no output');
+    }
+    return res.out;
+  };
+}
+
 /** Load (or join the loading of) the in-page model for a speaking language. Safe to call early as a prefetch. */
 export function loadWhisper(lang: string, onProgress?: Progress): Promise<Asr> {
   const model = modelFor(lang);
@@ -103,13 +208,25 @@ export function loadWhisper(lang: string, onProgress?: Progress): Promise<Asr> {
   const hit = loading.get(model.id);
   if (hit) return hit;
   const p = (async () => {
+    // Reading the model back from the cache also reports progress: only show it for a real download.
+    const quiet = await cached(model);
+    const report = (frac: number) => {
+      lastFraction.set(model.id, frac);
+      for (const l of ls) l(frac);
+    };
+    if (await startWorker()) {
+      try {
+        return await loadInWorker(model, quiet, report);
+      } catch {
+        /* the worker is now switched off for this visit: load on the main thread below */
+      }
+    }
+    if (!(globalThis as { __turantAsrPath?: string }).__turantAsrPath?.startsWith('main thread')) notePath('main thread');
     const { pipeline, env } = await import('@huggingface/transformers');
     env.allowLocalModels = false;
     const { host, path } = modelHost(model);
     env.remoteHost = host;
     env.remotePathTemplate = path;
-    // Reading the model back from the cache also reports progress: only show it for a real download.
-    const quiet = await cached(model);
     const files = new Map<string, { loaded: number; total: number }>();
     const progress_callback = (p: { status?: string; file?: string; loaded?: number; total?: number }) => {
       if (quiet || p.status !== 'progress' || !p.file || !p.total) return;
@@ -117,9 +234,7 @@ export function loadWhisper(lang: string, onProgress?: Progress): Promise<Asr> {
       let a = 0;
       let b = 0;
       for (const f of files.values()) (a += f.loaded), (b += f.total);
-      const frac = b ? a / b : 0;
-      lastFraction.set(model.id, frac);
-      for (const l of ls) l(frac);
+      report(b ? a / b : 0);
     };
     if (model.gpu && !forceWasm && (await hasGpu())) {
       try {
