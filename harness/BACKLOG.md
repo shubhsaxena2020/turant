@@ -27,7 +27,7 @@ no form submit, no YouTube upload, no upload to Shubh's HF account, no spending.
 | 15 | Live-site QA: mobile Lighthouse (perf / a11y / best practices), console errors, each screen at 360 px in all 7 UI languages; fix what is found | **done**: 96/100/100/100; mic bar overflow at text size 1.25 fixed |
 | 16 | First-visit cost: model download size per language shown before download; offline reload after first load | **done**: per-language size in the message; offline reload works (cached app + "You are offline" banner) |
 | 17 | Recogniser lever for Kannada (unseen 53.8%, 19 of 19 analysis-half errors are ASR): vasista22/whisper-kannada-small (Apache-2.0) vs the base model on tuned + unseen clips; adopt only if unseen moves enough to justify ~290 MB vs ~100 MB | **done, rejected**: unseen clean 53.8% = 53.8%, Indian voices 50.0% -> 41.3%, 3x download |
-| 18 | Marathi recogniser: in-page Marathi uses the Hinglish model (unseen 42.5%); try steja/whisper-small-marathi (Apache-2.0, Common Voice 11) on tuned + unseen clips; same adoption bar as item 17 | todo |
+| 18 | Marathi recogniser: in-page Marathi uses the Hinglish model (unseen 42.5%); try steja/whisper-small-marathi (Apache-2.0, Common Voice 11) on tuned + unseen clips; same adoption bar as item 17 | **done, rejected**: unseen 42.5% -> 16.3%, Indian voices 53.8% -> 28.8% |
 | 6 | README / JOURNAL / deck numbers in sync, every claim with a tuned vs unseen vs blind split | **done** for unseen (re-sync after each round) |
 
 ## 1. Unseen speakers
