@@ -19,6 +19,7 @@
   - The mic bar overflowed a 360 px phone at the largest text size.
   - The download message said 100 MB for every language; Bengali and Tamil are about 290 MB.
   - `docker compose up` from a fresh clone silently missed the Kannada and Tamil models (now retried and verified byte for byte).
+- **Rounds 59-60 (live): a report time is never in the future.** The harness clock is fixed at noon, so no eval could see this. A new test matrix (5 clock times x 7 languages) found that "today" plus a later part of the day resolved to the future in all six Indian languages: "आज रात" at 7 am gave 9 pm today. It now means last night, and "this afternoon" said before then means earlier today. No harness run changed.
 - **Measured and not adopted:** bigger Kannada and Marathi whisper-small models. Kannada was no better on unseen speakers. Marathi was much worse: 16.3% vs 42.5%.
 - **What is left:** for bn / te / kn / ta, 69 of 72 remaining field errors are the recogniser losing words, not the rules. The next lever is a better Indian-language recogniser, not more rules.
 - **Quality:** 565 tests pass. Lint found no bugs. README and deck numbers were re-traced to the round-58 reports (`SUBMISSION-CHECKLIST.md`).
