@@ -76,21 +76,21 @@ Build for Bharat 2026 (Scaler x Wispr Flow), Round 2. Theme: Public infrastructu
 
 | Fully correct reports | Whisper turbo | Whisper large-v3 |
 |---|---|---|
-| Tuning set, clean speech | 54.5% | 69.8% |
+| Tuning set, clean speech | 54.5% | 70.2% |
 | Voices never used for tuning | 53.4% | 68.4% |
-| **Blind set: 84 new sentences, never tuned on** | **52.2%** | **62.8%** |
+| **Blind set: 84 new sentences, never tuned on** | **52.2%** | **63.9%** |
 | Reference text, no speech recognition | 100% | 100% |
 
-- **Honest headline:** about 6 to 7 in 10 brand-new spoken reports are fully correct (blind sets: 62.8% and 68%; unseen speakers 62.2% on large-v3). The app asks for what it could not read.
+- **Honest headline:** about 6 to 7 in 10 brand-new spoken reports are fully correct (blind sets: 63.9% and 68%; unseen speakers 62.7% on large-v3). The app asks for what it could not read.
 - **By language** (large-v3, clean): Hindi 98%, English 91%, Marathi 73%, Tamil 66%, Telugu 61%, Kannada 46%, Bengali 44%.
 - **About 92% of remaining errors** are the recogniser losing words, not the parsing.
-- **Fuzz:** millions of generated amounts and times parse 100%; with one slip per number, 99.6-100%. 593 automated tests.
+- **Fuzz:** millions of generated amounts and times parse 100%; with one slip per number, 99.6-100%. 594 automated tests.
 - **What ships in the page, measured on the same clips:** Hindi 90.0% fully correct (stock whisper-base: 13.8%), English 75.8%, Marathi 53.8% (40.0% on a voice never tuned on); on the blind set (new sentences) Hindi 91.7%, English 61.1%, Marathi 45.8%. Hindi in noise: 85.0% at 15 dB, 55.0% at 5 dB. Indian-language Whisper fine-tunes in the page (stock whisper-base: 2.5-6.3%): Telugu 68.8%, Kannada 50.0%, Tamil 50.0%, Bengali 37.5%.
 - **Second blind set** (42 new cases, scored only in aggregate): large-v3 68% fully correct, 73% with unseen speakers; the in-page models 71% (69% with unseen speakers).
 <!-- blind3 -->
-- **Blind set 3, the headline** (42 new sentences, scored once at the freeze): large-v3 65% fully correct (68% with unseen speakers); the in-page models 72% (73%).
+- **Blind set 3, the headline** (42 new sentences, measured once at the 12:00 freeze, round 63): large-v3 65% fully correct (68% with unseen speakers); the in-page models 72% (73%).
 <!-- /blind3 -->
-- **New speakers:** 4 voices never used for tuning: large-v3 62.2% (tuned voice 71.8%), matching the blind set. In the page, Telugu 70.0%, Hindi 83.8%, Kannada and Tamil 53.8% hold up; Marathi and English drop to about 45%.
+- **New speakers:** 4 voices never used for tuning: large-v3 62.7% (tuned voice 71.8%), matching the blind set. In the page, Telugu 70.0%, Hindi 83.8%, Kannada 57.5% and Tamil 53.8% hold up; Marathi and English drop to about 45%.
 - **Limits:** synthetic voices (edge-tts). Real phone tests in every language come next.
 
 ## Slide 9: Users and how many

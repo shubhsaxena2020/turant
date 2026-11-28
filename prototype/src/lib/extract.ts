@@ -605,7 +605,7 @@ const SCAM_RULES: [ScamType, string[]][] = [
   ['investment_task', ['investment', 'invest', 'trading', 'stock tip', 'crypto', 'bitcoin', 'task', 'tasks', 'part time job', 'part-time job', 'work from home', 'youtube like', 'like karne', 'rating task', 'telegram', 'paisa double', 'double ho', 'high return', 'निवेश', 'टास्क', 'ट्रेडिंग', 'टेलीग्राम', 'इन्वेस्ट', 'डबल हो', 'दुप्पट', 'दुपट', 'गुंतवणु', 'বিনিয়োগ', 'ইনভেস্ট', 'ডাবল', 'টেলিগ্রাম', 'টাস্ক', 'முதலீடு', 'இன்வெஸ்ட்', 'டெலிகிராம்', 'டாஸ்க்', 'పెట్టుబడి', 'పిటుబడి', 'ఇన్వెస్ట్', 'టెలిగ్రామ్', 'టాస్క్', 'गुंतवणूक', 'ಹೂಡಿಕೆ', 'ಇನ್ವೆಸ್ಟ್', 'ಟೆಲಿಗ್ರಾಮ್', 'ಟಾಸ್ಕ್']],
   ['qr_scan', ['qr', 'qr code', 'scan', 'scanner', 'scanned', 'क्यूआर', 'स्कैन', 'স্ক্যান', 'কিউআর', 'ஸ்கேன்', 'స్కాన్', 'క్యువార', 'క్యూఆర్', 'स्कॅन', 'ಸ್ಕ್ಯಾನ್']],
   ['fake_customer_care', ['customer care', 'customer service', 'customer support', 'helpline number', 'care number', 'anydesk', 'any desk', 'anydisk', 'any disk', 'एनीडेस्क', 'एनी डेस्क', 'एनीडिस्क', 'teamviewer', 'screen share', 'quick support', 'कस्टमर केयर', 'कस्टमर केअर', 'कस्टमर केर', 'কাস্টমার কেয়ার', 'கஸ்டமர் கேர்', 'కస్టమర్ కేర్', 'ಕಸ್ಟಮರ್ ಕೇರ್']],
-  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'கேவாயசி', 'கேவைசி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'ಕೈಕ ಅಪ್', 'ಕೈಕ್ಕ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'केवाई सी', 'केवाय सी', 'केवा ऐसी', 'केवाऐसी', 'के वाईसी', 'के वाइसी', 'ಕೇವ ಆಯಸಿ', 'ಕೆವಾಯಸಿ', 'కెవాయసి', 'కేవాయసి', 'కేవ ఆయసి', 'के yc', 'yc अपडेट', 'yc update', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
+  ['fake_kyc', ['kyc', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'கேவாயசி', 'கேவைசி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'ಕೈಕ ಅಪ್', 'ಕೈಕ್ಕ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'केवाई सी', 'केवाय सी', 'केवा ऐसी', 'केवाऐसी', 'के वाईसी', 'के वाइसी', 'ಕೇವ ಆಯಸಿ', 'ಕೆವಾಯಸಿ', 'ಕೆವಾಯಿಸಿ', 'के वायसी', 'ke vaayisi', 'kevaah aisi', 'kewa aisi', 'keva aisi', 'kvc', 'kvic', 'vc update', 'vaisi update', 'kik update', 'kick update', 'కెవాయసి', 'కేవాయసి', 'కేవ ఆయసి', 'के yc', 'yc अपडेट', 'yc update', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
   ['wrong_transfer', ['galti se', 'galati se', 'by mistake', 'mistakenly', 'wrong transfer', 'wrongly sent', 'refund', 'paise wapas', 'paisa wapas', 'wapas bhej', 'return the money', 'गलती से', 'वापस भेज', 'रिफंड', 'ভুল করে', 'রিফান্ড', 'தவறுதலாக', 'தவர்தலா', 'పొరపాటున', 'चुकून', 'ತಪ್ಪಾಗಿ']],
   ['otp_shared', ['otp', 'ओटीपी', 'ওটিপি', 'অটিপি', 'ஓடிபி', 'ஓட்டிப்', 'ஓட்டிபி', 'ఓటీపీ', 'ఓటి పీ', 'ಒಟಿಪಿ', 'code bataya', 'code bata diya', 'pin bataya', 'pin bata diya']],
 ];
@@ -625,13 +625,16 @@ function extractScamType(text: string, opts: ExtractOptions): Extracted<ScamType
     return { value: pick.type, confidence: pick.type === 'otp_shared' ? 0.75 : 0.88 };
   }
   if (opts.hint === 'scamType' && hasPhrase(text, OTHER_WORDS) >= 0) return { value: 'other', confidence: 0.7 };
-  if (KYC_UPDATE.test(text)) return { value: 'fake_kyc', confidence: 0.7 };
+  if (KYC_UPDATE.test(text) || KYC_SPELLED.test(text)) return { value: 'fake_kyc', confidence: 0.7 };
   return undefined;
 }
 
 // "KYC update" with KYC garbled by the recogniser (কাইক আপডেট, ಕೆಕ್ ಅಪ್ಪೇಟ್, ಕೇಕ್ಷ ಅಪ್ಟೇಟ್): a short word that starts
 // with a k-sound and has a second k- or s-sound, right before an "update" word. Not "कुछ अपडेट" (some update).
-const KYC_UPDATE = /(?:^|\s)[कকಕకக](?=[^\s]{0,4}[कखसषকখসষಕಖಸಷకఖసషகச])[^\s]{1,5}\s+[अআঅಅఅஅ][पপಪపப][^\s]{0,5}[टটಟటட]/u;
+const KYC_UPDATE = /(?:^|\s)[कকখಕకக](?=[^\s]{0,4}[कखसषকখসষಕಖಸಷకఖసషகச])[^\s]{1,5}\s+[अআঅಅఅஅ]{1,2}[पপಪపப][^\s]{0,5}[टটಟటட]/u;
+// Bengali "KYC না করলে" (if KYC is not done) heard as কিক / খেক / ক্যিক / ক্রিখ না করলে: a short k-word ending in a
+// k-sound, then "if not done". (A Tamil கே வாசி rule was tried and dropped: it fired on a spoken UPI ID "rahul.kyc".)
+const KYC_SPELLED = /(?:^|\s)[কখ][^\s]{0,3}[কখ]\s+না\s+কর/u;
 
 export const BANKS: { name: string; keys: string[] }[] = [
   { name: 'State Bank of India (SBI)', keys: ['sbi', 'state bank', 'stay bank', 'state bank of india', 'yono', 'एसबीआई', 'स्टेट बैंक', 'স্টেট ব্যাংক', 'এসবিআই', 'எஸ்பிஐ', 'ஸ்டேட் பேங்க்', 'ఎస్బీఐ', 'ఎస్‌బీఐ', 'ఎస్బిఐ', 'స్టేట్ బ్యాంక్', 'ಎಸ್‌ಬಿಐ', 'ಎಸ್ಬಿಐ', 'ಸ್ಟೇಟ್ ಬ್ಯಾಂಕ್'] },

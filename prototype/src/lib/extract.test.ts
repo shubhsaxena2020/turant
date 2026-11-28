@@ -429,6 +429,22 @@ describe('round 32 (hour-and-minute phrases)', () => {
   it('KYC in Kannada letters', () => {
     expect(x('ಕೇವ ಆಯಸಿ ಅಪ್ಡೇಟ್ ಮಾಡಿ').scamType?.value).toBe('fake_kyc');
   });
+  // round 65: KYC as the recognisers mishear it (each spelling recurs on two or more voices)
+  it('KYC misheard', () => {
+    expect(x('ಒಬ್ಬರು ಕೆವಾಯಿಸಿ ಅಪ್ಡೇಟ್ ಮಾಡಲು ಹೇಳಿದರು').scamType?.value).toBe('fake_kyc');
+    expect(x('बंकेतून बोलतोए के वायसी केलन आहीतर खातम बंद').scamType?.value).toBe('fake_kyc');
+    expect(x('ek aasaani ke vaayisi update karaaya saangit len').scamType?.value).toBe('fake_kyc');
+    expect(x('Kewa Aisi Update Cheyalani Kaal Vachindi').scamType?.value).toBe('fake_kyc');
+    expect(x('ek aadmi ne bola ki VC update karo').scamType?.value).toBe('fake_kyc');
+    expect(x('KVIC అప్డేట్ చేయాలని కాల్ వచ్చింది').scamType?.value).toBe('fake_kyc');
+    expect(x('Kick Update নাম করে ফোন এশে ছিলো').scamType?.value).toBe('fake_kyc');
+    expect(x('ব্যাংক থেকে বলছি কিক না করলে একাউন্ট বন্ধ হয়ে যাবে').scamType?.value).toBe('fake_kyc');
+    expect(x('খিক অআপডেটের নাম করে ফোন এসেছিল').scamType?.value).toBe('fake_kyc');
+    // not KYC: "if not fixed", "some update", and a UPI ID read out letter by letter
+    expect(x('ঠিক না করলে টাকা ফেরত হবে না').scamType).toBeUndefined();
+    expect(x('कुछ अपडेट करना है').scamType).toBeUndefined();
+    expect(x('யூபிஐ ஐடி ராகுல் டாட் கே வாசி அட் வாய்பியல் க்கு எட்டாயிரம் ரூபாய் அனுப்பினேன்').scamType).toBeUndefined();
+  });
 });
 
 describe('round 34 (Hinglish as the in-page Hindi Whisper writes it)', () => {

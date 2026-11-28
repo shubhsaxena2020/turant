@@ -48,20 +48,20 @@ Recomputed on 28 Nov from the round-58 reports in `harness/reports/` (current ru
 
 | Deck claim (slide 8 unless noted) | Value | Report(s) |
 |---|---|---|
-| Tuning set, clean: turbo / large-v3 | 54.5% / 69.8% | `round58`, `lv3r58` |
+| Tuning set, clean: turbo / large-v3 | 54.5% / 70.2% | `round65`, `lv3r65` |
 | Voices never used for tuning: turbo / large-v3 | 53.4% / 68.4% | `round58`, `lv3r58` (held-out voices) |
-| Blind set 1 (84 sentences): turbo / large-v3 | 52.2% / 62.8% | `blind_turbo_r58`, `blind_lv3_r58` |
+| Blind set 1 (84 sentences): turbo / large-v3 | 52.2% / 63.9% | `blind_turbo_r65`, `blind_lv3_r65` |
 | By language, large-v3: hi 98, en 91, mr 73, ta 66, te 61, kn 46, bn 44 | | `lv3r58` |
 | In-page Hinglish model: Hindi 90.0, English 75.8, Marathi 53.8 (held-out voice 40.0) | | `swift58` |
 | In-page, Hindi in noise: 85.0% at 15 dB, 55.0% at 5 dB | | `swift58` |
 | In-page on blind set 1: Hindi 91.7, English 61.1, Marathi 45.8 | | `blind_swift58` |
 | In-page Indian-language models: Telugu 68.8, Kannada 50.0, Tamil 50.0, Bengali 37.5 | | `te_page58`, `kn_page58`, `ta_page58`, `bn_page58` |
-| Unseen speakers, large-v3: 62.2% (tuned voice 71.8%) | | `unseen_report.mjs lv3r58 unseen_lv3_58` |
+| Unseen speakers, large-v3: 62.7% (tuned voice 71.8%) | | `unseen_report.mjs lv3r65 unseen_lv3_65` |
 | Unseen speakers, turbo: 47.1% | | `unseen_report.mjs round58 unseen_turbo_58` |
-| Unseen, in-page: Hindi 83.8, English 47.5, Marathi 42.5; Telugu 70.0, Kannada 53.8, Tamil 53.8, Bengali 37.2 | | `unseen_swift58`; `te/kn/ta/bn_unseen58` |
+| Unseen, in-page: Hindi 83.8, English 47.5, Marathi 43.8; Telugu 70.0, Kannada 57.5, Tamil 53.8, Bengali 38.5 | | `unseen_swift65`; `te/kn/ta/bn_unseen65` |
 | Blind set 2: large-v3 68% / 73% unseen; in-page 71% / 69% | | `blind2_report.sh 56` (frozen after three aggregate scorings) |
 | "About 92% of remaining errors are the recogniser" | | Round 21 error split on turbo (`harness/JOURNAL.md`); round 58 in-page bn/te/kn/ta: 69 of 72 |
-| 593 automated tests (slide 8) | | app 180 + parsers 152 + kit 261 |
+| 594 automated tests (slide 8) | | app 181 + parsers 152 + kit 261 |
 | Lighthouse 96 / 100 / 100 / 100 (slide 13) | | live site, 28 Nov |
 | Blind set 3 (headline) | **pending** | scored once at the 12:00 IST freeze by `harness/blind3_report.sh --final` |
 
