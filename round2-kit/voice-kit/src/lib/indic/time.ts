@@ -317,8 +317,12 @@ export function findTime(text: string, now: Date = new Date()): TimeHit | undefi
     d.setHours(h, 0, 0, 0);
     // "evening" said at noon with no day: it was yesterday evening (the fraud already happened)
     if (day === undefined && d.getTime() > now.getTime() + 30 * 60_000) d.setDate(d.getDate() - 1);
-    // "this morning" said before 9 am: it happened earlier this morning, never later
-    else if (day === 0 && part === 'morning' && d.getTime() > now.getTime()) d.setTime(now.getTime());
+    // "today" + a part of the day that is still ahead: the fraud already happened, so never a future time.
+    // Evening / night: the one just gone ("आज रात" said in the morning = last night). Morning / afternoon: earlier today.
+    else if (day === 0 && d.getTime() > now.getTime()) {
+      if (part === 'evening' || part === 'night') d.setDate(d.getDate() - 1);
+      else d.setTime(now.getTime());
+    }
     return { date: d, kind: dated !== undefined ? 'date' : 'daypart', tolerance: 120 };
   }
   d.setHours(12, 0, 0, 0);

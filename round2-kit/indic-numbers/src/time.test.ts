@@ -115,3 +115,39 @@ describe('a time said in the morning is never in the future', () => {
     expect(findTime('aaj subah', NOW)?.date.getTime()).toBe(at(0, 9)); // said at noon: 9 am as before
   });
 });
+
+// The harness clock is fixed at noon, so time-of-day logic needs its own check: the same phrases said at
+// 07:00, 11:59, 12:01, 23:50 and 00:10. A fraud report's time is never in the future; "kal" is yesterday.
+describe('time of day: never in the future, at any clock', () => {
+  const P: Record<string, { today: string[]; yest: string[]; ago: string[]; pastOnly: string[] }> = {
+    en: { today: ['this morning', 'this afternoon', 'today', 'today morning'], yest: ['yesterday', 'yesterday night'], ago: ['an hour ago', 'one hour ago'], pastOnly: ['last night', 'at 11:30'] },
+    hi: { today: ['aaj subah', 'aaj dopahar', 'aaj raat', 'aaj', 'आज सुबह', 'आज दोपहर', 'आज रात', 'आज'], yest: ['kal', 'kal raat', 'kal shaam', 'कल', 'कल रात'], ago: ['ek ghante pehle', 'एक घंटे पहले'], pastOnly: ['11:30 baje'] },
+    mr: { today: ['आज सकाळी', 'आज दुपारी', 'आज रात्री', 'आज'], yest: ['काल', 'काल रात्री'], ago: ['एक तासापूर्वी'], pastOnly: [] },
+    bn: { today: ['আজ সকালে', 'আজ দুপুরে', 'আজ রাতে', 'আজ'], yest: ['গতকাল', 'গতকাল রাতে', 'কাল'], ago: ['এক ঘণ্টা আগে'], pastOnly: [] },
+    ta: { today: ['இன்று காலை', 'இன்று மதியம்', 'இன்று இரவு', 'இன்று'], yest: ['நேற்று', 'நேற்று இரவு'], ago: ['ஒரு மணி நேரத்துக்கு முன்'], pastOnly: [] },
+    te: { today: ['ఈరోజు ఉదయం', 'ఈరోజు మధ్యాహ్నం', 'ఈరోజు రాత్రి', 'ఈరోజు'], yest: ['నిన్న', 'నిన్న రాత్రి'], ago: ['ఒక గంట క్రితం'], pastOnly: [] },
+    kn: { today: ['ಇಂದು ಬೆಳಿಗ್ಗೆ', 'ಇಂದು ಮಧ್ಯಾಹ್ನ', 'ಇಂದು ರಾತ್ರಿ', 'ಇಂದು'], yest: ['ನಿನ್ನೆ', 'ನಿನ್ನೆ ರಾತ್ರಿ'], ago: ['ಒಂದು ಗಂಟೆ ಹಿಂದೆ'], pastOnly: [] },
+  };
+  for (const clock of ['07:00', '11:59', '12:01', '23:50', '00:10']) {
+    it(`said at ${clock}`, () => {
+      const now = new Date(`2026-11-21T${clock}:00+05:30`);
+      const yday = new Date(now);
+      yday.setDate(yday.getDate() - 1);
+      for (const [lang, g] of Object.entries(P)) {
+        for (const t of [...g.today, ...g.yest, ...g.ago, ...g.pastOnly]) {
+          const r = findTime(t, now);
+          expect(r, `${lang} "${t}" at ${clock}: a time`).toBeDefined();
+          expect(r!.date.getTime(), `${lang} "${t}" at ${clock}: not in the future`).toBeLessThanOrEqual(now.getTime());
+        }
+        for (const t of g.yest) expect(findTime(t, now)!.date.getDate(), `${lang} "${t}" at ${clock}: yesterday`).toBe(yday.getDate());
+        for (const t of g.ago) expect(findTime(t, now)!.date.getTime(), `${lang} "${t}" at ${clock}: an hour ago`).toBe(now.getTime() - 3600_000);
+      }
+    });
+  }
+  it('"tonight" said in the morning is the night just gone; "this afternoon" before it is earlier today', () => {
+    const seven = new Date('2026-11-21T07:00:00+05:30');
+    expect(findTime('आज रात', seven)!.date.getTime()).toBe(new Date('2026-11-20T21:00:00+05:30').getTime());
+    expect(findTime('aaj dopahar', seven)!.date.getTime()).toBe(seven.getTime());
+    expect(findTime('aaj raat', new Date('2026-11-21T23:50:00+05:30'))!.date.getTime()).toBe(new Date('2026-11-21T21:00:00+05:30').getTime());
+  });
+});
