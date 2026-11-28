@@ -72,8 +72,8 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
 
 | Fully correct reports (every field right, nothing spurious) | Whisper turbo | Whisper large-v3 |
 |---|---|---|
-| Tuning corpus, clean speech (280 cases, 7 languages) | 54.5% | 69.5% |
-| Voices never used for tuning | 53.4% | 67.8% |
+| Tuning corpus, clean speech (280 cases, 7 languages) | 54.5% | 69.8% |
+| Voices never used for tuning | 53.4% | 68.4% |
 | **Blind set: 84 new sentences written after tuning, never tuned on** | **52.2%** | **62.8%** |
 | Reference text (no speech recognition) | 100% | 100% |
 
@@ -84,18 +84,18 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   | In-page model | Hindi | English | Marathi | Bengali / Tamil / Telugu / Kannada |
   |---|---|---|---|---|
   | whisper-base | 13.8% | 50.0% | 10.0% | 2.5-6.3% |
-  | **Hindi2Hinglish-Swift + rules tuned to its Hinglish** | **90.0%** | **75.0%** | **53.8%** (held-out voice 40.0%) | not used |
+  | **Hindi2Hinglish-Swift + rules tuned to its Hinglish** | **90.0%** | **75.8%** | **53.8%** (held-out voice 40.0%) | not used |
   | **Indian-language Whisper fine-tunes** (Bangla small; IndicWhisper Telugu / Kannada base, Tamil small) | | | | **Telugu 68.8%, Kannada 50.0%, Tamil 50.0%, Bengali 37.5%** |
 
-  On the **blind set** (new sentences, never tuned on), the in-page model gets Hindi **91.7%** (the same as the text-only ceiling for those sentences), English 61.1% and Marathi 41.7%. In noise, Hindi stays at 85.0% at 15 dB (a busy room) and 55.0% at 5 dB (a roadside).
+  On the **blind set** (new sentences, never tuned on), the in-page model gets Hindi **91.7%** (the same as the text-only ceiling for those sentences), English 61.1% and Marathi 45.8%. In noise, Hindi stays at 85.0% at 15 dB (a busy room) and 55.0% at 5 dB (a roadside).
   The Indian-language models were measured on both voices with no rule changes. Telugu and Kannada in the page now beat server Whisper large-v3 (61% and 46%). Tamil's 196 MB decoder is split into chunks under the host's 100 MB per-file limit (`harness/split_onnx.py`; same weights, identical transcripts). The Telugu, Kannada and Tamil files are not in git: the Docker build fetches them from the live site (`prototype/scripts/fetch-models.mjs`), and if that fails the app uses whisper-base for them. `harness/convert_whisper.py` rebuilds them from the original models.
 - **Generalisation: speakers never used for tuning.** The rules were tuned by reading one Indian voice per language. To check they generalise, every case was also read by four Azure multilingual voices that were never used for tuning (French, Italian and Brazilian speakers reading the Indian-language text: a harder, accented test). Fully correct reports, clean speech (`harness/unseen_report.mjs`):
 
   | Path | Tuned voice | Held-out Indian voice | **Unseen speakers** | Unseen, 15 dB noise |
   |---|---|---|---|---|
-  | Server Whisper large-v3, all 7 languages | 71.8% | 68.8% | **61.6%** | 62.0% |
+  | Server Whisper large-v3, all 7 languages | 71.8% | 69.1% | **62.2%** | 62.4% |
   | Server Whisper turbo, all 7 languages | 52.4% | 53.9% | **47.1%** | 44.4% |
-  | In-page Hinglish model: Hindi / English / Marathi | 87.5 / 75.0 / 67.5% | 92.5 / 75.0 / 40.0% | **83.8 / 47.5 / 42.5%** | 77.5 / 52.5 / 37.5% |
+  | In-page Hinglish model: Hindi / English / Marathi | 87.5 / 75.0 / 67.5% | 92.5 / 76.3 / 40.0% | **83.8 / 47.5 / 42.5%** | 77.5 / 52.5 / 37.5% |
   | In-page Telugu / Kannada / Tamil / Bengali | 70.0 / 50.0 / 52.5 / 35.0% | 67.5 / 50.0 / 47.5 / 40.0% | **70.0 / 53.8 / 53.8 / 37.2%** | 62.5 / 47.5 / 47.5 / 35.9% |
 
   A **second blind set** (42 cases, written after the night's tuning, scored only in aggregate, three times: when written and after the English rounds, then frozen): reference text 97.6%; large-v3 68% fully correct on the tuning voices and 73% on unseen speakers; the in-page models 71% (69% with unseen speakers).
@@ -103,7 +103,7 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   The unseen numbers agree with the blind set (62.8% on large-v3), so about 6 in 10 brand-new spoken reports come out fully correct and the app asks for the rest. Hindi, Telugu, Kannada and Tamil hold up on new speakers; the Marathi tuned-voice number is inflated (held-out and unseen are about 40%); English drops on these voices mostly because 18 of the English cases are romanised Hindi read with a European accent (11-17% fully correct, not a realistic speaker); on the English sentences themselves, unseen speakers get 58.1% in the page and 87.1% on large-v3.
 - **What is left is the recogniser, not the rules.** On the unseen speakers' analysis half, Bengali / Tamil / Telugu / Kannada in the page have 72 field errors; 69 are the recogniser losing the words and 3 were a form the rules missed (fixed in round 58; the Telugu and Bengali unseen numbers above include them, gained on the analysis half only). A bigger Kannada model (IndicWhisper small, 288 MB) was measured as the next lever and **not adopted**: no gain on unseen speakers (53.8% both), worse on Indian voices (41.3% vs 50.0%), 3x the download (`harness/JOURNAL.md`, item 17). A Marathi whisper-small fine-tune was worse still (unseen 16.3% vs 42.5% on the Hinglish model; item 18), so Marathi stays on the Hinglish model.
 - **Fuzz testing:** millions of generated amounts and times are parsed 100% correctly. With one recogniser-style slip per number, 99.6-100% are still read correctly.
-- **Tests:** 170 unit tests in the app, 126 in the parsers and 261 in the voice kit.
+- **Tests:** 172 unit tests in the app, 132 in the parsers and 261 in the voice kit.
 - **Lighthouse** (mobile, live site, 28 Nov): accessibility 100, best practices 100, SEO 100, performance 96 (first paint 1.1 s, largest paint 2.5 s on a throttled phone connection). Fonts are self-hosted, so the page loads with no third-party requests (the Hinglish and Bengali speech models are fetched from Hugging Face only when the in-page fallback is needed; Telugu, Kannada and Tamil are served by Turant).
 
 The full log of every tuning round, what changed and what it gained is in [`harness/JOURNAL.md`](harness/JOURNAL.md).
