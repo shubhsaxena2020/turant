@@ -100,6 +100,10 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
 
   A **second blind set** (42 cases, written after the night's tuning, scored only in aggregate, three times: when written and after the English rounds, then frozen): reference text 97.6%; large-v3 68% fully correct on the tuning voices and 73% on unseen speakers; the in-page models 71% (69% with unseen speakers).
 
+<!-- blind3 -->
+  **Blind set 3, the headline:** 42 new sentences, committed before any scoring; scored once at the rules freeze (28 Nov, 12:00 IST). The result is filled in here by `harness/blind3_report.sh --final`.
+<!-- /blind3 -->
+
   The unseen numbers agree with the blind set (62.8% on large-v3), so about 6 in 10 brand-new spoken reports come out fully correct and the app asks for the rest. Hindi, Telugu, Kannada and Tamil hold up on new speakers; the Marathi tuned-voice number is inflated (held-out and unseen are about 40%); English drops on these voices mostly because 18 of the English cases are romanised Hindi read with a European accent (11-17% fully correct, not a realistic speaker); on the English sentences themselves, unseen speakers get 58.1% in the page and 87.1% on large-v3.
 - **What is left is the recogniser, not the rules.** On the unseen speakers' analysis half, Bengali / Tamil / Telugu / Kannada in the page have 72 field errors; 69 are the recogniser losing the words and 3 were a form the rules missed (fixed in round 58; the Telugu and Bengali unseen numbers above include them, gained on the analysis half only). A bigger Kannada model (IndicWhisper small, 288 MB) was measured as the next lever and **not adopted**: no gain on unseen speakers (53.8% both), worse on Indian voices (41.3% vs 50.0%), 3x the download (`harness/JOURNAL.md`, item 17). A Marathi whisper-small fine-tune was worse still (unseen 16.3% vs 42.5% on the Hinglish model; item 18), so Marathi stays on the Hinglish model.
 - **Fuzz testing:** millions of generated amounts and times are parsed 100% correctly. With one recogniser-style slip per number, 99.6-100% are still read correctly.

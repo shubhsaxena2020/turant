@@ -55,3 +55,11 @@ show('large-v3', agg(H('blind3_lv3_$T').runs));
 show('in-page', agg(['hienmr','te','kn','ta','bn'].flatMap((g) => H('blind3_page_' + g + '_$T').runs)));
 console.log('(tuning = the edge-tts Indian voices; unseen = the 4 multilingual voices never used for tuning)');
 "
+
+echo "[4/4] fill the result into README, deck and morning brief; rebuild the deck; run the tests"
+node fill_blind.mjs blind3 $T || { echo "fill failed: fill by hand from the numbers above"; exit 1; }
+python ../deck/build_deck.py || echo "deck rebuild failed"
+(cd ../prototype && npx vitest run 2>&1 | grep -E "Tests ")
+(cd ../round2-kit/indic-numbers && npx vitest run 2>&1 | grep -E "Tests ")
+(cd ../round2-kit/voice-kit && npx vitest run 2>&1 | grep -E "Tests ")
+echo "done: review the diff (git diff README.md deck/DECK.md harness/JOURNAL.md), then commit and push"

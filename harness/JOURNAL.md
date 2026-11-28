@@ -5,7 +5,9 @@
 **The honest headline:** about 6 to 7 in 10 brand-new spoken reports come out fully correct, and the app asks for the rest.
 - **Unseen speakers** (voices never used for tuning): 62.2% on server Whisper large-v3; in the page, Hindi 83.8%, Telugu 70.0%, Kannada and Tamil 53.8%, English 47.5%, Marathi 42.5%, Bengali 37.2%.
 - **Blind sets:** blind 1 is 62.8% on large-v3. Blind 2 is 68% (73% with unseen speakers); it was scored three times, then frozen.
-- **Blind set 3:** committed unscored at 06:50, scored once at 12:00. Result: *(filled in after the freeze)*.
+<!-- blind3 -->
+- **Blind set 3:** committed unscored at 06:50, scored once at 12:00. Result: *(filled in by `harness/blind3_report.sh --final`)*.
+<!-- /blind3 -->
 
 **What changed overnight:**
 - **Rounds 57-58 (live):**
