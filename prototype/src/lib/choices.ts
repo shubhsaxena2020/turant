@@ -23,6 +23,18 @@ export const viaToSource = (via: Via): Source =>
   via === 'typed' ? 'typed' : via === 'sample' ? 'sample' : via === 'tap' ? 'tap' : 'voice';
 
 /** Fields whose spoken answer must be read back and confirmed (money, dates, IDs). */
+/** One-tap bank chips under the bank question: the eight most common, by the short name people see on cards and SMS. */
+export const BANK_CHIPS: [value: string, label: string][] = [
+  ['State Bank of India (SBI)', 'SBI'],
+  ['HDFC Bank', 'HDFC'],
+  ['ICICI Bank', 'ICICI'],
+  ['Axis Bank', 'Axis'],
+  ['Punjab National Bank (PNB)', 'PNB'],
+  ['Bank of Baroda', 'Bank of Baroda'],
+  ['Canara Bank', 'Canara'],
+  ['Union Bank of India', 'Union Bank'],
+];
+
 export const EXPLICIT: QuestionKey[] = ['amount', 'time', 'utr', 'suspect'];
 
 /** Which questions can be answered on a number keypad, and the field the digits fill. */

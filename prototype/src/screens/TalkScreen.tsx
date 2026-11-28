@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { detectIntent, extractFields, SCAM_TYPES, wordCount, type Extraction, type FieldKey } from '../lib/extract';
 import { mergeExtraction, pendingQuestions, setField, type QuestionKey, type Report } from '../lib/report';
 import { commitAnswer, interpret, shownValues, spokenValues } from '../lib/answer';
-import { EXPLICIT, keypadField, TOP_BANKS, viaToSource, type Via } from '../lib/choices';
+import { BANK_CHIPS, EXPLICIT, keypadField, TOP_BANKS, viaToSource, type Via } from '../lib/choices';
 import { buildLetter } from '../lib/letter';
 import { displayValue } from '../lib/outputs';
 import { useListen, type Outcome } from '../lib/useListen';
@@ -332,6 +332,21 @@ export function TalkScreen(props: {
               </p>
             ) : null}
             {q === 'utr' ? <p className="mt-2 text-base text-ink/70">{t('help_utr')}</p> : null}
+            {/* One tap fills the answer when the recogniser lost the word (KYC dropped, SBI misheard). */}
+            {q === 'scamType' || q === 'bank' ? (
+              <div className="mt-5 flex flex-wrap gap-2" data-testid={`chips-${q}`}>
+                {(q === 'scamType' ? SCAM_TYPES.map((s) => [s, scamLabel(ui.lang, s)]) : BANK_CHIPS).map(([value, text]) => (
+                  <button key={value} className="chip" onClick={() => tapValue(q as FieldKey, value)} data-testid={`chip-${value}`}>
+                    {text}
+                  </button>
+                ))}
+                {q === 'bank' ? (
+                  <button className="chip" onClick={() => setSheet('type')} data-testid="chip-other-bank">
+                    {t('otherBank')}
+                  </button>
+                ) : null}
+              </div>
+            ) : null}
           </section>
         ) : null}
 
@@ -450,7 +465,7 @@ export function TalkScreen(props: {
                       {t('pressNumbers')}
                     </button>
                   ) : null}
-                  {q === 'scamType' || q === 'bank' ? (
+                  {q === 'bank' ? (
                     <button className="link" onClick={() => setSheet('choices')} data-testid="open-choices">
                       {t('chooseInstead')}
                     </button>

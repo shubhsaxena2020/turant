@@ -97,6 +97,26 @@
   - Live smoke with `judge_e2e.mjs`: typed report and the time flag fine. The Hindi demo clip (Madhur, "ki vaah si update karo") now comes out as Fake KYC; this morning it missed the scam type. Telugu still misses it, because the recogniser drops KYC entirely.
   - The strict `docker compose up` check is to be re-run once on the final commit before submission.
 
+**Round 66 (28 Nov evening): one tap to fix a field the recogniser lost** (UI only, no extractor change)
+- **Audit, before the change** (all 7 languages):
+  - A missing scam type or bank was already asked about, and both the follow-up question and the review screen ("Tell me") offered a choice list: every scam type, the top 10 banks.
+  - That cost **2 taps** (open the list, pick). The list also opens by itself after two failed answers.
+  - The screen and Turant's voice are English in every speaking language by design (commit d7b8f46, "Everything on screen and everything Turant says is in English"). The chips follow that; the localised strings exist in all 7 languages.
+  - The re-ask line and the example already said "Tap one below", but nothing was below.
+- **Change:**
+  - Under the scam-type question: all 8 scam types as one-tap chips (the "Choose from a list" link is dropped there, because the chips are the whole list).
+  - Under the bank question: SBI, HDFC, ICICI, Axis, PNB, Bank of Baroda, Canara and Union Bank, plus "Other bank" (opens the type-or-say sheet). "Choose from a list" stays for the full 10.
+  - Chips are 44 px tall (WCAG target size). A tap goes through the same commit as the list, which stops the microphone.
+  - New tests: bank chips are real banks known to the extractor, and every language has its own "Other bank" and scam labels. 596 tests total (app 183).
+- **Measured** with `fix_effort.mjs` (headless Chromium, 390 px wide, the in-page model; the script answers the target field by tapping and skips the rest).
+  - **Taps to fix the lost field went from 2 to 1** in every case that needed it:
+    - Telugu, Tamil and Marathi (KYC lost): scam type in 1 tap.
+    - Kannada (SBI lost): bank in 1 tap.
+  - Hindi, Bengali and Kannada now get the scam type from speech (round 65), so they were not asked. The English clip is a QR-code story, recognised correctly.
+  - No horizontal overflow, no page errors, and every run reached a complete review screen, at text size 1x and 1.25x.
+  - At 1x, 7 of 8 scam chips show above the pinned bar; at 1.25x the person scrolls for the rest. A tap on "Other", the last chip, still works in 1 tap.
+- **Harness, round 66 vs 65:** −0 +0 on every set (UI only, as expected).
+
 **Only you can do these** (details in `SUBMISSION-CHECKLIST.md`):
 1. Answer the 18+ eligibility question.
 2. Fill in the State field.

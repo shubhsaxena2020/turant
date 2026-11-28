@@ -92,6 +92,21 @@ a {
   .btn-line:active {
     background: #f4f2da;
   }
+  /* One-tap answer chips under a question (scam type, bank): 44px tall (WCAG target size), outlined like .btn-line. */
+  .chip {
+    @apply inline-flex items-center px-3.5 text-base font-medium text-ink transition-colors;
+    min-height: 2.75rem;
+    border-radius: 999px;
+    border: 1.6px solid #1a1a1a;
+    background: transparent;
+  }
+  .chip:active {
+    background: #f0d7ff;
+  }
+  .on-night .chip {
+    @apply text-night-text;
+    border-color: rgba(179, 178, 173, 0.6);
+  }
   /* Text links: secondary actions, 48px hit area. */
   .link {
     @apply inline-flex items-center gap-2 font-semibold text-ink underline decoration-[1.5px] underline-offset-[6px];
