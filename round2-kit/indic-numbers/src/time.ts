@@ -282,7 +282,23 @@ export function hourMinutePhrase(text: string): string {
   return w.join(' ');
 }
 
+/** A fraud report is about the past: never a time later than now. Up to half an hour ahead is a rounded "now"
+ * ("at 12:20" said at 11:59); further ahead it was that time the day before ("aaj shaam 7 baje" said at 10:00). */
+export function notInFuture(date: Date, now: Date): Date {
+  const ahead = date.getTime() - now.getTime();
+  if (ahead <= 0) return date;
+  const d = new Date(date);
+  if (ahead <= 30 * 60_000) return new Date(now);
+  d.setDate(d.getDate() - 1);
+  return d.getTime() > now.getTime() ? new Date(now) : d;
+}
+
 export function findTime(text: string, now: Date = new Date()): TimeHit | undefined {
+  const r = resolveTime(text, now);
+  return r && { ...r, date: notInFuture(r.date, now) };
+}
+
+function resolveTime(text: string, now: Date): TimeHit | undefined {
   text = hourMinutePhrase(text.replace(/\b([ap])\.\s?m\b\.?/gi, '$1m')); // "7 p.m."
   const toks = tokenize(text).map((t) => t.toLowerCase());
   const low = text.toLowerCase();

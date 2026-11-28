@@ -14,7 +14,7 @@ const at = (day: number, h: number, m = 0) => {
 const cases: [string, number][] = [
   ['पाँच मिनट पहले', ago(5)],
   ['तीन घंटे पहले पैसे कटे', ago(180)],
-  ['आज दोपहर 3 बजे', at(0, 15)],
+  ['आज दोपहर 3 बजे', at(-1, 15)], // said at noon, 3 pm today has not happened: never a future time (round 62)
   ['परसों रात 11 बजे फोन आया', at(-2, 23)],
   ['कल सुबह 8 बजे', at(-1, 8)],
   ['two hours back', ago(120)],
@@ -22,7 +22,7 @@ const cases: [string, number][] = [
   ['this morning around 9 they called', at(0, 9)],
   ['পাঁচ মিনিট আগে', ago(5)],
   ['গতকাল রাত এগারোটায়', at(-1, 23)],
-  ['আজ বিকেল চারটায়', at(0, 16)],
+  ['আজ বিকেল চারটায়', at(-1, 16)], // same: 4 pm today is still ahead at noon
   ['ஐந்து நிமிஷத்துக்கு முன்னாடி', ago(5)],
   ['நேற்று காலை 8 மணிக்கு', at(-1, 8)],
   ['இரண்டு மணி நேரத்துக்கு முன்னாடி', ago(120)],
@@ -176,5 +176,25 @@ describe('a bare 7-12 o\'clock is the most recent past occurrence', () => {
     expect(findTime('subah 11 baje', late)!.date.getTime()).toBe(at('2026-11-20T11:00:00'));
     expect(findTime('kal 10 baje', NOW)!.date.getTime()).toBe(at('2026-11-20T10:00:00'));
     expect(findTime('3 baje', NOW)!.date.getTime()).toBe(at('2026-11-20T15:00:00')); // 1-6 still mean pm
+  });
+});
+
+describe('the invariant: no resolved time is later than now (round 62)', () => {
+  const phrases = ['3 baje', 'shaam 7 baje', 'aaj shaam 7 baje', 'aaj 3 baje', 'आज रात 10 बजे', 'today at 5 pm', 'at 12:20', 'aaj subah 11 baje',
+    'இன்று மாலை 6 மணிக்கு', 'আজ বিকেল চারটায়', 'आज दोपहर 3 बजे', 'ఈరోజు సాయంత్రం 6 గంటలకు', 'ಇಂದು ಸಂಜೆ 6 ಗಂಟೆಗೆ', 'आज संध्याकाळी 6 वाजता',
+    'this morning', 'this afternoon', 'today', 'aaj raat', 'at 11:30', '11:30 baje', 'yesterday at 9 pm', 'kal raat 10 baje', 'an hour ago'];
+  for (const clock of ['07:00', '10:00', '11:59', '12:01', '23:50', '00:10']) {
+    it(`said at ${clock}`, () => {
+      const now = new Date(`2026-11-21T${clock}:00+05:30`);
+      for (const t of phrases) {
+        const r = findTime(t, now);
+        if (r) expect(r.date.getTime(), `"${t}" at ${clock}`).toBeLessThanOrEqual(now.getTime());
+      }
+    });
+  }
+  it('a little ahead is a rounded now; well ahead is the day before', () => {
+    const now = new Date('2026-11-21T11:59:00+05:30');
+    expect(findTime('at 12:20', now)!.date.getTime()).toBe(now.getTime());
+    expect(findTime('today at 5 pm', now)!.date.getTime()).toBe(new Date('2026-11-20T17:00:00+05:30').getTime());
   });
 });

@@ -702,3 +702,18 @@ describe('pinned: corrections in Tamil, Marathi and English (behaviour as shippe
     expect(new Date(c('no, the time was today at 9 15 am', 'en-IN')?.value as string).getTime()).toBe(new Date('2026-11-21T09:15:00+05:30').getTime());
   });
 });
+
+describe('a report time is never in the future, at any clock (rounds 59-62)', () => {
+  const phrases = ['3 baje', 'shaam 7 baje', 'aaj shaam 7 baje', 'aaj 3 baje', 'आज रात 10 बजे', 'today at 5 pm', 'at 12:20', 'aaj subah 11 baje', 'this afternoon', 'at 11:30', 'the time was today at 7 pm'];
+  for (const clock of ['07:00', '10:00', '11:59', '12:01', '23:50', '00:10']) {
+    it(`said at ${clock}`, () => {
+      const now = new Date(`2026-11-21T${clock}:00+05:30`);
+      for (const t of phrases) for (const lang of ['en-IN', 'hi-IN']) {
+        const v = extractFields(t, { now, lang }).time?.value;
+        if (v) expect(new Date(v as string).getTime(), `${lang} "${t}" at ${clock}`).toBeLessThanOrEqual(now.getTime());
+        const c = parseCorrection('no, ' + t, { now, lang });
+        if (c?.field === 'time') expect(new Date(c.value as string).getTime(), `correction ${lang} "${t}" at ${clock}`).toBeLessThanOrEqual(now.getTime());
+      }
+    });
+  }
+});
