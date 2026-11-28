@@ -7,8 +7,8 @@ COPY package.json package-lock.json .npmrc ./
 # that the browser build never uses.
 RUN npm ci --ignore-scripts --no-audit --no-fund
 COPY . .
-# Telugu and Kannada speech models (about 100 MB each, not in git): fetched from the live site; if that
-# fails the build still succeeds and the app uses whisper-base for those two languages.
+# Telugu, Kannada and Tamil speech models (about 100, 100 and 290 MB, not in git): fetched from the live site;
+# if that fails the build still succeeds and the app uses whisper-base for those languages.
 RUN node scripts/fetch-models.mjs
 RUN npm run build
 
