@@ -1,5 +1,35 @@
 # Harness journal
 
+## Morning brief for Shubh (28 Nov, written 08:10 IST; blind-set-3 line filled in after the 12:00 freeze)
+
+**The honest headline:** about 6 to 7 in 10 brand-new spoken reports come out fully correct, and the app asks for the rest.
+- **Unseen speakers** (voices never used for tuning): 62.2% on server Whisper large-v3; in the page, Hindi 83.8%, Telugu 70.0%, Kannada and Tamil 53.8%, English 47.5%, Marathi 42.5%, Bengali 37.2%.
+- **Blind sets:** blind 1 is 62.8% on large-v3. Blind 2 is 68% (73% with unseen speakers); it was scored three times, then frozen.
+- **Blind set 3:** committed unscored at 06:50, scored once at 12:00. Result: *(filled in after the freeze)*.
+
+**What changed overnight:**
+- **Rounds 57-58 (live):**
+  - A 12-digit UTR whose last group Whisper writes as a time keeps its leading 0.
+  - Telugu "ఒంటి గంట" inside a read-out is read as 1.
+  - Bengali "ব্যাং" counts as bank; অটিপি counts as OTP.
+  - No run got worse on any set.
+- **Bugs fixed:**
+  - The mic bar overflowed a 360 px phone at the largest text size.
+  - The download message said 100 MB for every language; Bengali and Tamil are about 290 MB.
+  - `docker compose up` from a fresh clone silently missed the Kannada and Tamil models (now retried and verified byte for byte).
+- **Measured and not adopted:** bigger Kannada and Marathi whisper-small models. Kannada was no better on unseen speakers. Marathi was much worse: 16.3% vs 42.5%.
+- **What is left:** for bn / te / kn / ta, 69 of 72 remaining field errors are the recogniser losing words, not the rules. The next lever is a better Indian-language recogniser, not more rules.
+- **Quality:** 565 tests pass. Lint found no bugs. README and deck numbers were re-traced to the round-58 reports (`SUBMISSION-CHECKLIST.md`).
+
+**Only you can do these** (details in `SUBMISSION-CHECKLIST.md`):
+1. Answer the 18+ eligibility question.
+2. Fill in the State field.
+3. Upload the demo to YouTube as Unlisted.
+4. Try the live app once with your own voice.
+5. Submit the form before Mon 30 Nov, 11:59 pm.
+
+---
+
 What each change to the extractor did, measured end to end. The setup:
 
 - **Audio:** 280 spoken fraud reports in 7 languages, voiced with edge-tts.
