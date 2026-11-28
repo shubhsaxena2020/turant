@@ -6,8 +6,9 @@
 - **Unseen speakers** (voices never used for tuning): 62.2% on server Whisper large-v3; in the page, Hindi 83.8%, Telugu 70.0%, Kannada and Tamil 53.8%, English 47.5%, Marathi 42.5%, Bengali 37.2%.
 - **Blind sets:** blind 1 is 62.8% on large-v3. Blind 2 is 68% (73% with unseen speakers); it was scored three times, then frozen.
 <!-- blind3 -->
-- **Blind set 3:** committed unscored at 06:50, scored once at 12:00. Result: *(filled in by `harness/blind3_report.sh --final`)*.
+- **Blind set 3** (committed unscored at 06:50, scored once at the freeze): large-v3 **65%** fully correct (tuning voices 62%, unseen speakers 68%); in-page models **72%** (72% / 73%); reference text 95.2%.
 <!-- /blind3 -->
+- *How blind 3 was run:* once, with `harness/blind3_report.sh --final`, from 12:01 to 12:23 on 28 Nov, after the 12:00 freeze. Server Whisper large-v3 ran in-process on the GPU via `asr_alt.py`, not via the Whisper server on port 8790, which was not touched. A first launch at 12:00 failed before the script started (Windows could not start bash), and nothing was written, so this is the only scoring. No rule changed after the freeze. Per language (tuning / unseen voices), in the page: Hindi 83/83, English 94/92, Marathi 67/58, Bengali 25/33, Tamil 67/83, Telugu 67/75, Kannada 92/83; large-v3: Hindi 67/75, English 78/100, Marathi 67/50, Bengali 42/58, Tamil 67/83, Telugu 42/50, Kannada 67/58. Bengali in the page is the weak spot (as on the unseen set, 37%). On this set the in-page models beat large-v3; with 12 runs per language and voice group (18 for English tuning voices), one case is about 6-8 points, so treat per-language gaps as rough.
 
 **What changed overnight:**
 - **Rounds 57-58 (live):**

@@ -1,0 +1,3907 @@
+{
+ "summary": {
+  "name": "blind3_page_bn_final",
+  "generatedAt": "2026-11-28T06:52:47.642Z",
+  "extractor": "..\\prototype\\src\\lib\\extract.ts",
+  "cases": 42,
+  "runs": 24,
+  "missingTranscripts": 0,
+  "headline": {
+   "reference": {
+    "n": 42,
+    "correct": 95.23809523809524,
+    "correctUnamb": 95.23809523809524,
+    "f1": 0.9806451612903225,
+    "precision": 0.987012987012987,
+    "recall": 0.9743589743589743,
+    "wer": null,
+    "cer": null
+   },
+   "asr_clean": {
+    "n": 12,
+    "correct": 25,
+    "correctUnamb": 25,
+    "f1": 0.5555555555555556,
+    "precision": 0.7142857142857143,
+    "recall": 0.45454545454545453,
+    "wer": 31,
+    "cer": 10.460251046025105
+   },
+   "asr_noise15": {
+    "n": 0,
+    "correct": null,
+    "correctUnamb": null,
+    "f1": null,
+    "precision": null,
+    "recall": null,
+    "wer": null,
+    "cer": null
+   },
+   "asr_noise5": {
+    "n": 0,
+    "correct": null,
+    "correctUnamb": null,
+    "f1": null,
+    "precision": null,
+    "recall": null,
+    "wer": null,
+    "cer": null
+   },
+   "asr_rate": {
+    "n": 0,
+    "correct": null,
+    "correctUnamb": null,
+    "f1": null,
+    "precision": null,
+    "recall": null,
+    "wer": null,
+    "cer": null
+   },
+   "asr_all_forced": {
+    "n": 24,
+    "correct": 29.166666666666668,
+    "correctUnamb": 29.166666666666668,
+    "f1": 0.5945945945945945,
+    "precision": 0.7333333333333333,
+    "recall": 0.5,
+    "wer": 30.5,
+    "cer": 10.251046025104603
+   }
+  },
+  "ceiling": {
+   "asr_clean": 50,
+   "asr_all_forced": 50,
+   "byLang": {
+    "hi": null,
+    "en": null,
+    "bn": 50,
+    "ta": null,
+    "te": null,
+    "mr": null,
+    "kn": null
+   }
+  },
+  "fields": {
+   "reference": {
+    "amount": {
+     "tp": 24,
+     "wrong": 1,
+     "fn": 0,
+     "fp": 0,
+     "support": 25,
+     "precision": 0.96,
+     "recall": 0.96,
+     "f1": 0.96
+    },
+    "time": {
+     "tp": 19,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 19,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "scamType": {
+     "tp": 10,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 10,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "bank": {
+     "tp": 14,
+     "wrong": 0,
+     "fn": 1,
+     "fp": 0,
+     "support": 15,
+     "precision": 1,
+     "recall": 0.9333333333333333,
+     "f1": 0.9655172413793104
+    },
+    "paymentApp": {
+     "tp": 6,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 6,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "utr": {
+     "tp": 1,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 1,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "suspectUpi": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "suspectPhone": {
+     "tp": 2,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 2,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "suspectAccount": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "intent": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "_micro": {
+     "tp": 76,
+     "wrong": 1,
+     "fn": 1,
+     "fp": 0,
+     "support": 78,
+     "precision": 0.987012987012987,
+     "recall": 0.9743589743589743,
+     "f1": 0.9806451612903225
+    }
+   },
+   "asr_clean": {
+    "amount": {
+     "tp": 2,
+     "wrong": 1,
+     "fn": 3,
+     "fp": 0,
+     "support": 6,
+     "precision": 0.6666666666666666,
+     "recall": 0.3333333333333333,
+     "f1": 0.4444444444444444
+    },
+    "time": {
+     "tp": 3,
+     "wrong": 3,
+     "fn": 0,
+     "fp": 0,
+     "support": 6,
+     "precision": 0.5,
+     "recall": 0.5,
+     "f1": 0.5
+    },
+    "scamType": {
+     "tp": 1,
+     "wrong": 0,
+     "fn": 1,
+     "fp": 0,
+     "support": 2,
+     "precision": 1,
+     "recall": 0.5,
+     "f1": 0.6666666666666666
+    },
+    "bank": {
+     "tp": 3,
+     "wrong": 0,
+     "fn": 3,
+     "fp": 0,
+     "support": 6,
+     "precision": 1,
+     "recall": 0.5,
+     "f1": 0.6666666666666666
+    },
+    "paymentApp": {
+     "tp": 1,
+     "wrong": 0,
+     "fn": 1,
+     "fp": 0,
+     "support": 2,
+     "precision": 1,
+     "recall": 0.5,
+     "f1": 0.6666666666666666
+    },
+    "utr": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "suspectUpi": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "suspectPhone": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "suspectAccount": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "intent": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "_micro": {
+     "tp": 10,
+     "wrong": 4,
+     "fn": 8,
+     "fp": 0,
+     "support": 22,
+     "precision": 0.7142857142857143,
+     "recall": 0.45454545454545453,
+     "f1": 0.5555555555555556
+    }
+   },
+   "asr_all_forced": {
+    "amount": {
+     "tp": 5,
+     "wrong": 3,
+     "fn": 4,
+     "fp": 0,
+     "support": 12,
+     "precision": 0.625,
+     "recall": 0.4166666666666667,
+     "f1": 0.5
+    },
+    "time": {
+     "tp": 7,
+     "wrong": 5,
+     "fn": 0,
+     "fp": 0,
+     "support": 12,
+     "precision": 0.5833333333333334,
+     "recall": 0.5833333333333334,
+     "f1": 0.5833333333333334
+    },
+    "scamType": {
+     "tp": 2,
+     "wrong": 0,
+     "fn": 2,
+     "fp": 0,
+     "support": 4,
+     "precision": 1,
+     "recall": 0.5,
+     "f1": 0.6666666666666666
+    },
+    "bank": {
+     "tp": 6,
+     "wrong": 0,
+     "fn": 6,
+     "fp": 0,
+     "support": 12,
+     "precision": 1,
+     "recall": 0.5,
+     "f1": 0.6666666666666666
+    },
+    "paymentApp": {
+     "tp": 2,
+     "wrong": 0,
+     "fn": 2,
+     "fp": 0,
+     "support": 4,
+     "precision": 1,
+     "recall": 0.5,
+     "f1": 0.6666666666666666
+    },
+    "utr": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "suspectUpi": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "suspectPhone": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "suspectAccount": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "intent": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "_micro": {
+     "tp": 22,
+     "wrong": 8,
+     "fn": 14,
+     "fp": 0,
+     "support": 44,
+     "precision": 0.7333333333333333,
+     "recall": 0.5,
+     "f1": 0.5945945945945945
+    }
+   }
+  },
+  "byLang": {
+   "hi": {
+    "reference": {
+     "n": 6,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": null,
+    "idRuns": 0,
+    "fieldsRef": {
+     "amount": {
+      "tp": 4,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 4,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 3,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 11,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 11,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "time": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "scamType": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "bank": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "paymentApp": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    }
+   },
+   "en": {
+    "reference": {
+     "n": 6,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": null,
+    "idRuns": 0,
+    "fieldsRef": {
+     "amount": {
+      "tp": 3,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 11,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 11,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "time": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "scamType": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "bank": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "paymentApp": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    }
+   },
+   "bn": {
+    "reference": {
+     "n": 6,
+     "correct": 83.33333333333333,
+     "correctUnamb": 83.33333333333333,
+     "f1": 0.9523809523809523,
+     "precision": 1,
+     "recall": 0.9090909090909091,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 12,
+     "correct": 25,
+     "correctUnamb": 25,
+     "f1": 0.5555555555555556,
+     "precision": 0.7142857142857143,
+     "recall": 0.45454545454545453,
+     "wer": 31,
+     "cer": 10.460251046025105
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": null,
+    "idRuns": 0,
+    "fieldsRef": {
+     "amount": {
+      "tp": 3,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 3,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 1,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 0.6666666666666666,
+      "f1": 0.8
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 10,
+      "wrong": 0,
+      "fn": 1,
+      "fp": 0,
+      "support": 11,
+      "precision": 1,
+      "recall": 0.9090909090909091,
+      "f1": 0.9523809523809523
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 2,
+      "wrong": 1,
+      "fn": 3,
+      "fp": 0,
+      "support": 6,
+      "precision": 0.6666666666666666,
+      "recall": 0.3333333333333333,
+      "f1": 0.4444444444444444
+     },
+     "time": {
+      "tp": 3,
+      "wrong": 3,
+      "fn": 0,
+      "fp": 0,
+      "support": 6,
+      "precision": 0.5,
+      "recall": 0.5,
+      "f1": 0.5
+     },
+     "scamType": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 1,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 0.5,
+      "f1": 0.6666666666666666
+     },
+     "bank": {
+      "tp": 3,
+      "wrong": 0,
+      "fn": 3,
+      "fp": 0,
+      "support": 6,
+      "precision": 1,
+      "recall": 0.5,
+      "f1": 0.6666666666666666
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 1,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 0.5,
+      "f1": 0.6666666666666666
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 10,
+      "wrong": 4,
+      "fn": 8,
+      "fp": 0,
+      "support": 22,
+      "precision": 0.7142857142857143,
+      "recall": 0.45454545454545453,
+      "f1": 0.5555555555555556
+     }
+    }
+   },
+   "ta": {
+    "reference": {
+     "n": 6,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": null,
+    "idRuns": 0,
+    "fieldsRef": {
+     "amount": {
+      "tp": 4,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 4,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 11,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 11,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "time": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "scamType": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "bank": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "paymentApp": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    }
+   },
+   "te": {
+    "reference": {
+     "n": 6,
+     "correct": 83.33333333333333,
+     "correctUnamb": 83.33333333333333,
+     "f1": 0.9090909090909091,
+     "precision": 0.9090909090909091,
+     "recall": 0.9090909090909091,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": null,
+    "idRuns": 0,
+    "fieldsRef": {
+     "amount": {
+      "tp": 2,
+      "wrong": 1,
+      "fn": 0,
+      "fp": 0,
+      "support": 3,
+      "precision": 0.6666666666666666,
+      "recall": 0.6666666666666666,
+      "f1": 0.6666666666666666
+     },
+     "time": {
+      "tp": 3,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 3,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 10,
+      "wrong": 1,
+      "fn": 0,
+      "fp": 0,
+      "support": 11,
+      "precision": 0.9090909090909091,
+      "recall": 0.9090909090909091,
+      "f1": 0.9090909090909091
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "time": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "scamType": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "bank": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "paymentApp": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    }
+   },
+   "mr": {
+    "reference": {
+     "n": 6,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": null,
+    "idRuns": 0,
+    "fieldsRef": {
+     "amount": {
+      "tp": 4,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 4,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 3,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 12,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 12,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "time": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "scamType": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "bank": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "paymentApp": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    }
+   },
+   "kn": {
+    "reference": {
+     "n": 6,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": null,
+    "idRuns": 0,
+    "fieldsRef": {
+     "amount": {
+      "tp": 4,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 4,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 3,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 11,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 11,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "time": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "scamType": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "bank": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "paymentApp": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    }
+   }
+  },
+  "byCondition": {
+   "clean": {
+    "n": 24,
+    "correct": 29.166666666666668,
+    "correctUnamb": 29.166666666666668,
+    "f1": 0.5945945945945945,
+    "precision": 0.7333333333333333,
+    "recall": 0.5,
+    "wer": 30.5,
+    "cer": 10.251046025104603
+   }
+  },
+  "bySnr": {
+   "clean": {
+    "n": 24,
+    "correct": 29.166666666666668,
+    "correctUnamb": 29.166666666666668,
+    "f1": 0.5945945945945945,
+    "precision": 0.7333333333333333,
+    "recall": 0.5,
+    "wer": 30.5,
+    "cer": 10.251046025104603
+   }
+  },
+  "byVoice": {
+   "bn-IN-BashkarNeural": {
+    "n": 6,
+    "correct": 33.333333333333336,
+    "correctUnamb": 33.333333333333336,
+    "f1": 0.5882352941176471,
+    "precision": 0.8333333333333334,
+    "recall": 0.45454545454545453,
+    "wer": 34,
+    "cer": 13.807531380753138
+   },
+   "bn-IN-TanishaaNeural": {
+    "n": 6,
+    "correct": 16.666666666666668,
+    "correctUnamb": 16.666666666666668,
+    "f1": 0.5263157894736842,
+    "precision": 0.625,
+    "recall": 0.45454545454545453,
+    "wer": 28,
+    "cer": 7.112970711297071
+   }
+  },
+  "byRate": {
+   "r0": {
+    "n": 24,
+    "correct": 29.166666666666668,
+    "correctUnamb": 29.166666666666668,
+    "f1": 0.5945945945945945,
+    "precision": 0.7333333333333333,
+    "recall": 0.5,
+    "wer": 30.5,
+    "cer": 10.251046025104603
+   }
+  },
+  "byKind": {
+   "story": {
+    "n": 4,
+    "correct": 0,
+    "correctUnamb": 0,
+    "f1": 0.5833333333333334,
+    "precision": 0.7,
+    "recall": 0.5,
+    "wer": 28.571428571428573,
+    "cer": 11.904761904761905,
+    "reference": {
+     "n": 14,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    }
+   },
+   "answer": {
+    "n": 6,
+    "correct": 16.666666666666668,
+    "correctUnamb": 16.666666666666668,
+    "f1": 0.25,
+    "precision": 0.5,
+    "recall": 0.16666666666666666,
+    "wer": 38.888888888888886,
+    "cer": 6.818181818181818,
+    "reference": {
+     "n": 21,
+     "correct": 90.47619047619048,
+     "correctUnamb": 90.47619047619048,
+     "f1": 0.9268292682926829,
+     "precision": 0.95,
+     "recall": 0.9047619047619048,
+     "wer": null,
+     "cer": null
+    }
+   },
+   "correction": {
+    "n": 2,
+    "correct": 100,
+    "correctUnamb": 100,
+    "f1": 1,
+    "precision": 1,
+    "recall": 1,
+    "wer": 33.333333333333336,
+    "cer": 7.407407407407407,
+    "reference": {
+     "n": 7,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    }
+   }
+  },
+  "autoDetect": {
+   "n": 0,
+   "auto": {
+    "n": 0,
+    "correct": null,
+    "correctUnamb": null,
+    "f1": null,
+    "precision": null,
+    "recall": null,
+    "wer": null,
+    "cer": null
+   },
+   "forced": {
+    "n": 0,
+    "correct": null,
+    "correctUnamb": null,
+    "f1": null,
+    "precision": null,
+    "recall": null,
+    "wer": null,
+    "cer": null
+   },
+   "wrongScript": null,
+   "byLang": {}
+  },
+  "attribution": {
+   "all": {
+    "asr": 15,
+    "extractor_form": 3,
+    "extractor": 4,
+    "extractor_asrToo": 0,
+    "total": 22
+   },
+   "clean": {
+    "asr": 9,
+    "extractor_form": 1,
+    "extractor": 2,
+    "extractor_asrToo": 0,
+    "total": 12
+   },
+   "byField": {
+    "time": {
+     "asr": 5,
+     "extractor_form": 0,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 5
+    },
+    "scamType": {
+     "asr": 1,
+     "extractor_form": 1,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 2
+    },
+    "bank": {
+     "asr": 2,
+     "extractor_form": 0,
+     "extractor": 4,
+     "extractor_asrToo": 0,
+     "total": 6
+    },
+    "amount": {
+     "asr": 7,
+     "extractor_form": 0,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 7
+    },
+    "paymentApp": {
+     "asr": 0,
+     "extractor_form": 2,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 2
+    }
+   },
+   "byLang": {
+    "bn": {
+     "asr": 15,
+     "extractor_form": 3,
+     "extractor": 4,
+     "extractor_asrToo": 0,
+     "total": 22
+    }
+   },
+   "bySnr": {
+    "clean": {
+     "asr": 15,
+     "extractor_form": 3,
+     "extractor": 4,
+     "extractor_asrToo": 0,
+     "total": 22
+    }
+   }
+  },
+  "clusters": [
+   {
+    "field": "time",
+    "lang": "bn",
+    "cat": "asr",
+    "outcome": "wrong",
+    "runs": 5,
+    "cases": [
+     "bn-d01",
+     "bn-d03"
+    ]
+   },
+   {
+    "field": "amount",
+    "lang": "bn",
+    "cat": "asr",
+    "outcome": "fn",
+    "runs": 4,
+    "cases": [
+     "bn-d01",
+     "bn-d04"
+    ]
+   },
+   {
+    "field": "bank",
+    "lang": "bn",
+    "cat": "extractor",
+    "outcome": "fn",
+    "runs": 4,
+    "cases": [
+     "bn-d05"
+    ]
+   },
+   {
+    "field": "amount",
+    "lang": "bn",
+    "cat": "asr",
+    "outcome": "wrong",
+    "runs": 3,
+    "cases": [
+     "bn-d02"
+    ]
+   },
+   {
+    "field": "bank",
+    "lang": "bn",
+    "cat": "asr",
+    "outcome": "fn",
+    "runs": 2,
+    "cases": [
+     "bn-d01"
+    ]
+   },
+   {
+    "field": "paymentApp",
+    "lang": "bn",
+    "cat": "extractor_form",
+    "outcome": "fn",
+    "runs": 2,
+    "cases": [
+     "bn-d02"
+    ]
+   },
+   {
+    "field": "scamType",
+    "lang": "bn",
+    "cat": "asr",
+    "outcome": "fn",
+    "runs": 1,
+    "cases": [
+     "bn-d01"
+    ]
+   },
+   {
+    "field": "scamType",
+    "lang": "bn",
+    "cat": "extractor_form",
+    "outcome": "fn",
+    "runs": 1,
+    "cases": [
+     "bn-d01"
+    ]
+   }
+  ],
+  "worst": [
+   {
+    "id": "bn-d02",
+    "lang": "bn",
+    "kind": "story",
+    "failRate": 1,
+    "runs": 4,
+    "refCorrect": true,
+    "text": "ফোনপে দিয়ে তিন হাজার পাঁচশো টাকা চলে গেছে, পনেরো মিনিট আগে",
+    "transcript": "ফোনটে দিয়ে তিন হাজার পাঁচশ তাকা চলে গেছে পনেরো মিনিট আগে।",
+    "tid": "bn-d02__Bashkar__r0__bn",
+    "fields": [
+     {
+      "field": "paymentApp",
+      "outcome": "fn",
+      "expected": "PhonePe",
+      "got": "-",
+      "refGot": "PhonePe",
+      "cat": "extractor_form",
+      "why": "near-spelling variant of: ফোনপে"
+     }
+    ]
+   },
+   {
+    "id": "bn-d05",
+    "lang": "bn",
+    "kind": "answer:bank",
+    "failRate": 1,
+    "runs": 4,
+    "refCorrect": false,
+    "text": "ইউকো ব্যাংক",
+    "transcript": "ইউকো ব্যাংক",
+    "tid": "bn-d05__Bashkar__r0__bn",
+    "fields": [
+     {
+      "field": "bank",
+      "outcome": "fn",
+      "expected": "UCO Bank",
+      "got": "-",
+      "refGot": "-",
+      "cat": "extractor",
+      "why": "fails on the reference text too (fn)"
+     }
+    ]
+   },
+   {
+    "id": "bn-d01",
+    "lang": "bn",
+    "kind": "story",
+    "failRate": 0.75,
+    "runs": 4,
+    "refCorrect": true,
+    "text": "গতকাল সন্ধ্যা সাতটায় একজন কাস্টমার কেয়ার থেকে ফোন করে একটা অ্যাপ ডাউনলোড করতে বলল, তারপর আমার এসবিআই অ্যাকাউন্ট থেকে বারো হাজার টাকা কেটে গেছে",
+    "transcript": "গতকাল সূন্ধা সপ্তায় একজন কাস্টোমার্ক এর থেকে ফোন করে একটা এক ডাউনলোড করতে বলল, তারপর আমার এসবিএকাউন্ট থেকে বারো হাজার তাকা কে গেছে।",
+    "tid": "bn-d01__Bashkar__r0__bn",
+    "fields": [
+     {
+      "field": "time",
+      "outcome": "wrong",
+      "expected": "-1d 19:00 (1020 min ago)",
+      "got": "-1d 12:00 (1440 min ago)",
+      "refGot": "-1d 19:00 (1020 min ago)",
+      "cat": "asr",
+      "why": "ASR lost/changed: সন্ধ্যা"
+     },
+     {
+      "field": "scamType",
+      "outcome": "fn",
+      "expected": "fake_customer_care",
+      "got": "-",
+      "refGot": "fake_customer_care",
+      "cat": "asr",
+      "why": "ASR lost/changed: কাস্টমার কেয়ার"
+     },
+     {
+      "field": "bank",
+      "outcome": "fn",
+      "expected": "State Bank of India (SBI)",
+      "got": "-",
+      "refGot": "State Bank of India (SBI)",
+      "cat": "asr",
+      "why": "ASR lost/changed: এসবিআই"
+     }
+    ]
+   },
+   {
+    "id": "bn-d03",
+    "lang": "bn",
+    "kind": "answer:time",
+    "failRate": 0.75,
+    "runs": 4,
+    "refCorrect": true,
+    "text": "আজ সকাল সাড়ে এগারোটায়",
+    "transcript": "আজ সকাল সারে এগারুটায়।",
+    "tid": "bn-d03__Tanishaa__r0__bn",
+    "fields": [
+     {
+      "field": "time",
+      "outcome": "wrong",
+      "expected": "today 11:30 (30 min ago)",
+      "got": "today 09:00 (180 min ago)",
+      "refGot": "today 11:30 (30 min ago)",
+      "cat": "asr",
+      "why": "ASR lost/changed: সাড়ে"
+     }
+    ]
+   },
+   {
+    "id": "bn-d04",
+    "lang": "bn",
+    "kind": "answer:amount",
+    "failRate": 0.75,
+    "runs": 4,
+    "refCorrect": true,
+    "text": "পঁচিশ হাজার টাকা",
+    "transcript": "পঁচি সহাজার তাকা।",
+    "tid": "bn-d04__Bashkar__r0__bn",
+    "fields": [
+     {
+      "field": "amount",
+      "outcome": "fn",
+      "expected": "25000",
+      "got": "-",
+      "refGot": "25000",
+      "cat": "asr",
+      "why": "value not in the transcript"
+     }
+    ]
+   }
+  ]
+ },
+ "reference": [
+  {
+   "id": "hi-d01",
+   "got": {
+    "amount": 14500,
+    "time": "2026-11-20T12:30:00.000Z",
+    "bank": "Bank of Baroda"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "hi-d02",
+   "got": {
+    "amount": 4200,
+    "time": "2026-11-21T05:30:00.000Z",
+    "scamType": "wrong_transfer",
+    "paymentApp": "PhonePe"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "hi-d03",
+   "got": {
+    "time": "2026-11-21T03:15:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "hi-d04",
+   "got": {
+    "amount": 38700
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "hi-d05",
+   "got": {
+    "suspectPhone": "9123456780"
+   },
+   "out": {
+    "suspectPhone": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "hi-d06",
+   "got": {
+    "amount": 21000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "en-d01",
+   "got": {
+    "amount": 23600,
+    "time": "2026-11-20T09:30:00.000Z",
+    "bank": "HDFC Bank"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "en-d02",
+   "got": {
+    "amount": 50000,
+    "time": "2026-11-18T06:30:00.000Z",
+    "scamType": "investment_task",
+    "paymentApp": "Paytm"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "en-d03",
+   "got": {
+    "utr": "618204573916"
+   },
+   "out": {
+    "utr": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "en-d04",
+   "got": {
+    "amount": 375000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "en-d05",
+   "got": {
+    "suspectPhone": "7042981365"
+   },
+   "out": {
+    "suspectPhone": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "en-d06",
+   "got": {
+    "bank": "Bandhan Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "mr-d01",
+   "got": {
+    "amount": 18000,
+    "time": "2026-11-20T16:00:00.000Z",
+    "scamType": "fake_kyc",
+    "bank": "Union Bank of India"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "mr-d02",
+   "got": {
+    "amount": 6400,
+    "time": "2026-11-21T06:00:00.000Z",
+    "scamType": "qr_scan",
+    "paymentApp": "Google Pay"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "mr-d03",
+   "got": {
+    "time": "2026-11-20T11:30:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "mr-d04",
+   "got": {
+    "amount": 120000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "mr-d05",
+   "got": {
+    "bank": "ICICI Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "mr-d06",
+   "got": {
+    "amount": 15000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "bn-d01",
+   "got": {
+    "amount": 12000,
+    "time": "2026-11-20T13:30:00.000Z",
+    "scamType": "fake_customer_care",
+    "bank": "State Bank of India (SBI)"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "bn-d02",
+   "got": {
+    "amount": 3500,
+    "time": "2026-11-21T06:15:00.000Z",
+    "paymentApp": "PhonePe"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "bn-d03",
+   "got": {
+    "time": "2026-11-21T06:00:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "bn-d04",
+   "got": {
+    "amount": 25000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "bn-d05",
+   "got": {},
+   "out": {
+    "bank": "fn"
+   },
+   "correct": false
+  },
+  {
+   "id": "bn-d06",
+   "got": {
+    "bank": "Canara Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "ta-d01",
+   "got": {
+    "amount": 10000,
+    "time": "2026-11-20T15:30:00.000Z",
+    "scamType": "otp_shared",
+    "bank": "Indian Bank"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "ta-d02",
+   "got": {
+    "amount": 2500,
+    "scamType": "wrong_transfer",
+    "paymentApp": "Google Pay"
+   },
+   "out": {
+    "amount": "tp",
+    "scamType": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "ta-d03",
+   "got": {
+    "time": "2026-11-21T02:30:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "ta-d04",
+   "got": {
+    "amount": 75000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "ta-d05",
+   "got": {
+    "bank": "Indian Overseas Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "ta-d06",
+   "got": {
+    "amount": 6000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "te-d01",
+   "got": {
+    "amount": 35000,
+    "time": "2026-11-20T09:30:00.000Z",
+    "scamType": "investment_task"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "te-d02",
+   "got": {
+    "amount": 8000,
+    "time": "2026-11-21T06:10:00.000Z",
+    "scamType": "qr_scan",
+    "bank": "State Bank of India (SBI)"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "te-d03",
+   "got": {
+    "time": "2026-11-21T04:30:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "te-d04",
+   "got": {
+    "amount": 50000
+   },
+   "out": {
+    "amount": "wrong"
+   },
+   "correct": false
+  },
+  {
+   "id": "te-d05",
+   "got": {
+    "bank": "Axis Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "te-d06",
+   "got": {
+    "bank": "Canara Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "kn-d01",
+   "got": {
+    "amount": 9000,
+    "time": "2026-11-20T12:30:00.000Z",
+    "scamType": "fake_kyc",
+    "bank": "Canara Bank"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "kn-d02",
+   "got": {
+    "amount": 3200,
+    "time": "2026-11-21T05:30:00.000Z",
+    "paymentApp": "PhonePe"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "kn-d03",
+   "got": {
+    "time": "2026-11-21T03:30:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "kn-d04",
+   "got": {
+    "amount": 40000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "kn-d05",
+   "got": {
+    "bank": "Bank of Baroda"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "kn-d06",
+   "got": {
+    "amount": 5000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  }
+ ],
+ "runs": [
+  {
+   "tid": "bn-d01__Bashkar__r0__bn",
+   "case": "bn-d01",
+   "lang": "bn",
+   "kind": "story",
+   "tier": "base",
+   "voice": "bn-IN-BashkarNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "গতকাল সূন্ধা সপ্তায় একজন কাস্টোমার্ক এর থেকে ফোন করে একটা এক ডাউনলোড করতে বলল, তারপর আমার এসবিএকাউন্ট থেকে বারো হাজার তাকা কে গেছে।",
+   "got": {
+    "amount": 12000,
+    "time": "2026-11-20T06:30:00.000Z"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "wrong",
+    "scamType": "fn",
+    "bank": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "time": {
+     "cat": "asr",
+     "why": "ASR lost/changed: সন্ধ্যা"
+    },
+    "scamType": {
+     "cat": "asr",
+     "why": "ASR lost/changed: কাস্টমার কেয়ার"
+    },
+    "bank": {
+     "cat": "asr",
+     "why": "ASR lost/changed: এসবিআই"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.375,
+   "cer": 0.21666666666666667
+  },
+  {
+   "tid": "bn-d01__Tanishaa__r0__bn",
+   "case": "bn-d01",
+   "lang": "bn",
+   "kind": "story",
+   "tier": "base",
+   "voice": "bn-IN-TanishaaNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "গতকাল সন্ধা সাকটায় একজন কাস্টমার কেয়ার থেকে ফোন করে একটা অ্যাপ ডাউন্নোট করতে বলল, তারপর আমার এশবিআই অ্যাকাউন্ট থেকে বারু হাজার টাকা কেটে গেছে।",
+   "got": {
+    "time": "2026-11-20T06:30:00.000Z",
+    "scamType": "fake_customer_care",
+    "bank": "State Bank of India (SBI)"
+   },
+   "out": {
+    "amount": "fn",
+    "time": "wrong",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "amount": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    },
+    "time": {
+     "cat": "asr",
+     "why": "ASR lost/changed: সন্ধ্যা"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.20833333333333334,
+   "cer": 0.06666666666666667
+  },
+  {
+   "tid": "bn-d02__Bashkar__r0__bn",
+   "case": "bn-d02",
+   "lang": "bn",
+   "kind": "story",
+   "tier": "base",
+   "voice": "bn-IN-BashkarNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "ফোনটে দিয়ে তিন হাজার পাঁচশ তাকা চলে গেছে পনেরো মিনিট আগে।",
+   "got": {
+    "amount": 3500,
+    "time": "2026-11-21T06:15:00.000Z"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "paymentApp": {
+     "cat": "extractor_form",
+     "why": "near-spelling variant of: ফোনপে"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.2727272727272727,
+   "cer": 0.0625
+  },
+  {
+   "tid": "bn-d02__Tanishaa__r0__bn",
+   "case": "bn-d02",
+   "lang": "bn",
+   "kind": "story",
+   "tier": "base",
+   "voice": "bn-IN-TanishaaNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "ফোন পে দিয়ে তিন হাজার পাঞ্চশ টাকা চলে গেছে পনেরো মিনিট আগে।",
+   "got": {
+    "amount": 3000,
+    "time": "2026-11-21T06:15:00.000Z",
+    "paymentApp": "PhonePe"
+   },
+   "out": {
+    "amount": "wrong",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "amount": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.2727272727272727,
+   "cer": 0.0625
+  },
+  {
+   "tid": "bn-d03__Bashkar__r0__bn",
+   "case": "bn-d03",
+   "lang": "bn",
+   "kind": "answer:time",
+   "tier": "base",
+   "voice": "bn-IN-BashkarNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "আজ সকাল সাড়ে এগারোটায়।",
+   "got": {
+    "time": "2026-11-21T06:00:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0,
+   "cer": 0
+  },
+  {
+   "tid": "bn-d03__Tanishaa__r0__bn",
+   "case": "bn-d03",
+   "lang": "bn",
+   "kind": "answer:time",
+   "tier": "base",
+   "voice": "bn-IN-TanishaaNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "আজ সকাল সারে এগারুটায়।",
+   "got": {
+    "time": "2026-11-21T03:30:00.000Z"
+   },
+   "out": {
+    "time": "wrong"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "time": {
+     "cat": "asr",
+     "why": "ASR lost/changed: সাড়ে"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.5,
+   "cer": 0.15
+  },
+  {
+   "tid": "bn-d04__Bashkar__r0__bn",
+   "case": "bn-d04",
+   "lang": "bn",
+   "kind": "answer:amount",
+   "tier": "base",
+   "voice": "bn-IN-BashkarNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "পঁচি সহাজার তাকা।",
+   "got": {},
+   "out": {
+    "amount": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "amount": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 1,
+   "cer": 0.14285714285714285
+  },
+  {
+   "tid": "bn-d04__Tanishaa__r0__bn",
+   "case": "bn-d04",
+   "lang": "bn",
+   "kind": "answer:amount",
+   "tier": "base",
+   "voice": "bn-IN-TanishaaNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "পঁচি শাজার টাকা।",
+   "got": {},
+   "out": {
+    "amount": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "amount": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.6666666666666666,
+   "cer": 0.07142857142857142
+  },
+  {
+   "tid": "bn-d05__Bashkar__r0__bn",
+   "case": "bn-d05",
+   "lang": "bn",
+   "kind": "answer:bank",
+   "tier": "base",
+   "voice": "bn-IN-BashkarNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "ইউকো ব্যাংক",
+   "got": {},
+   "out": {
+    "bank": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "bank": {
+     "cat": "extractor",
+     "asrToo": false,
+     "why": "fails on the reference text too (fn)"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0,
+   "cer": 0
+  },
+  {
+   "tid": "bn-d05__Tanishaa__r0__bn",
+   "case": "bn-d05",
+   "lang": "bn",
+   "kind": "answer:bank",
+   "tier": "base",
+   "voice": "bn-IN-TanishaaNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "ইউকো ব্যাংক",
+   "got": {},
+   "out": {
+    "bank": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "bank": {
+     "cat": "extractor",
+     "asrToo": false,
+     "why": "fails on the reference text too (fn)"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0,
+   "cer": 0
+  },
+  {
+   "tid": "bn-d06__Bashkar__r0__bn",
+   "case": "bn-d06",
+   "lang": "bn",
+   "kind": "correction",
+   "tier": "base",
+   "voice": "bn-IN-BashkarNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "না, ব্যাংক ধুল, কানাডা ব্যাংক ছিল।",
+   "got": {
+    "bank": "Canara Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.3333333333333333,
+   "cer": 0.07407407407407407
+  },
+  {
+   "tid": "bn-d06__Tanishaa__r0__bn",
+   "case": "bn-d06",
+   "lang": "bn",
+   "kind": "correction",
+   "tier": "base",
+   "voice": "bn-IN-TanishaaNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "না, ব্যাংক ভুলু, কানাডা ব্যাংক ছিল।",
+   "got": {
+    "bank": "Canara Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.3333333333333333,
+   "cer": 0.07407407407407407
+  },
+  {
+   "tid": "bn-d01__RemyMultilingual__r0__bn",
+   "case": "bn-d01",
+   "lang": "bn",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "গতকাল সন্ধ্যা সাত্তায় একজন কাস্টমার কেয়ার থেকে ফোন করে একটা অ্যাব ডাউনলোড করতে বলল, তারপর আমার এশবিআই একাউন থেকে বারোহাজার টাকা কেটে গেছে।",
+   "got": {
+    "amount": 12000,
+    "time": "2026-11-20T13:30:00.000Z",
+    "scamType": "fake_customer_care",
+    "bank": "State Bank of India (SBI)"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.25,
+   "cer": 0.08333333333333333
+  },
+  {
+   "tid": "bn-d01__VivienneMultilingual__r0__bn",
+   "case": "bn-d01",
+   "lang": "bn",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "গতকাল সন্ধা সাত্তায় একজন কাস্টমার ক্যার থেকে ফোন করে একটা অ্যাপ ডাউনলোড করতে বল, তারপর আমার এসবিয়ায় একাউন্ট থেকে বারো হাজার টাকা কেটে গেছে।",
+   "got": {
+    "amount": 12000,
+    "time": "2026-11-20T13:30:00.000Z"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "fn",
+    "bank": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "scamType": {
+     "cat": "extractor_form",
+     "why": "near-spelling variant of: কেয়ার"
+    },
+    "bank": {
+     "cat": "asr",
+     "why": "ASR lost/changed: এসবিআই"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.25,
+   "cer": 0.10833333333333334
+  },
+  {
+   "tid": "bn-d02__GiuseppeMultilingual__r0__bn",
+   "case": "bn-d02",
+   "lang": "bn",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "ফনপে দিয়ে তিন হাজার পাচ্য টাক্যা চলে গেছে, পনেরো মিনিটা আগে।",
+   "got": {
+    "amount": 1000,
+    "time": "2026-11-21T06:15:00.000Z"
+   },
+   "out": {
+    "amount": "wrong",
+    "time": "tp",
+    "paymentApp": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "amount": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    },
+    "paymentApp": {
+     "cat": "extractor_form",
+     "why": "near-spelling variant of: ফোনপে"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.36363636363636365,
+   "cer": 0.14583333333333334
+  },
+  {
+   "tid": "bn-d02__ThalitaMultilingual__r0__bn",
+   "case": "bn-d02",
+   "lang": "bn",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "ফোন পে দিয়ে তিন হাজার পাচ্য টাকা চলে গেছে অনেরো মিনিট আগে।",
+   "got": {
+    "amount": 1000,
+    "time": "2026-11-21T06:29:00.000Z",
+    "paymentApp": "PhonePe"
+   },
+   "out": {
+    "amount": "wrong",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "amount": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.36363636363636365,
+   "cer": 0.08333333333333333
+  },
+  {
+   "tid": "bn-d03__RemyMultilingual__r0__bn",
+   "case": "bn-d03",
+   "lang": "bn",
+   "kind": "answer:time",
+   "tier": "unseen",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "আজ সকাল স্বাড়ে এগারোটায়।",
+   "got": {
+    "time": "2026-11-21T05:30:00.000Z"
+   },
+   "out": {
+    "time": "wrong"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "time": {
+     "cat": "asr",
+     "why": "ASR lost/changed: সাড়ে"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.25,
+   "cer": 0.1
+  },
+  {
+   "tid": "bn-d03__VivienneMultilingual__r0__bn",
+   "case": "bn-d03",
+   "lang": "bn",
+   "kind": "answer:time",
+   "tier": "unseen",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "আজ সকাল সারে এগার ওটায়।",
+   "got": {
+    "time": "2026-11-21T03:30:00.000Z"
+   },
+   "out": {
+    "time": "wrong"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "time": {
+     "cat": "asr",
+     "why": "ASR lost/changed: সাড়ে"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.75,
+   "cer": 0.15
+  },
+  {
+   "tid": "bn-d04__GiuseppeMultilingual__r0__bn",
+   "case": "bn-d04",
+   "lang": "bn",
+   "kind": "answer:amount",
+   "tier": "unseen",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "পঁচিশ হাজা টাকা।",
+   "got": {
+    "amount": 25000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.3333333333333333,
+   "cer": 0.07142857142857142
+  },
+  {
+   "tid": "bn-d04__ThalitaMultilingual__r0__bn",
+   "case": "bn-d04",
+   "lang": "bn",
+   "kind": "answer:amount",
+   "tier": "unseen",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "পুঁচি সাজা টাকা।",
+   "got": {},
+   "out": {
+    "amount": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "amount": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.6666666666666666,
+   "cer": 0.2857142857142857
+  },
+  {
+   "tid": "bn-d05__RemyMultilingual__r0__bn",
+   "case": "bn-d05",
+   "lang": "bn",
+   "kind": "answer:bank",
+   "tier": "unseen",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "ইউকো ব্যাংক",
+   "got": {},
+   "out": {
+    "bank": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "bank": {
+     "cat": "extractor",
+     "asrToo": false,
+     "why": "fails on the reference text too (fn)"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0,
+   "cer": 0
+  },
+  {
+   "tid": "bn-d05__VivienneMultilingual__r0__bn",
+   "case": "bn-d05",
+   "lang": "bn",
+   "kind": "answer:bank",
+   "tier": "unseen",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "ইউকো ব্যাংপ",
+   "got": {},
+   "out": {
+    "bank": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "bank": {
+     "cat": "extractor",
+     "asrToo": false,
+     "why": "fails on the reference text too (fn)"
+    }
+   },
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.5,
+   "cer": 0.1
+  },
+  {
+   "tid": "bn-d06__GiuseppeMultilingual__r0__bn",
+   "case": "bn-d06",
+   "lang": "bn",
+   "kind": "correction",
+   "tier": "unseen",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "না, ব্যাংক ভুল, কানাডা ব্যাংক ছিল।",
+   "got": {
+    "bank": "Canara Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.16666666666666666,
+   "cer": 0.037037037037037035
+  },
+  {
+   "tid": "bn-d06__ThalitaMultilingual__r0__bn",
+   "case": "bn-d06",
+   "lang": "bn",
+   "kind": "correction",
+   "tier": "unseen",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|bn|>",
+   "transcript": "না, ব্যাংক ভুল, কানারা ব্যাংক ছিল।",
+   "got": {
+    "bank": "Canara Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "beng",
+   "refScript": "beng",
+   "wer": 0.16666666666666666,
+   "cer": 0.07407407407407407
+  }
+ ]
+}

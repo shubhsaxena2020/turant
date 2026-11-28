@@ -1,0 +1,512 @@
+{
+ "clips": [
+  {
+   "clip": "kn-d01__Gagan__r0",
+   "case": "kn-d01",
+   "lang": "kn",
+   "voice": "kn-IN-GaganNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d01__Sapna__r0",
+   "case": "kn-d01",
+   "lang": "kn",
+   "voice": "kn-IN-SapnaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d01__RemyMultilingual__r0",
+   "case": "kn-d01",
+   "lang": "kn",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d01__VivienneMultilingual__r0",
+   "case": "kn-d01",
+   "lang": "kn",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d02__Gagan__r0",
+   "case": "kn-d02",
+   "lang": "kn",
+   "voice": "kn-IN-GaganNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d02__Sapna__r0",
+   "case": "kn-d02",
+   "lang": "kn",
+   "voice": "kn-IN-SapnaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d02__GiuseppeMultilingual__r0",
+   "case": "kn-d02",
+   "lang": "kn",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d02__ThalitaMultilingual__r0",
+   "case": "kn-d02",
+   "lang": "kn",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d03__Gagan__r0",
+   "case": "kn-d03",
+   "lang": "kn",
+   "voice": "kn-IN-GaganNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d03__Sapna__r0",
+   "case": "kn-d03",
+   "lang": "kn",
+   "voice": "kn-IN-SapnaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d03__RemyMultilingual__r0",
+   "case": "kn-d03",
+   "lang": "kn",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d03__VivienneMultilingual__r0",
+   "case": "kn-d03",
+   "lang": "kn",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d04__Gagan__r0",
+   "case": "kn-d04",
+   "lang": "kn",
+   "voice": "kn-IN-GaganNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d04__Sapna__r0",
+   "case": "kn-d04",
+   "lang": "kn",
+   "voice": "kn-IN-SapnaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d04__GiuseppeMultilingual__r0",
+   "case": "kn-d04",
+   "lang": "kn",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d04__ThalitaMultilingual__r0",
+   "case": "kn-d04",
+   "lang": "kn",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d05__Gagan__r0",
+   "case": "kn-d05",
+   "lang": "kn",
+   "voice": "kn-IN-GaganNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d05__Sapna__r0",
+   "case": "kn-d05",
+   "lang": "kn",
+   "voice": "kn-IN-SapnaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d05__RemyMultilingual__r0",
+   "case": "kn-d05",
+   "lang": "kn",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d05__VivienneMultilingual__r0",
+   "case": "kn-d05",
+   "lang": "kn",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d06__Gagan__r0",
+   "case": "kn-d06",
+   "lang": "kn",
+   "voice": "kn-IN-GaganNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d06__Sapna__r0",
+   "case": "kn-d06",
+   "lang": "kn",
+   "voice": "kn-IN-SapnaNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d06__GiuseppeMultilingual__r0",
+   "case": "kn-d06",
+   "lang": "kn",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0"
+  },
+  {
+   "clip": "kn-d06__ThalitaMultilingual__r0",
+   "case": "kn-d06",
+   "lang": "kn",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0"
+  }
+ ],
+ "audios": [
+  {
+   "audio": "kn-d01__Gagan__r0",
+   "clip": "kn-d01__Gagan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d01__Sapna__r0",
+   "clip": "kn-d01__Sapna__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d01__RemyMultilingual__r0",
+   "clip": "kn-d01__RemyMultilingual__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d01__VivienneMultilingual__r0",
+   "clip": "kn-d01__VivienneMultilingual__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d02__Gagan__r0",
+   "clip": "kn-d02__Gagan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d02__Sapna__r0",
+   "clip": "kn-d02__Sapna__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d02__GiuseppeMultilingual__r0",
+   "clip": "kn-d02__GiuseppeMultilingual__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d02__ThalitaMultilingual__r0",
+   "clip": "kn-d02__ThalitaMultilingual__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d03__Gagan__r0",
+   "clip": "kn-d03__Gagan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d03__Sapna__r0",
+   "clip": "kn-d03__Sapna__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d03__RemyMultilingual__r0",
+   "clip": "kn-d03__RemyMultilingual__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d03__VivienneMultilingual__r0",
+   "clip": "kn-d03__VivienneMultilingual__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d04__Gagan__r0",
+   "clip": "kn-d04__Gagan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d04__Sapna__r0",
+   "clip": "kn-d04__Sapna__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d04__GiuseppeMultilingual__r0",
+   "clip": "kn-d04__GiuseppeMultilingual__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d04__ThalitaMultilingual__r0",
+   "clip": "kn-d04__ThalitaMultilingual__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d05__Gagan__r0",
+   "clip": "kn-d05__Gagan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d05__Sapna__r0",
+   "clip": "kn-d05__Sapna__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d05__RemyMultilingual__r0",
+   "clip": "kn-d05__RemyMultilingual__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d05__VivienneMultilingual__r0",
+   "clip": "kn-d05__VivienneMultilingual__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d06__Gagan__r0",
+   "clip": "kn-d06__Gagan__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d06__Sapna__r0",
+   "clip": "kn-d06__Sapna__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d06__GiuseppeMultilingual__r0",
+   "clip": "kn-d06__GiuseppeMultilingual__r0",
+   "noise": "clean",
+   "snr": null
+  },
+  {
+   "audio": "kn-d06__ThalitaMultilingual__r0",
+   "clip": "kn-d06__ThalitaMultilingual__r0",
+   "noise": "clean",
+   "snr": null
+  }
+ ],
+ "jobs": [
+  {
+   "tid": "kn-d01__Gagan__r0__kn",
+   "audio": "kn-d01__Gagan__r0",
+   "case": "kn-d01",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kn-d01__Sapna__r0__kn",
+   "audio": "kn-d01__Sapna__r0",
+   "case": "kn-d01",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kn-d02__Gagan__r0__kn",
+   "audio": "kn-d02__Gagan__r0",
+   "case": "kn-d02",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kn-d02__Sapna__r0__kn",
+   "audio": "kn-d02__Sapna__r0",
+   "case": "kn-d02",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kn-d03__Gagan__r0__kn",
+   "audio": "kn-d03__Gagan__r0",
+   "case": "kn-d03",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kn-d03__Sapna__r0__kn",
+   "audio": "kn-d03__Sapna__r0",
+   "case": "kn-d03",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kn-d04__Gagan__r0__kn",
+   "audio": "kn-d04__Gagan__r0",
+   "case": "kn-d04",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kn-d04__Sapna__r0__kn",
+   "audio": "kn-d04__Sapna__r0",
+   "case": "kn-d04",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kn-d05__Gagan__r0__kn",
+   "audio": "kn-d05__Gagan__r0",
+   "case": "kn-d05",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kn-d05__Sapna__r0__kn",
+   "audio": "kn-d05__Sapna__r0",
+   "case": "kn-d05",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kn-d06__Gagan__r0__kn",
+   "audio": "kn-d06__Gagan__r0",
+   "case": "kn-d06",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kn-d06__Sapna__r0__kn",
+   "audio": "kn-d06__Sapna__r0",
+   "case": "kn-d06",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "base"
+  },
+  {
+   "tid": "kn-d01__RemyMultilingual__r0__kn",
+   "audio": "kn-d01__RemyMultilingual__r0",
+   "case": "kn-d01",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "unseen"
+  },
+  {
+   "tid": "kn-d01__VivienneMultilingual__r0__kn",
+   "audio": "kn-d01__VivienneMultilingual__r0",
+   "case": "kn-d01",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "unseen"
+  },
+  {
+   "tid": "kn-d02__GiuseppeMultilingual__r0__kn",
+   "audio": "kn-d02__GiuseppeMultilingual__r0",
+   "case": "kn-d02",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "unseen"
+  },
+  {
+   "tid": "kn-d02__ThalitaMultilingual__r0__kn",
+   "audio": "kn-d02__ThalitaMultilingual__r0",
+   "case": "kn-d02",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "unseen"
+  },
+  {
+   "tid": "kn-d03__RemyMultilingual__r0__kn",
+   "audio": "kn-d03__RemyMultilingual__r0",
+   "case": "kn-d03",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "unseen"
+  },
+  {
+   "tid": "kn-d03__VivienneMultilingual__r0__kn",
+   "audio": "kn-d03__VivienneMultilingual__r0",
+   "case": "kn-d03",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "unseen"
+  },
+  {
+   "tid": "kn-d04__GiuseppeMultilingual__r0__kn",
+   "audio": "kn-d04__GiuseppeMultilingual__r0",
+   "case": "kn-d04",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "unseen"
+  },
+  {
+   "tid": "kn-d04__ThalitaMultilingual__r0__kn",
+   "audio": "kn-d04__ThalitaMultilingual__r0",
+   "case": "kn-d04",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "unseen"
+  },
+  {
+   "tid": "kn-d05__RemyMultilingual__r0__kn",
+   "audio": "kn-d05__RemyMultilingual__r0",
+   "case": "kn-d05",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "unseen"
+  },
+  {
+   "tid": "kn-d05__VivienneMultilingual__r0__kn",
+   "audio": "kn-d05__VivienneMultilingual__r0",
+   "case": "kn-d05",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "unseen"
+  },
+  {
+   "tid": "kn-d06__GiuseppeMultilingual__r0__kn",
+   "audio": "kn-d06__GiuseppeMultilingual__r0",
+   "case": "kn-d06",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "unseen"
+  },
+  {
+   "tid": "kn-d06__ThalitaMultilingual__r0__kn",
+   "audio": "kn-d06__ThalitaMultilingual__r0",
+   "case": "kn-d06",
+   "lang": "kn",
+   "asr_lang": "<|kn|>",
+   "tier": "unseen"
+  }
+ ]
+}

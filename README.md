@@ -103,7 +103,7 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   A **second blind set** (42 cases, written after the night's tuning, scored only in aggregate, three times: when written and after the English rounds, then frozen): reference text 97.6%; large-v3 68% fully correct on the tuning voices and 73% on unseen speakers; the in-page models 71% (69% with unseen speakers).
 
 <!-- blind3 -->
-  **Blind set 3, the headline:** 42 new sentences, committed before any scoring; scored once at the rules freeze (28 Nov, 12:00 IST). The result is filled in here by `harness/blind3_report.sh --final`.
+  **Blind set 3, the headline** (42 new sentences in 7 languages, committed before any scoring and scored once, at the rules freeze: run 28 Nov, 12:01-12:23 IST): reference text 95.2%; spoken, fully correct reports: server Whisper large-v3 **65%** (62% tuning voices, 68% unseen speakers; 174 runs), the in-page models **72%** (72% / 73%; 174 runs).
 <!-- /blind3 -->
 
   The unseen numbers agree with the blind set (62.8% on large-v3), so about 6 in 10 brand-new spoken reports come out fully correct and the app asks for the rest. Hindi, Telugu, Kannada and Tamil hold up on new speakers; the Marathi tuned-voice number is inflated (held-out and unseen are about 40%); English drops on these voices mostly because 18 of the English cases are romanised Hindi read with a European accent (11-17% fully correct, not a realistic speaker); on the English sentences themselves, unseen speakers get 58.1% in the page and 87.1% on large-v3.
