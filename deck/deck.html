@@ -74,7 +74,7 @@ h1 { font-family: 'EB Garamond', Georgia, serif; font-weight: 400; font-size: 46
 </ul></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 6 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 07</div><h1>How it works</h1><div class="body"><ul>
 <li><strong>Two speech recognisers behind one interface (<code>speech.ts</code>):</strong><ul>
 <li>The browser's speech recognition shows live words.</li>
-<li>Turant also records the audio. If the browser returns nothing, one misheard word, or stops early (all seen on Chrome for Windows), Whisper transcribes it in the page via transformers.js and ONNX Runtime Web. For Hindi, English and Marathi it uses Oriserve's Hindi2Hinglish Whisper, which writes clean Hinglish. About 100 MB, downloaded once, then cached; a 12-second story takes about 8 seconds.</li>
+<li>Turant also records the audio. If the browser returns nothing, one misheard word, or stops early (all seen on Chrome for Windows), Whisper transcribes it in the page via transformers.js and ONNX Runtime Web. For Hindi, English and Marathi it uses Oriserve's Hindi2Hinglish Whisper, which writes clean Hinglish; Bengali, Telugu, Kannada and Tamil use Indian-language fine-tunes (a Bangla whisper-small; IIT Madras IndicWhisper). About 100 MB (Bengali and Tamil about 290 MB), downloaded once, then cached; a 12-second story takes about 8 seconds.</li>
 <li>Turant's own voice detection decides when the person has finished.</li>
 </ul>
 </li>
@@ -118,7 +118,7 @@ h1 { font-family: 'EB Garamond', Georgia, serif; font-weight: 400; font-size: 46
 <li><strong>About 92% of remaining errors</strong> are the recogniser losing words, not the parsing.</li>
 <li><strong>Fuzz:</strong> millions of generated amounts and times parse 100%; with one slip per number, 99.6-100%. 557 automated tests.</li>
 <li><strong>What ships in the page, measured on the same clips:</strong> Hindi 90.0% fully correct (stock whisper-base: 13.8%), English 75.0%, Marathi 53.8% (40.0% on a voice never tuned on); on the blind set (new sentences) Hindi 91.7%, English 61.1%, Marathi 41.7%. Hindi in noise: 85.0% at 15 dB, 55.0% at 5 dB. Indian-language Whisper fine-tunes in the page (stock whisper-base: 2.5-6.3%): Telugu 68.8%, Kannada 50.0%, Tamil 50.0%, Bengali 37.5%.</li>
-<li><strong>Second blind set</strong> (42 new cases, scored only in aggregate): large-v3 68% fully correct, 73% with unseen speakers; the in-page models 71%.</li>
+<li><strong>Second blind set</strong> (42 new cases, scored only in aggregate): large-v3 68% fully correct, 73% with unseen speakers; the in-page models 71% (69% with unseen speakers).</li>
 <li><strong>New speakers:</strong> 4 voices never used for tuning: large-v3 61.6% (tuned voice 71.8%), matching the blind set. In the page, Telugu 70.0%, Hindi 83.8%, Kannada and Tamil 53.8% hold up; Marathi and English drop to about 45%.</li>
 <li><strong>Limits:</strong> synthetic voices (edge-tts). Real phone tests in every language come next.</li>
 </ul></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 8 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 09</div><h1>Users and how many</h1><div class="body"><p><strong>Core users: people reporting a financial fraud.</strong></p>
@@ -145,16 +145,16 @@ h1 { font-family: 'EB Garamond', Georgia, serif; font-weight: 400; font-size: 46
 <td>In-page Whisper; typing and tapping</td>
 </tr>
 <tr>
-<td>Whisper-base, transformers.js, ONNX Runtime Web</td>
-<td>Free, open source</td>
-<td>100 MB first download; slow on low-end phones</td>
-<td>WebGPU falls back to WebAssembly; typing</td>
+<td>In-page Whisper models (Hinglish, IndicWhisper, Bangla), transformers.js, ONNX Runtime Web</td>
+<td>Free, open source (Apache-2.0)</td>
+<td>100-290 MB first download; slow on low-end phones</td>
+<td>Cached after first use; whisper-base if a model fails to load; typing</td>
 </tr>
 <tr>
-<td>Hugging Face model hosting</td>
+<td>Hugging Face model hosting (Hinglish and Bengali models)</td>
 <td>Free</td>
 <td>Outage or policy change</td>
-<td>Serve the model files from our own host</td>
+<td>Serve them from our own host, as we already do for Telugu, Kannada and Tamil</td>
 </tr>
 <tr>
 <td>Static hosting (Vercel)</td>
@@ -199,9 +199,9 @@ h1 { font-family: 'EB Garamond', Georgia, serif; font-weight: 400; font-size: 46
 <li><strong>Typing and tapping</strong> for every answer. <strong>Quiet mode</strong> turns speech off.</li>
 <li><strong>1930 is one tap away</strong> in the top bar. "UTR" is always explained in plain words.</li>
 <li><strong>No timeouts, no auto-advance;</strong> reduced motion respected.</li>
-<li><strong>Lighthouse (mobile):</strong> accessibility 100, best practices 100, performance 94. The page loads with no third-party requests: even the fonts are served by Turant.</li>
+<li><strong>Lighthouse (mobile, 28 Nov):</strong> accessibility 100, best practices 100, SEO 100, performance 96. The page loads with no third-party requests: even the fonts are served by Turant.</li>
 </ul></div><div class="foot"><span class="mark"><svg viewBox="0 0 44 24"><rect width="44" height="24" rx="12" fill="#1A1A1A"/><rect x="10" y="9" width="3" height="6" rx="1.5" fill="#F0D7FF"/><rect x="16" y="6" width="3" height="12" rx="1.5" fill="#F0D7FF"/><rect x="22" y="4" width="3" height="16" rx="1.5" fill="#FFBCF2"/><rect x="28" y="7" width="3" height="10" rx="1.5" fill="#FFA946"/><rect x="34" y="10" width="3" height="4" rx="1.5" fill="#F0D7FF"/></svg> Turant</span><span>Build for Bharat 2026 · 13 / 15</span></div></section><section class="slide"><div class="eyebrow">Turant · 14</div><h1>Roadmap</h1><div class="body"><ol>
-<li><strong>Indian-language ASR</strong> for Bengali, Kannada, Tamil and Telugu, measured on the same harness and blind set.</li>
+<li><strong>Server-grade Indian-language ASR</strong> (Bhashini, IndicConformer) above the on-device models, measured on the same harness and blind sets. Bigger on-device models were measured and did not help (Kannada and Marathi whisper-small: no gain on unseen speakers).</li>
 <li><strong>Real-phone tests</strong> in every language, with real voices.</li>
 <li><strong>Direct hand-off to 1930 or NCRP</strong> if a public API appears. Today there is none, so the user files.</li>
 <li><strong>More scam types</strong> and payment apps.</li>

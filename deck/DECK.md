@@ -65,7 +65,7 @@ Build for Bharat 2026 (Scaler x Wispr Flow), Round 2. Theme: Public infrastructu
 
 - **Two speech recognisers behind one interface (`speech.ts`):**
   - The browser's speech recognition shows live words.
-  - Turant also records the audio. If the browser returns nothing, one misheard word, or stops early (all seen on Chrome for Windows), Whisper transcribes it in the page via transformers.js and ONNX Runtime Web. For Hindi, English and Marathi it uses Oriserve's Hindi2Hinglish Whisper, which writes clean Hinglish. About 100 MB, downloaded once, then cached; a 12-second story takes about 8 seconds.
+  - Turant also records the audio. If the browser returns nothing, one misheard word, or stops early (all seen on Chrome for Windows), Whisper transcribes it in the page via transformers.js and ONNX Runtime Web. For Hindi, English and Marathi it uses Oriserve's Hindi2Hinglish Whisper, which writes clean Hinglish; Bengali, Telugu, Kannada and Tamil use Indian-language fine-tunes (a Bangla whisper-small; IIT Madras IndicWhisper). About 100 MB (Bengali and Tamil about 290 MB), downloaded once, then cached; a 12-second story takes about 8 seconds.
   - Turant's own voice detection decides when the person has finished.
 - **Rules, not an LLM:** the rules read numbers, dates, banks and IDs in 7 languages, including recogniser slips ("to lock rupees" = ₹2,00,000; "9 बजकर 30 मिनट" = 9:30; a UTR read digit by digit). On the same transcripts an LLM invented times and scam types: 16.5% fully correct, against 43.5% for the rules then.
 - **Asking beats guessing:** a wrong amount on a police complaint is worse than a missing one. A spoken "₹5" is offered back as "₹5,000?". Unclear values are asked again.
@@ -86,7 +86,7 @@ Build for Bharat 2026 (Scaler x Wispr Flow), Round 2. Theme: Public infrastructu
 - **About 92% of remaining errors** are the recogniser losing words, not the parsing.
 - **Fuzz:** millions of generated amounts and times parse 100%; with one slip per number, 99.6-100%. 557 automated tests.
 - **What ships in the page, measured on the same clips:** Hindi 90.0% fully correct (stock whisper-base: 13.8%), English 75.0%, Marathi 53.8% (40.0% on a voice never tuned on); on the blind set (new sentences) Hindi 91.7%, English 61.1%, Marathi 41.7%. Hindi in noise: 85.0% at 15 dB, 55.0% at 5 dB. Indian-language Whisper fine-tunes in the page (stock whisper-base: 2.5-6.3%): Telugu 68.8%, Kannada 50.0%, Tamil 50.0%, Bengali 37.5%.
-- **Second blind set** (42 new cases, scored only in aggregate): large-v3 68% fully correct, 73% with unseen speakers; the in-page models 71%.
+- **Second blind set** (42 new cases, scored only in aggregate): large-v3 68% fully correct, 73% with unseen speakers; the in-page models 71% (69% with unseen speakers).
 - **New speakers:** 4 voices never used for tuning: large-v3 61.6% (tuned voice 71.8%), matching the blind set. In the page, Telugu 70.0%, Hindi 83.8%, Kannada and Tamil 53.8% hold up; Marathi and English drop to about 45%.
 - **Limits:** synthetic voices (edge-tts). Real phone tests in every language come next.
 
@@ -107,8 +107,8 @@ Build for Bharat 2026 (Scaler x Wispr Flow), Round 2. Theme: Public infrastructu
 | Dependency | Cost today | Risk | Fallback |
 |---|---|---|---|
 | Browser speech recognition | Free | Fails on some machines; may process audio off the device | In-page Whisper; typing and tapping |
-| Whisper-base, transformers.js, ONNX Runtime Web | Free, open source | 100 MB first download; slow on low-end phones | WebGPU falls back to WebAssembly; typing |
-| Hugging Face model hosting | Free | Outage or policy change | Serve the model files from our own host |
+| In-page Whisper models (Hinglish, IndicWhisper, Bangla), transformers.js, ONNX Runtime Web | Free, open source (Apache-2.0) | 100-290 MB first download; slow on low-end phones | Cached after first use; whisper-base if a model fails to load; typing |
+| Hugging Face model hosting (Hinglish and Bengali models) | Free | Outage or policy change | Serve them from our own host, as we already do for Telugu, Kannada and Tamil |
 | Static hosting (Vercel) | Near zero, no backend | Pricing changes | Any static host or our Docker image; PWA works offline |
 | LLM or paid API | None used | Nothing to get costly | Not needed |
 
@@ -149,11 +149,11 @@ Turant keeps no server data, so we will measure with an opt-in anonymous count (
 - **Typing and tapping** for every answer. **Quiet mode** turns speech off.
 - **1930 is one tap away** in the top bar. "UTR" is always explained in plain words.
 - **No timeouts, no auto-advance;** reduced motion respected.
-- **Lighthouse (mobile):** accessibility 100, best practices 100, performance 94. The page loads with no third-party requests: even the fonts are served by Turant.
+- **Lighthouse (mobile, 28 Nov):** accessibility 100, best practices 100, SEO 100, performance 96. The page loads with no third-party requests: even the fonts are served by Turant.
 
 ## Slide 14: Roadmap
 
-1. **Indian-language ASR** for Bengali, Kannada, Tamil and Telugu, measured on the same harness and blind set.
+1. **Server-grade Indian-language ASR** (Bhashini, IndicConformer) above the on-device models, measured on the same harness and blind sets. Bigger on-device models were measured and did not help (Kannada and Marathi whisper-small: no gain on unseen speakers).
 2. **Real-phone tests** in every language, with real voices.
 3. **Direct hand-off to 1930 or NCRP** if a public API appears. Today there is none, so the user files.
 4. **More scam types** and payment apps.
