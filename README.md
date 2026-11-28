@@ -55,7 +55,7 @@ microphone ──► browser speech recognition (Chrome / Edge, live words)
   - **The in-page model depends on the speaking language:**
     - Hindi, English (India) and Marathi use **Whisper-Hindi2Hinglish-Swift** (Oriserve, Apache-2.0), which writes clean Hinglish.
     - Bengali uses a Bangla whisper-small fine-tune (arif11/bangla-ASR-v5, Apache-2.0); Telugu, Kannada and Tamil use IIT Madras's **IndicWhisper** fine-tunes (vasista22, Apache-2.0), converted to ONNX by `harness/convert_whisper.py` and served with the site from `/models/`.
-  - **Download and speed:** about 100 MB (Bengali 287 MB), downloaded once and then cached. A 12-second story transcribes in about 8 seconds on a laptop: cross-origin isolation lets it use several CPU threads.
+  - **Download and speed:** about 100 MB (Bengali and Tamil about 290 MB; the app shows the size for the chosen language while it downloads), downloaded once and then cached. A 12-second story transcribes in about 8 seconds on a laptop: cross-origin isolation lets it use several CPU threads.
   - Turant's own voice detection decides when the person has finished, so a recogniser that gives up early can't cut them off.
   - Add `?speech=whisper` to the link to skip the browser recogniser and use only the in-page path.
 - **Understanding is rules, not an LLM.** On the same transcripts, an LLM invented times and scam types. On its own it was fully correct on 16.5% of reports, against 43.5% for the rules at the time (see `harness/JOURNAL.md`). The rules read numbers, dates, banks and IDs in **Hindi, English/Hinglish, Bengali, Tamil, Telugu, Marathi and Kannada**, including the misspellings speech recognisers make:
@@ -101,10 +101,10 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
   A **second blind set** (42 cases, written after the night's tuning, scored only in aggregate, three times: when written and after the English rounds, then frozen): reference text 97.6%; large-v3 68% fully correct on the tuning voices and 73% on unseen speakers; the in-page models 71% (69% with unseen speakers).
 
   The unseen numbers agree with the blind set (62.8% on large-v3), so about 6 in 10 brand-new spoken reports come out fully correct and the app asks for the rest. Hindi, Telugu, Kannada and Tamil hold up on new speakers; the Marathi tuned-voice number is inflated (held-out and unseen are about 40%); English drops on these voices mostly because 18 of the English cases are romanised Hindi read with a European accent (11-17% fully correct, not a realistic speaker); on the English sentences themselves, unseen speakers get 58.1% in the page and 87.1% on large-v3.
-- **What is left is the recogniser, not the rules.** On the unseen speakers' analysis half, Bengali / Tamil / Telugu / Kannada in the page have 72 field errors; 69 are the recogniser losing the words and 3 were a form the rules missed (fixed in round 58; the Telugu and Bengali unseen numbers above include them, gained on the analysis half only). A bigger Kannada model (IndicWhisper small, 288 MB) was measured as the next lever and **not adopted**: no gain on unseen speakers (53.8% both), worse on Indian voices (41.3% vs 50.0%), 3x the download (`harness/JOURNAL.md`, item 17).
+- **What is left is the recogniser, not the rules.** On the unseen speakers' analysis half, Bengali / Tamil / Telugu / Kannada in the page have 72 field errors; 69 are the recogniser losing the words and 3 were a form the rules missed (fixed in round 58; the Telugu and Bengali unseen numbers above include them, gained on the analysis half only). A bigger Kannada model (IndicWhisper small, 288 MB) was measured as the next lever and **not adopted**: no gain on unseen speakers (53.8% both), worse on Indian voices (41.3% vs 50.0%), 3x the download (`harness/JOURNAL.md`, item 17). A Marathi whisper-small fine-tune was worse still (unseen 16.3% vs 42.5% on the Hinglish model; item 18), so Marathi stays on the Hinglish model.
 - **Fuzz testing:** millions of generated amounts and times are parsed 100% correctly. With one recogniser-style slip per number, 99.6-100% are still read correctly.
 - **Tests:** 170 unit tests in the app, 126 in the parsers and 261 in the voice kit.
-- **Lighthouse** (mobile, live site, 27 Nov): accessibility 100, best practices 100, SEO 100, performance 94 (first paint 2.0 s on a throttled phone connection). Fonts are self-hosted, so the page loads with no third-party requests (the in-page speech model is fetched from Hugging Face only when it is needed).
+- **Lighthouse** (mobile, live site, 28 Nov): accessibility 100, best practices 100, SEO 100, performance 96 (first paint 1.1 s, largest paint 2.5 s on a throttled phone connection). Fonts are self-hosted, so the page loads with no third-party requests (the Hinglish and Bengali speech models are fetched from Hugging Face only when the in-page fallback is needed; Telugu, Kannada and Tamil are served by Turant).
 
 The full log of every tuning round, what changed and what it gained is in [`harness/JOURNAL.md`](harness/JOURNAL.md).
 
@@ -127,7 +127,7 @@ Re-run the speech evaluation (needs Python, edge-tts and a Whisper server; see `
 | Folder | What |
 |---|---|
 | `prototype/` | **The app** (React + TypeScript + Vite PWA, works offline): extraction rules, the question flow, outputs, and the in-page Whisper fallback. |
-| `harness/` | Speech-to-report evaluation: corpus (280 cases), two blind sets (84 + 42 cases, scored only in aggregate), a 40-case robustness set, 4 unseen speakers, TTS, noise, ASR, scoring (`eval_all.sh`, `unseen_report.mjs`) and the tuning journal. |
+| `harness/` | Speech-to-report evaluation: corpus (280 cases), three blind sets (84 + 42 cases scored only in aggregate; a third, 42 cases, committed unscored and scored once at the end), a 40-case robustness set, 4 unseen speakers, TTS, noise, ASR, scoring (`eval_all.sh`, `unseen_report.mjs`) and the tuning journal. |
 | `round2-kit/indic-numbers/` | Shared parsers for numbers, times and banks in 7 languages, with fuzz tests. |
 | `round2-kit/voice-kit/` | The same voice engine as a reusable kit, where one config file makes a new slot-filling voice app (examples: khata ledger, health, civic grievance). |
 | `research/` | Sourced facts, voice-UX and accessibility research, and the design spec. |
@@ -144,8 +144,8 @@ Re-run the speech evaluation (needs Python, edge-tts and a Whisper server; see `
 
 ## Honest limitations
 
-- **Speech accuracy:** about 6 in 10 brand-new spoken reports come out fully correct (blind set and unseen speakers); the app asks for the rest. Bengali is the weakest (in the page about 35%); Marathi and English drop on accented, unseen speakers. Most remaining errors are the recogniser losing words, not the parsing.
-- **Whisper fallback:** the first use downloads about 100 MB. Live words appear only when the browser's own recogniser works. Every language now has an Indian-language model for the in-page fallback; Bengali and Tamil are larger downloads (about 290 MB).
+- **Speech accuracy:** about 6 in 10 brand-new spoken reports come out fully correct (blind set and unseen speakers); the app asks for the rest. Bengali is the weakest (in the page about 37%); Marathi and English drop on accented, unseen speakers. Most remaining errors are the recogniser losing words, not the parsing.
+- **Whisper fallback:** the first use downloads about 100 MB (290 MB for Bengali and Tamil). Live words appear only when the browser's own recogniser works. Every language now has an Indian-language model for the in-page fallback.
 - **Filing:** Turant prepares the complaint and the call script. Filing still happens on the official 1930 line or cybercrime.gov.in, which have no public API.
 - **Test speech:** our harness voices are synthetic (edge-tts). Real phone tests in each language are the next step.
 
