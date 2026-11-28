@@ -669,3 +669,11 @@ describe('round 55-56 (English amounts as the recogniser writes digits)', () => 
     expect(x('8400 rupees were taken from my quota account').bank?.value).toBe('Kotak Mahindra Bank');
   });
 });
+
+describe('round 57 (a 12-digit UTR whose last group is written as a time)', () => {
+  const x = (t: string) => extractFields(t, { now: NOW, lang: 'en-IN' });
+  it('keeps the leading zero only when it completes a 12-digit run', () => {
+    expect(x('UTR 67 23 4589 01:23').utr?.value).toBe('672345890123');
+    expect(x('The reference number is 06:01 to 34567 890.').utr?.value).toBe('601234567890');
+  });
+});

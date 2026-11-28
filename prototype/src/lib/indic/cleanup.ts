@@ -165,8 +165,16 @@ export function spokenDigits(text: string): string {
     if (CLOCK_WORDS.test(prev) || CLOCK_WORDS.test(next)) continue;
     const nextAfterTo = next === 'to' ? clean(word(w.indexOf(word(i, 1)!, i + 1), 1)) : '';
     const idCtx = /^\+?\d+$/.test(prev) || ID_WORDS.test(prev) || prev === 'is' || /^\d+$/.test(next) || /^\d+$/.test(nextAfterTo);
-    // Whisper pads the hour ("5 0 1" -> "05:01"); in every read-out in the harness the 0 was padding, never spoken
-    if (idCtx) w[i] = m[1].replace(/^0(?=\d)/, '') + m[2] + m[3];
+    // Whisper pads the hour ("5 0 1" -> "05:01"), so the 0 is usually padding. But it can be spoken ("UTR 67 23 4589
+    // 01:23" = 6723 4589 0123): keep it when that makes the read-out exactly a phone (10) or UTR (12) and dropping it doesn't.
+    if (idCtx) {
+      let around = 0;
+      for (let j = i - 1; j >= 0; j--) { if (!w[j].trim()) continue; const c = clean(w[j]); if (/^\d+$/.test(c)) around += c.length; else break; }
+      for (let j = i + 1; j < w.length; j++) { if (!w[j].trim()) continue; const c = clean(w[j]); if (/^\d+$/.test(c)) around += c.length; else if (c === 'to' || c === 'too') around += 1; else break; }
+      const withZero = around + m[1].length + 2;
+      const keep = /^0\d$/.test(m[1]) && [10, 12].includes(withZero) && ![10, 12].includes(withZero - 1);
+      w[i] = (keep ? m[1] : m[1].replace(/^0(?=\d)/, '')) + m[2] + m[3];
+    }
     // ...and the spoken "two" after it is written "to": "06:01 to 34567 890" = 601 2 34567 890
     if (idCtx && nextAfterTo && /^\d+$/.test(nextAfterTo)) {
       const k = w.indexOf(word(i, 1)!, i + 1);

@@ -22,6 +22,7 @@ no form submit, no YouTube upload, no upload to Shubh's HF account, no spending.
 | 11 | English unseen split (English vs romanised-Hindi cases) | **done**: 58.1% / 87.1% on English sentences |
 | 9 | Second blind set (42 cases, written after round 51), aggregate only | **done**: text 97.6%; large-v3 68% / 73% unseen; in-page 67% / 67% |
 | 12 | English tuning set (corpus/en_tune.jsonl, 30 cases, 300 clips) + Indian-English number / clock phrasing | **done** (rounds 53-56): blind-2 in-page English 33% -> 56% |
+| 13 | Blind set 2 frozen (scored 3x: rounds 52, 54, 56). **Blind set 3**: write + commit before scoring, score ONCE at the very end; it is the submission headline with the unseen-speaker number | todo (last) |
 | 6 | README / JOURNAL / deck numbers in sync, every claim with a tuned vs unseen vs blind split | **done** for unseen (re-sync after each round) |
 
 ## 1. Unseen speakers
