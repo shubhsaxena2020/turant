@@ -16,22 +16,24 @@ interface ModelChoice {
   gpu: boolean;
   /** Served by Turant itself from /models/<id>/ (converted with harness/convert_whisper.py), not from Hugging Face. */
   self?: boolean;
+  /** Download size of the q8 files, for the first-use message. */
+  mb: number;
 }
-const BASE: ModelChoice = { id: 'onnx-community/whisper-base', gpu: true };
-const HINGLISH: ModelChoice = { id: 'Hirecentive-D3l/Whisper-Hindi2Hinglish-Swift-ONNX', gpu: false };
+const BASE: ModelChoice = { id: 'onnx-community/whisper-base', gpu: true, mb: 80 };
+const HINGLISH: ModelChoice = { id: 'Hirecentive-D3l/Whisper-Hindi2Hinglish-Swift-ONNX', gpu: false, mb: 100 };
 // Bengali: a whisper-small fine-tune (arif11/bangla-ASR-v5, Apache-2.0, ONNX by shamim1122), 287 MB, downloaded
 // only by people who speak Bengali and only when the browser recogniser fails.
-const BANGLA: ModelChoice = { id: 'shamim1122/whisper-small-bangla-onnx', gpu: false };
+const BANGLA: ModelChoice = { id: 'shamim1122/whisper-small-bangla-onnx', gpu: false, mb: 290 };
 // Measured on the harness clips (clean, fully correct reports):
 //   Hindi 13.8% -> 90.0%, English (India) 50.0% -> 75.0%, Marathi 10.0% -> 53.8% (base -> Hinglish model + rules);
 //   Bengali 5.0% -> 36.3% (base -> Bangla model, word error 165 -> 47).
 // Telugu and Kannada: vasista22's IndicWhisper base fine-tunes (Apache-2.0, IIT Madras Speech Lab), converted to
 // ONNX q8 (103 MB each) and served with the app. Telugu 6.3% -> 68.8%, Kannada 2.5% -> 50.0% fully correct.
-const TELUGU: ModelChoice = { id: 'turant/whisper-telugu-base-onnx', gpu: false, self: true };
-const KANNADA: ModelChoice = { id: 'turant/whisper-kannada-base-onnx', gpu: false, self: true };
+const TELUGU: ModelChoice = { id: 'turant/whisper-telugu-base-onnx', gpu: false, self: true, mb: 100 };
+const KANNADA: ModelChoice = { id: 'turant/whisper-kannada-base-onnx', gpu: false, self: true, mb: 100 };
 // Tamil: vasista22/whisper-tamil-small (no base size exists), 289 MB: 6.3% -> 47.5% fully correct. Its 196 MB decoder
 // is split into external-data chunks under the host's 100 MB per-file limit (harness/split_onnx.py; same weights).
-const TAMIL: ModelChoice = { id: 'turant/whisper-tamil-small-onnx', gpu: false, self: true };
+const TAMIL: ModelChoice = { id: 'turant/whisper-tamil-small-onnx', gpu: false, self: true, mb: 290 };
 const MODEL_FOR: Record<string, ModelChoice> = {
   'hi-IN': HINGLISH,
   'en-IN': HINGLISH,
@@ -45,6 +47,8 @@ const MODEL_FOR: Record<string, ModelChoice> = {
 const modelHost = (model: ModelChoice) =>
   model.self ? { host: new URL('models/', document.baseURI).href, path: '{model}/' } : { host: 'https://huggingface.co/', path: '{model}/resolve/{revision}/' };
 const modelFor = (lang: string) => MODEL_FOR[lang] ?? BASE;
+/** About how many MB the first use of the in-page recogniser downloads for this language. */
+export const modelSizeMb = (lang: string) => modelFor(lang).mb;
 const WHISPER_LANG: Record<string, string> = {
   'en-IN': 'english',
   'hi-IN': 'hindi',

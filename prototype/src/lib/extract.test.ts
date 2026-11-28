@@ -677,3 +677,14 @@ describe('round 57 (a 12-digit UTR whose last group is written as a time)', () =
     expect(x('The reference number is 06:01 to 34567 890.').utr?.value).toBe('601234567890');
   });
 });
+
+describe('round 58 (Indic shapes from the unseen-voice analysis half)', () => {
+  it('Telugu "ఒంటి గంట" between digit words is the digit 1, not one o\'clock', () => {
+    const r = extractFields('కాల్ వచ్చిన నంబర్ తొమ్మిది ఎనిమిది ఏడు ఆరు ఐదు నాలుగు మూడు రెండు ఒంటి గంటలు సున్నా బ్యాంకు నుండి', { now: NOW, lang: 'te-IN' });
+    expect(r.suspectPhone?.value).toBe('9876543210');
+  });
+  it('Bengali "ব্যাং" is the word for bank; অটিপি is OTP', () => {
+    expect(extractFields('নয়হাজার টাকা কেটে গেল, ইন্ডিয়ান ব্যাং।', { now: NOW, lang: 'bn-IN' }).bank?.value).toBe('Indian Bank');
+    expect(extractFields('ছয় হাজার টাকা কেটেছে অটিপি বলে দিয়েছিলাম', { now: NOW, lang: 'bn-IN' }).scamType?.value).toBe('otp_shared');
+  });
+});

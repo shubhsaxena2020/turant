@@ -19,7 +19,7 @@ const SCAM_RULES: [string, string[], number?][] = [
   ['fake_kyc', ['kyc', 'के वाईसी', 'के वाइसी', 'ಕೇವ ಆಯಸಿ', 'ಕೆವಾಯಸಿ', 'కెవాయసి', 'కేవాయసి', 'కేవ ఆయసి', 'केवाईसी', 'केवायसी', 'কেওয়াইসি', 'কেওয়াইসি', 'கேஒய்சி', 'கேவாயசி', 'கேவைசி', 'కేవైసీ', 'ಕೆವೈಸಿ', 'ಕೈಕ ಅಪ್', 'ಕೈಕ್ಕ', 'pan card update', 'pan update', 'aadhaar update', 'aadhar update', 'account block', 'account band', 'account will be blocked', 'khata band', 'bank se call', 'bank se phone', 'bank wala', 'bank manager', 'bank official', 'bank se bol', 'बैंक से कॉल', 'बैंक से फोन', 'खाता बंद', 'केवाई सी', 'केवाय सी', 'के yc', 'yc अपडेट', 'yc update', 'पैन कार्ड', 'पॅन कार्ड', 'pan card', 'अकाउंट ब्लॉक', 'बैंक वाले', 'প্যান কার্ড', 'பான் கார்டு', 'పాన్ కార్డ్', 'ಪ್ಯಾನ್ ಕಾರ್ಡ್']],
   ['wrong_transfer', ['galti se', 'galati se', 'by mistake', 'mistakenly', 'wrong transfer', 'wrongly sent', 'refund', 'paise wapas', 'paisa wapas', 'wapas bhej', 'return the money', 'गलती से', 'वापस भेज', 'रिफंड', 'ভুল করে', 'রিফান্ড', 'தவறுதலாக', 'தவர்தலா', 'పొరపాటున', 'चुकून', 'ತಪ್ಪಾಗಿ']],
   // OTP alone is a mechanism, not the story: lower confidence.
-  ['otp_shared', ['otp', 'ओटीपी', 'ওটিপি', 'ஓடிபி', 'ஓட்டிப்', 'ஓட்டிபி', 'ఓటీపీ', 'ఓటి పీ', 'ಒಟಿಪಿ', 'code bataya', 'code bata diya', 'pin bataya', 'pin bata diya'], 0.75],
+  ['otp_shared', ['otp', 'ओटीपी', 'ওটিপি', 'অটিপি', 'ஓடிபி', 'ஓட்டிப்', 'ஓட்டிபி', 'ఓటీపీ', 'ఓటి పీ', 'ಒಟಿಪಿ', 'code bataya', 'code bata diya', 'pin bataya', 'pin bata diya'], 0.75],
 ];
 const OTHER_WORDS = ['other', 'kuch aur', 'kuch or', 'dusra', 'something else', 'अन्य', 'कुछ और', 'दूसरा', 'অন্য', 'மற்றவை', 'ఇతర', 'इतर', 'ಇತರೆ'];
 const SCAM_ORDER = ['fake_kyc', 'otp_shared', 'fake_customer_care', 'wrong_transfer', 'qr_scan', 'investment_task', 'sextortion', 'other'];

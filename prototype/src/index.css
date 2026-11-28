@@ -221,7 +221,7 @@ a {
   background: #f0d7ff;
   border: 1.6px solid #1a1a1a;
   color: #1a1a1a;
-  min-width: 15rem;
+  min-width: min(15rem, calc(100vw - 2rem));
   box-shadow: 0 6px 20px rgba(26, 26, 26, 0.08);
 }
 .flow[data-state='idle']:active {
@@ -233,7 +233,7 @@ a {
   background: #1a1a1a;
   border: 1.6px solid #1a1a1a;
   color: #ffffeb;
-  min-width: 18rem;
+  min-width: min(18rem, calc(100vw - 2rem)); /* at the largest text size 18rem is wider than a 360 px phone */
   padding: 0 0.75rem 0 1.5rem;
   box-shadow: 0 10px 30px rgba(26, 26, 26, 0.18);
 }

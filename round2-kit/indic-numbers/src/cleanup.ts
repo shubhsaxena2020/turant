@@ -106,6 +106,9 @@ export function spokenDigits(text: string): string {
   t = t.replace(/\b(double|triple)\s+(zero|oh|one|two|three|four|five|six|seven|eight|nine)\b/gi, (_, k: string, w: string) =>
     Array(k.toLowerCase() === 'double' ? 2 : 3).fill(w).join(' '),
   );
+  // Telugu Whisper writes a spoken "one" inside a read-out as "ఒంటి గంట(లు)" (one o'clock); between two digit words it is just 1
+  const TE_D = '(?:సున్నా|సున్న|ఒకటి|రెండు|మూడు|నాలుగు|ఐదు|ఆరు|ఏడు|ఎనిమిది|తొమ్మిది)';
+  t = t.normalize('NFC').replace(new RegExp(`(${B}${TE_D}\\s+ఒంటి)\\s+గంట(?:లు)?(?=\\s+${TE_D}${E})`, 'gu'), '$1');
   // "501-002-345-678-1-2": an ID read out in groups and written with hyphens; 9+ digits only (a date 25-11-2026 has 8)
   t = t.replace(/(?<![\d-])\d{1,5}(?:-\d{1,5}){2,}(?![\d-])/g, (m) => (m.replace(/-/g, '').length >= 9 ? m.replace(/-/g, '') : m));
   // "1 point to laakh" / "one point five lakh" = 1.2 / 1.5 lakh: a decimal read out before a multiplier ("two" heard as "to")

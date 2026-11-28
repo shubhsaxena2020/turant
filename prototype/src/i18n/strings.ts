@@ -40,7 +40,7 @@ const en = {
   err_silent: "I can't hear anything from your microphone. Check it isn't muted or that the right mic is selected, then tap Speak again.",
   speakingIn: 'Speaking {lang}',
   state_transcribing: 'Turning your voice into words…',
-  modelLoading: 'Getting voice typing ready on this device (first time only, about 100 MB): {p}%',
+  modelLoading: 'Getting voice typing ready on this device (first time only, about {mb} MB): {p}%',
   heroA: 'Lost money to a scam?',
   heroB: 'Just tell me what happened.',
   voiceFallback: 'This phone has no {lang} voice, so I will speak in {fallback}.',

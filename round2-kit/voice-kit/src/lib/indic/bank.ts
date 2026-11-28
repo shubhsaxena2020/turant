@@ -146,6 +146,7 @@ export const BANKS: BankDef[] = [
 
 // "bank" in any script, with case endings: बैंक बँकेतून ব্যাংকের பேங்க்ல వంకి ಬ್ಯಾಂಕ್‌ನಿಂದ வங்கி
 const isBankWord = (tok: string) => {
+  if (/^ব্যাং(?:ে|য়ে)?$/u.test(tok.normalize('NFC'))) return true; // Bengali "bank" with the final k dropped
   const k = soundKey(/^[a-z]+$/i.test(tok) ? tok : romanize(tok));
   return /^p[aeiyou]*n[aeiou]?k/.test(k) || /^van?ki/.test(k); // বেনক / బైంక: ASR puts a vowel in
 };

@@ -23,6 +23,10 @@ no form submit, no YouTube upload, no upload to Shubh's HF account, no spending.
 | 9 | Second blind set (42 cases, written after round 51), aggregate only | **done**: text 97.6%; large-v3 68% / 73% unseen; in-page 67% / 67% |
 | 12 | English tuning set (corpus/en_tune.jsonl, 30 cases, 300 clips) + Indian-English number / clock phrasing | **done** (rounds 53-56): blind-2 in-page English 33% -> 56% |
 | 13 | Blind set 2 frozen (scored 3x: rounds 52, 54, 56). **Blind set 3**: write + commit before scoring, score ONCE at the very end; it is the submission headline with the unseen-speaker number | todo (last) |
+| 14 | Extractor-fixable share (`extractor_form`) per language on the unseen ANALYSIS half (bn/te/kn/ta in-page); fix only shapes that also appear on the check half | **done**: 3 of 72 analysis-half errors fixable (rest = recogniser); round 58 |
+| 15 | Live-site QA: mobile Lighthouse (perf / a11y / best practices), console errors, each screen at 360 px in all 7 UI languages; fix what is found | **done**: 96/100/100/100; mic bar overflow at text size 1.25 fixed |
+| 16 | First-visit cost: model download size per language shown before download; offline reload after first load | size per language **done**; offline check after deploy |
+| 17 | Recogniser lever for Kannada (unseen 53.8%, 19 of 19 analysis-half errors are ASR): vasista22/whisper-kannada-small (Apache-2.0) vs the base model on tuned + unseen clips; adopt only if unseen moves enough to justify ~290 MB vs ~100 MB | todo |
 | 6 | README / JOURNAL / deck numbers in sync, every claim with a tuned vs unseen vs blind split | **done** for unseen (re-sync after each round) |
 
 ## 1. Unseen speakers

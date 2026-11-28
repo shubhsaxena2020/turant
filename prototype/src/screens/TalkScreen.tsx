@@ -18,6 +18,7 @@ import { Keypad } from '../components/Keypad';
 import { Row, Sheet } from '../components/Sheet';
 import { CheckIcon } from '../components/icons';
 import type { UI } from '../ui';
+import { modelSizeMb } from '../lib/whisper';
 
 interface Pending {
   q: QuestionKey;
@@ -368,7 +369,7 @@ export function TalkScreen(props: {
             </p>
             {mic.modelProgress !== undefined ? (
               <div className="mt-2" data-testid="model-progress">
-                <p className="text-base text-ink/70">{t('modelLoading', { p: Math.round(mic.modelProgress * 100) })}</p>
+                <p className="text-base text-ink/70">{t('modelLoading', { p: Math.round(mic.modelProgress * 100), mb: modelSizeMb(ui.speakLang) })}</p>
                 <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-sand">
                   <div className="h-full rounded-full bg-chord-500 transition-[width]" style={{ width: `${Math.round(mic.modelProgress * 100)}%` }} />
                 </div>
