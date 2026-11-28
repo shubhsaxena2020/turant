@@ -151,3 +151,30 @@ describe('time of day: never in the future, at any clock', () => {
     expect(findTime('aaj raat', new Date('2026-11-21T23:50:00+05:30'))!.date.getTime()).toBe(new Date('2026-11-21T21:00:00+05:30').getTime());
   });
 });
+
+describe('a bare 7-12 o\'clock is the most recent past occurrence', () => {
+  const at = (iso: string) => new Date(iso + '+05:30').getTime();
+  const cases: [string, string][] = [
+    ['07:00', '2026-11-20T23:30:00'],
+    ['11:59', '2026-11-21T11:30:00'],
+    ['12:01', '2026-11-21T11:30:00'],
+    ['23:50', '2026-11-21T23:30:00'],
+    ['00:10', '2026-11-20T23:30:00'],
+  ];
+  for (const [clock, want] of cases) {
+    it(`"at 11:30" / "11:30 baje" said at ${clock}`, () => {
+      const now = new Date(`2026-11-21T${clock}:00+05:30`);
+      expect(findTime('at 11:30', now)!.date.getTime()).toBe(at(want));
+      expect(findTime('11:30 baje', now)!.date.getTime()).toBe(at(want));
+    });
+  }
+  it('am / pm, a 24-hour time, a part of the day or a day keep their meaning', () => {
+    const late = new Date('2026-11-21T00:10:00+05:30');
+    expect(findTime('at 11:30 am', late)!.date.getTime()).toBe(at('2026-11-20T11:30:00'));
+    expect(findTime('at 11:30 pm', late)!.date.getTime()).toBe(at('2026-11-20T23:30:00'));
+    expect(findTime('at 14:30', new Date('2026-11-21T12:01:00+05:30'))!.date.getTime()).toBe(at('2026-11-20T14:30:00'));
+    expect(findTime('subah 11 baje', late)!.date.getTime()).toBe(at('2026-11-20T11:00:00'));
+    expect(findTime('kal 10 baje', NOW)!.date.getTime()).toBe(at('2026-11-20T10:00:00'));
+    expect(findTime('3 baje', NOW)!.date.getTime()).toBe(at('2026-11-20T15:00:00')); // 1-6 still mean pm
+  });
+});

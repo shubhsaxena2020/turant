@@ -18,7 +18,7 @@ Deadline: **Mon 30 Nov 2026, 11:59 pm**. The form fields and the YouTube text ar
 | Code | https://github.com/shubhsaxena2020/turant (public) | `docker compose up` from a fresh clone builds and serves all three self-hosted speech models (fixed 28 Nov; before that Kannada and Tamil were silently missing) |
 | Pitch deck | `deck/Turant-pitch-deck.pdf` (15 pages, 0.4 MB), text in `deck/DECK.md` | Numbers traced below; no slide overflows |
 | Demo video | `demo/turant_demo_landscape.mp4` (1:52), `demo/turant_demo_vertical.mp4` | Under the 3-minute limit; not uploaded |
-| Tests | app 172, parsers 139, voice kit 261 | All pass |
+| Tests | app 172, parsers 145, voice kit 261 | All pass |
 | Judges' quick guide | `JUDGES.md`, one page as `docs/Turant-judges-guide.pdf` (attach or link it if the form allows) | Every step and sample checked on the live site, 28 Nov |
 
 ## Demo video: shot list (the existing 1:52 cut)
@@ -61,7 +61,7 @@ Recomputed on 28 Nov from the round-58 reports in `harness/reports/` (current ru
 | Unseen, in-page: Hindi 83.8, English 47.5, Marathi 42.5; Telugu 70.0, Kannada 53.8, Tamil 53.8, Bengali 37.2 | | `unseen_swift58`; `te/kn/ta/bn_unseen58` |
 | Blind set 2: large-v3 68% / 73% unseen; in-page 71% / 69% | | `blind2_report.sh 56` (frozen after three aggregate scorings) |
 | "About 92% of remaining errors are the recogniser" | | Round 21 error split on turbo (`harness/JOURNAL.md`); round 58 in-page bn/te/kn/ta: 69 of 72 |
-| 572 automated tests (slide 8) | | app 172 + parsers 139 + kit 261 |
+| 578 automated tests (slide 8) | | app 172 + parsers 145 + kit 261 |
 | Lighthouse 96 / 100 / 100 / 100 (slide 13) | | live site, 28 Nov |
 | Blind set 3 (headline) | **pending** | scored once at the 12:00 IST freeze by `harness/blind3_report.sh --final` |
 

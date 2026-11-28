@@ -84,7 +84,7 @@ Build for Bharat 2026 (Scaler x Wispr Flow), Round 2. Theme: Public infrastructu
 - **Honest headline:** about 6 to 7 in 10 brand-new spoken reports are fully correct (blind sets: 62.8% and 68%; unseen speakers 62.2% on large-v3). The app asks for what it could not read.
 - **By language** (large-v3, clean): Hindi 98%, English 91%, Marathi 73%, Tamil 66%, Telugu 61%, Kannada 46%, Bengali 44%.
 - **About 92% of remaining errors** are the recogniser losing words, not the parsing.
-- **Fuzz:** millions of generated amounts and times parse 100%; with one slip per number, 99.6-100%. 572 automated tests.
+- **Fuzz:** millions of generated amounts and times parse 100%; with one slip per number, 99.6-100%. 578 automated tests.
 - **What ships in the page, measured on the same clips:** Hindi 90.0% fully correct (stock whisper-base: 13.8%), English 75.8%, Marathi 53.8% (40.0% on a voice never tuned on); on the blind set (new sentences) Hindi 91.7%, English 61.1%, Marathi 45.8%. Hindi in noise: 85.0% at 15 dB, 55.0% at 5 dB. Indian-language Whisper fine-tunes in the page (stock whisper-base: 2.5-6.3%): Telugu 68.8%, Kannada 50.0%, Tamil 50.0%, Bengali 37.5%.
 - **Second blind set** (42 new cases, scored only in aggregate): large-v3 68% fully correct, 73% with unseen speakers; the in-page models 71% (69% with unseen speakers).
 <!-- blind3 -->

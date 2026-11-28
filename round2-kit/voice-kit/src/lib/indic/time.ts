@@ -306,6 +306,21 @@ export function findTime(text: string, now: Date = new Date()): TimeHit | undefi
   const d = new Date(now);
   d.setDate(d.getDate() + (day ?? 0));
   if (clock !== undefined) {
+    // A bare 7-12 o'clock (no am/pm, no part of the day, no day, not a zero-padded 24-hour "08:30"): the most
+    // recent time it was that o'clock. People report soon after: "11:30" said at 00:10 is 23:30, 40 minutes ago.
+    // (1-6 keep meaning pm, as before: few frauds are reported as "3 o'clock" meaning 3 am.)
+    if (part === undefined && day === undefined && clock >= 7 && clock < 13 && !/\d\s*[ap]\.?\s?m\b/i.test(text) && !/(?<!\d)0\d[:.]\d{2}/.test(text)) {
+      let best: Date | undefined;
+      for (const back of [0, 1]) {
+        for (const hh of [clock % 12, (clock % 12) + 12]) {
+          const c = new Date(now);
+          c.setDate(c.getDate() - back);
+          c.setHours(Math.floor(hh), Math.round((hh % 1) * 60), 0, 0);
+          if (c.getTime() <= now.getTime() + 30 * 60_000 && (!best || c > best)) best = c;
+        }
+      }
+      return { date: best!, kind: 'clock', tolerance: 20 };
+    }
     const h = to24(clock, part ?? (clock < 7 ? 'evening' : undefined));
     d.setHours(Math.floor(h), Math.round((h % 1) * 60), 0, 0);
     // "10 baje" with no day said and later than now: it was yesterday
