@@ -110,7 +110,7 @@ export function TalkScreen(props: {
       setProblem(t('err_silent')); // mic stays available: they can fix the mic and try again
     } else {
       setTyping(true);
-      setProblem(o.code === 'network' ? t('networkError') : o.code === 'no-words' ? t('err_noWords') : t('noSpeech'));
+      setProblem(o.code === 'model' ? t('err_model') : o.code === 'network' ? t('networkError') : o.code === 'no-words' ? t('err_noWords') : t('noSpeech'));
     }
   };
 

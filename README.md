@@ -106,6 +106,20 @@ The `harness/` turns written fraud reports into speech with Indian neural voices
 - **Tests:** 172 unit tests in the app, 132 in the parsers and 261 in the voice kit.
 - **Lighthouse** (mobile, live site, 28 Nov): accessibility 100, best practices 100, SEO 100, performance 96 (first paint 1.1 s, largest paint 2.5 s on a throttled phone connection). Fonts are self-hosted, so the page loads with no third-party requests (the Hinglish and Bengali speech models are fetched from Hugging Face only when the in-page fallback is needed; Telugu, Kannada and Tamil are served by Turant).
 
+### Performance on low-end phones
+
+Measured on the live site in Chromium with DevTools throttling (CPU 4x and 6x slower; network "Fast 3G" 1.44 Mbit/s with 562 ms latency and "Slow 4G" 1.6 Mbit/s with 150 ms latency, both run at 90%), Chromium limited to 5 laptop cores, a cold cache, and a recorded 11.3-second Hindi story as the microphone (`?speech=whisper`, the in-page path). Throttling emulates a slow phone; it is not one.
+
+| | Slow 4G | Fast 3G |
+|---|---|---|
+| App ready ("Tap to speak" usable, main thread settled), CPU 4x / 6x | 2.6 s / 3.0 s | 3.7 s / 4.2 s |
+| JS heap after load | 4 MB | 4 MB |
+
+- **The first in-page speech download** happens only when the browser's own recogniser fails, then it is cached. Measured at 0.16 MB/s on Fast 3G: Hindi / English / Marathi, Telugu or Kannada (about 125 MB with the runtime) take about 13 minutes; Bengali or Tamil (about 310 MB) about 32 minutes; Slow 4G is about 10% faster. A progress line shows the size and percentage, the page stays usable (taps answered in 120-150 ms while downloading), and typing is always offered.
+- **From the end of speech to a filled report** (Hindi model cached): 4.6 s at normal speed, 11.2 s at CPU 4x, 15.9 s at CPU 6x. Peak JS heap 115-190 MB.
+- **Known limit on slow CPUs:** the app warms the model up while the person is still talking, so it is ready when they stop. On a 6x slower CPU that warm-up keeps the main thread busy, and the "Listening" bar ends about 8 s after the person stops (on time at normal speed). Tapping the bar ends it at once, and the screen says so. The fix is running the speech model in a worker (ONNX Runtime's proxy mode); it is not shipped before Round 2 because it needs real-phone testing.
+- **A failed download** (weak signal) now says so: "the voice model could not download on this connection; tap to speak again when the signal is better, or type below". Retrying with the network back filled the report in 19 s.
+
 The full log of every tuning round, what changed and what it gained is in [`harness/JOURNAL.md`](harness/JOURNAL.md).
 
 ## Run and develop

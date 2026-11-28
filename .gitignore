@@ -8,3 +8,4 @@ harness/models/
 
 # deck preview renders
 deck/preview/
+.perf/

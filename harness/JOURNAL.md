@@ -21,6 +21,13 @@
 - **What is left:** for bn / te / kn / ta, 69 of 72 remaining field errors are the recogniser losing words, not the rules. The next lever is a better Indian-language recogniser, not more rules.
 - **Quality:** 565 tests pass. Lint found no bugs. README and deck numbers were re-traced to the round-58 reports (`SUBMISSION-CHECKLIST.md`).
 
+**Low-end phone check** (throttled Chromium, README "Performance on low-end phones"):
+- The app is ready in 2.6-4.2 s on Slow 4G / Fast 3G with a 4-6x slower CPU.
+- The first in-page model download takes about 13 min (Hindi / Telugu / Kannada) or 32 min (Bengali / Tamil) on Fast 3G. It's needed only if the browser's own recogniser fails, and progress is shown.
+- End of speech to a filled report: 4.6 s at normal speed, 11-16 s at 4-6x.
+- Fixed: a failed download now says what happened, instead of blaming the browser.
+- Known and not fixed: on a 6x slower CPU the "Listening" bar ends about 8 s late, while the model warms up. Tapping the bar ends it.
+
 **Only you can do these** (details in `SUBMISSION-CHECKLIST.md`):
 1. Answer the 18+ eligibility question.
 2. Fill in the State field.
@@ -410,6 +417,7 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
 - **Judge path and live-site QA (28 Nov, before the freeze):**
   - **`docker compose up` from a fresh GitHub clone was broken for Kannada and Tamil.** `fetch-models.mjs` made one attempt per file; the 80-100 MB downloads dropped mid-body ("terminated"), so the image shipped only the Telugu model and the app would have used stock whisper-base for Kannada and Tamil (about 2.5% fully correct instead of 50%). Now each file is retried (4 tries, backoff), streamed to a temp file and renamed only when complete, an HTML page served for a missing file counts as a failure, and a model that still fails is removed whole. Rebuilt from a fresh clone: all three models ready, served files byte-identical to the originals (sha256), COOP / COEP headers present.
   - **Live site** at 360 / 412 / 1280 px: all 7 speaking languages listed and selectable, no overflow, no console errors; microphone denied shows how to unblock it and offers typing; the complaint screen at the largest text size fits (an apparent overflow was the slide-in animation); prefers-color-scheme dark keeps the app's fixed light theme (by design, readable); offline reload verified earlier. The per-language download size is verified in the code and the live bundle, not end to end: a synthetic tone does not pass voice detection in headless Chrome.
+- **Low-end phone check (28 Nov, before the freeze; `harness/perf_lowend.mjs`, method in README):** time to interactive 2.6-4.2 s (Slow 4G / Fast 3G x CPU 4x / 6x), FCP 2.8-4.0 s, heap 4 MB at load. Model download 0.16 MB/s on Fast 3G with progress shown and taps answered in 120-150 ms. Clip end to filled report 4.6 / 11.2 / 15.9 s at CPU 1x / 4x / 6x; peak heap 115-190 MB. At 4x / 6x the report lacked the scam type that 1x had: not throttling, the word KYC is borderline for this model on this voice (the harness transcript of the same WAV, with no browser, also loses it as "ki vaise hi"). Listening-state trace: at 6x the main thread spends 16.3 of 18 s in long tasks while the model warms up during speech, so end of speech is detected about 7.7 s late (on time at 1x); fix = ONNX Runtime proxy worker, deferred (needs real-phone testing). Failed download: the message blamed the browser ("use Chrome or Edge"); added `err_model` for a model that could not load. Verified with the model files blocked; retry with the network back filled the report in 19 s.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
   | Fully correct, Hinglish model | Clean | 15 dB | 5 dB |

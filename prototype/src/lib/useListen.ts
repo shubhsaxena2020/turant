@@ -10,8 +10,9 @@ import { simulateListen, speech, type ListenHandle, type SpeechErrorCode } from 
 import { cue } from './cues';
 import { loadWhisper, transcribe } from './whisper';
 
-/** 'no-words': sound reached the mic but the speech service returned nothing. 'silent': the mic gave no sound. */
-export type ListenErrorCode = SpeechErrorCode | 'no-words' | 'silent';
+/** 'no-words': sound reached the mic but the speech service returned nothing. 'silent': the mic gave no sound.
+ * 'model': the person spoke, but the in-page speech model could not download (a weak connection). */
+export type ListenErrorCode = SpeechErrorCode | 'no-words' | 'silent' | 'model';
 
 export type Outcome =
   | { kind: 'heard'; text: string; confidence: number; simulated: boolean }
@@ -219,6 +220,7 @@ export function useListen() {
       // We hold the recording, so any speech-service failure (no words, network, a session that ended early) is recoverable.
       if (recording && spoke) {
         setTranscribing(true);
+        let modelFailed = false;
         try {
           const text = await transcribe(recording, req.lang, (f) => alive.current && setModelProgress(f < 1 ? f : undefined));
           if (!alive.current || cancelled.current) return;
@@ -226,13 +228,14 @@ export function useListen() {
           if (text) return req.onOutcome({ kind: 'heard', text, confidence: 0, simulated: false });
         } catch (e) {
           console.warn('[turant] in-page Whisper failed', e); // model could not load (offline?): fall through to the message
+          modelFailed = true;
         } finally {
           if (alive.current) {
             setTranscribing(false);
             setModelProgress(undefined);
           }
         }
-        return req.onOutcome({ kind: 'error', code: error === 'network' ? 'network' : 'no-words' });
+        return req.onOutcome({ kind: 'error', code: modelFailed ? 'model' : error === 'network' ? 'network' : 'no-words' });
       }
       if (error && error !== 'no-speech') return req.onOutcome({ kind: 'error', code: error });
       // Nothing came back. With a meter we know whether the person actually spoke.
