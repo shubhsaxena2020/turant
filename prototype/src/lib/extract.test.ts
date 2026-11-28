@@ -636,3 +636,25 @@ describe('round 50 (Bengali as the in-page model spells numbers)', () => {
     expect(x('এক হাজার দূষো টাকা').amount?.value).toBe(1200);
   });
 });
+
+describe('round 53-54 (Indian-English numbers and clock phrasing)', () => {
+  const x = (t: string) => extractFields(t, { now: NOW });
+  it('lakh phrasing, pairs, grand', () => {
+    expect(x('one point five lakh rupees').amount?.value).toBe(150000);
+    expect(x('one and a half lakh rupees debited').amount?.value).toBe(150000);
+    expect(x('a lakh and a half was taken').amount?.value).toBe(150000);
+    expect(x('two and a half thousand rupees went').amount?.value).toBe(2500);
+    expect(x('nineteen ninety nine rupees').amount?.value).toBe(1999);
+    expect(x('5 grand went from my account').amount?.value).toBe(5000);
+    expect(x('in nineteen ninety nine I opened the account').amount).toBeUndefined();
+    expect(x('it was two and a half hours ago').amount).toBeUndefined();
+  });
+  it('clock phrasing and "not" in corrections', () => {
+    const t = (s: string) => new Date(x(s).time!.value).toLocaleTimeString('en-GB', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute: '2-digit' });
+    expect(t('yesterday at 7 30 pm')).toBe('19:30');
+    expect(t('yesterday at half past nine in the evening')).toBe('21:30');
+    expect(t('the call came at quarter to eight in the morning')).toBe('07:45');
+    expect(parseCorrection('no, it was fifteen hundred, not five hundred', { now: NOW })).toMatchObject({ field: 'amount', value: 1500 });
+    expect(parseCorrection('no, the bank was HDFC not SBI')).toMatchObject({ field: 'bank', value: 'HDFC Bank' });
+  });
+});

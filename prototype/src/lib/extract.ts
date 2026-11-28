@@ -1022,6 +1022,8 @@ export interface Correction {
  */
 export function parseCorrection(text: string, opts: { now?: Date; lang?: string } = {}): Correction | null {
   text = unifyScript(text);
+  // English "it was fifteen hundred, not five hundred": the value after a final "not" is the one being rejected
+  text = text.replace(/^(.*\S)\s*,?\s+not\s+(?:the\s+)?[^,.;!?]+[.!?]?\s*$/i, '$1');
   const s = normalize(text);
   let field: FieldKey | undefined;
   let at = Infinity;

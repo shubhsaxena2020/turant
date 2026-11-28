@@ -358,6 +358,11 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
 - **Blind set 2 (written 28 Nov ~06:00, after round 51):** `corpus/blind2.jsonl`, 42 new cases (6 per language: two stories, a time, an amount, a bank / suspect answer, a correction), committed before any audio was scored. Same rule as blind 1: aggregate scores only, nobody reads its per-case failures, no rule is written from it. **Reference text 97.6%** (41 / 42; blind 1 was 90.5% when it was written at round 29).
   - **Audio, aggregate only** (`blind2_report.sh 52`; about 12 clips per language and voice set, so single cells are noisy): large-v3 **68% tuning voices / 73% unseen voices**; in-page models **67% / 67%**. Per language (tuning / unseen), large-v3: hi 83/75, en 72/58, mr 75/50, bn 75/92, ta 42/83, te 75/83, kn 50/67; in-page: hi 83/75, en 33/33, mr 58/42, bn 58/58, ta 75/75, te 92/92, kn 83/92. In-page English is the weak cell and is reported as is (blind cases are not read).
 - **Round 52:** Kannada "ನೂರ" (oblique form of ನೂರು, hundred): "ಒಂಬತ್ತು ಸಾವಿರ ಒಂಬತ್ತು ನೂರ ತೊಂಬತ್ತೊಂಬತ್ತು" was 99, now 9,999 (a field-level gain; that run still lacks the bank). All report sets unchanged run for run.
+- **Rounds 53-54 (Indian-English phrasing; new `corpus/en_tune.jsonl`, 30 English cases, separate from both blind sets):**
+  - Numbers: "one point five lakh" was read as **5 lakh**, "nineteen ninety nine rupees" as **118**; "one and a half lakh", "two and a half thousand", "a lakh and a half", "5 grand" gave nothing. Now 1,50,000 / 1,999 / 1,50,000 / 2,500 / 1,50,000 / 5,000; a year ("in nineteen ninety nine") and a duration ("two and a half hours") stay non-money.
+  - Clock: "7 30 pm" = 7:30 pm (was 6 am the next day); "half past nine", "quarter past six", "quarter to eight".
+  - Corrections: "it was fifteen hundred, not five hundred" now keeps 1,500 (the value after a final "not" is the rejected one).
+  - en_tune reference text 80% → 100%. All report sets unchanged run for run. **Blind set 2, in-page English 33% → 50%** (tuning and unseen voices; aggregate only), in-page overall 67% → 70% / 69%.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
   | Fully correct, Hinglish model | Clean | 15 dB | 5 dB |

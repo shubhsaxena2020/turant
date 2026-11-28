@@ -108,10 +108,32 @@ export function spokenDigits(text: string): string {
   );
   // "501-002-345-678-1-2": an ID read out in groups and written with hyphens; 9+ digits only (a date 25-11-2026 has 8)
   t = t.replace(/(?<![\d-])\d{1,5}(?:-\d{1,5}){2,}(?![\d-])/g, (m) => (m.replace(/-/g, '').length >= 9 ? m.replace(/-/g, '') : m));
-  // "1 point to laakh" = 1.2 lakh: a decimal read out before a multiplier, the "two" heard as "to"
-  const DIGIT: Record<string, string> = { zero: '0', oh: '0', one: '1', to: '2', too: '2', two: '2', three: '3', four: '4', five: '5', six: '6', seven: '7', eight: '8', nine: '9' };
-  t = t.replace(/\b(\d+)\s+point\s+(\d|zero|oh|one|to|too|two|three|four|five|six|seven|eight|nine)\s+(?=(?:laakh|lakh|lakhs|crore|crores|karod|hazaar|thousand)\b)/gi, (_, a: string, b: string) =>
-    `${a}.${DIGIT[b.toLowerCase()] ?? b} `,
+  // "1 point to laakh" / "one point five lakh" = 1.2 / 1.5 lakh: a decimal read out before a multiplier ("two" heard as "to")
+  const DIGIT: Record<string, string> = { zero: '0', oh: '0', one: '1', to: '2', too: '2', two: '2', three: '3', four: '4', five: '5', six: '6', seven: '7', eight: '8', nine: '9', ten: '10' };
+  const num = (w: string) => (/^\d+$/.test(w) ? w : DIGIT[w.toLowerCase()]);
+  const UNIT_W = '(\\d+|one|two|three|four|five|six|seven|eight|nine|ten)';
+  const MULT_W = '(laakh|lakh|lakhs|crore|crores|karod|hazaar|thousand|hundred)';
+  t = t.replace(new RegExp(`\\b${UNIT_W}\\s+point\\s+(\\d|zero|oh|one|to|too|two|three|four|five|six|seven|eight|nine)\\s+(?=${MULT_W}\\b)`, 'gi'), (_, a: string, b: string) =>
+    `${num(a)}.${DIGIT[b.toLowerCase()] ?? b} `,
+  );
+  // clock times said in English: "7 30 pm" = 7:30 pm; "half past nine" = 9:30; "quarter past 6" = 6:15; "quarter to 8" = 7:45
+  t = t.replace(/\b(\d{1,2})\s+([0-5]\d)\s*(?=(?:am|pm|a\.m\.|p\.m\.)(?![a-z]))/gi, (m, h: string, mm: string) => (Number(h) >= 1 && Number(h) <= 12 ? `${h}:${mm} ` : m));
+  const HOUR_W: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12 };
+  const hourOf = (w: string) => (/^\d{1,2}$/.test(w) ? Number(w) : HOUR_W[w.toLowerCase()]);
+  const HW = '(\\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)';
+  t = t.replace(new RegExp(`\\bhalf\\s+past\\s+${HW}\\b`, 'gi'), (m, h: string) => (hourOf(h) <= 12 ? `${hourOf(h)}:30` : m));
+  t = t.replace(new RegExp(`\\b(?:a\\s+)?quarter\\s+past\\s+${HW}\\b`, 'gi'), (m, h: string) => (hourOf(h) <= 12 ? `${hourOf(h)}:15` : m));
+  t = t.replace(new RegExp(`\\b(?:a\\s+)?quarter\\s+to\\s+${HW}\\b`, 'gi'), (m, h: string) => (hourOf(h) <= 12 ? `${hourOf(h) === 1 ? 12 : hourOf(h) - 1}:45` : m));
+  // Indian English: "one and a half lakh", "two and a half thousand", "a lakh and a half", "5 grand"
+  t = t.replace(new RegExp(`\\b${UNIT_W}\\s+and\\s+a\\s+half\\s+${MULT_W}\\b`, 'gi'), (_, a: string, m: string) => `${num(a)}.5 ${m}`);
+  t = t.replace(new RegExp(`\\ba\\s+${MULT_W}\\s+and\\s+a\\s+half\\b`, 'gi'), (_, m: string) => `1.5 ${m}`);
+  t = t.replace(new RegExp(`\\b${UNIT_W}\\s+grand\\b`, 'gi'), (_, a: string) => `${num(a)} thousand`);
+  // a price read in pairs before rupees: "nineteen ninety nine rupees" = 1,999 (never a year here: money follows)
+  const TEEN: Record<string, number> = { ten: 10, eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19 };
+  const TENS: Record<string, number> = { twenty: 20, thirty: 30, forty: 40, fifty: 50, sixty: 60, seventy: 70, eighty: 80, ninety: 90 };
+  t = t.replace(
+    /\b(ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen)\s+(twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety)(?:[\s-]+(one|two|three|four|five|six|seven|eight|nine))?\s+(?=(?:rupees?|rs\.?|rupaye|bucks)\b)/gi,
+    (_, a: string, b: string, c: string | undefined) => `${TEEN[a.toLowerCase()] * 100 + TENS[b.toLowerCase()] + (c ? Number(DIGIT[c.toLowerCase()]) : 0)} `,
   );
   const w = t.split(/(\s+)/);
   const clean = (s: string | undefined) => (s ?? '').replace(/[.,;:!?]+$/, '').toLowerCase();

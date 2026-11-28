@@ -1,0 +1,30 @@
+{"id":"et-01","lang":"en","kind":"story","text":"I lost one and a half lakh rupees from my SBI account this morning at 10 am","expected":{"amount":150000,"time":{"day":0,"at":"10:00"},"bank":"sbi"},"tags":["en_tune"]}
+{"id":"et-02","lang":"en","kind":"story","text":"Someone took twenty-five hundred rupees through Google Pay about forty minutes ago","expected":{"amount":2500,"time":{"ago":40},"paymentApp":"gpay"},"tags":["en_tune"]}
+{"id":"et-03","lang":"en","kind":"story","text":"A man said he was from my bank and asked for the OTP, I shared it and 12,750 rupees were debited from my HDFC account","expected":{"amount":12750,"scamType":"otp_shared","bank":"hdfc"},"tags":["en_tune"]}
+{"id":"et-04","lang":"en","kind":"story","text":"They took two and a half thousand rupees from my Canara Bank account yesterday at 8 pm","expected":{"amount":2500,"time":{"day":-1,"at":"20:00"},"bank":"canara"},"tags":["en_tune"]}
+{"id":"et-05","lang":"en","kind":"story","text":"I got a part-time job offer on WhatsApp, paid tasks, and I lost one point two lakh rupees","expected":{"amount":120000,"scamType":"investment_task"},"tags":["en_tune"]}
+{"id":"et-06","lang":"en","kind":"story","text":"Rs 45,000 went from my ICICI account two hours ago","expected":{"amount":45000,"time":{"ago":120},"bank":"icici"},"tags":["en_tune"]}
+{"id":"et-07","lang":"en","kind":"story","text":"I paid nineteen ninety nine rupees for a fake delivery fee on PhonePe","expected":{"amount":1999,"paymentApp":"phonepe"},"tags":["en_tune"]}
+{"id":"et-08","lang":"en","kind":"story","text":"A caller from fake customer care made me install AnyDesk and three lakh rupees went from my Axis account","expected":{"amount":300000,"scamType":"fake_customer_care","bank":"axis"},"tags":["en_tune"]}
+{"id":"et-09","lang":"en","kind":"story","text":"Someone sent a QR code to give me money, I scanned it and 8,400 rupees were taken from my Kotak account at 11 am today","expected":{"amount":8400,"time":{"day":0,"at":"11:00"},"scamType":"qr_scan","bank":"kotak"},"tags":["en_tune"]}
+{"id":"et-10","lang":"en","kind":"story","text":"They said my KYC has expired and my account will be blocked, then 6,000 rupees were debited from my PNB account","expected":{"amount":6000,"scamType":"fake_kyc","bank":"pnb"},"tags":["en_tune"]}
+{"id":"et-11","lang":"en","kind":"story","text":"About a lakh and a half was taken from my Bank of Baroda account last night at 10","expected":{"amount":150000,"time":{"day":-1,"at":"22:00"},"bank":"bob"},"tags":["en_tune"]}
+{"id":"et-12","lang":"en","kind":"story","text":"Ten thousand five hundred rupees went from my Yes Bank account fifteen minutes ago","expected":{"amount":10500,"time":{"ago":15},"bank":"yes"},"tags":["en_tune"]}
+{"id":"et-13","lang":"en","kind":"story","text":"Somebody said he had sent money by mistake and asked me to return it, I sent 7,200 rupees on Paytm","expected":{"amount":7200,"scamType":"wrong_transfer","paymentApp":"paytm"},"tags":["en_tune"]}
+{"id":"et-14","lang":"en","kind":"story","text":"I lost two lakh fifty thousand rupees in a fake share trading app","expected":{"amount":250000,"scamType":"investment_task"},"tags":["en_tune"]}
+{"id":"et-15","lang":"en","kind":"story","text":"Eighteen thousand two hundred and fifty rupees were debited from my Union Bank account on Monday","expected":{"amount":18250,"time":{"day":-5,"at":"12:00","tol":720},"bank":"union"},"tags":["en_tune"]}
+{"id":"et-16","lang":"en","kind":"answer:amount","hint":"amount","text":"one and a half lakh","expected":{"amount":150000},"tags":["en_tune"]}
+{"id":"et-17","lang":"en","kind":"answer:amount","hint":"amount","text":"twelve thousand nine hundred","expected":{"amount":12900},"tags":["en_tune"]}
+{"id":"et-18","lang":"en","kind":"answer:amount","hint":"amount","text":"around thirty five thousand rupees","expected":{"amount":35000},"tags":["en_tune"]}
+{"id":"et-19","lang":"en","kind":"answer:time","hint":"time","text":"yesterday at half past nine in the evening","expected":{"time":{"day":-1,"at":"21:30"}},"tags":["en_tune"]}
+{"id":"et-20","lang":"en","kind":"answer:time","hint":"time","text":"about three hours ago","expected":{"time":{"ago":180}},"tags":["en_tune"]}
+{"id":"et-21","lang":"en","kind":"answer:time","hint":"time","text":"today at 10 30 am","expected":{"time":{"day":0,"at":"10:30"}},"tags":["en_tune"]}
+{"id":"et-22","lang":"en","kind":"answer:utr","hint":"utr","text":"the reference number is 3 4 5 6 7 8 9 0 1 2 3 4","expected":{"utr":"345678901234"},"tags":["en_tune"]}
+{"id":"et-23","lang":"en","kind":"answer:utr","hint":"utr","text":"UTR 6723 4589 0123","expected":{"utr":"672345890123"},"tags":["en_tune"]}
+{"id":"et-24","lang":"en","kind":"answer:suspect","hint":"suspect","text":"his number was 9 8 4 5 6 7 1 2 3 0","expected":{"suspectPhone":"9845671230"},"tags":["en_tune"]}
+{"id":"et-25","lang":"en","kind":"answer:suspect","hint":"suspect","text":"the UPI ID was refund dot help at ybl","expected":{"suspectUpi":"refund.help@ybl"},"tags":["en_tune"]}
+{"id":"et-26","lang":"en","kind":"answer:bank","hint":"bank","text":"it was my IndusInd Bank account","expected":{"bank":"indusind"},"tags":["en_tune"]}
+{"id":"et-27","lang":"en","kind":"answer:bank","hint":"bank","text":"Bank of India","expected":{"bank":"boi"},"tags":["en_tune"]}
+{"id":"et-28","lang":"en","kind":"correction","text":"no, it was fifteen hundred, not five hundred","expected":{"amount":1500},"tags":["en_tune"]}
+{"id":"et-29","lang":"en","kind":"correction","text":"the bank is wrong, it was Federal Bank","expected":{"bank":"federal"},"tags":["en_tune"]}
+{"id":"et-30","lang":"en","kind":"correction","text":"sorry, the time was yesterday at 7 30 pm","expected":{"time":{"day":-1,"at":"19:30"}},"tags":["en_tune"]}

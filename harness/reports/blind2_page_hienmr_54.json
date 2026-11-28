@@ -1,0 +1,5629 @@
+{
+ "summary": {
+  "name": "blind2_page_hienmr_54",
+  "generatedAt": "2026-11-28T00:16:58.464Z",
+  "extractor": "..\\prototype\\src\\lib\\extract.ts",
+  "cases": 42,
+  "runs": 78,
+  "missingTranscripts": 0,
+  "headline": {
+   "reference": {
+    "n": 42,
+    "correct": 97.61904761904762,
+    "correctUnamb": 97.61904761904762,
+    "f1": 0.9863013698630136,
+    "precision": 0.9863013698630136,
+    "recall": 0.9863013698630136,
+    "wer": null,
+    "cer": null
+   },
+   "asr_clean": {
+    "n": 42,
+    "correct": 61.904761904761905,
+    "correctUnamb": 61.904761904761905,
+    "f1": 0.8591549295774646,
+    "precision": 0.9384615384615385,
+    "recall": 0.7922077922077922,
+    "wer": 66.12576064908723,
+    "cer": 66.9239250275634
+   },
+   "asr_noise15": {
+    "n": 0,
+    "correct": null,
+    "correctUnamb": null,
+    "f1": null,
+    "precision": null,
+    "recall": null,
+    "wer": null,
+    "cer": null
+   },
+   "asr_noise5": {
+    "n": 0,
+    "correct": null,
+    "correctUnamb": null,
+    "f1": null,
+    "precision": null,
+    "recall": null,
+    "wer": null,
+    "cer": null
+   },
+   "asr_rate": {
+    "n": 0,
+    "correct": null,
+    "correctUnamb": null,
+    "f1": null,
+    "precision": null,
+    "recall": null,
+    "wer": null,
+    "cer": null
+   },
+   "asr_all_forced": {
+    "n": 78,
+    "correct": 58.97435897435897,
+    "correctUnamb": 58.97435897435897,
+    "f1": 0.8538461538461539,
+    "precision": 0.9487179487179487,
+    "recall": 0.7762237762237763,
+    "wer": 69.74416017797553,
+    "cer": 71.82037371910789
+   }
+  },
+  "ceiling": {
+   "asr_clean": 69.04761904761905,
+   "asr_all_forced": 65.38461538461539,
+   "byLang": {
+    "hi": 83.33333333333333,
+    "en": 66.66666666666667,
+    "bn": null,
+    "ta": null,
+    "te": null,
+    "mr": 58.333333333333336,
+    "kn": null
+   }
+  },
+  "fields": {
+   "reference": {
+    "amount": {
+     "tp": 26,
+     "wrong": 1,
+     "fn": 0,
+     "fp": 0,
+     "support": 27,
+     "precision": 0.9629629629629629,
+     "recall": 0.9629629629629629,
+     "f1": 0.9629629629629629
+    },
+    "time": {
+     "tp": 15,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 15,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "scamType": {
+     "tp": 8,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 8,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "bank": {
+     "tp": 13,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 13,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "paymentApp": {
+     "tp": 7,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 7,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "utr": {
+     "tp": 1,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 1,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "suspectUpi": {
+     "tp": 1,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 1,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "suspectPhone": {
+     "tp": 1,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 1,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "suspectAccount": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "intent": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "_micro": {
+     "tp": 72,
+     "wrong": 1,
+     "fn": 0,
+     "fp": 0,
+     "support": 73,
+     "precision": 0.9863013698630136,
+     "recall": 0.9863013698630136,
+     "f1": 0.9863013698630136
+    }
+   },
+   "asr_clean": {
+    "amount": {
+     "tp": 23,
+     "wrong": 3,
+     "fn": 0,
+     "fp": 0,
+     "support": 26,
+     "precision": 0.8846153846153846,
+     "recall": 0.8846153846153846,
+     "f1": 0.8846153846153846
+    },
+    "time": {
+     "tp": 14,
+     "wrong": 1,
+     "fn": 1,
+     "fp": 0,
+     "support": 16,
+     "precision": 0.9333333333333333,
+     "recall": 0.875,
+     "f1": 0.9032258064516129
+    },
+    "scamType": {
+     "tp": 9,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 9,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "bank": {
+     "tp": 7,
+     "wrong": 0,
+     "fn": 4,
+     "fp": 0,
+     "support": 11,
+     "precision": 1,
+     "recall": 0.6363636363636364,
+     "f1": 0.7777777777777778
+    },
+    "paymentApp": {
+     "tp": 6,
+     "wrong": 0,
+     "fn": 1,
+     "fp": 0,
+     "support": 7,
+     "precision": 1,
+     "recall": 0.8571428571428571,
+     "f1": 0.923076923076923
+    },
+    "utr": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 3,
+     "fp": 0,
+     "support": 3,
+     "precision": null,
+     "recall": 0,
+     "f1": null
+    },
+    "suspectUpi": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 3,
+     "fp": 0,
+     "support": 3,
+     "precision": null,
+     "recall": 0,
+     "f1": null
+    },
+    "suspectPhone": {
+     "tp": 2,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 2,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "suspectAccount": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "intent": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "_micro": {
+     "tp": 61,
+     "wrong": 4,
+     "fn": 12,
+     "fp": 0,
+     "support": 77,
+     "precision": 0.9384615384615385,
+     "recall": 0.7922077922077922,
+     "f1": 0.8591549295774646
+    }
+   },
+   "asr_all_forced": {
+    "amount": {
+     "tp": 43,
+     "wrong": 4,
+     "fn": 1,
+     "fp": 0,
+     "support": 48,
+     "precision": 0.9148936170212766,
+     "recall": 0.8958333333333334,
+     "f1": 0.9052631578947369
+    },
+    "time": {
+     "tp": 23,
+     "wrong": 2,
+     "fn": 5,
+     "fp": 0,
+     "support": 30,
+     "precision": 0.92,
+     "recall": 0.7666666666666667,
+     "f1": 0.8363636363636363
+    },
+    "scamType": {
+     "tp": 17,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 17,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "bank": {
+     "tp": 15,
+     "wrong": 0,
+     "fn": 6,
+     "fp": 0,
+     "support": 21,
+     "precision": 1,
+     "recall": 0.7142857142857143,
+     "f1": 0.8333333333333333
+    },
+    "paymentApp": {
+     "tp": 9,
+     "wrong": 0,
+     "fn": 4,
+     "fp": 0,
+     "support": 13,
+     "precision": 1,
+     "recall": 0.6923076923076923,
+     "f1": 0.8181818181818181
+    },
+    "utr": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 5,
+     "fp": 0,
+     "support": 5,
+     "precision": null,
+     "recall": 0,
+     "f1": null
+    },
+    "suspectUpi": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 5,
+     "fp": 0,
+     "support": 5,
+     "precision": null,
+     "recall": 0,
+     "f1": null
+    },
+    "suspectPhone": {
+     "tp": 4,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 4,
+     "precision": 1,
+     "recall": 1,
+     "f1": 1
+    },
+    "suspectAccount": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "intent": {
+     "tp": 0,
+     "wrong": 0,
+     "fn": 0,
+     "fp": 0,
+     "support": 0,
+     "precision": null,
+     "recall": null,
+     "f1": null
+    },
+    "_micro": {
+     "tp": 111,
+     "wrong": 6,
+     "fn": 26,
+     "fp": 0,
+     "support": 143,
+     "precision": 0.9487179487179487,
+     "recall": 0.7762237762237763,
+     "f1": 0.8538461538461539
+    }
+   }
+  },
+  "byLang": {
+   "hi": {
+    "reference": {
+     "n": 6,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 12,
+     "correct": 83.33333333333333,
+     "correctUnamb": 83.33333333333333,
+     "f1": 0.9523809523809523,
+     "precision": 1,
+     "recall": 0.9090909090909091,
+     "wer": 100.67567567567568,
+     "cer": 128.95833333333334
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": 0,
+    "idRuns": 2,
+    "fieldsRef": {
+     "amount": {
+      "tp": 3,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 11,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 11,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 6,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 6,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 4,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 4,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 4,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 4,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 2,
+      "fp": 0,
+      "support": 4,
+      "precision": 1,
+      "recall": 0.5,
+      "f1": 0.6666666666666666
+     },
+     "paymentApp": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 20,
+      "wrong": 0,
+      "fn": 2,
+      "fp": 0,
+      "support": 22,
+      "precision": 1,
+      "recall": 0.9090909090909091,
+      "f1": 0.9523809523809523
+     }
+    }
+   },
+   "en": {
+    "reference": {
+     "n": 6,
+     "correct": 83.33333333333333,
+     "correctUnamb": 83.33333333333333,
+     "f1": 0.9090909090909091,
+     "precision": 0.9090909090909091,
+     "recall": 0.9090909090909091,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 18,
+     "correct": 50,
+     "correctUnamb": 50,
+     "f1": 0.8275862068965517,
+     "precision": 0.96,
+     "recall": 0.7272727272727273,
+     "wer": 31.03448275862069,
+     "cer": 11.505376344086022
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": 100,
+    "idRuns": 3,
+    "fieldsRef": {
+     "amount": {
+      "tp": 3,
+      "wrong": 1,
+      "fn": 0,
+      "fp": 0,
+      "support": 4,
+      "precision": 0.75,
+      "recall": 0.75,
+      "f1": 0.75
+     },
+     "time": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "suspectUpi": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 10,
+      "wrong": 1,
+      "fn": 0,
+      "fp": 0,
+      "support": 11,
+      "precision": 0.9090909090909091,
+      "recall": 0.9090909090909091,
+      "f1": 0.9090909090909091
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 12,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 12,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 5,
+      "wrong": 1,
+      "fn": 0,
+      "fp": 0,
+      "support": 6,
+      "precision": 0.8333333333333334,
+      "recall": 0.8333333333333334,
+      "f1": 0.8333333333333334
+     },
+     "scamType": {
+      "tp": 3,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 2,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 0.3333333333333333,
+      "f1": 0.5
+     },
+     "paymentApp": {
+      "tp": 3,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 3,
+      "fp": 0,
+      "support": 3,
+      "precision": null,
+      "recall": 0,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 3,
+      "fp": 0,
+      "support": 3,
+      "precision": null,
+      "recall": 0,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 24,
+      "wrong": 1,
+      "fn": 8,
+      "fp": 0,
+      "support": 33,
+      "precision": 0.96,
+      "recall": 0.7272727272727273,
+      "f1": 0.8275862068965517
+     }
+    }
+   },
+   "bn": {
+    "reference": {
+     "n": 6,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": null,
+    "idRuns": 0,
+    "fieldsRef": {
+     "amount": {
+      "tp": 4,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 4,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 10,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 10,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "time": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "scamType": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "bank": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "paymentApp": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    }
+   },
+   "ta": {
+    "reference": {
+     "n": 6,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": null,
+    "idRuns": 0,
+    "fieldsRef": {
+     "amount": {
+      "tp": 4,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 4,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 10,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 10,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "time": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "scamType": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "bank": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "paymentApp": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    }
+   },
+   "te": {
+    "reference": {
+     "n": 6,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": null,
+    "idRuns": 0,
+    "fieldsRef": {
+     "amount": {
+      "tp": 4,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 4,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 10,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 10,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "time": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "scamType": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "bank": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "paymentApp": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    }
+   },
+   "mr": {
+    "reference": {
+     "n": 6,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 12,
+     "correct": 58.333333333333336,
+     "correctUnamb": 58.333333333333336,
+     "f1": 0.8095238095238095,
+     "precision": 0.85,
+     "recall": 0.7727272727272727,
+     "wer": 114.28571428571429,
+     "cer": 120.79207920792079
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": null,
+    "idRuns": 0,
+    "fieldsRef": {
+     "amount": {
+      "tp": 4,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 4,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 3,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 3,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 11,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 11,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 5,
+      "wrong": 3,
+      "fn": 0,
+      "fp": 0,
+      "support": 8,
+      "precision": 0.625,
+      "recall": 0.625,
+      "f1": 0.625
+     },
+     "time": {
+      "tp": 5,
+      "wrong": 0,
+      "fn": 1,
+      "fp": 0,
+      "support": 6,
+      "precision": 1,
+      "recall": 0.8333333333333334,
+      "f1": 0.9090909090909091
+     },
+     "scamType": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 4,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 4,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 1,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 0.5,
+      "f1": 0.6666666666666666
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 17,
+      "wrong": 3,
+      "fn": 2,
+      "fp": 0,
+      "support": 22,
+      "precision": 0.85,
+      "recall": 0.7727272727272727,
+      "f1": 0.8095238095238095
+     }
+    }
+   },
+   "kn": {
+    "reference": {
+     "n": 6,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    },
+    "asr_clean": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "asr_noise5": {
+     "n": 0,
+     "correct": null,
+     "correctUnamb": null,
+     "f1": null,
+     "precision": null,
+     "recall": null,
+     "wer": null,
+     "cer": null
+    },
+    "idDigitsKept": null,
+    "idRuns": 0,
+    "fieldsRef": {
+     "amount": {
+      "tp": 4,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 4,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "time": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "scamType": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "bank": {
+      "tp": 2,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 2,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "paymentApp": {
+      "tp": 1,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 1,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 10,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 10,
+      "precision": 1,
+      "recall": 1,
+      "f1": 1
+     }
+    },
+    "fieldsAsr": {
+     "amount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "time": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "scamType": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "bank": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "paymentApp": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "utr": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectUpi": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectPhone": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "suspectAccount": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "intent": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     },
+     "_micro": {
+      "tp": 0,
+      "wrong": 0,
+      "fn": 0,
+      "fp": 0,
+      "support": 0,
+      "precision": null,
+      "recall": null,
+      "f1": null
+     }
+    }
+   }
+  },
+  "byCondition": {
+   "clean": {
+    "n": 78,
+    "correct": 58.97435897435897,
+    "correctUnamb": 58.97435897435897,
+    "f1": 0.8538461538461539,
+    "precision": 0.9487179487179487,
+    "recall": 0.7762237762237763,
+    "wer": 69.74416017797553,
+    "cer": 71.82037371910789
+   }
+  },
+  "bySnr": {
+   "clean": {
+    "n": 78,
+    "correct": 58.97435897435897,
+    "correctUnamb": 58.97435897435897,
+    "f1": 0.8538461538461539,
+    "precision": 0.9487179487179487,
+    "recall": 0.7762237762237763,
+    "wer": 69.74416017797553,
+    "cer": 71.82037371910789
+   }
+  },
+  "byVoice": {
+   "hi-IN-MadhurNeural": {
+    "n": 6,
+    "correct": 83.33333333333333,
+    "correctUnamb": 83.33333333333333,
+    "f1": 0.9523809523809523,
+    "precision": 1,
+    "recall": 0.9090909090909091,
+    "wer": 100,
+    "cer": 129.16666666666666
+   },
+   "hi-IN-SwaraNeural": {
+    "n": 6,
+    "correct": 83.33333333333333,
+    "correctUnamb": 83.33333333333333,
+    "f1": 0.9523809523809523,
+    "precision": 1,
+    "recall": 0.9090909090909091,
+    "wer": 101.35135135135135,
+    "cer": 128.75
+   },
+   "en-IN-NeerjaNeural": {
+    "n": 6,
+    "correct": 50,
+    "correctUnamb": 50,
+    "f1": 0.8421052631578948,
+    "precision": 1,
+    "recall": 0.7272727272727273,
+    "wer": 32.18390804597701,
+    "cer": 12.580645161290322
+   },
+   "en-IN-PrabhatNeural": {
+    "n": 6,
+    "correct": 50,
+    "correctUnamb": 50,
+    "f1": 0.7999999999999999,
+    "precision": 0.8888888888888888,
+    "recall": 0.7272727272727273,
+    "wer": 31.03448275862069,
+    "cer": 10.32258064516129
+   },
+   "en-IN-NeerjaExpressiveNeural": {
+    "n": 6,
+    "correct": 50,
+    "correctUnamb": 50,
+    "f1": 0.8421052631578948,
+    "precision": 1,
+    "recall": 0.7272727272727273,
+    "wer": 29.885057471264368,
+    "cer": 11.612903225806452
+   },
+   "mr-IN-AarohiNeural": {
+    "n": 6,
+    "correct": 50,
+    "correctUnamb": 50,
+    "f1": 0.7999999999999999,
+    "precision": 0.8888888888888888,
+    "recall": 0.7272727272727273,
+    "wer": 109.52380952380952,
+    "cer": 118.81188118811882
+   },
+   "mr-IN-ManoharNeural": {
+    "n": 6,
+    "correct": 66.66666666666667,
+    "correctUnamb": 66.66666666666667,
+    "f1": 0.8181818181818182,
+    "precision": 0.8181818181818182,
+    "recall": 0.8181818181818182,
+    "wer": 119.04761904761905,
+    "cer": 122.77227722772277
+   }
+  },
+  "byRate": {
+   "r0": {
+    "n": 78,
+    "correct": 58.97435897435897,
+    "correctUnamb": 58.97435897435897,
+    "f1": 0.8538461538461539,
+    "precision": 0.9487179487179487,
+    "recall": 0.7762237762237763,
+    "wer": 69.74416017797553,
+    "cer": 71.82037371910789
+   }
+  },
+  "byKind": {
+   "story": {
+    "n": 14,
+    "correct": 42.857142857142854,
+    "correctUnamb": 42.857142857142854,
+    "f1": 0.8913043478260869,
+    "precision": 0.9534883720930233,
+    "recall": 0.8367346938775511,
+    "wer": 62.295081967213115,
+    "cer": 61.513687600644126,
+    "reference": {
+     "n": 14,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    }
+   },
+   "answer": {
+    "n": 21,
+    "correct": 61.904761904761905,
+    "correctUnamb": 61.904761904761905,
+    "f1": 0.7222222222222222,
+    "precision": 0.8666666666666667,
+    "recall": 0.6190476190476191,
+    "wer": 78.32167832167832,
+    "cer": 84.02948402948402,
+    "reference": {
+     "n": 21,
+     "correct": 100,
+     "correctUnamb": 100,
+     "f1": 1,
+     "precision": 1,
+     "recall": 1,
+     "wer": null,
+     "cer": null
+    }
+   },
+   "correction": {
+    "n": 7,
+    "correct": 100,
+    "correctUnamb": 100,
+    "f1": 1,
+    "precision": 1,
+    "recall": 1,
+    "wer": 53.333333333333336,
+    "cer": 65.45454545454545,
+    "reference": {
+     "n": 7,
+     "correct": 85.71428571428571,
+     "correctUnamb": 85.71428571428571,
+     "f1": 0.8571428571428571,
+     "precision": 0.8571428571428571,
+     "recall": 0.8571428571428571,
+     "wer": null,
+     "cer": null
+    }
+   }
+  },
+  "autoDetect": {
+   "n": 0,
+   "auto": {
+    "n": 0,
+    "correct": null,
+    "correctUnamb": null,
+    "f1": null,
+    "precision": null,
+    "recall": null,
+    "wer": null,
+    "cer": null
+   },
+   "forced": {
+    "n": 0,
+    "correct": null,
+    "correctUnamb": null,
+    "f1": null,
+    "precision": null,
+    "recall": null,
+    "wer": null,
+    "cer": null
+   },
+   "wrongScript": null,
+   "byLang": {}
+  },
+  "attribution": {
+   "all": {
+    "asr": 27,
+    "extractor_form": 5,
+    "extractor": 0,
+    "extractor_asrToo": 0,
+    "total": 32
+   },
+   "clean": {
+    "asr": 13,
+    "extractor_form": 3,
+    "extractor": 0,
+    "extractor_asrToo": 0,
+    "total": 16
+   },
+   "byField": {
+    "bank": {
+     "asr": 6,
+     "extractor_form": 0,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 6
+    },
+    "time": {
+     "asr": 7,
+     "extractor_form": 0,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 7
+    },
+    "utr": {
+     "asr": 0,
+     "extractor_form": 5,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 5
+    },
+    "suspectUpi": {
+     "asr": 5,
+     "extractor_form": 0,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 5
+    },
+    "paymentApp": {
+     "asr": 4,
+     "extractor_form": 0,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 4
+    },
+    "amount": {
+     "asr": 5,
+     "extractor_form": 0,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 5
+    }
+   },
+   "byLang": {
+    "hi": {
+     "asr": 5,
+     "extractor_form": 0,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 5
+    },
+    "en": {
+     "asr": 10,
+     "extractor_form": 5,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 15
+    },
+    "mr": {
+     "asr": 12,
+     "extractor_form": 0,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 12
+    }
+   },
+   "bySnr": {
+    "clean": {
+     "asr": 27,
+     "extractor_form": 5,
+     "extractor": 0,
+     "extractor_asrToo": 0,
+     "total": 32
+    }
+   }
+  },
+  "clusters": [
+   {
+    "field": "utr",
+    "lang": "en",
+    "cat": "extractor_form",
+    "outcome": "fn",
+    "runs": 5,
+    "cases": [
+     "en-c03"
+    ]
+   },
+   {
+    "field": "suspectUpi",
+    "lang": "en",
+    "cat": "asr",
+    "outcome": "fn",
+    "runs": 5,
+    "cases": [
+     "en-c05"
+    ]
+   },
+   {
+    "field": "time",
+    "lang": "mr",
+    "cat": "asr",
+    "outcome": "fn",
+    "runs": 5,
+    "cases": [
+     "mr-c01",
+     "mr-c03"
+    ]
+   },
+   {
+    "field": "bank",
+    "lang": "hi",
+    "cat": "asr",
+    "outcome": "fn",
+    "runs": 4,
+    "cases": [
+     "hi-c01"
+    ]
+   },
+   {
+    "field": "amount",
+    "lang": "mr",
+    "cat": "asr",
+    "outcome": "wrong",
+    "runs": 4,
+    "cases": [
+     "mr-c02",
+     "mr-c04"
+    ]
+   },
+   {
+    "field": "bank",
+    "lang": "en",
+    "cat": "asr",
+    "outcome": "fn",
+    "runs": 2,
+    "cases": [
+     "en-c02"
+    ]
+   },
+   {
+    "field": "paymentApp",
+    "lang": "en",
+    "cat": "asr",
+    "outcome": "fn",
+    "runs": 2,
+    "cases": [
+     "en-c01"
+    ]
+   },
+   {
+    "field": "time",
+    "lang": "en",
+    "cat": "asr",
+    "outcome": "wrong",
+    "runs": 1,
+    "cases": [
+     "en-c01"
+    ]
+   },
+   {
+    "field": "paymentApp",
+    "lang": "mr",
+    "cat": "asr",
+    "outcome": "fn",
+    "runs": 1,
+    "cases": [
+     "mr-c02"
+    ]
+   },
+   {
+    "field": "paymentApp",
+    "lang": "hi",
+    "cat": "asr",
+    "outcome": "fn",
+    "runs": 1,
+    "cases": [
+     "hi-c02"
+    ]
+   },
+   {
+    "field": "time",
+    "lang": "mr",
+    "cat": "asr",
+    "outcome": "wrong",
+    "runs": 1,
+    "cases": [
+     "mr-c02"
+    ]
+   },
+   {
+    "field": "amount",
+    "lang": "mr",
+    "cat": "asr",
+    "outcome": "fn",
+    "runs": 1,
+    "cases": [
+     "mr-c04"
+    ]
+   }
+  ],
+  "worst": [
+   {
+    "id": "en-c03",
+    "lang": "en",
+    "kind": "answer:utr",
+    "failRate": 1,
+    "runs": 5,
+    "refCorrect": true,
+    "text": "the UTR is 5 0 7 1 2 3 4 5 6 7 8 9",
+    "transcript": "The UTR is 05:07123456789.",
+    "tid": "en-c03__Neerja__r0__en",
+    "fields": [
+     {
+      "field": "utr",
+      "outcome": "fn",
+      "expected": "507123456789",
+      "got": "-",
+      "refGot": "507123456789",
+      "cat": "extractor_form",
+      "why": "value is in the transcript but not parsed"
+     }
+    ]
+   },
+   {
+    "id": "en-c05",
+    "lang": "en",
+    "kind": "answer:suspect",
+    "failRate": 1,
+    "runs": 5,
+    "refCorrect": true,
+    "text": "the UPI ID was lucky dot winner at okaxis",
+    "transcript": "The UPI ID was lucky dot winner at the taxes.",
+    "tid": "en-c05__Neerja__r0__en",
+    "fields": [
+     {
+      "field": "suspectUpi",
+      "outcome": "fn",
+      "expected": "lucky.winner@okaxis",
+      "got": "-",
+      "refGot": "lucky.winner@okaxis",
+      "cat": "asr",
+      "why": "value not in the transcript"
+     }
+    ]
+   },
+   {
+    "id": "hi-c01",
+    "lang": "hi",
+    "kind": "story",
+    "failRate": 1,
+    "runs": 4,
+    "refCorrect": true,
+    "text": "एक आदमी ने खुद को बैंक का अफसर बताया, ओटीपी माँगा और मैंने दे दिया, फिर मेरे केनरा बैंक खाते से सात हज़ार रुपये कट गए, बीस मिनट पहले",
+    "transcript": "Ek aadmi ne khud ko bank ka avsar bataaya, OTP maanga aur mainne de diya. Phir mere kendr bank khaate se saat hazaar rupe cut gae bis minute pahle.",
+    "tid": "hi-c01__Madhur__r0__hi",
+    "fields": [
+     {
+      "field": "bank",
+      "outcome": "fn",
+      "expected": "Canara Bank",
+      "got": "-",
+      "refGot": "Canara Bank",
+      "cat": "asr",
+      "why": "ASR lost/changed: केनरा"
+     }
+    ]
+   },
+   {
+    "id": "mr-c04",
+    "lang": "mr",
+    "kind": "answer:amount",
+    "failRate": 1,
+    "runs": 4,
+    "refCorrect": true,
+    "text": "पावणे दोन लाख",
+    "transcript": "Paani donon laakh.",
+    "tid": "mr-c04__Aarohi__r0__mr",
+    "fields": [
+     {
+      "field": "amount",
+      "outcome": "wrong",
+      "expected": "175000",
+      "got": "200000",
+      "refGot": "175000",
+      "cat": "asr",
+      "why": "value not in the transcript"
+     }
+    ]
+   },
+   {
+    "id": "mr-c01",
+    "lang": "mr",
+    "kind": "story",
+    "failRate": 0.75,
+    "runs": 4,
+    "refCorrect": true,
+    "text": "माझ्या बँक ऑफ इंडिया खात्यातून बारा हजार रुपये गेले, एका माणसाने ओटीपी मागितला आणि मी सांगितला, अर्ध्या तासापूर्वी",
+    "transcript": "Maja Bank of India khaataatoon baarah hazaar rupe gale, ekaam aadashaani OTP magtla, aani mein sangitla, aradhaataapur bhi.",
+    "tid": "mr-c01__Aarohi__r0__mr",
+    "fields": [
+     {
+      "field": "time",
+      "outcome": "fn",
+      "expected": "today 11:30 (30 min ago)",
+      "got": "-",
+      "refGot": "today 11:30 (30 min ago)",
+      "cat": "asr",
+      "why": "ASR lost/changed: अर्ध्या तासापूर्वी"
+     }
+    ]
+   },
+   {
+    "id": "mr-c02",
+    "lang": "mr",
+    "kind": "story",
+    "failRate": 0.75,
+    "runs": 4,
+    "refCorrect": true,
+    "text": "काल दुपारी तीन वाजता फोनपे वरून चार हजार पाचशे रुपये गेले",
+    "transcript": "Kal dophari tin vaajastha phone par varoorn chaar hazaar paanch se rupe ke lie.",
+    "tid": "mr-c02__Aarohi__r0__mr",
+    "fields": [
+     {
+      "field": "paymentApp",
+      "outcome": "fn",
+      "expected": "PhonePe",
+      "got": "-",
+      "refGot": "PhonePe",
+      "cat": "asr",
+      "why": "ASR lost/changed: फोनपे"
+     }
+    ]
+   },
+   {
+    "id": "en-c01",
+    "lang": "en",
+    "kind": "story",
+    "failRate": 0.6,
+    "runs": 5,
+    "refCorrect": true,
+    "text": "Someone claiming to be from the electricity board said my power would be cut tonight, I paid 3,450 rupees through Paytm an hour ago",
+    "transcript": "Someone claiming to be from the electricity board said my power would be cut to night, I paid 3450 rupees through Paytm and aargo.",
+    "tid": "en-c01__Prabhat__r0__en",
+    "fields": [
+     {
+      "field": "time",
+      "outcome": "wrong",
+      "expected": "today 11:00 (60 min ago)",
+      "got": "-1d 22:00 (840 min ago)",
+      "refGot": "today 11:00 (60 min ago)",
+      "cat": "asr",
+      "why": "ASR lost/changed: hour ago"
+     }
+    ]
+   },
+   {
+    "id": "mr-c03",
+    "lang": "mr",
+    "kind": "answer:time",
+    "failRate": 0.5,
+    "runs": 4,
+    "refCorrect": true,
+    "text": "दोन तासांपूर्वी",
+    "transcript": "Don't ask for me.",
+    "tid": "mr-c03__RemyMultilingual__r0__mr",
+    "fields": [
+     {
+      "field": "time",
+      "outcome": "fn",
+      "expected": "today 10:00 (120 min ago)",
+      "got": "-",
+      "refGot": "today 10:00 (120 min ago)",
+      "cat": "asr",
+      "why": "ASR lost/changed: दोन तासांपूर्वी"
+     }
+    ]
+   },
+   {
+    "id": "en-c02",
+    "lang": "en",
+    "kind": "story",
+    "failRate": 0.4,
+    "runs": 5,
+    "refCorrect": true,
+    "text": "A buyer on OLX sent me a QR code to receive payment, I scanned it and 18,000 was debited from my Kotak account yesterday at 4 pm",
+    "transcript": "Ab by or on OILX sent me a QR code to receive payment. I scan it and 18000 was debated from my quota account yesterday at 4PM.",
+    "tid": "en-c02__Neerja__r0__en",
+    "fields": [
+     {
+      "field": "bank",
+      "outcome": "fn",
+      "expected": "Kotak Mahindra Bank",
+      "got": "-",
+      "refGot": "Kotak Mahindra Bank",
+      "cat": "asr",
+      "why": "ASR lost/changed: Kotak"
+     }
+    ]
+   },
+   {
+    "id": "hi-c02",
+    "lang": "hi",
+    "kind": "story",
+    "failRate": 0.25,
+    "runs": 4,
+    "refCorrect": true,
+    "text": "टेलीग्राम पर टास्क वाली नौकरी के नाम पर मुझसे तीस हज़ार रुपये भरवाए, गूगल पे से भेजे थे",
+    "transcript": "Telegram par task vaali naukri ke naam par mujh se tis hazaar rupe bhravae Google par ise bheje the.",
+    "tid": "hi-c02__GiuseppeMultilingual__r0__hi",
+    "fields": [
+     {
+      "field": "paymentApp",
+      "outcome": "fn",
+      "expected": "Google Pay",
+      "got": "-",
+      "refGot": "Google Pay",
+      "cat": "asr",
+      "why": "ASR lost/changed: गूगल पे"
+     }
+    ]
+   }
+  ]
+ },
+ "reference": [
+  {
+   "id": "hi-c01",
+   "got": {
+    "amount": 7000,
+    "time": "2026-11-21T06:10:00.000Z",
+    "scamType": "otp_shared",
+    "bank": "Canara Bank"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "hi-c02",
+   "got": {
+    "amount": 30000,
+    "scamType": "investment_task",
+    "paymentApp": "Google Pay"
+   },
+   "out": {
+    "amount": "tp",
+    "scamType": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "hi-c03",
+   "got": {
+    "time": "2026-11-19T17:00:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "hi-c04",
+   "got": {
+    "amount": 125000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "hi-c05",
+   "got": {
+    "suspectPhone": "8765432109"
+   },
+   "out": {
+    "suspectPhone": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "hi-c06",
+   "got": {
+    "bank": "Axis Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "en-c01",
+   "got": {
+    "amount": 3450,
+    "time": "2026-11-21T05:30:00.000Z",
+    "paymentApp": "Paytm"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "en-c02",
+   "got": {
+    "amount": 18000,
+    "time": "2026-11-20T10:30:00.000Z",
+    "scamType": "qr_scan",
+    "bank": "Kotak Mahindra Bank"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "en-c03",
+   "got": {
+    "utr": "507123456789"
+   },
+   "out": {
+    "utr": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "en-c04",
+   "got": {
+    "amount": 175000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "en-c05",
+   "got": {
+    "suspectUpi": "lucky.winner@okaxis"
+   },
+   "out": {
+    "suspectUpi": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "en-c06",
+   "got": {
+    "amount": 5900
+   },
+   "out": {
+    "amount": "wrong"
+   },
+   "correct": false
+  },
+  {
+   "id": "mr-c01",
+   "got": {
+    "amount": 12000,
+    "time": "2026-11-21T06:00:00.000Z",
+    "scamType": "otp_shared",
+    "bank": "Bank of India"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "mr-c02",
+   "got": {
+    "amount": 4500,
+    "time": "2026-11-20T09:30:00.000Z",
+    "paymentApp": "PhonePe"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "mr-c03",
+   "got": {
+    "time": "2026-11-21T04:30:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "mr-c04",
+   "got": {
+    "amount": 175000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "mr-c05",
+   "got": {
+    "bank": "HDFC Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "mr-c06",
+   "got": {
+    "amount": 8000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "bn-c01",
+   "got": {
+    "amount": 8000,
+    "scamType": "fake_kyc",
+    "bank": "State Bank of India (SBI)"
+   },
+   "out": {
+    "amount": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "bn-c02",
+   "got": {
+    "amount": 2000,
+    "time": "2026-11-20T12:30:00.000Z",
+    "paymentApp": "PhonePe"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "bn-c03",
+   "got": {
+    "time": "2026-11-21T05:50:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "bn-c04",
+   "got": {
+    "amount": 120000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "bn-c05",
+   "got": {
+    "bank": "Punjab National Bank (PNB)"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "bn-c06",
+   "got": {
+    "amount": 5000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "ta-c01",
+   "got": {
+    "amount": 6000,
+    "scamType": "otp_shared",
+    "bank": "Indian Bank"
+   },
+   "out": {
+    "amount": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "ta-c02",
+   "got": {
+    "amount": 3000,
+    "time": "2026-11-20T14:30:00.000Z",
+    "paymentApp": "Google Pay"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "ta-c03",
+   "got": {
+    "time": "2026-11-21T06:10:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "ta-c04",
+   "got": {
+    "amount": 150000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "ta-c05",
+   "got": {
+    "bank": "Canara Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "ta-c06",
+   "got": {
+    "amount": 7000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "te-c01",
+   "got": {
+    "amount": 10000,
+    "scamType": "otp_shared",
+    "bank": "ICICI Bank"
+   },
+   "out": {
+    "amount": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "te-c02",
+   "got": {
+    "amount": 4000,
+    "time": "2026-11-20T08:30:00.000Z",
+    "paymentApp": "Paytm"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "te-c03",
+   "got": {
+    "time": "2026-11-21T06:00:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "te-c04",
+   "got": {
+    "amount": 200000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "te-c05",
+   "got": {
+    "bank": "Union Bank of India"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "te-c06",
+   "got": {
+    "amount": 3000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "kn-c01",
+   "got": {
+    "amount": 8000,
+    "scamType": "otp_shared",
+    "bank": "Canara Bank"
+   },
+   "out": {
+    "amount": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "kn-c02",
+   "got": {
+    "amount": 2000,
+    "time": "2026-11-20T13:30:00.000Z",
+    "paymentApp": "PhonePe"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "kn-c03",
+   "got": {
+    "time": "2026-11-21T06:20:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "kn-c04",
+   "got": {
+    "amount": 100000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "kn-c05",
+   "got": {
+    "bank": "State Bank of India (SBI)"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true
+  },
+  {
+   "id": "kn-c06",
+   "got": {
+    "amount": 6000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true
+  }
+ ],
+ "runs": [
+  {
+   "tid": "hi-c01__Madhur__r0__hi",
+   "case": "hi-c01",
+   "lang": "hi",
+   "kind": "story",
+   "tier": "base",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Ek aadmi ne khud ko bank ka avsar bataaya, OTP maanga aur mainne de diya. Phir mere kendr bank khaate se saat hazaar rupe cut gae bis minute pahle.",
+   "got": {
+    "amount": 7000,
+    "time": "2026-11-21T06:10:00.000Z",
+    "scamType": "otp_shared"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "bank": {
+     "cat": "asr",
+     "why": "ASR lost/changed: केनरा"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.1485148514851484
+  },
+  {
+   "tid": "hi-c01__Swara__r0__hi",
+   "case": "hi-c01",
+   "lang": "hi",
+   "kind": "story",
+   "tier": "base",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Ek aadmi ne khud ko bank ka avsar bataaya, OTP maanga aur mainne de diya. Phir mere kendr bank khaate se saat hazaar rupe cut gae, bis minute pahle.",
+   "got": {
+    "amount": 7000,
+    "time": "2026-11-21T06:10:00.000Z",
+    "scamType": "otp_shared"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "bank": {
+     "cat": "asr",
+     "why": "ASR lost/changed: केनरा"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.1485148514851484
+  },
+  {
+   "tid": "hi-c02__Madhur__r0__hi",
+   "case": "hi-c02",
+   "lang": "hi",
+   "kind": "story",
+   "tier": "base",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Telegram par task vaali naukri ke naam par mujhase tis hazaar rupe bhravaen Google Pay se bheje the.",
+   "got": {
+    "amount": 30000,
+    "scamType": "investment_task",
+    "paymentApp": "Google Pay"
+   },
+   "out": {
+    "amount": "tp",
+    "scamType": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.1884057971014492
+  },
+  {
+   "tid": "hi-c02__Swara__r0__hi",
+   "case": "hi-c02",
+   "lang": "hi",
+   "kind": "story",
+   "tier": "base",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Telegram par task vaali naukri ke naam par mujh se tis hazaar rupe bharvaen Google Pay se bheje the.",
+   "got": {
+    "amount": 30000,
+    "scamType": "investment_task",
+    "paymentApp": "Google Pay"
+   },
+   "out": {
+    "amount": "tp",
+    "scamType": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.0555555555555556,
+   "cer": 1.173913043478261
+  },
+  {
+   "tid": "hi-c03__Madhur__r0__hi",
+   "case": "hi-c03",
+   "lang": "hi",
+   "kind": "answer:time",
+   "tier": "base",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Parson raat saadhe das baje.",
+   "got": {
+    "time": "2026-11-19T17:00:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.2777777777777777
+  },
+  {
+   "tid": "hi-c03__Swara__r0__hi",
+   "case": "hi-c03",
+   "lang": "hi",
+   "kind": "answer:time",
+   "tier": "base",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Parson raat saadhe das baje.",
+   "got": {
+    "time": "2026-11-19T17:00:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.2777777777777777
+  },
+  {
+   "tid": "hi-c04__Madhur__r0__hi",
+   "case": "hi-c04",
+   "lang": "hi",
+   "kind": "answer:amount",
+   "tier": "base",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Sava laakh rupe.",
+   "got": {
+    "amount": 125000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.1818181818181819
+  },
+  {
+   "tid": "hi-c04__Swara__r0__hi",
+   "case": "hi-c04",
+   "lang": "hi",
+   "kind": "answer:amount",
+   "tier": "base",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Sava laakh rupe.",
+   "got": {
+    "amount": 125000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.1818181818181819
+  },
+  {
+   "tid": "hi-c05__Madhur__r0__hi",
+   "case": "hi-c05",
+   "lang": "hi",
+   "kind": "answer:suspect",
+   "tier": "base",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Uska number tha aath saat chhah paanch chaar tin do ek shoony nau.",
+   "got": {
+    "suspectPhone": "8765432109"
+   },
+   "out": {
+    "suspectPhone": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 2.65
+  },
+  {
+   "tid": "hi-c05__Swara__r0__hi",
+   "case": "hi-c05",
+   "lang": "hi",
+   "kind": "answer:suspect",
+   "tier": "base",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Uska number tha aath saat chhah paanch chaar tin do ek shoony nau.",
+   "got": {
+    "suspectPhone": "8765432109"
+   },
+   "out": {
+    "suspectPhone": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 2.65
+  },
+  {
+   "tid": "hi-c06__Madhur__r0__hi",
+   "case": "hi-c06",
+   "lang": "hi",
+   "kind": "correction",
+   "tier": "base",
+   "voice": "hi-IN-MadhurNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Bank galat hai, axis bank tha.",
+   "got": {
+    "bank": "Axis Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.0952380952380953
+  },
+  {
+   "tid": "hi-c06__Swara__r0__hi",
+   "case": "hi-c06",
+   "lang": "hi",
+   "kind": "correction",
+   "tier": "base",
+   "voice": "hi-IN-SwaraNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Bank galat hai, axis bank tha.",
+   "got": {
+    "bank": "Axis Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.0952380952380953
+  },
+  {
+   "tid": "en-c01__Neerja__r0__en",
+   "case": "en-c01",
+   "lang": "en",
+   "kind": "story",
+   "tier": "base",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "Someone claiming to be from the electricity board said my power would be cut tonight, I paid 3450 rupees through Paytm an hour ago.",
+   "got": {
+    "amount": 3450,
+    "time": "2026-11-21T05:30:00.000Z",
+    "paymentApp": "Paytm"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0,
+   "cer": 0
+  },
+  {
+   "tid": "en-c01__Prabhat__r0__en",
+   "case": "en-c01",
+   "lang": "en",
+   "kind": "story",
+   "tier": "base",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "Someone claiming to be from the electricity board said my power would be cut to night, I paid 3450 rupees through Paytm and aargo.",
+   "got": {
+    "amount": 3450,
+    "time": "2026-11-20T16:30:00.000Z",
+    "paymentApp": "Paytm"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "wrong",
+    "paymentApp": "tp"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "time": {
+     "cat": "asr",
+     "why": "ASR lost/changed: hour ago"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.20833333333333334,
+   "cer": 0.03773584905660377
+  },
+  {
+   "tid": "en-c01__NeerjaExpressive__r0__en",
+   "case": "en-c01",
+   "lang": "en",
+   "kind": "story",
+   "tier": "base",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "Someone claiming to be from the electricity board said my power would be cut tonight, I paid 3450 rupees through Paytm an hour ago.",
+   "got": {
+    "amount": 3450,
+    "time": "2026-11-21T05:30:00.000Z",
+    "paymentApp": "Paytm"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0,
+   "cer": 0
+  },
+  {
+   "tid": "en-c02__Neerja__r0__en",
+   "case": "en-c02",
+   "lang": "en",
+   "kind": "story",
+   "tier": "base",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "Ab by or on OILX sent me a QR code to receive payment. I scan it and 18000 was debated from my quota account yesterday at 4PM.",
+   "got": {
+    "amount": 18000,
+    "time": "2026-11-20T10:30:00.000Z",
+    "scamType": "qr_scan"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "bank": {
+     "cat": "asr",
+     "why": "ASR lost/changed: Kotak"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.3333333333333333,
+   "cer": 0.1
+  },
+  {
+   "tid": "en-c02__Prabhat__r0__en",
+   "case": "en-c02",
+   "lang": "en",
+   "kind": "story",
+   "tier": "base",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "A buyer on OLX sent me a QR code to receive payment, I scanded and 18000 was debated from my Kotak account yesterday at 4PM.",
+   "got": {
+    "amount": 18000,
+    "time": "2026-11-20T10:30:00.000Z",
+    "scamType": "qr_scan",
+    "bank": "Kotak Mahindra Bank"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.18518518518518517,
+   "cer": 0.04
+  },
+  {
+   "tid": "en-c02__NeerjaExpressive__r0__en",
+   "case": "en-c02",
+   "lang": "en",
+   "kind": "story",
+   "tier": "base",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "A by or on OILX sent me a QR code to receive payment. I scan it and 18000 was debated from my code of account yesterday at 4PM.",
+   "got": {
+    "amount": 18000,
+    "time": "2026-11-20T10:30:00.000Z",
+    "scamType": "qr_scan"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "bank": {
+     "cat": "asr",
+     "why": "ASR lost/changed: Kotak"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.3333333333333333,
+   "cer": 0.12
+  },
+  {
+   "tid": "en-c03__Neerja__r0__en",
+   "case": "en-c03",
+   "lang": "en",
+   "kind": "answer:utr",
+   "tier": "base",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "The UTR is 05:07123456789.",
+   "got": {},
+   "out": {
+    "utr": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "utr": {
+     "cat": "extractor_form",
+     "why": "value is in the transcript but not parsed"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.8,
+   "cer": 0.05
+  },
+  {
+   "tid": "en-c03__Prabhat__r0__en",
+   "case": "en-c03",
+   "lang": "en",
+   "kind": "answer:utr",
+   "tier": "base",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "The UTR is 05:07123456789.",
+   "got": {},
+   "out": {
+    "utr": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "utr": {
+     "cat": "extractor_form",
+     "why": "value is in the transcript but not parsed"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.8,
+   "cer": 0.05
+  },
+  {
+   "tid": "en-c03__NeerjaExpressive__r0__en",
+   "case": "en-c03",
+   "lang": "en",
+   "kind": "answer:utr",
+   "tier": "base",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "The UTR is 05:07123456789.",
+   "got": {},
+   "out": {
+    "utr": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "utr": {
+     "cat": "extractor_form",
+     "why": "value is in the transcript but not parsed"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.8,
+   "cer": 0.05
+  },
+  {
+   "tid": "en-c04__Neerja__r0__en",
+   "case": "en-c04",
+   "lang": "en",
+   "kind": "answer:amount",
+   "tier": "base",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "1 laakh 75000.",
+   "got": {
+    "amount": 175000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 1,
+   "cer": 0.8846153846153846
+  },
+  {
+   "tid": "en-c04__Prabhat__r0__en",
+   "case": "en-c04",
+   "lang": "en",
+   "kind": "answer:amount",
+   "tier": "base",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "1 lakh 75000.",
+   "got": {
+    "amount": 175000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.8,
+   "cer": 0.8461538461538461
+  },
+  {
+   "tid": "en-c04__NeerjaExpressive__r0__en",
+   "case": "en-c04",
+   "lang": "en",
+   "kind": "answer:amount",
+   "tier": "base",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "1 lakh 75000.",
+   "got": {
+    "amount": 175000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.8,
+   "cer": 0.8461538461538461
+  },
+  {
+   "tid": "en-c05__Neerja__r0__en",
+   "case": "en-c05",
+   "lang": "en",
+   "kind": "answer:suspect",
+   "tier": "base",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "The UPI ID was lucky dot winner at the taxes.",
+   "got": {},
+   "out": {
+    "suspectUpi": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "suspectUpi": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.2222222222222222,
+   "cer": 0.15151515151515152
+  },
+  {
+   "tid": "en-c05__Prabhat__r0__en",
+   "case": "en-c05",
+   "lang": "en",
+   "kind": "answer:suspect",
+   "tier": "base",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "The UPI ID was lucky dot winner at Ocaxis.",
+   "got": {},
+   "out": {
+    "suspectUpi": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "suspectUpi": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.1111111111111111,
+   "cer": 0.030303030303030304
+  },
+  {
+   "tid": "en-c05__NeerjaExpressive__r0__en",
+   "case": "en-c05",
+   "lang": "en",
+   "kind": "answer:suspect",
+   "tier": "base",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "The UPI ID was lucky dot winner at Ocaxis.",
+   "got": {},
+   "out": {
+    "suspectUpi": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "suspectUpi": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.1111111111111111,
+   "cer": 0.030303030303030304
+  },
+  {
+   "tid": "en-c06__Neerja__r0__en",
+   "case": "en-c06",
+   "lang": "en",
+   "kind": "correction",
+   "tier": "base",
+   "voice": "en-IN-NeerjaNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "No, the amount was 9500 not 5900.",
+   "got": {
+    "amount": 9500
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0,
+   "cer": 0
+  },
+  {
+   "tid": "en-c06__Prabhat__r0__en",
+   "case": "en-c06",
+   "lang": "en",
+   "kind": "correction",
+   "tier": "base",
+   "voice": "en-IN-PrabhatNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "No, the amount was 9500 not 5900.",
+   "got": {
+    "amount": 9500
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0,
+   "cer": 0
+  },
+  {
+   "tid": "en-c06__NeerjaExpressive__r0__en",
+   "case": "en-c06",
+   "lang": "en",
+   "kind": "correction",
+   "tier": "base",
+   "voice": "en-IN-NeerjaExpressiveNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "No, the amount was 9500 not 5900.",
+   "got": {
+    "amount": 9500
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0,
+   "cer": 0
+  },
+  {
+   "tid": "mr-c01__Aarohi__r0__mr",
+   "case": "mr-c01",
+   "lang": "mr",
+   "kind": "story",
+   "tier": "base",
+   "voice": "mr-IN-AarohiNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Maja Bank of India khaataatoon baarah hazaar rupe gale, ekaam aadashaani OTP magtla, aani mein sangitla, aradhaataapur bhi.",
+   "got": {
+    "amount": 12000,
+    "scamType": "otp_shared",
+    "bank": "Bank of India"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "fn",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "time": {
+     "cat": "asr",
+     "why": "ASR lost/changed: अर्ध्या तासापूर्वी"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.0736842105263158
+  },
+  {
+   "tid": "mr-c01__Manohar__r0__mr",
+   "case": "mr-c01",
+   "lang": "mr",
+   "kind": "story",
+   "tier": "base",
+   "voice": "mr-IN-ManoharNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Maja Bank of India khaatiyaatoon baarah hazaar rupe ke lie, ekaam aansa ne OTP maaghitla, aane mein sangitla, ardhya taasaapur bhi.",
+   "got": {
+    "amount": 12000,
+    "time": "2026-11-21T06:00:00.000Z",
+    "scamType": "otp_shared",
+    "bank": "Bank of India"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.1666666666666667,
+   "cer": 1.1263157894736842
+  },
+  {
+   "tid": "mr-c02__Aarohi__r0__mr",
+   "case": "mr-c02",
+   "lang": "mr",
+   "kind": "story",
+   "tier": "base",
+   "voice": "mr-IN-AarohiNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Kal dophari tin vaajastha phone par varoorn chaar hazaar paanch se rupe ke lie.",
+   "got": {
+    "amount": 4500,
+    "time": "2026-11-20T09:30:00.000Z"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "paymentApp": {
+     "cat": "asr",
+     "why": "ASR lost/changed: फोनपे"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.2727272727272727,
+   "cer": 1.3829787234042554
+  },
+  {
+   "tid": "mr-c02__Manohar__r0__mr",
+   "case": "mr-c02",
+   "lang": "mr",
+   "kind": "story",
+   "tier": "base",
+   "voice": "mr-IN-ManoharNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Kaal dubaari tin vaajata phone par varun chaar hazaar paanch chhah rupe ke lie.",
+   "got": {
+    "amount": 4005,
+    "time": "2026-11-20T09:30:00.000Z",
+    "paymentApp": "PhonePe"
+   },
+   "out": {
+    "amount": "wrong",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "amount": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.2727272727272727,
+   "cer": 1.3829787234042554
+  },
+  {
+   "tid": "mr-c03__Aarohi__r0__mr",
+   "case": "mr-c03",
+   "lang": "mr",
+   "kind": "answer:time",
+   "tier": "base",
+   "voice": "mr-IN-AarohiNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Don'taasaan poorvi.",
+   "got": {
+    "time": "2026-11-21T04:30:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.5,
+   "cer": 1.1428571428571428
+  },
+  {
+   "tid": "mr-c03__Manohar__r0__mr",
+   "case": "mr-c03",
+   "lang": "mr",
+   "kind": "answer:time",
+   "tier": "base",
+   "voice": "mr-IN-ManoharNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Don'taasaanpur bhi.",
+   "got": {
+    "time": "2026-11-21T04:30:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.5,
+   "cer": 1.1428571428571428
+  },
+  {
+   "tid": "mr-c04__Aarohi__r0__mr",
+   "case": "mr-c04",
+   "lang": "mr",
+   "kind": "answer:amount",
+   "tier": "base",
+   "voice": "mr-IN-AarohiNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Paani donon laakh.",
+   "got": {
+    "amount": 200000
+   },
+   "out": {
+    "amount": "wrong"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "amount": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.3636363636363635
+  },
+  {
+   "tid": "mr-c04__Manohar__r0__mr",
+   "case": "mr-c04",
+   "lang": "mr",
+   "kind": "answer:amount",
+   "tier": "base",
+   "voice": "mr-IN-ManoharNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Paanve ne donon laakh.",
+   "got": {
+    "amount": 200000
+   },
+   "out": {
+    "amount": "wrong"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "amount": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.3333333333333333,
+   "cer": 1.6363636363636365
+  },
+  {
+   "tid": "mr-c05__Aarohi__r0__mr",
+   "case": "mr-c05",
+   "lang": "mr",
+   "kind": "answer:bank",
+   "tier": "base",
+   "voice": "mr-IN-AarohiNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "HDFC bank.",
+   "got": {
+    "bank": "HDFC Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1
+  },
+  {
+   "tid": "mr-c05__Manohar__r0__mr",
+   "case": "mr-c05",
+   "lang": "mr",
+   "kind": "answer:bank",
+   "tier": "base",
+   "voice": "mr-IN-ManoharNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "HDSC bank.",
+   "got": {
+    "bank": "HDFC Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1
+  },
+  {
+   "tid": "mr-c06__Aarohi__r0__mr",
+   "case": "mr-c06",
+   "lang": "mr",
+   "kind": "correction",
+   "tier": "base",
+   "voice": "mr-IN-AarohiNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Rakam chukiachi aae aath hazaar hote.",
+   "got": {
+    "amount": 8000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.2916666666666667
+  },
+  {
+   "tid": "mr-c06__Manohar__r0__mr",
+   "case": "mr-c06",
+   "lang": "mr",
+   "kind": "correction",
+   "tier": "base",
+   "voice": "mr-IN-ManoharNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Rakam chukiachi aae aath hazaar hote.",
+   "got": {
+    "amount": 8000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.2916666666666667
+  },
+  {
+   "tid": "hi-c01__RemyMultilingual__r0__hi",
+   "case": "hi-c01",
+   "lang": "hi",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Ek aadmi ne khud ko bank ka avsar bataaya, OTP maanga aur mainne de diya, phir mere kendr bank khaate se saat hazaar rupe cut gae bis minute pahle.",
+   "got": {
+    "amount": 7000,
+    "time": "2026-11-21T06:10:00.000Z",
+    "scamType": "otp_shared"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "bank": {
+     "cat": "asr",
+     "why": "ASR lost/changed: केनरा"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.1485148514851484
+  },
+  {
+   "tid": "hi-c01__VivienneMultilingual__r0__hi",
+   "case": "hi-c01",
+   "lang": "hi",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Ek aadmi ne khud ko bank ka avsar bataaya, OTP maanga aur mainne de diya phir mere kendr bank khaate se saat hazaar rupe cut gae bis minute pahle.",
+   "got": {
+    "amount": 7000,
+    "time": "2026-11-21T06:10:00.000Z",
+    "scamType": "otp_shared"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "bank": {
+     "cat": "asr",
+     "why": "ASR lost/changed: केनरा"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.1485148514851484
+  },
+  {
+   "tid": "hi-c02__GiuseppeMultilingual__r0__hi",
+   "case": "hi-c02",
+   "lang": "hi",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Telegram par task vaali naukri ke naam par mujh se tis hazaar rupe bhravae Google par ise bheje the.",
+   "got": {
+    "amount": 30000,
+    "scamType": "investment_task"
+   },
+   "out": {
+    "amount": "tp",
+    "scamType": "tp",
+    "paymentApp": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "paymentApp": {
+     "cat": "asr",
+     "why": "ASR lost/changed: गूगल पे"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.0555555555555556,
+   "cer": 1.173913043478261
+  },
+  {
+   "tid": "hi-c02__ThalitaMultilingual__r0__hi",
+   "case": "hi-c02",
+   "lang": "hi",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Telegram par task vaali naukri ke naam par mujh se tis hazaar rupe bhravae Google Pay se bheje the.",
+   "got": {
+    "amount": 30000,
+    "scamType": "investment_task",
+    "paymentApp": "Google Pay"
+   },
+   "out": {
+    "amount": "tp",
+    "scamType": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.0555555555555556,
+   "cer": 1.1594202898550725
+  },
+  {
+   "tid": "hi-c03__RemyMultilingual__r0__hi",
+   "case": "hi-c03",
+   "lang": "hi",
+   "kind": "answer:time",
+   "tier": "unseen",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Parson raat saadhe das baje.",
+   "got": {
+    "time": "2026-11-19T17:00:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.2777777777777777
+  },
+  {
+   "tid": "hi-c03__VivienneMultilingual__r0__hi",
+   "case": "hi-c03",
+   "lang": "hi",
+   "kind": "answer:time",
+   "tier": "unseen",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Parson raat saadhe das baje.",
+   "got": {
+    "time": "2026-11-19T17:00:00.000Z"
+   },
+   "out": {
+    "time": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.2777777777777777
+  },
+  {
+   "tid": "hi-c04__GiuseppeMultilingual__r0__hi",
+   "case": "hi-c04",
+   "lang": "hi",
+   "kind": "answer:amount",
+   "tier": "unseen",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Sava laakh rupe.",
+   "got": {
+    "amount": 125000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.1818181818181819
+  },
+  {
+   "tid": "hi-c04__ThalitaMultilingual__r0__hi",
+   "case": "hi-c04",
+   "lang": "hi",
+   "kind": "answer:amount",
+   "tier": "unseen",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Sava laakh roope.",
+   "got": {
+    "amount": 125000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.2727272727272727
+  },
+  {
+   "tid": "hi-c05__RemyMultilingual__r0__hi",
+   "case": "hi-c05",
+   "lang": "hi",
+   "kind": "answer:suspect",
+   "tier": "unseen",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Uska number tha aath saat chhah paanch chaar tin do ek shoony nau.",
+   "got": {
+    "suspectPhone": "8765432109"
+   },
+   "out": {
+    "suspectPhone": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 2.65
+  },
+  {
+   "tid": "hi-c05__VivienneMultilingual__r0__hi",
+   "case": "hi-c05",
+   "lang": "hi",
+   "kind": "answer:suspect",
+   "tier": "unseen",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Uska number tha aath saat chhah paanch chaar tin do ek shoony nau.",
+   "got": {
+    "suspectPhone": "8765432109"
+   },
+   "out": {
+    "suspectPhone": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 2.65
+  },
+  {
+   "tid": "hi-c06__GiuseppeMultilingual__r0__hi",
+   "case": "hi-c06",
+   "lang": "hi",
+   "kind": "correction",
+   "tier": "unseen",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Bank galat hai, axis bank tha.",
+   "got": {
+    "bank": "Axis Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.0952380952380953
+  },
+  {
+   "tid": "hi-c06__ThalitaMultilingual__r0__hi",
+   "case": "hi-c06",
+   "lang": "hi",
+   "kind": "correction",
+   "tier": "unseen",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|hi|>",
+   "transcript": "Bank galat hai, axis bank tha.",
+   "got": {
+    "bank": "Axis Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.0952380952380953
+  },
+  {
+   "tid": "en-c01__RemyMultilingual__r0__en",
+   "case": "en-c01",
+   "lang": "en",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "Someone claiming to be from the electricity board said my power would be cut tonight. I paid 3450 rupees through paid him an hour ago.",
+   "got": {
+    "amount": 3450,
+    "time": "2026-11-21T05:30:00.000Z"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "paymentApp": {
+     "cat": "asr",
+     "why": "ASR lost/changed: Paytm"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.08333333333333333,
+   "cer": 0.03773584905660377
+  },
+  {
+   "tid": "en-c01__VivienneMultilingual__r0__en",
+   "case": "en-c01",
+   "lang": "en",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "Someone claiming to be from the electricity board said my power would be cut tonight. I paid 3450 rupees through paid an hour ago.",
+   "got": {
+    "amount": 3450,
+    "time": "2026-11-21T05:30:00.000Z"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "paymentApp": {
+     "cat": "asr",
+     "why": "ASR lost/changed: Paytm"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.041666666666666664,
+   "cer": 0.02830188679245283
+  },
+  {
+   "tid": "en-c02__GiuseppeMultilingual__r0__en",
+   "case": "en-c02",
+   "lang": "en",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "A buyer on OLX sent me a QR code to receive payment. I scandered an 18000 was debited for my Kotak account yesterday at 04:00.",
+   "got": {
+    "amount": 18000,
+    "time": "2026-11-20T10:30:00.000Z",
+    "scamType": "qr_scan",
+    "bank": "Kotak Mahindra Bank"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.2222222222222222,
+   "cer": 0.1
+  },
+  {
+   "tid": "en-c02__ThalitaMultilingual__r0__en",
+   "case": "en-c02",
+   "lang": "en",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "A byerone will accept me a QR code to receive payment. I scan it and 18000 was debited from my Kotak account yesterday at 4PM.",
+   "got": {
+    "amount": 18000,
+    "time": "2026-11-20T10:30:00.000Z",
+    "scamType": "qr_scan",
+    "bank": "Kotak Mahindra Bank"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.25925925925925924,
+   "cer": 0.12
+  },
+  {
+   "tid": "en-c03__RemyMultilingual__r0__en",
+   "case": "en-c03",
+   "lang": "en",
+   "kind": "answer:utr",
+   "tier": "unseen",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "The UTR is 05:07123456789.",
+   "got": {},
+   "out": {
+    "utr": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "utr": {
+     "cat": "extractor_form",
+     "why": "value is in the transcript but not parsed"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.8,
+   "cer": 0.05
+  },
+  {
+   "tid": "en-c03__VivienneMultilingual__r0__en",
+   "case": "en-c03",
+   "lang": "en",
+   "kind": "answer:utr",
+   "tier": "unseen",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "The UTR is 05:07123456789.",
+   "got": {},
+   "out": {
+    "utr": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "utr": {
+     "cat": "extractor_form",
+     "why": "value is in the transcript but not parsed"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.8,
+   "cer": 0.05
+  },
+  {
+   "tid": "en-c04__GiuseppeMultilingual__r0__en",
+   "case": "en-c04",
+   "lang": "en",
+   "kind": "answer:amount",
+   "tier": "unseen",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "1 lakh 75000.",
+   "got": {
+    "amount": 175000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.8,
+   "cer": 0.8461538461538461
+  },
+  {
+   "tid": "en-c04__ThalitaMultilingual__r0__en",
+   "case": "en-c04",
+   "lang": "en",
+   "kind": "answer:amount",
+   "tier": "unseen",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "1 lakh 75000.",
+   "got": {
+    "amount": 175000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.8,
+   "cer": 0.8461538461538461
+  },
+  {
+   "tid": "en-c05__RemyMultilingual__r0__en",
+   "case": "en-c05",
+   "lang": "en",
+   "kind": "answer:suspect",
+   "tier": "unseen",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "The UPI ID was lucky dot winner at Oaxaz.",
+   "got": {},
+   "out": {
+    "suspectUpi": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "suspectUpi": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.1111111111111111,
+   "cer": 0.09090909090909091
+  },
+  {
+   "tid": "en-c05__VivienneMultilingual__r0__en",
+   "case": "en-c05",
+   "lang": "en",
+   "kind": "answer:suspect",
+   "tier": "unseen",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "The UPI ID was lucky dot win our auto Caxis.",
+   "got": {},
+   "out": {
+    "suspectUpi": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "suspectUpi": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0.4444444444444444,
+   "cer": 0.12121212121212122
+  },
+  {
+   "tid": "en-c06__GiuseppeMultilingual__r0__en",
+   "case": "en-c06",
+   "lang": "en",
+   "kind": "correction",
+   "tier": "unseen",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "No, the amount was 9500 not 5900.",
+   "got": {
+    "amount": 9500
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0,
+   "cer": 0
+  },
+  {
+   "tid": "en-c06__ThalitaMultilingual__r0__en",
+   "case": "en-c06",
+   "lang": "en",
+   "kind": "correction",
+   "tier": "unseen",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|en|>",
+   "transcript": "No, the amount was 9500 not 5900.",
+   "got": {
+    "amount": 9500
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "latin",
+   "wer": 0,
+   "cer": 0
+  },
+  {
+   "tid": "mr-c01__RemyMultilingual__r0__mr",
+   "case": "mr-c01",
+   "lang": "mr",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Majhe bank of India khaatiya toon baarah hazaar rupe ke lie ek aasaanen OTP maaghitla, aani mein saangitla, ardhataapurvi.",
+   "got": {
+    "amount": 12000,
+    "scamType": "otp_shared",
+    "bank": "Bank of India"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "fn",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "time": {
+     "cat": "asr",
+     "why": "ASR lost/changed: अर्ध्या तासापूर्वी"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.0555555555555556,
+   "cer": 1.063157894736842
+  },
+  {
+   "tid": "mr-c01__VivienneMultilingual__r0__mr",
+   "case": "mr-c01",
+   "lang": "mr",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Maajha Bank of India khaatiyaatun baarah hazaar rupe ke lie ek maansaani OTP maangitla, animistla, adhyakshapur bhi.",
+   "got": {
+    "amount": 12000,
+    "scamType": "otp_shared",
+    "bank": "Bank of India"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "fn",
+    "scamType": "tp",
+    "bank": "tp"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "time": {
+     "cat": "asr",
+     "why": "ASR lost/changed: अर्ध्या तासापूर्वी"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.0210526315789474
+  },
+  {
+   "tid": "mr-c02__GiuseppeMultilingual__r0__mr",
+   "case": "mr-c02",
+   "lang": "mr",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Kaal dubaari tin vaajata phone par varun chaar hazaar paanch se rupe gale.",
+   "got": {
+    "amount": 4500,
+    "time": "2026-11-20T09:30:00.000Z",
+    "paymentApp": "PhonePe"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "tp",
+    "paymentApp": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.1818181818181819,
+   "cer": 1.297872340425532
+  },
+  {
+   "tid": "mr-c02__ThalitaMultilingual__r0__mr",
+   "case": "mr-c02",
+   "lang": "mr",
+   "kind": "story",
+   "tier": "unseen",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Kaal dubaari tin vaajida phone par varun chaar hazaar paanch se rupe gile.",
+   "got": {
+    "amount": 4500,
+    "time": "2026-11-20T06:30:00.000Z",
+    "paymentApp": "PhonePe"
+   },
+   "out": {
+    "amount": "tp",
+    "time": "wrong",
+    "paymentApp": "tp"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "time": {
+     "cat": "asr",
+     "why": "ASR lost/changed: तीन वाजता"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.1818181818181819,
+   "cer": 1.297872340425532
+  },
+  {
+   "tid": "mr-c03__RemyMultilingual__r0__mr",
+   "case": "mr-c03",
+   "lang": "mr",
+   "kind": "answer:time",
+   "tier": "unseen",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Don't ask for me.",
+   "got": {},
+   "out": {
+    "time": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "time": {
+     "cat": "asr",
+     "why": "ASR lost/changed: दोन तासांपूर्वी"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 2.5,
+   "cer": 1
+  },
+  {
+   "tid": "mr-c03__VivienneMultilingual__r0__mr",
+   "case": "mr-c03",
+   "lang": "mr",
+   "kind": "answer:time",
+   "tier": "unseen",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Don't ask for aapoorvi.",
+   "got": {},
+   "out": {
+    "time": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "time": {
+     "cat": "asr",
+     "why": "ASR lost/changed: दोन तासांपूर्वी"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 2.5,
+   "cer": 1.2857142857142858
+  },
+  {
+   "tid": "mr-c04__GiuseppeMultilingual__r0__mr",
+   "case": "mr-c04",
+   "lang": "mr",
+   "kind": "answer:amount",
+   "tier": "unseen",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Pavan ek donon laakh.",
+   "got": {
+    "amount": 300000
+   },
+   "out": {
+    "amount": "wrong"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "amount": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.3333333333333333,
+   "cer": 1.5454545454545454
+  },
+  {
+   "tid": "mr-c04__ThalitaMultilingual__r0__mr",
+   "case": "mr-c04",
+   "lang": "mr",
+   "kind": "answer:amount",
+   "tier": "unseen",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Paavne donalak.",
+   "got": {},
+   "out": {
+    "amount": "fn"
+   },
+   "correct": false,
+   "correctUnamb": false,
+   "attr": {
+    "amount": {
+     "cat": "asr",
+     "why": "value not in the transcript"
+    }
+   },
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1.1818181818181819
+  },
+  {
+   "tid": "mr-c05__RemyMultilingual__r0__mr",
+   "case": "mr-c05",
+   "lang": "mr",
+   "kind": "answer:bank",
+   "tier": "unseen",
+   "voice": "fr-FR-RemyMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "HDFC bunk.",
+   "got": {
+    "bank": "HDFC Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1
+  },
+  {
+   "tid": "mr-c05__VivienneMultilingual__r0__mr",
+   "case": "mr-c05",
+   "lang": "mr",
+   "kind": "answer:bank",
+   "tier": "unseen",
+   "voice": "fr-FR-VivienneMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "HDFC bunk.",
+   "got": {
+    "bank": "HDFC Bank"
+   },
+   "out": {
+    "bank": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1,
+   "cer": 1
+  },
+  {
+   "tid": "mr-c06__GiuseppeMultilingual__r0__mr",
+   "case": "mr-c06",
+   "lang": "mr",
+   "kind": "correction",
+   "tier": "unseen",
+   "voice": "it-IT-GiuseppeMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Rakam chuki chhiyaan hai aath hazaar hote.",
+   "got": {
+    "amount": 8000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.1666666666666667,
+   "cer": 1.4583333333333333
+  },
+  {
+   "tid": "mr-c06__ThalitaMultilingual__r0__mr",
+   "case": "mr-c06",
+   "lang": "mr",
+   "kind": "correction",
+   "tier": "unseen",
+   "voice": "pt-BR-ThalitaMultilingualNeural",
+   "rate": "r0",
+   "noise": "clean",
+   "snr": null,
+   "asrLang": "<|mr|>",
+   "transcript": "Rakkam chuki ji aae aath hazaar hote.",
+   "got": {
+    "amount": 8000
+   },
+   "out": {
+    "amount": "tp"
+   },
+   "correct": true,
+   "correctUnamb": true,
+   "attr": {},
+   "script": "latin",
+   "refScript": "deva",
+   "wer": 1.1666666666666667,
+   "cer": 1.25
+  }
+ ]
+}
