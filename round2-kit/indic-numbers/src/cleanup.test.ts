@@ -74,3 +74,31 @@ describe('marathiRoman (Marathi in Latin letters, as the in-page Whisper writes 
     expect(marathiRoman('kal doopaari adhik vaajata phone par varun')).toBe('kal doopaari saadhe don vaajata PhonePe varun');
   });
 });
+
+// Pins for the 27-28 Nov rounds (behaviour as shipped; a change here is a rule change and needs the harness)
+describe('pinned: spoken digits and script fixes', () => {
+  it('joins hyphen-spelled acronyms and reads Kannada letters as Telugu only in Telugu text', async () => {
+    const { joinSpelled } = await import('./cleanup');
+    expect(joinSpelled('मेरा आई-सी-ाई-सी-ाई बैंक')).toBe('मेरा आईसीआईसीआई बैंक');
+    expect(unifyScript('ఐదు వేల రೂಪಾಯలు')).toBe('ఐదు వేల రూపాయలు');
+    expect(unifyScript('ಐದು ಸಾವಿರ ರೂಪಾಯಿ')).toBe('ಐದು ಸಾವಿರ ರೂಪಾಯಿ');
+  });
+  it('decimals before a multiplier, clock phrasing, read-outs', () => {
+    expect(spokenDigits('one point five lakh rupees')).toBe('1.5 lakh rupees');
+    expect(spokenDigits('1 point to laakh')).toBe('1.2 laakh');
+    expect(spokenDigits('yesterday 7 30 pm')).toBe('yesterday 7:30 pm');
+    expect(spokenDigits('at half past nine')).toBe('at 9:30');
+    expect(spokenDigits('quarter to 8')).toBe('7:45');
+    expect(spokenDigits('double 8754321')).toBe('88754321');
+    expect(spokenDigits('501-002-345-678-1-2')).toBe('50100234567812');
+    expect(spokenDigits('25-11-2026')).toBe('25-11-2026'); // a date (8 digits) is not an ID
+  });
+  it('a UTR whose last group is written as a time keeps the 0 that completes 12 digits', () => {
+    expect(spokenDigits('UTR 67 23 4589 01:23')).toBe('UTR 67 23 4589 0123');
+    expect(spokenDigits('sharma 01:23 at paytm')).toBe('sharma123 at paytm');
+  });
+  it('Telugu "ఒంటి గంట" between digit words drops the o\'clock word', () => {
+    expect(spokenDigits('తొమ్మిది ఎనిమిది రెండు ఒంటి గంట సున్నా')).toBe('తొమ్మిది ఎనిమిది రెండు ఒంటి సున్నా');
+    expect(spokenDigits('నిన్న ఒంటి గంటకు')).toBe('నిన్న ఒంటి గంటకు'); // a real time is left alone
+  });
+});

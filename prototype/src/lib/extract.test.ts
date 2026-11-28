@@ -688,3 +688,17 @@ describe('round 58 (Indic shapes from the unseen-voice analysis half)', () => {
     expect(extractFields('ছয় হাজার টাকা কেটেছে অটিপি বলে দিয়েছিলাম', { now: NOW, lang: 'bn-IN' }).scamType?.value).toBe('otp_shared');
   });
 });
+
+describe('pinned: corrections in Tamil, Marathi and English (behaviour as shipped)', () => {
+  const c = (t: string, lang: string) => parseCorrection(t, { now: NOW, lang });
+  it('the value after the rejected one wins', () => {
+    expect(c('இல்லை, ஐந்தாயிரம் இல்லை, எட்டாயிரம்', 'ta-IN')).toMatchObject({ field: 'amount', value: 8000 });
+    expect(c('नाही, तीन हजार नाही, तेरा हजार', 'mr-IN')).toMatchObject({ field: 'amount', value: 13000 });
+    expect(c('sorry, not 3000, it was 13000', 'en-IN')).toMatchObject({ field: 'amount', value: 13000 });
+  });
+  it('bank and time corrections', () => {
+    expect(c('இல்லை, பேங்க் தப்பு, கனரா பேங்க்', 'ta-IN')).toMatchObject({ field: 'bank', value: 'Canara Bank' });
+    expect(c('नाही, बँक चुकीची आहे, ॲक्सिस बँक होती', 'mr-IN')).toMatchObject({ field: 'bank', value: 'Axis Bank' });
+    expect(new Date(c('no, the time was today at 9 15 am', 'en-IN')?.value as string).getTime()).toBe(new Date('2026-11-21T09:15:00+05:30').getTime());
+  });
+});

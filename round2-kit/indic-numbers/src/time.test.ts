@@ -93,3 +93,15 @@ describe('ASR misspellings', () => {
     expect(findTime('around 4,999 rupees', NOW)).toBeUndefined(); // an amount, not 4 o'clock
   });
 });
+
+describe('pinned: times from the 27-28 Nov rounds', () => {
+  it('articles, written amounts, dayparts at noon, weekdays', () => {
+    expect(findTime('half an hour ago', NOW)?.date.getTime()).toBe(ago(30));
+    expect(findTime('Rs 500 an hour ago', NOW)?.date.getTime()).toBe(ago(60)); // 500 is money, not the count
+    const ev = findTime('evening', NOW)!;
+    expect([ev.date.getTime(), ev.kind]).toEqual([at(-1, 19), 'daypart']); // said at noon: yesterday evening
+    const wed = findTime('last wednesday', NOW)!;
+    expect([wed.date.getTime(), wed.kind, wed.tolerance]).toEqual([at(-3, 12), 'date', 720]);
+    expect(findTime('kal shaam 7 baje', NOW)?.date.getTime()).toBe(at(-1, 19));
+  });
+});

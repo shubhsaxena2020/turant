@@ -192,3 +192,17 @@ describe('round 27 spellings (Whisper large-v3)', () => {
     expect(findAmount('साढ़े 3,500 रुपये')).toBe(3500);
   });
 });
+
+describe('pinned: amounts from the 27-28 Nov rounds', () => {
+  it('crore spellings, fractions, corrections, Indic words', () => {
+    expect(findAmount('do karod rupaye')).toBe(20000000);
+    expect(findAmount('ek karor')).toBe(10000000);
+    expect(findAmount('dedh lakh')).toBe(150000);
+    expect(findAmount('1.5 lakh rupees')).toBe(150000);
+    expect(findAmount('saade teen hazaar')).toBe(3500);
+    expect(findAmount('सवा लाख')).toBe(125000);
+    expect(findAmount('पाच नाही पंधरा हजार')).toBe(15000); // Marathi: the value after "no" replaces the first
+    expect(findAmount('இருபதாயிரம் ரூபாய்')).toBe(20000);
+    expect(findAmount('ಐದು ಸಾವಿರ ರೂಪಾಯಿ')).toBe(5000);
+  });
+});
