@@ -1,0 +1,42 @@
+{"id":"hi-d01","lang":"hi","kind":"story","text":"कल शाम करीब छह बजे किसी ने कूरियर वाला बनकर लिंक भेजा, मैंने क्लिक किया और मेरे बैंक ऑफ़ बड़ौदा खाते से चौदह हज़ार पाँच सौ रुपये निकल गए","expected":{"amount":14500,"time":{"day":-1,"at":"18:00"},"bank":"bob"},"tags":["blind3"]}
+{"id":"hi-d02","lang":"hi","kind":"story","text":"फ़ोनपे पर एक आदमी ने कहा गलती से पैसे भेज दिए, वापस करो, तो मैंने उसे चार हज़ार दो सौ रुपये भेज दिए, एक घंटा पहले","expected":{"amount":4200,"time":{"ago":60},"scamType":"wrong_transfer","paymentApp":"phonepe"},"tags":["blind3"]}
+{"id":"hi-d03","lang":"hi","kind":"answer:time","hint":"time","text":"आज सुबह पौने नौ बजे","expected":{"time":{"day":0,"at":"08:45"}},"tags":["blind3"]}
+{"id":"hi-d04","lang":"hi","kind":"answer:amount","hint":"amount","text":"अड़तीस हज़ार सात सौ","expected":{"amount":38700},"tags":["blind3"]}
+{"id":"hi-d05","lang":"hi","kind":"answer:suspect","hint":"suspect","text":"उसने 9 1 2 3 4 5 6 7 8 0 नंबर से कॉल किया था","expected":{"suspectPhone":"9123456780"},"tags":["blind3"]}
+{"id":"hi-d06","lang":"hi","kind":"correction","text":"नहीं, रकम बारह हज़ार नहीं, इक्कीस हज़ार थी","expected":{"amount":21000},"tags":["blind3"]}
+{"id":"en-d01","lang":"en","kind":"story","text":"I got a call saying my electricity would be cut tonight, they made me install an app and 23,600 rupees went from my HDFC account around 3 pm yesterday","expected":{"amount":23600,"time":{"day":-1,"at":"15:00"},"bank":"hdfc"},"tags":["blind3"]}
+{"id":"en-d02","lang":"en","kind":"story","text":"Someone on Instagram promised double returns on crypto and I sent fifty thousand rupees through Paytm last Wednesday","expected":{"amount":50000,"time":{"day":-3,"at":"12:00","tol":720},"scamType":"investment_task","paymentApp":"paytm"},"tags":["blind3"]}
+{"id":"en-d03","lang":"en","kind":"answer:utr","hint":"utr","text":"it's 6 1 8 2 0 4 5 7 3 9 1 6","expected":{"utr":"618204573916"},"tags":["blind3"]}
+{"id":"en-d04","lang":"en","kind":"answer:amount","hint":"amount","text":"three lakh seventy-five thousand","expected":{"amount":375000},"tags":["blind3"]}
+{"id":"en-d05","lang":"en","kind":"answer:suspect","hint":"suspect","text":"the number was 7 0 4 2 9 8 1 3 6 5","expected":{"suspectPhone":"7042981365"},"tags":["blind3"]}
+{"id":"en-d06","lang":"en","kind":"correction","text":"sorry, it was Bandhan Bank, not Bank of India","expected":{"bank":"bandhan"},"tags":["blind3"]}
+{"id":"mr-d01","lang":"mr","kind":"story","text":"काल रात्री साडेनऊ वाजता कोणीतरी केवायसी अपडेट करा म्हणून मेसेज पाठवला, आणि माझ्या युनियन बँकेच्या खात्यातून अठरा हजार रुपये गेले","expected":{"amount":18000,"time":{"day":-1,"at":"21:30"},"scamType":"fake_kyc","bank":"union"},"tags":["blind3"]}
+{"id":"mr-d02","lang":"mr","kind":"story","text":"मी क्यूआर कोड स्कॅन केला आणि गुगल पे वरून सहा हजार चारशे रुपये कट झाले, अर्ध्या तासापूर्वी","expected":{"amount":6400,"time":{"ago":30},"scamType":"qr_scan","paymentApp":"gpay"},"tags":["blind3"]}
+{"id":"mr-d03","lang":"mr","kind":"answer:time","hint":"time","text":"काल संध्याकाळी पाच वाजता","expected":{"time":{"day":-1,"at":"17:00"}},"tags":["blind3"]}
+{"id":"mr-d04","lang":"mr","kind":"answer:amount","hint":"amount","text":"एक लाख वीस हजार","expected":{"amount":120000},"tags":["blind3"]}
+{"id":"mr-d05","lang":"mr","kind":"answer:bank","hint":"bank","text":"आयसीआयसीआय बँक","expected":{"bank":"icici"},"tags":["blind3"]}
+{"id":"mr-d06","lang":"mr","kind":"correction","text":"नाही, पाच हजार नाही, पंधरा हजार होते","expected":{"amount":15000},"tags":["blind3"]}
+{"id":"bn-d01","lang":"bn","kind":"story","text":"গতকাল সন্ধ্যা সাতটায় একজন কাস্টমার কেয়ার থেকে ফোন করে একটা অ্যাপ ডাউনলোড করতে বলল, তারপর আমার এসবিআই অ্যাকাউন্ট থেকে বারো হাজার টাকা কেটে গেছে","expected":{"amount":12000,"time":{"day":-1,"at":"19:00"},"scamType":"fake_customer_care","bank":"sbi"},"tags":["blind3"]}
+{"id":"bn-d02","lang":"bn","kind":"story","text":"ফোনপে দিয়ে তিন হাজার পাঁচশো টাকা চলে গেছে, পনেরো মিনিট আগে","expected":{"amount":3500,"time":{"ago":15},"paymentApp":"phonepe"},"tags":["blind3"]}
+{"id":"bn-d03","lang":"bn","kind":"answer:time","hint":"time","text":"আজ সকাল সাড়ে এগারোটায়","expected":{"time":{"day":0,"at":"11:30"}},"tags":["blind3"]}
+{"id":"bn-d04","lang":"bn","kind":"answer:amount","hint":"amount","text":"পঁচিশ হাজার টাকা","expected":{"amount":25000},"tags":["blind3"]}
+{"id":"bn-d05","lang":"bn","kind":"answer:bank","hint":"bank","text":"ইউকো ব্যাংক","expected":{"bank":"uco"},"tags":["blind3"]}
+{"id":"bn-d06","lang":"bn","kind":"correction","text":"না, ব্যাংক ভুল, কানাড়া ব্যাংক ছিল","expected":{"bank":"canara"},"tags":["blind3"]}
+{"id":"ta-d01","lang":"ta","kind":"story","text":"நேற்று இரவு ஒன்பது மணிக்கு ஒருவர் வங்கியிலிருந்து பேசுவதாக சொல்லி ஓடிபி கேட்டார், நான் சொன்னேன், என் இந்தியன் வங்கி கணக்கிலிருந்து பத்தாயிரம் ரூபாய் போய்விட்டது","expected":{"amount":10000,"time":{"day":-1,"at":"21:00"},"scamType":"otp_shared","bank":"indian"},"tags":["blind3"]}
+{"id":"ta-d02","lang":"ta","kind":"story","text":"ஒருவர் தவறுதலாக பணம் அனுப்பிவிட்டேன் திருப்பி அனுப்புங்கள் என்றார், நான் கூகுள் பே மூலம் இரண்டாயிரத்து ஐநூறு ரூபாய் அனுப்பினேன்","expected":{"amount":2500,"scamType":"wrong_transfer","paymentApp":"gpay"},"tags":["blind3"]}
+{"id":"ta-d03","lang":"ta","kind":"answer:time","hint":"time","text":"இன்று காலை எட்டு மணிக்கு","expected":{"time":{"day":0,"at":"08:00"}},"tags":["blind3"]}
+{"id":"ta-d04","lang":"ta","kind":"answer:amount","hint":"amount","text":"எழுபத்தைந்தாயிரம் ரூபாய்","expected":{"amount":75000},"tags":["blind3"]}
+{"id":"ta-d05","lang":"ta","kind":"answer:bank","hint":"bank","text":"இந்தியன் ஓவர்சீஸ் பேங்க்","expected":{"bank":"iob"},"tags":["blind3"]}
+{"id":"ta-d06","lang":"ta","kind":"correction","text":"இல்லை, தொகை நான்காயிரம் இல்லை, ஆறாயிரம்","expected":{"amount":6000},"tags":["blind3"]}
+{"id":"te-d01","lang":"te","kind":"story","text":"నిన్న మధ్యాహ్నం మూడు గంటలకు టెలిగ్రామ్‌లో పార్ట్ టైమ్ జాబ్ అని చెప్పి నా దగ్గర నుంచి ముప్పై ఐదు వేల రూపాయలు కట్టించారు","expected":{"amount":35000,"time":{"day":-1,"at":"15:00"},"scamType":"investment_task"},"tags":["blind3"]}
+{"id":"te-d02","lang":"te","kind":"story","text":"క్యూఆర్ కోడ్ స్కాన్ చేశాను, నా ఎస్బీఐ అకౌంట్ నుండి ఎనిమిది వేల రూపాయలు పోయాయి, ఇరవై నిమిషాల క్రితం","expected":{"amount":8000,"time":{"ago":20},"scamType":"qr_scan","bank":"sbi"},"tags":["blind3"]}
+{"id":"te-d03","lang":"te","kind":"answer:time","hint":"time","text":"ఈరోజు ఉదయం పది గంటలకు","expected":{"time":{"day":0,"at":"10:00"}},"tags":["blind3"]}
+{"id":"te-d04","lang":"te","kind":"answer:amount","hint":"amount","text":"లక్షా యాభై వేలు","expected":{"amount":150000},"tags":["blind3"]}
+{"id":"te-d05","lang":"te","kind":"answer:bank","hint":"bank","text":"యాక్సిస్ బ్యాంక్","expected":{"bank":"axis"},"tags":["blind3"]}
+{"id":"te-d06","lang":"te","kind":"correction","text":"కాదు, బ్యాంక్ తప్పు, కెనరా బ్యాంక్","expected":{"bank":"canara"},"tags":["blind3"]}
+{"id":"kn-d01","lang":"kn","kind":"story","text":"ನಿನ್ನೆ ಸಂಜೆ ಆರು ಗಂಟೆಗೆ ಯಾರೋ ಕೆವೈಸಿ ಅಪ್‌ಡೇಟ್ ಮಾಡಿ ಇಲ್ಲದಿದ್ದರೆ ಖಾತೆ ಬ್ಲಾಕ್ ಆಗುತ್ತದೆ ಅಂದರು, ನನ್ನ ಕೆನರಾ ಬ್ಯಾಂಕ್ ಖಾತೆಯಿಂದ ಒಂಬತ್ತು ಸಾವಿರ ರೂಪಾಯಿ ಹೋಯಿತು","expected":{"amount":9000,"time":{"day":-1,"at":"18:00"},"scamType":"fake_kyc","bank":"canara"},"tags":["blind3"]}
+{"id":"kn-d02","lang":"kn","kind":"story","text":"ಫೋನ್‌ಪೇ ಮೂಲಕ ಮೂರು ಸಾವಿರ ಎರಡು ನೂರು ರೂಪಾಯಿ ಕಳೆದುಕೊಂಡೆ, ಒಂದು ಗಂಟೆ ಹಿಂದೆ","expected":{"amount":3200,"time":{"ago":60},"paymentApp":"phonepe"},"tags":["blind3"]}
+{"id":"kn-d03","lang":"kn","kind":"answer:time","hint":"time","text":"ಇಂದು ಬೆಳಿಗ್ಗೆ ಒಂಬತ್ತು ಗಂಟೆಗೆ","expected":{"time":{"day":0,"at":"09:00"}},"tags":["blind3"]}
+{"id":"kn-d04","lang":"kn","kind":"answer:amount","hint":"amount","text":"ನಲವತ್ತು ಸಾವಿರ","expected":{"amount":40000},"tags":["blind3"]}
+{"id":"kn-d05","lang":"kn","kind":"answer:bank","hint":"bank","text":"ಬ್ಯಾಂಕ್ ಆಫ್ ಬರೋಡಾ","expected":{"bank":"bob"},"tags":["blind3"]}
+{"id":"kn-d06","lang":"kn","kind":"correction","text":"ಇಲ್ಲ, ಮೊತ್ತ ಎರಡು ಸಾವಿರ ಅಲ್ಲ, ಐದು ಸಾವಿರ","expected":{"amount":5000},"tags":["blind3"]}
