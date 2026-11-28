@@ -6,11 +6,12 @@
 type Asr = (audio: Float32Array, opts: Record<string, unknown>) => Promise<{ text: string } | { text: string }[]>;
 type In =
   | { type: 'ping' }
-  | { type: 'load'; id: string; gpu: boolean; host: string; path: string; quiet: boolean; forceWasm: boolean }
+  | { type: 'load'; id: string; gpu: boolean; host: string; path: string; quiet: boolean; forceWasm: boolean; hang?: boolean }
   | { type: 'run'; rid: number; id: string; pcm: Float32Array; opts: Record<string, unknown> };
 
 const scope = self as unknown as DedicatedWorkerGlobalScope;
 const models = new Map<string, Promise<Asr>>();
+let hang = false; // debug (?asr-worker-hang): never answer a transcription, to test the page's stall fallback
 
 async function hasGpu(): Promise<boolean> {
   try {
@@ -50,6 +51,7 @@ scope.onmessage = async (e: MessageEvent<In>) => {
   const m = e.data;
   if (m.type === 'ping') return scope.postMessage({ type: 'pong', isolated: self.crossOriginIsolated });
   if (m.type === 'load') {
+    hang = !!m.hang;
     let p = models.get(m.id);
     if (!p) {
       p = load(m);
@@ -65,6 +67,7 @@ scope.onmessage = async (e: MessageEvent<In>) => {
     return;
   }
   if (m.type === 'run') {
+    if (hang) return;
     try {
       const asr = await models.get(m.id);
       if (!asr) throw new Error('model not loaded');

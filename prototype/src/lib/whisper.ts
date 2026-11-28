@@ -96,7 +96,10 @@ async function cached(model: ModelChoice): Promise<boolean> {
 // loads on the main thread exactly as before, so the worst case is the main-thread path. ?asr-main forces it.
 const PING_MS = 5_000;
 const STALL_MS = 90_000; // no message at all from the worker for this long while loading
-const RUN_MS = 120_000;
+/** A transcription that takes longer than this has stalled: 4x the audio's length, at least 20 s. */
+const runLimitMs = (audio: Float32Array) => Math.max(20_000, (4 * audio.length) / 16);
+/** Debug only (?asr-worker-hang): the worker answers the ping and loads, then never returns a transcription. */
+const DEBUG_HANG = /[?&]asr-worker-hang\b/.test(typeof location === 'undefined' ? '' : location.search);
 let workerBroken = typeof Worker === 'undefined' || /[?&]asr-main\b/.test(typeof location === 'undefined' ? '' : location.search);
 let worker: Worker | null = null;
 let workerUp: Promise<boolean> | null = null;
@@ -172,7 +175,7 @@ async function loadInWorker(model: ModelChoice, quiet: boolean, report: (f: numb
   const { host, path } = modelHost(model);
   type Load = { ok: true } | { ok: false; message: string };
   const r = await ask<Load>(
-    { type: 'load', id: model.id, gpu: model.gpu, host, path, quiet, forceWasm },
+    { type: 'load', id: model.id, gpu: model.gpu, host, path, quiet, forceWasm, hang: DEBUG_HANG },
     (d) => (d.id !== model.id ? undefined : d.type === 'ready' ? { ok: true } : d.type === 'error' ? { ok: false, message: String((d as { message?: string }).message) } : undefined),
     STALL_MS,
     (d) => d.id === model.id && d.type === 'progress' && d.frac !== undefined && report(d.frac),
@@ -186,7 +189,7 @@ async function loadInWorker(model: ModelChoice, quiet: boolean, report: (f: numb
   return async (audio, opts) => {
     const rid = ++runId;
     type Run = { out?: { text: string } | { text: string }[]; error?: string };
-    const res = await ask<Run>({ type: 'run', rid, id: model.id, pcm: audio, opts }, (d) => (d.rid === rid ? (d as Run) : undefined), RUN_MS);
+    const res = await ask<Run>({ type: 'run', rid, id: model.id, pcm: audio, opts }, (d) => (d.rid === rid ? (d as Run) : undefined), runLimitMs(audio));
     if (res.error || !res.out) {
       killWorker('failed to transcribe');
       throw new Error(res.error ?? 'no output');
