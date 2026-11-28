@@ -363,6 +363,9 @@ Everything above measured server-grade Whisper (turbo, large-v3). When the brows
   - Clock: "7 30 pm" = 7:30 pm (was 6 am the next day); "half past nine", "quarter past six", "quarter to eight".
   - Corrections: "it was fifteen hundred, not five hundred" now keeps 1,500 (the value after a final "not" is the rejected one).
   - en_tune reference text 80% → 100%. All report sets unchanged run for run. **Blind set 2, in-page English 33% → 50%** (tuning and unseen voices; aggregate only), in-page overall 67% → 70% / 69%.
+- **Rounds 55-56 (English set audio: 300 clips, tuning voices + noise + speed + unseen halves A / B):** large-v3 94% tuning / 87% unseen A / 90% unseen B; in-page 72% / 67% / 87% (clean).
+  - From the tuning-voice failures: "half-past nine" with a hyphen; "a lot and a half" (Whisper for "a lakh and a half"); digit groups before rupees ("18 250 rupees" = 18,250; "19 99 rupees" = 1,999); an ordinal before a multiplier ("Twelfth thousand 900" = 12,900); "quota account" = Kotak.
+  - In-page English set: tuning +13, **unseen A +6**, unseen B 0 (none of these shapes there). Tuning corpus in-page +1; all other report sets unchanged run for run; **blind set 2 in-page English 50% → 56%** (tuning voices, aggregate only), in-page overall 71% / 69%.
 - **The in-page model in noise** (first measurement, `plan_noise_hienmr.json`, 120 clips per level, traffic / babble / pink noise):
 
   | Fully correct, Hinglish model | Clean | 15 dB | 5 dB |

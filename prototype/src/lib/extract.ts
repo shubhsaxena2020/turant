@@ -640,7 +640,7 @@ export const BANKS: { name: string; keys: string[] }[] = [
   { name: 'Bank of Baroda', keys: ['bank of baroda', 'baroda', 'बैंक ऑफ बड़ौदा', 'बड़ौदा', 'बडौदा'] },
   { name: 'Canara Bank', keys: ['canara', 'kenara', 'केनरा', 'कैनरा', 'ಕೆನರಾ', 'கனரா'] },
   { name: 'Union Bank of India', keys: ['union bank', 'union bank of india', 'यूनियन बैंक'] },
-  { name: 'Kotak Mahindra Bank', keys: ['kotak', 'कोटक', 'quote account', 'quote bank'] },
+  { name: 'Kotak Mahindra Bank', keys: ['kotak', 'quota account', 'quota bank', 'कोटक', 'quote account', 'quote bank'] },
   { name: 'IndusInd Bank', keys: ['indusind', 'induslnd', 'इंडसइंड'] },
   { name: 'Yes Bank', keys: ['yes bank', 'यस बैंक'] },
   { name: 'IDFC FIRST Bank', keys: ['idfc', 'आईडीएफसी'] },

@@ -658,3 +658,14 @@ describe('round 53-54 (Indian-English numbers and clock phrasing)', () => {
     expect(parseCorrection('no, the bank was HDFC not SBI')).toMatchObject({ field: 'bank', value: 'HDFC Bank' });
   });
 });
+
+describe('round 55-56 (English amounts as the recogniser writes digits)', () => {
+  const x = (t: string) => extractFields(t, { now: NOW });
+  it('digit groups and ordinals before rupees / thousand', () => {
+    expect(x('18 250 rupees were debated from my union bank account').amount?.value).toBe(18250);
+    expect(x('I paid 19 99 rupees for a fake delivery fee').amount?.value).toBe(1999);
+    expect(x('Twelfth thousand 900.').amount?.value).toBe(12900);
+    expect(x('About a lot and a half was taken').amount?.value).toBe(150000);
+    expect(x('8400 rupees were taken from my quota account').bank?.value).toBe('Kotak Mahindra Bank');
+  });
+});

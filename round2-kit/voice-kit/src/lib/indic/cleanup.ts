@@ -121,13 +121,21 @@ export function spokenDigits(text: string): string {
   const HOUR_W: Record<string, number> = { one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, eleven: 11, twelve: 12 };
   const hourOf = (w: string) => (/^\d{1,2}$/.test(w) ? Number(w) : HOUR_W[w.toLowerCase()]);
   const HW = '(\\d{1,2}|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve)';
-  t = t.replace(new RegExp(`\\bhalf\\s+past\\s+${HW}\\b`, 'gi'), (m, h: string) => (hourOf(h) <= 12 ? `${hourOf(h)}:30` : m));
-  t = t.replace(new RegExp(`\\b(?:a\\s+)?quarter\\s+past\\s+${HW}\\b`, 'gi'), (m, h: string) => (hourOf(h) <= 12 ? `${hourOf(h)}:15` : m));
-  t = t.replace(new RegExp(`\\b(?:a\\s+)?quarter\\s+to\\s+${HW}\\b`, 'gi'), (m, h: string) => (hourOf(h) <= 12 ? `${hourOf(h) === 1 ? 12 : hourOf(h) - 1}:45` : m));
+  t = t.replace(new RegExp(`\\bhalf[\\s-]+past\\s+${HW}\\b`, 'gi'), (m, h: string) => (hourOf(h) <= 12 ? `${hourOf(h)}:30` : m));
+  t = t.replace(new RegExp(`\\b(?:a\\s+)?quarter[\\s-]+past\\s+${HW}\\b`, 'gi'), (m, h: string) => (hourOf(h) <= 12 ? `${hourOf(h)}:15` : m));
+  t = t.replace(new RegExp(`\\b(?:a\\s+)?quarter[\\s-]+to\\s+${HW}\\b`, 'gi'), (m, h: string) => (hourOf(h) <= 12 ? `${hourOf(h) === 1 ? 12 : hourOf(h) - 1}:45` : m));
   // Indian English: "one and a half lakh", "two and a half thousand", "a lakh and a half", "5 grand"
   t = t.replace(new RegExp(`\\b${UNIT_W}\\s+and\\s+a\\s+half\\s+${MULT_W}\\b`, 'gi'), (_, a: string, m: string) => `${num(a)}.5 ${m}`);
+  t = t.replace(/\ba\s+lot\s+and\s+a\s+half\b/gi, 'a lakh and a half'); // how Whisper hears "a lakh and a half" ("a lot" alone stays)
   t = t.replace(new RegExp(`\\ba\\s+${MULT_W}\\s+and\\s+a\\s+half\\b`, 'gi'), (_, m: string) => `1.5 ${m}`);
   t = t.replace(new RegExp(`\\b${UNIT_W}\\s+grand\\b`, 'gi'), (_, a: string) => `${num(a)} thousand`);
+  // the recogniser splits a spoken amount into digit groups right before "rupees": "18 250 rupees" (eighteen thousand two
+  // hundred fifty) = 18250, "19 99 rupees" (nineteen ninety nine) = 1999
+  t = t.replace(/\b([1-9]\d{0,2})\s+(\d{3})\s+(?=(?:rupees?|rs\.?|rupaye|rupe)\b)/gi, '$1$2 ');
+  t = t.replace(/\b([1-9]\d)\s+(\d{2})\s+(?=(?:rupees?|rs\.?|rupaye|rupe)\b)/gi, '$1$2 ');
+  // an ordinal heard for a number before a multiplier: "twelfth thousand 900" = twelve thousand 900
+  const ORD: Record<string, string> = { fifth: 'five', sixth: 'six', seventh: 'seven', eighth: 'eight', ninth: 'nine', tenth: 'ten', eleventh: 'eleven', twelfth: 'twelve', fifteenth: 'fifteen', twentieth: 'twenty' };
+  t = t.replace(/\b(fifth|sixth|seventh|eighth|ninth|tenth|eleventh|twelfth|fifteenth|twentieth)\s+(?=(?:thousand|lakh|lakhs|hundred)\b)/gi, (_, o: string) => `${ORD[o.toLowerCase()]} `);
   // a price read in pairs before rupees: "nineteen ninety nine rupees" = 1,999 (never a year here: money follows)
   const TEEN: Record<string, number> = { ten: 10, eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17, eighteen: 18, nineteen: 19 };
   const TENS: Record<string, number> = { twenty: 20, thirty: 30, forty: 40, fifty: 50, sixty: 60, seventy: 70, eighty: 80, ninety: 90 };

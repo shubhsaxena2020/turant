@@ -38,7 +38,7 @@ const BANKS: [string, string[]][] = [
   ['Bank of Baroda', ['bank of baroda', 'baroda', 'बैंक ऑफ बड़ौदा', 'बड़ौदा', 'बडौदा']],
   ['Canara Bank', ['canara', 'kenara', 'केनरा', 'कैनरा', 'ಕೆನರಾ', 'கனரா']],
   ['Union Bank of India', ['union bank', 'union bank of india', 'यूनियन बैंक']],
-  ['Kotak Mahindra Bank', ['kotak', 'कोटक', 'quote account', 'quote bank']],
+  ['Kotak Mahindra Bank', ['kotak', 'quota account', 'quota bank', 'कोटक', 'quote account', 'quote bank']],
   ['IndusInd Bank', ['indusind', 'induslnd', 'इंडसइंड']],
   ['Yes Bank', ['yes bank', 'यस बैंक']],
   ['IDFC FIRST Bank', ['idfc', 'आईडीएफसी']],
